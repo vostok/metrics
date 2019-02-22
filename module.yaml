@@ -1,0 +1,17 @@
+notests *default:
+  build:
+    target: Vostok.Metrics.Abstractions.sln
+    configuration: NoTests
+    tool:
+      name: dotnet
+
+  install:
+    - Vostok.Metrics.Abstractions/bin/Release/netstandard2.0/Vostok.Metrics.Abstractions.dll
+
+  deps:
+    - vostok.devtools
+
+full-build > notests:
+  build:
+    target: Vostok.Metrics.Abstractions.sln
+    configuration: Release
