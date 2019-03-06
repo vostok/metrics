@@ -290,9 +290,7 @@ namespace Vostok.Metrics.Abstractions
     public interface IMetricContext
     {
         IMetricEventSender Sender { get; }
-        
         IMetricEventScraper Scraper { get; }
-        
         List<Tag> GetStaticTags();
         List<Tag> GetDynamicTags();
     }
@@ -355,11 +353,30 @@ namespace Vostok.Metrics.Abstractions
             ConfigureSender();
 
             ChildContexts();
+
+            GetMeterByNameUseCase();
             
             // to be discussed
             ExternalDynamicTag();
             OpenStringTagging();
             AnonymousClassTagging();
+        }
+
+        private static void GetMeterByNameUseCase()
+        {
+            var root = new RootContext(new ConsoleMetricEventSender());
+
+            // we did this in one place
+            var gauge = root.Gauge("SomethingCount", "items", TimeSpan.FromSeconds(10));
+
+            // and this in another one
+            var sameGauge = root.Gauge("SomethingCount", "items", TimeSpan.FromMinutes(1));
+
+            // In Prometheus and Metrics.NET this is a default use case.
+            // The second call should return existing Gauge without applying the settings.
+            // Kontur teams use this too.
+            
+            // Should we support this?
         }
 
         private static void ChildContexts()
@@ -450,7 +467,7 @@ namespace Vostok.Metrics.Abstractions
         // 1.b We don't know for sure how many dynamic tags we have.
         //     This may affect performance of TagList -> TMetric mapping
         //
-        // 2. If we have a simple Gauge without dynamic keys we can't cache it anymore because external value can change
+        // 2. If we have a simple Gauge without dynamic keys we can't cache it anymore because external value can change.
         private static void ExternalDynamicTag()
         {
             var context = new RootContext(new ConsoleMetricEventSender());
