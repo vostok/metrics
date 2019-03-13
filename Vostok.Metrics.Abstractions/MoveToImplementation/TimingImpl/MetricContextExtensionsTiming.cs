@@ -1,5 +1,6 @@
 using System;
 using Vostok.Metrics.Abstractions.DynamicTags;
+using Vostok.Metrics.Abstractions.DynamicTags.StringKeys;
 using Vostok.Metrics.Abstractions.Model;
 
 namespace Vostok.Metrics.Abstractions.MoveToImplementation.TimingImpl

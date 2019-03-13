@@ -1,4 +1,4 @@
-namespace Vostok.Metrics.Abstractions.DynamicTags
+namespace Vostok.Metrics.Abstractions.DynamicTags.StringKeys
 {
     public interface ITaggedMetric2<out TMetric>
     {
