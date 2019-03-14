@@ -1,5 +1,4 @@
 using System;
-using Vostok.Metrics.Abstractions.DynamicTags;
 using Vostok.Metrics.Abstractions.DynamicTags.StringKeys;
 using Vostok.Metrics.Abstractions.Model;
 
@@ -16,18 +15,33 @@ namespace Vostok.Metrics.Abstractions.MoveToImplementation.HistogramImpl
             return metric;
         }
 
-        public static ITaggedMetric2<IHistogram> Histogram(this IMetricContext context, string name, string key1, string key2, TimeSpan scrapePeriod, out IDisposable registration, HistogramConfig config = null)
+        private static StringKeysTaggedMetric<Histogram> CreateStringKeysTaggedHistogram(IMetricContext context, string name, TimeSpan scrapePeriod, out IDisposable registration, HistogramConfig config = null, params string[] keys)
         {
             config = config ?? HistogramConfig.Default;
-            var taggedMetric = new TaggedMetric2<Histogram>(tags =>
+            var taggedMetric = new StringKeysTaggedMetric<Histogram>(tags =>
             {
                 var finalTags = MetricTagsMerger.Merge(context.Tags, name, tags);
                 var metric = new Histogram(config, finalTags);
                 return metric;
-            }, key1, key2);
+            }, keys);
             registration = context.Register(taggedMetric, scrapePeriod);
-            
+
             return taggedMetric;
+        }
+        
+        public static ITaggedMetric1<IHistogram> Histogram(this IMetricContext context, string name, string key1, TimeSpan scrapePeriod, out IDisposable registration, HistogramConfig config = null)
+        {
+            return CreateStringKeysTaggedHistogram(context, name, scrapePeriod, out registration, config, key1);
+        }
+        
+        public static ITaggedMetric2<IHistogram> Histogram(this IMetricContext context, string name, string key1, string key2, TimeSpan scrapePeriod, out IDisposable registration, HistogramConfig config = null)
+        {
+            return CreateStringKeysTaggedHistogram(context, name, scrapePeriod, out registration, config, key1, key2);
+        }
+        
+        public static ITaggedMetric3<IHistogram> Histogram(this IMetricContext context, string name, string key1, string key2, string key3, TimeSpan scrapePeriod, out IDisposable registration, HistogramConfig config = null)
+        {
+            return CreateStringKeysTaggedHistogram(context, name, scrapePeriod, out registration, config, key1, key2, key3);
         }
     }
 }

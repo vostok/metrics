@@ -15,17 +15,33 @@ namespace Vostok.Metrics.Abstractions.MoveToImplementation.TimingImpl
             return metric;
         }
 
-        public static ITaggedMetric2<ITiming> Timing(this IMetricContext context, string name, string key1, string key2, TimingConfig config = null)
+        private static StringKeysTaggedMetric<Timing> CreateStringKeysTaggedMetric(IMetricContext context, string name, TimingConfig config, params string[] keys)
         {
             config = config ?? TimingConfig.Default;
-            var taggedMetric = new TaggedMetric2<Timing>(tags =>
-            {
-                var finalTags = MetricTagsMerger.Merge(context.Tags, name, tags);
-                var metric = new Timing(context, finalTags, config);
-                return metric;
-            }, key1, key2);
-            
+            var taggedMetric = new StringKeysTaggedMetric<Timing>(
+                tags =>
+                {
+                    var finalTags = MetricTagsMerger.Merge(context.Tags, name, tags);
+                    var metric = new Timing(context, finalTags, config);
+                    return metric;
+                },
+                keys);
             return taggedMetric;
+        }
+
+        public static ITaggedMetric1<ITiming> Timing(this IMetricContext context, string name, string key1, TimingConfig config = null)
+        {
+            return CreateStringKeysTaggedMetric(context, name, config, key1);
+        }
+        
+        public static ITaggedMetric2<ITiming> Timing(this IMetricContext context, string name, string key1, string key2, TimingConfig config = null)
+        {
+            return CreateStringKeysTaggedMetric(context, name, config, key1, key2);
+        }
+        
+        public static ITaggedMetric3<ITiming> Timing(this IMetricContext context, string name, string key1, string key2, string key3, TimingConfig config = null)
+        {
+            return CreateStringKeysTaggedMetric(context, name, config, key1, key2, key3);
         }
     }
 }

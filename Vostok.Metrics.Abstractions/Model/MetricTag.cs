@@ -2,8 +2,8 @@ namespace Vostok.Metrics.Abstractions.Model
 {
     public class MetricTag
     {
-        public readonly string Key;
-        public readonly string Value;
+        public string Key { get; }
+        public string Value { get; }
 
         public MetricTag(string key, string value)
         {

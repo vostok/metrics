@@ -25,5 +25,9 @@
     <PackageTags>vostok</PackageTags>
     <RepositoryUrl>https://github.com/vostok/metrics.abstractions</RepositoryUrl>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Wrappers" />
+  </ItemGroup>
   
 </Project>

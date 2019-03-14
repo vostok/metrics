@@ -5,7 +5,7 @@ using Vostok.Metrics.Abstractions.Model;
 
 namespace Vostok.Metrics.Abstractions.DynamicTags
 {
-    // this class and its inheritors are public because they allow user to create custom Metric types
+    //design this class and its inheritors are public because they allow user to create custom Metric types
     public class TaggedMetricBase<TMetric> : IScrapableMetric
     {
         private readonly ConcurrentDictionary<MetricTags, TMetric> cache = new ConcurrentDictionary<MetricTags, TMetric>();
@@ -25,7 +25,7 @@ namespace Vostok.Metrics.Abstractions.DynamicTags
         {
             foreach (var kvp in cache)
             {
-                // todo do smth with this runtime check
+                //design do smth with this runtime check
                 if (kvp.Value is IScrapableMetric scrapable)
                 {
                     foreach (var metricEvent in scrapable.Scrape())

@@ -5,7 +5,6 @@ namespace Vostok.Metrics.Abstractions.MoveToImplementation.HistogramImpl
 {
     internal class Histogram : IHistogram, IScrapableMetric
     {
-        // tags already contain _name tag and all "dynamic" tags
         public Histogram(HistogramConfig config, MetricTags contextTags)
         {
         }

@@ -5,7 +5,7 @@ using Vostok.Metrics.Abstractions.Model;
 
 namespace Vostok.Metrics.Abstractions.MoveToImplementation.GaugeImpl
 {
-    public class Gauge : IScrapableMetric, IGauge
+    internal class Gauge : IScrapableMetric, IGauge
     {
         private double value = 0;
         private readonly MetricTags tags;
