@@ -30,7 +30,6 @@ namespace Vostok.Metrics.Abstractions.DynamicTags
                 {
                     foreach (var metricEvent in scrapable.Scrape())
                     {
-
                         yield return metricEvent;
                     }
                 }

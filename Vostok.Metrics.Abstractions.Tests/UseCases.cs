@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using FluentAssertions.Extensions;
 using NSubstitute;
 using NUnit.Framework;
+using Vostok.Metrics.Abstractions.Model;
 using Vostok.Metrics.Abstractions.MoveToImplementation.GaugeImpl;
 using Vostok.Metrics.Abstractions.MoveToImplementation.TimingImpl;
 
@@ -24,13 +26,28 @@ namespace Vostok.Metrics.Abstractions.Tests
         public void Whitebox_gauge_metric()
         {
             var queue = new Queue<int>();
-
+            
             rootContext
                 .Gauge("queue-length",
                     () => queue.Count,
                     out _,
                     10.Seconds(),
                     GaugeConfig.Default);
+
+            var gauge2 = rootContext.Gauge("nag", out var _, 10.Seconds());
+        }
+
+        [Test]
+        public void Store_prepared_metric()
+        {
+            // todo MEtricEvent builder
+            rootContext
+                .Send(new MetricEvent(
+                    10,
+                    DateTimeOffset.Now,
+                    MetricUnits.Seconds,
+                    null,
+                    MetricTagsMerger.Merge(rootContext.Tags, "my-custom-metric")));
         }
 
         [Test]
@@ -50,7 +67,7 @@ namespace Vostok.Metrics.Abstractions.Tests
             var elapsed = sw.Elapsed;
             
             latenciesClidUrl.For(clid, url).Report(elapsed.TotalSeconds);
-            latenciesGlobal.Report(elapsed.Seconds);
+            latenciesGlobal.Report(elapsed.TotalSeconds);
         }
     }
 }

@@ -38,6 +38,8 @@ namespace Vostok.Metrics.Abstractions.Tests
             locksMetrics.Dispose();
         }
 
+        
+        // todo add this to guidelines
         private class SignalServiceMetrics : IDisposable
         {
             // graphite path:
@@ -120,6 +122,7 @@ namespace Vostok.Metrics.Abstractions.Tests
         public void RecordLockTime(TimeSpan time)
         {
             //design Why should I care about seconds/milliseconds here?
+            //todo clever extension and Unit in public interface
             lockTime.Report(time.TotalSeconds);
         }
 

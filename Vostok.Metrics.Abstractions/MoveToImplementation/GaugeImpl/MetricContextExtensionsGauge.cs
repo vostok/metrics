@@ -36,7 +36,7 @@ namespace Vostok.Metrics.Abstractions.MoveToImplementation.GaugeImpl
             return result;
         }
 
-        //desing User who writes new primitive is forced to boilerplate or use code generation here
+        //design User who writes new primitive is forced to boilerplate or use code generation here
         // Should we try to avoid this?
         public static ITaggedMetric1<IGauge> Gauge(this IMetricContext context, string name, string key1, out IDisposable registration, TimeSpan scrapePeriod, GaugeConfig config = null)
         {

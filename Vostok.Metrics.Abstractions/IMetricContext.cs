@@ -25,7 +25,7 @@ namespace Vostok.Metrics.Abstractions
         /// <param name="metric">The metric to scrape</param>
         /// <param name="scrapePeriod">How often to scrape</param>
         /// <returns>The <see cref="IDisposable"/> token. Call <see cref="IDisposable.Dispose"/> to stop scraping the <paramref name="metric"/></returns>
-        IDisposable Register(IScrapableMetric metric, TimeSpan scrapePeriod);
+        IDisposable Register(IScrapableMetric metric, TimeSpan? scrapePeriod);
         
         /// <summary>
         /// <para>Sends the <see cref="MetricEvent"/> for further processing.</para>

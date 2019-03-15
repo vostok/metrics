@@ -8,6 +8,7 @@ namespace Vostok.Metrics.Abstractions.MoveToImplementation.TimingImpl
         internal static readonly TimingConfig Default = new TimingConfig();
 
         public string Unit { get; set; } = TimingDefaultUnit;
+        //CR(ezsilmar) Remove this from config
         public string AggregationType { get; set; } = TimingAggregationType;
     }
 }
