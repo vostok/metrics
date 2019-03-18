@@ -1,6 +1,4 @@
-using System.Runtime.CompilerServices;
 using Vostok.Metrics.Abstractions.Model;
-using Vostok.Metrics.Abstractions.Wrappers;
 
 namespace Vostok.Metrics.Abstractions
 {
