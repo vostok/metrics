@@ -3,7 +3,7 @@ using Vostok.Metrics.Abstractions.DynamicTags.StringKeys;
 using Vostok.Metrics.Abstractions.DynamicTags.Typed;
 using Vostok.Metrics.Abstractions.Model;
 
-namespace Vostok.Metrics.Abstractions.MoveToImplementation.HistogramImpl
+namespace Vostok.Metrics.Abstractions.Primitives.HistogramImpl
 {
     public static class MetricContextExtensionsHistogram
     {

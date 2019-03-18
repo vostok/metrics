@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Vostok.Metrics.Abstractions.Model;
 
-namespace Vostok.Metrics.Abstractions.MoveToImplementation.GaugeImpl
+namespace Vostok.Metrics.Abstractions.Primitives.GaugeImpl
 {
     internal class FuncGauge : IScrapableMetric, IDisposable
     {

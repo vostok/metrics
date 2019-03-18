@@ -1,4 +1,4 @@
-namespace Vostok.Metrics.Abstractions.MoveToImplementation
+namespace Vostok.Metrics.Abstractions.Primitives
 {
     public interface ISummary
     {

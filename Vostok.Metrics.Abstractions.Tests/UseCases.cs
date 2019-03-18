@@ -5,8 +5,8 @@ using FluentAssertions.Extensions;
 using NSubstitute;
 using NUnit.Framework;
 using Vostok.Metrics.Abstractions.Model;
-using Vostok.Metrics.Abstractions.MoveToImplementation.GaugeImpl;
-using Vostok.Metrics.Abstractions.MoveToImplementation.TimingImpl;
+using Vostok.Metrics.Abstractions.Primitives.GaugeImpl;
+using Vostok.Metrics.Abstractions.Primitives.TimingImpl;
 
 namespace Vostok.Metrics.Abstractions.Tests
 {

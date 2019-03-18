@@ -1,13 +1,10 @@
 using System;
-using System.Runtime.InteropServices.ComTypes;
 using FluentAssertions.Extensions;
 using NSubstitute;
 using NUnit.Framework;
-using NUnit.Framework.Internal.Execution;
 using Vostok.Metrics.Abstractions.DynamicTags.StringKeys;
-using Vostok.Metrics.Abstractions.MoveToImplementation.GaugeImpl;
-using Vostok.Metrics.Abstractions.MoveToImplementation.HistogramImpl;
-using Vostok.Metrics.Abstractions.MoveToImplementation.TimingImpl;
+using Vostok.Metrics.Abstractions.Primitives.GaugeImpl;
+using Vostok.Metrics.Abstractions.Primitives.TimingImpl;
 
 namespace Vostok.Metrics.Abstractions.Tests
 {

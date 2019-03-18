@@ -3,7 +3,7 @@ using Vostok.Metrics.Abstractions.DynamicTags.StringKeys;
 using Vostok.Metrics.Abstractions.DynamicTags.Typed;
 using Vostok.Metrics.Abstractions.Model;
 
-namespace Vostok.Metrics.Abstractions.MoveToImplementation.TimingImpl
+namespace Vostok.Metrics.Abstractions.Primitives.TimingImpl
 {
     public static class MetricContextExtensionsTiming
     {

@@ -1,7 +1,7 @@
 using System;
 using Vostok.Metrics.Abstractions.Model;
 
-namespace Vostok.Metrics.Abstractions.MoveToImplementation.TimingImpl
+namespace Vostok.Metrics.Abstractions.Primitives.TimingImpl
 {
     internal class Timing : ITiming
     {

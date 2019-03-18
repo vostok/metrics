@@ -1,4 +1,4 @@
-namespace Vostok.Metrics.Abstractions.MoveToImplementation.GaugeImpl
+namespace Vostok.Metrics.Abstractions.Primitives.GaugeImpl
 {
     public static class IGaugeExtensions
     {

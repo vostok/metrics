@@ -1,5 +1,8 @@
 using System;
 using Vostok.Metrics.Abstractions.Model;
+using Vostok.Metrics.Abstractions.Primitives.GaugeImpl;
+using Vostok.Metrics.Abstractions.Primitives.HistogramImpl;
+using Vostok.Metrics.Abstractions.Primitives.TimingImpl;
 
 namespace Vostok.Metrics.Abstractions
 {

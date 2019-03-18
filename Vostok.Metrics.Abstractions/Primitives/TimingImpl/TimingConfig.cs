@@ -1,4 +1,4 @@
-namespace Vostok.Metrics.Abstractions.MoveToImplementation.TimingImpl
+namespace Vostok.Metrics.Abstractions.Primitives.TimingImpl
 {
     public class TimingConfig
     {

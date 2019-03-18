@@ -1,6 +1,6 @@
 using System;
 
-namespace Vostok.Metrics.Abstractions.MoveToImplementation.HistogramImpl
+namespace Vostok.Metrics.Abstractions.Primitives.HistogramImpl
 {
     public interface IHistogram : IDisposable
     {

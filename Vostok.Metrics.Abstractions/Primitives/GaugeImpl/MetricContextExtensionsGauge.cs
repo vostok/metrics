@@ -3,7 +3,7 @@ using Vostok.Metrics.Abstractions.DynamicTags.StringKeys;
 using Vostok.Metrics.Abstractions.DynamicTags.Typed;
 using Vostok.Metrics.Abstractions.Model;
 
-namespace Vostok.Metrics.Abstractions.MoveToImplementation.GaugeImpl
+namespace Vostok.Metrics.Abstractions.Primitives.GaugeImpl
 {
     public static class MetricContextExtensionsGauge
     {

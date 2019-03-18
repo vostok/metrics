@@ -1,7 +1,7 @@
 using System;
 using JetBrains.Annotations;
 
-namespace Vostok.Metrics.Abstractions.MoveToImplementation.HistogramImpl
+namespace Vostok.Metrics.Abstractions.Primitives.HistogramImpl
 {
     public class HistogramConfig
     {

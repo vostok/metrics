@@ -1,6 +1,6 @@
 using System;
 
-namespace Vostok.Metrics.Abstractions.MoveToImplementation.TimingImpl
+namespace Vostok.Metrics.Abstractions.Primitives.TimingImpl
 {
     public interface ITiming : IDisposable
     {
