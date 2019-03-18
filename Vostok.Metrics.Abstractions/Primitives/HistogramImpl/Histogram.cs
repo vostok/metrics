@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Vostok.Metrics.Abstractions.Model;
 
 namespace Vostok.Metrics.Abstractions.Primitives.HistogramImpl
@@ -10,7 +11,7 @@ namespace Vostok.Metrics.Abstractions.Primitives.HistogramImpl
         private readonly HistogramConfig config;
         private readonly IDisposable registration;
         
-        public Histogram(IMetricContext context, MetricTags tags, HistogramConfig config)
+        public Histogram([NotNull] IMetricContext context, [NotNull] MetricTags tags, [NotNull] HistogramConfig config)
         {
             this.tags = tags;
             this.config = config;
@@ -18,13 +19,16 @@ namespace Vostok.Metrics.Abstractions.Primitives.HistogramImpl
         }
 
         public IEnumerable<MetricEvent> Scrape()
-        { 
-            yield break;
+        {
+            throw new NotImplementedException();
         }
 
         public void Report(double value)
         {
+            throw new NotImplementedException();
         }
+
+        public string Unit => config.Unit;
 
         public void Dispose()
         {

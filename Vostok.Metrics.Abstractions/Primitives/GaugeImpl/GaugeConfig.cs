@@ -5,7 +5,9 @@ namespace Vostok.Metrics.Abstractions.Primitives.GaugeImpl
 {
     public class GaugeConfig
     {
-        [CanBeNull] public string Unit { get; set; }  
+        [CanBeNull] 
+        [ValueProvider("Vostok.Metrics.Abstractions.MetricUnits")]
+        public string Unit { get; set; }  
         [CanBeNull] public TimeSpan? ScrapePeriod { get; set; }
         
         internal static readonly GaugeConfig Default = new GaugeConfig();

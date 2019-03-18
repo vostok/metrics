@@ -1,8 +1,12 @@
 namespace Vostok.Metrics.Abstractions
 {
-    //todo several well-known classes + resharper attribute
     public static class MetricUnits
     {
+        public const string Items = "items";
+
+        public const string Ticks = "ticks";
+        public const string Microseconds = "microseconds";
+        public const string Milliseconds = "milliseconds";
         public const string Seconds = "seconds";
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using JetBrains.Annotations;
 using Vostok.Metrics.Abstractions.Model;
 
 namespace Vostok.Metrics.Abstractions.Primitives.TimingImpl
@@ -9,7 +10,7 @@ namespace Vostok.Metrics.Abstractions.Primitives.TimingImpl
         private readonly MetricTags tags;
         private readonly TimingConfig config;
 
-        public Timing(IMetricContext context, MetricTags tags, TimingConfig config)
+        public Timing([NotNull] IMetricContext context, [NotNull] MetricTags tags, [NotNull] TimingConfig config)
         {
             this.context = context;
             this.tags = tags;
@@ -19,9 +20,15 @@ namespace Vostok.Metrics.Abstractions.Primitives.TimingImpl
         public void Report(double value)
         {
             var metricEvent = new MetricEvent(
-                value, DateTimeOffset.Now, config.Unit, config.AggregationType, tags);
+                value,
+                DateTimeOffset.Now,
+                config.Unit,
+                AggregationTypes.Timing,
+                tags);
             context.Send(metricEvent);
         }
+
+        public string Unit => config.Unit;
 
         public void Dispose()
         {
