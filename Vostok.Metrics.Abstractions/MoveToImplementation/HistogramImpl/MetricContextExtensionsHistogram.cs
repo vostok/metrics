@@ -1,4 +1,6 @@
+using System;
 using Vostok.Metrics.Abstractions.DynamicTags.StringKeys;
+using Vostok.Metrics.Abstractions.DynamicTags.Typed;
 using Vostok.Metrics.Abstractions.Model;
 
 namespace Vostok.Metrics.Abstractions.MoveToImplementation.HistogramImpl
@@ -12,20 +14,36 @@ namespace Vostok.Metrics.Abstractions.MoveToImplementation.HistogramImpl
             return new Histogram(context, tags, config);
         }
 
+        private static Func<MetricTags, Histogram> CreateTagsFactory(IMetricContext context, string name, HistogramConfig config)
+        {
+            return tags =>
+            {
+                var finalTags1 = MetricTagsMerger.Merge(context.Tags, name, tags);
+                return new Histogram(context, finalTags1, config);
+            };
+        }
+        
         private static StringKeysTaggedMetric<Histogram> CreateStringKeysTaggedHistogram(IMetricContext context, string name, HistogramConfig config = null, params string[] keys)
         {
             config = config ?? HistogramConfig.Default;
             return new StringKeysTaggedMetric<Histogram>(
                 context, 
-                tags =>
-                {
-                    var finalTags1 = MetricTagsMerger.Merge(context.Tags, name, tags);
-                    return new Histogram(context, finalTags1, config);
-                },
+                CreateTagsFactory(context, name, config),
                 config.ScrapePeriod,
                 keys);
         }
-        
+
+        public static ITaggedMetricT<TFor, IHistogram> Histogram<TFor>(this IMetricContext context, string name, ITypeTagsConverter<TFor> typeTagsConverter, HistogramConfig config = null)
+        {
+            config = config ?? HistogramConfig.Default;
+            typeTagsConverter = typeTagsConverter ?? TypeTagsConverter<TFor>.Default;
+            return new TaggedMetricT<TFor, IHistogram>(
+                context,
+                CreateTagsFactory(context, name, config),
+                config.ScrapePeriod,
+                typeTagsConverter);
+        }
+
         public static ITaggedMetric1<IHistogram> Histogram(this IMetricContext context, string name, string key1, HistogramConfig config = null)
         {
             return CreateStringKeysTaggedHistogram(context, name, config, key1);

@@ -3,7 +3,7 @@ using Vostok.Metrics.Abstractions.Model;
 
 namespace Vostok.Metrics.Abstractions.DynamicTags.Typed
 {
-    internal class TaggedMetricT<TMetric, TFor> : TaggedMetricBase<TMetric>, ITaggedMetricT<TMetric, TFor>
+    internal class TaggedMetricT<TFor, TMetric> : TaggedMetricBase<TMetric>, ITaggedMetricT<TFor, TMetric>
     {
         private readonly ITypeTagsConverter<TFor> converter;
 

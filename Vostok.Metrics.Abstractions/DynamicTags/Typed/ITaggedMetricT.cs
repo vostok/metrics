@@ -1,6 +1,6 @@
 namespace Vostok.Metrics.Abstractions.DynamicTags.Typed
 {
-    public interface ITaggedMetricT<out TMetric, TFor>
+    public interface ITaggedMetricT<TFor, out TMetric>
     {
         TMetric For(TFor value);
     }
