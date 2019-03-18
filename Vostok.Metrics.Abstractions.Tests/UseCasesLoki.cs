@@ -111,9 +111,7 @@ namespace Vostok.Metrics.Abstractions.Tests
 
         public void RecordLockTime(TimeSpan time)
         {
-            //design Why should I care about seconds/milliseconds here?
-            //todo clever extension and Unit in public interface
-            lockTime.Report(time.TotalSeconds);
+            lockTime.Report(time);
         }
 
         public void Dispose()
