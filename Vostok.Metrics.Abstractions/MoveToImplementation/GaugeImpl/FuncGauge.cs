@@ -1,21 +1,28 @@
 using System;
 using System.Collections.Generic;
-using Vostok.Metrics.Abstractions.DynamicTags;
+using JetBrains.Annotations;
 using Vostok.Metrics.Abstractions.Model;
 
 namespace Vostok.Metrics.Abstractions.MoveToImplementation.GaugeImpl
 {
-    internal class FuncGauge : IScrapableMetric
+    internal class FuncGauge : IScrapableMetric, IDisposable
     {
         private readonly Func<double> getValue;
         private readonly MetricTags tags;
         private readonly GaugeConfig config;
+        private readonly IDisposable registration;
 
-        public FuncGauge(Func<double> getValue, MetricTags tags, GaugeConfig config)
+        public FuncGauge(
+            [NotNull] IMetricContext context,
+            [NotNull] MetricTags tags,
+            [NotNull] Func<double> getValue,
+            [NotNull] GaugeConfig config)
         {
             this.getValue = getValue;
             this.tags = tags;
             this.config = config;
+
+            registration = context.Register(this, config.ScrapePeriod);
         }
 
         public IEnumerable<MetricEvent> Scrape()
@@ -25,9 +32,14 @@ namespace Vostok.Metrics.Abstractions.MoveToImplementation.GaugeImpl
                 value,
                 DateTimeOffset.UtcNow,
                 config.Unit,
-                config.AggregationType,
+                null,
                 tags);
             yield return result;
+        }
+
+        public void Dispose()
+        {
+            registration.Dispose();
         }
     }
 }

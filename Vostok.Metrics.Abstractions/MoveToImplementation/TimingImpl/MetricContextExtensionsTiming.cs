@@ -1,5 +1,3 @@
-using System;
-using Vostok.Metrics.Abstractions.DynamicTags;
 using Vostok.Metrics.Abstractions.DynamicTags.StringKeys;
 using Vostok.Metrics.Abstractions.Model;
 
@@ -11,22 +9,20 @@ namespace Vostok.Metrics.Abstractions.MoveToImplementation.TimingImpl
         {
             config = config ?? TimingConfig.Default;
             var tags = MetricTagsMerger.Merge(context.Tags, name);
-            var metric = new Timing(context, tags, config);
-            return metric;
+            return new Timing(context, tags, config);
         }
 
         private static StringKeysTaggedMetric<Timing> CreateStringKeysTaggedMetric(IMetricContext context, string name, TimingConfig config, params string[] keys)
         {
             config = config ?? TimingConfig.Default;
-            var taggedMetric = new StringKeysTaggedMetric<Timing>(
+            return new StringKeysTaggedMetric<Timing>(
+                context,
                 tags =>
                 {
                     var finalTags = MetricTagsMerger.Merge(context.Tags, name, tags);
-                    var metric = new Timing(context, finalTags, config);
-                    return metric;
+                    return new Timing(context, finalTags, config);
                 },
                 keys);
-            return taggedMetric;
         }
 
         public static ITaggedMetric1<ITiming> Timing(this IMetricContext context, string name, string key1, TimingConfig config = null)

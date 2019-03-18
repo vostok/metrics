@@ -15,7 +15,7 @@ namespace Vostok.Metrics.Abstractions
 
         public MetricTags Tags { get; }
 
-        public IDisposable Register(IScrapableMetric metric, TimeSpan scrapePeriod) =>
+        public IDisposable Register(IScrapableMetric metric, TimeSpan? scrapePeriod) =>
             context.Register(metric, scrapePeriod);
 
         public void Send(MetricEvent @event)

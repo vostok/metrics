@@ -22,5 +22,9 @@ namespace Vostok.Metrics.Abstractions.MoveToImplementation.TimingImpl
                 value, DateTimeOffset.Now, config.Unit, config.AggregationType, tags);
             context.Send(metricEvent);
         }
+
+        public void Dispose()
+        {
+        }
     }
 }

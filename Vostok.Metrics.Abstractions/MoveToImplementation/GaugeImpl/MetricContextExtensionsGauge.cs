@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using Vostok.Metrics.Abstractions.DynamicTags;
 using Vostok.Metrics.Abstractions.DynamicTags.StringKeys;
 using Vostok.Metrics.Abstractions.Model;
 
@@ -8,49 +6,47 @@ namespace Vostok.Metrics.Abstractions.MoveToImplementation.GaugeImpl
 {
     public static class MetricContextExtensionsGauge
     {
-        public static void Gauge(this IMetricContext context, string name, Func<double> getValue, out IDisposable registration, TimeSpan scrapePeriod, GaugeConfig config = null)
+        public static IDisposable Gauge(this IMetricContext context, string name, Func<double> getValue, GaugeConfig config = null)
         {
+            config = config ?? GaugeConfig.Default;
             var tags = MetricTagsMerger.Merge(context.Tags, name);
-            var gauge = new FuncGauge(getValue, tags, config ?? GaugeConfig.Default);
-            registration = context.Register(gauge, scrapePeriod);
+            return new FuncGauge(context, tags, getValue, config);
         }
 
-        public static IGauge Gauge(this IMetricContext context, string name, out IDisposable registration, TimeSpan scrapePeriod, GaugeConfig config = null)
+        public static IGauge Gauge(this IMetricContext context, string name, GaugeConfig config = null)
         {
+            config = config ?? GaugeConfig.Default;
             var tags = MetricTagsMerger.Merge(context.Tags, name);
-            var gauge = new Gauge(tags, config ?? GaugeConfig.Default);
-            registration = context.Register(gauge, scrapePeriod);
-            return gauge;
+            return new Gauge(context, tags, config);
         }
 
-        private static StringKeysTaggedMetric<Gauge> CreateStringTaggedMetric(IMetricContext context, string name, out IDisposable registration, TimeSpan scrapePeriod, GaugeConfig config, params string[] keys)
+        private static StringKeysTaggedMetric<Gauge> CreateStringTaggedMetric(IMetricContext context, string name, GaugeConfig config, params string[] keys)
         {
-            var result = new StringKeysTaggedMetric<Gauge>(
+            config = config ?? GaugeConfig.Default;
+            return new StringKeysTaggedMetric<Gauge>(
+                context,
                 tags =>
                 {
-                    var finalTags = MetricTagsMerger.Merge(context.Tags, name, tags);
-                    return new Gauge(finalTags, config ?? GaugeConfig.Default);
+                    var finalTags1 = MetricTagsMerger.Merge(context.Tags, name, tags);
+                    return new Gauge(context, finalTags1, config);
                 },
+                config.ScrapePeriod,
                 keys);
-            registration = context.Register(result, scrapePeriod);
-            return result;
         }
 
-        //design User who writes new primitive is forced to boilerplate or use code generation here
-        // Should we try to avoid this?
-        public static ITaggedMetric1<IGauge> Gauge(this IMetricContext context, string name, string key1, out IDisposable registration, TimeSpan scrapePeriod, GaugeConfig config = null)
+        public static ITaggedMetric1<IGauge> Gauge(this IMetricContext context, string name, string key1, GaugeConfig config = null)
         {
-            return CreateStringTaggedMetric(context, name, out registration, scrapePeriod, config, key1);
+            return CreateStringTaggedMetric(context, name, config, key1);
         }
 
-        public static ITaggedMetric2<IGauge> Gauge(this IMetricContext context, string name, string key1, string key2, out IDisposable registration, TimeSpan scrapePeriod, GaugeConfig config = null)
+        public static ITaggedMetric2<IGauge> Gauge(this IMetricContext context, string name, string key1, string key2, GaugeConfig config = null)
         {
-            return CreateStringTaggedMetric(context, name, out registration, scrapePeriod, config, key1, key2);
+            return CreateStringTaggedMetric(context, name, config, key1, key2);
         }
         
-        public static ITaggedMetric3<IGauge> Gauge(this IMetricContext context, string name, string key1, string key2, string key3, out IDisposable registration, TimeSpan scrapePeriod, GaugeConfig config = null)
+        public static ITaggedMetric3<IGauge> Gauge(this IMetricContext context, string name, string key1, string key2, string key3, GaugeConfig config = null)
         {
-            return CreateStringTaggedMetric(context, name, out registration, scrapePeriod, config, key1, key2, key3);
+            return CreateStringTaggedMetric(context, name, config, key1, key2, key3);
         }
     }
 }

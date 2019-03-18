@@ -47,25 +47,18 @@ namespace Vostok.Metrics.Abstractions.Tests
             // signals-requests-count.
             // req-{create,set,count}.clid-{fat-service,...}.result-{NotFound,Set,...}
             private readonly ITaggedMetric3<IGauge> requestCounter;
-            
             private readonly ITaggedMetric1<IGauge> expiredRequestsCounter;
-            
-            //design We should have separate fields for them, its so ugly
-            private readonly IDisposable reqCounterRegistration;
-            private readonly IDisposable signalsExpiredRegistration;
 
             public SignalServiceMetrics(IMetricContext context, TimeSpan scrapePeriod)
             {
                 requestCounter = context.Gauge(
                     "signals-requests-count",
                     "req", "clid", "result",
-                    out reqCounterRegistration,
-                    scrapePeriod);
+                    new GaugeConfig{ScrapePeriod = scrapePeriod});
                 expiredRequestsCounter = context.Gauge(
                     "signals-expired-signals",
                     "state",
-                    out signalsExpiredRegistration,
-                    scrapePeriod);
+                    new GaugeConfig{ScrapePeriod = scrapePeriod});
             }
 
             public void ReportCreate(string clid, SignalCreateResult result)
@@ -101,8 +94,8 @@ namespace Vostok.Metrics.Abstractions.Tests
 
             public void Dispose()
             {
-                reqCounterRegistration.Dispose();
-                signalsExpiredRegistration.Dispose();
+                requestCounter.Dispose();
+                expiredRequestsCounter.Dispose();
             }
         }
     }

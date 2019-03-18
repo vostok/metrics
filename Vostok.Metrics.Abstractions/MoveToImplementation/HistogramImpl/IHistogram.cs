@@ -1,8 +1,8 @@
-using System.Collections.Generic;
+using System;
 
 namespace Vostok.Metrics.Abstractions.MoveToImplementation.HistogramImpl
 {
-    public interface IHistogram
+    public interface IHistogram : IDisposable
     {
         void Report(double value);
     }

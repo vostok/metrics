@@ -30,17 +30,20 @@ namespace Vostok.Metrics.Abstractions.Tests
             rootContext
                 .Gauge("queue-length",
                     () => queue.Count,
-                    out _,
-                    10.Seconds(),
-                    GaugeConfig.Default);
+                    new GaugeConfig
+                    {
+                        ScrapePeriod = 10.Seconds()
+                    });
 
-            var gauge2 = rootContext.Gauge("nag", out var _, 10.Seconds());
+            var gauge2 = rootContext.Gauge("nag", new GaugeConfig {ScrapePeriod = 10.Seconds()});
+            gauge2.Inc();
         }
 
         [Test]
         public void Store_prepared_metric()
         {
-            // todo MEtricEvent builder
+            // todo MetricEvent builder
+            // need this to send custom metrics to storage
             rootContext
                 .Send(new MetricEvent(
                     10,

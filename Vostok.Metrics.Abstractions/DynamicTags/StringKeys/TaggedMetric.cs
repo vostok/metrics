@@ -11,8 +11,14 @@ namespace Vostok.Metrics.Abstractions.DynamicTags.StringKeys
     {
         private readonly string[] keys;
 
-        public StringKeysTaggedMetric(Func<MetricTags, TMetric> factory, params string[] keys)
-            : base(factory)
+        public StringKeysTaggedMetric(IMetricContext context, Func<MetricTags, TMetric> factory, params string[] keys)
+            : base(context, factory)
+        {
+            this.keys = keys;
+        }
+
+        public StringKeysTaggedMetric(IMetricContext context, Func<MetricTags, TMetric> factory, TimeSpan? scrapePeriod, params string[] keys)
+            : base(context, factory, scrapePeriod)
         {
             this.keys = keys;
         }
