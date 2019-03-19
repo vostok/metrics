@@ -20,14 +20,10 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageProjectUrl>https://github.com/vostok/metrics.abstractions</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/vostok/metrics.abstractions/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/vostok/metrics</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/vostok/metrics/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>vostok</PackageTags>
-    <RepositoryUrl>https://github.com/vostok/metrics.abstractions</RepositoryUrl>
+    <RepositoryUrl>https://github.com/vostok/metrics</RepositoryUrl>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="CodeGeneration" />
-  </ItemGroup>
   
 </Project>
