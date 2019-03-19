@@ -11,13 +11,13 @@ namespace Vostok.Metrics.DynamicTags.StringKeys
     {
 		private readonly string[] keys;
 
-        public StringKeysTaggedMetric(IMetricContext context, Func<MetricTags, TMetric> factory, params string[] keys)
+        public TaggedMetric(IMetricContext context, Func<MetricTags, TMetric> factory, params string[] keys)
             : base(context, factory)
         {
             this.keys = keys;
         }
 
-        public StringKeysTaggedMetric(IMetricContext context, Func<MetricTags, TMetric> factory, TimeSpan? scrapePeriod, params string[] keys)
+        public TaggedMetric(IMetricContext context, Func<MetricTags, TMetric> factory, TimeSpan? scrapePeriod, params string[] keys)
             : base(context, factory, scrapePeriod)
         {
             this.keys = keys;
