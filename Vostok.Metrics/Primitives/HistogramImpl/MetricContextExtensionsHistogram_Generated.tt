@@ -1,0 +1,3 @@
+<#@ include file="./../../CodeGeneration/CodeGenerationCommon.ttinclude" once="true" #>
+<# model = new MetricExtensionsModel("Histogram"); #>
+<#@ include file="./../../CodeGeneration/MetricContextExtensionsMetric.ttinclude" once="true" #>

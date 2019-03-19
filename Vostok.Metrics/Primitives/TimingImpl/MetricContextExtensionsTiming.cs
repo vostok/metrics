@@ -5,7 +5,7 @@ using Vostok.Metrics.Model;
 
 namespace Vostok.Metrics.Primitives.TimingImpl
 {
-    public static class MetricContextExtensionsTiming
+    public static partial class MetricContextExtensionsTiming
     {
         public static ITiming Timing(this IMetricContext context, string name, TimingConfig config = null)
         {
@@ -23,7 +23,7 @@ namespace Vostok.Metrics.Primitives.TimingImpl
             };
         }
 
-        private static TaggedMetric<Timing> CreateStringKeysTaggedMetric(IMetricContext context, string name, TimingConfig config, params string[] keys)
+        private static TaggedMetric<Timing> CreateTaggedMetric(IMetricContext context, string name, TimingConfig config, params string[] keys)
         {
             config = config ?? TimingConfig.Default;
             return new TaggedMetric<Timing>(
@@ -40,21 +40,6 @@ namespace Vostok.Metrics.Primitives.TimingImpl
                 context,
                 CreateTimingFactory(context, name, config),
                 typeTagsConverter);
-        }
-
-        public static ITaggedMetric1<ITiming> Timing(this IMetricContext context, string name, string key1, TimingConfig config = null)
-        {
-            return CreateStringKeysTaggedMetric(context, name, config, key1);
-        }
-        
-        public static ITaggedMetric2<ITiming> Timing(this IMetricContext context, string name, string key1, string key2, TimingConfig config = null)
-        {
-            return CreateStringKeysTaggedMetric(context, name, config, key1, key2);
-        }
-        
-        public static ITaggedMetric3<ITiming> Timing(this IMetricContext context, string name, string key1, string key2, string key3, TimingConfig config = null)
-        {
-            return CreateStringKeysTaggedMetric(context, name, config, key1, key2, key3);
         }
     }
 }

@@ -1,0 +1,35 @@
+using Vostok.Metrics.DynamicTags.StringKeys;
+
+namespace <#= model.MetricNamespace #>
+{
+    public static partial class <#= model.ExtensionClassName #>
+    {
+<# for (var keysCount = 1; keysCount <= DynamicTags_StringKeys_MaxKeyCount; keysCount++) { #>
+        public static ITaggedMetric<#= keysCount #><<#= model.MetricInterface #>> <#= model.MetricClass #>(this IMetricContext context, string name, <#= string.Join(", ", Enumerable.Range(1, keysCount).Select(x => $"string key{x}")) #>, <#= model.MetricConfigClass #> config = null)
+        {
+            return CreateTaggedMetric(context, name, config, <#= string.Join(", ", Enumerable.Range(1, keysCount).Select(x => $"key{x}")) #>);
+        }
+<# } #>
+    }
+}
+<#+
+MetricExtensionsModel model { get; set; }
+
+class MetricExtensionsModel 
+{
+    public string MetricClass { get; set; }
+    public string MetricInterface { get; set; }
+    public string MetricConfigClass { get; set; }
+    public string MetricNamespace { get; set; }
+    public string ExtensionClassName { get; set; }
+
+    public MetricExtensionsModel(string metricClass)
+    {
+        MetricClass = metricClass;
+        MetricInterface = $"I{MetricClass}";
+        MetricConfigClass = $"{MetricClass}Config";
+        MetricNamespace = $"Vostok.Metrics.Primitives.{MetricClass}Impl";
+        ExtensionClassName = $"MetricContextExtensions{MetricClass}";
+    }
+}
+#>
