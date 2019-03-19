@@ -30,10 +30,10 @@ namespace Vostok.Metrics.Primitives.GaugeImpl
             };
         }
 
-        private static StringKeysTaggedMetric<Gauge> CreateStringTaggedMetric(IMetricContext context, string name, GaugeConfig config, params string[] keys)
+        private static TaggedMetric<Gauge> CreateStringTaggedMetric(IMetricContext context, string name, GaugeConfig config, params string[] keys)
         {
             config = config ?? GaugeConfig.Default;
-            return new StringKeysTaggedMetric<Gauge>(
+            return new TaggedMetric<Gauge>(
                 context,
                 CreateGaugeFactory(context, name, config),
                 config.ScrapePeriod,

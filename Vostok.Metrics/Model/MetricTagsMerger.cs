@@ -1,4 +1,4 @@
-using System;
+using Vostok.Metrics.WellKnownConstants;
 
 namespace Vostok.Metrics.Model
 {
@@ -6,12 +6,15 @@ namespace Vostok.Metrics.Model
     {
         public static MetricTags Merge(MetricTags contextTags, string name, MetricTags dynamicTags)
         {
-            throw new NotImplementedException();
+            return contextTags
+                .Add(MetricTagKeys.Name, name)
+                .AddRange(dynamicTags);
         }
 
         public static MetricTags Merge(MetricTags contextTags, string name)
         {
-            throw new NotImplementedException();
+            return contextTags
+                .Add(MetricTagKeys.Name, name);
         }
     }
 }
