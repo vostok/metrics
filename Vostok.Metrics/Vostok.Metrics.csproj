@@ -25,5 +25,12 @@
     <PackageTags>vostok</PackageTags>
     <RepositoryUrl>https://github.com/vostok/metrics.abstractions</RepositoryUrl>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="DynamicTags\StringKeys\ITaggedMetric.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ITaggedMetric.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
   
 </Project>
