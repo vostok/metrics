@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using Vostok.Metrics.WellKnownConstants;
 
 namespace Vostok.Metrics.Primitives.TimingImpl
 {
@@ -7,7 +8,7 @@ namespace Vostok.Metrics.Primitives.TimingImpl
         internal static readonly TimingConfig Default = new TimingConfig();
         
         [CanBeNull]
-        [ValueProvider("Vostok.Metrics.MetricUnits")]
+        [ValueProvider("Vostok.Metrics.WellKnownConstants.MetricUnits")]
         public string Unit { get; set; } = MetricUnits.Seconds;
     }
 }

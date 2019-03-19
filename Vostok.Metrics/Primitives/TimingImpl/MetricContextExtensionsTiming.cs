@@ -23,10 +23,10 @@ namespace Vostok.Metrics.Primitives.TimingImpl
             };
         }
 
-        private static StringKeysTaggedMetric<Timing> CreateStringKeysTaggedMetric(IMetricContext context, string name, TimingConfig config, params string[] keys)
+        private static TaggedMetric<Timing> CreateStringKeysTaggedMetric(IMetricContext context, string name, TimingConfig config, params string[] keys)
         {
             config = config ?? TimingConfig.Default;
-            return new StringKeysTaggedMetric<Timing>(
+            return new TaggedMetric<Timing>(
                 context,
                 CreateTimingFactory(context, name, config),
                 keys);

@@ -7,6 +7,7 @@ using NUnit.Framework;
 using Vostok.Metrics.Model;
 using Vostok.Metrics.Primitives.GaugeImpl;
 using Vostok.Metrics.Primitives.TimingImpl;
+using Vostok.Metrics.WellKnownConstants;
 
 namespace Vostok.Metrics.Tests
 {

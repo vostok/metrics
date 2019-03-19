@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Vostok.Metrics.DynamicTags.StringKeys;
 using Vostok.Metrics.Primitives.GaugeImpl;
 using Vostok.Metrics.Primitives.TimingImpl;
+using Vostok.Metrics.WellKnownConstants;
 
 namespace Vostok.Metrics.Tests
 {

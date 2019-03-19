@@ -23,10 +23,10 @@ namespace Vostok.Metrics.Primitives.HistogramImpl
             };
         }
         
-        private static StringKeysTaggedMetric<Histogram> CreateStringKeysTaggedHistogram(IMetricContext context, string name, HistogramConfig config = null, params string[] keys)
+        private static TaggedMetric<Histogram> CreateStringKeysTaggedHistogram(IMetricContext context, string name, HistogramConfig config = null, params string[] keys)
         {
             config = config ?? HistogramConfig.Default;
-            return new StringKeysTaggedMetric<Histogram>(
+            return new TaggedMetric<Histogram>(
                 context, 
                 CreateTagsFactory(context, name, config),
                 config.ScrapePeriod,

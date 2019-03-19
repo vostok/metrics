@@ -9,15 +9,20 @@ namespace Vostok.Metrics.Model
         
         public DateTimeOffset Timestamp { get; }
         
-        [ValueProvider("Vostok.Metrics.MetricUnits")]
+        [ValueProvider("Vostok.Metrics.WellKnownConstants.MetricUnits")]
         public string Unit { get; }
         
-        [ValueProvider("Vostok.Metrics.AggregationTypes")]
+        [ValueProvider("Vostok.Metrics.WellKnownConstants.AggregationTypes")]
         public string AggregationType { get; }
         
         public MetricTags Tags { get; }
 
-        public MetricEvent(double value, DateTimeOffset timestamp, string unit, string aggregationType, MetricTags tags)
+        public MetricEvent(
+            double value,
+            DateTimeOffset timestamp,
+            [ValueProvider("Vostok.Metrics.WellKnownConstants.MetricUnits")] string unit,
+            [ValueProvider("Vostok.Metrics.WellKnownConstants.AggregationTypes")] string aggregationType,
+            MetricTags tags)
         {
             Value = value;
             Timestamp = timestamp;

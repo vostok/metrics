@@ -1,5 +1,6 @@
 using System;
 using JetBrains.Annotations;
+using Vostok.Metrics.WellKnownConstants;
 
 namespace Vostok.Metrics.Primitives.HistogramImpl
 {
@@ -8,7 +9,7 @@ namespace Vostok.Metrics.Primitives.HistogramImpl
         public double[] Buckets { get; set; }
 
         [CanBeNull]
-        [ValueProvider("Vostok.Metrics.MetricUnits")]
+        [ValueProvider("Vostok.Metrics.WellKnownConstants.MetricUnits")]
         public string Unit { get; set; } = MetricUnits.Seconds;
         [CanBeNull] public TimeSpan? ScrapePeriod { get; set; }
         
