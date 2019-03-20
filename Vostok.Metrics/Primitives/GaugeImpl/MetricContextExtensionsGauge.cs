@@ -7,13 +7,6 @@ namespace Vostok.Metrics.Primitives.GaugeImpl
 {
     public static partial class MetricContextExtensionsGauge
     {
-        public static IDisposable Gauge(this IMetricContext context, string name, Func<double> getValue, GaugeConfig config = null)
-        {
-            config = config ?? GaugeConfig.Default;
-            var tags = MetricTagsMerger.Merge(context.Tags, name);
-            return new FuncGauge(context, tags, getValue, config);
-        }
-
         public static IGauge Gauge(this IMetricContext context, string name, GaugeConfig config = null)
         {
             config = config ?? GaugeConfig.Default;
@@ -21,28 +14,55 @@ namespace Vostok.Metrics.Primitives.GaugeImpl
             return new Gauge(context, tags, config);
         }
 
-        public static ITaggedMetricT<TFor, IGauge> Gauge<TFor>(this IMetricContext context, string name, ITypeTagsConverter<TFor> typeTagsConverter = null, GaugeConfig config = null)
+        #region TaggedMetric
+
+        public static ITaggedMetricT<TFor, IGauge> Gauge<TFor>(this IMetricContext context, string name, ITypeTagsConverter<TFor> typeTagsConverter, GaugeConfig config = null)
         {
             config = config ?? GaugeConfig.Default;
-            typeTagsConverter = typeTagsConverter ?? TypeTagsConverter<TFor>.Default;
-            return new TaggedMetricT<TFor, IGauge>(
-                context,
-                CreateGaugeFactory(context, name, config),
-                config.ScrapePeriod,
-                typeTagsConverter);
+            return new TaggedMetricT<TFor, IGauge>(CreateTagsFactory(context, name, config), typeTagsConverter);
         }
+         
+        public static ITaggedMetric1<IGauge> Gauge(this IMetricContext context, string name, string key1, GaugeConfig config = null)
+        {
+            return CreateTaggedMetric(context, name, config, key1);
+        }
+        public static ITaggedMetric2<IGauge> Gauge(this IMetricContext context, string name, string key1, string key2, GaugeConfig config = null)
+        {
+            return CreateTaggedMetric(context, name, config, key1, key2);
+        }
+        public static ITaggedMetric3<IGauge> Gauge(this IMetricContext context, string name, string key1, string key2, string key3, GaugeConfig config = null)
+        {
+            return CreateTaggedMetric(context, name, config, key1, key2, key3);
+        }
+        public static ITaggedMetric4<IGauge> Gauge(this IMetricContext context, string name, string key1, string key2, string key3, string key4, GaugeConfig config = null)
+        {
+            return CreateTaggedMetric(context, name, config, key1, key2, key3, key4);
+        }
+        public static ITaggedMetric5<IGauge> Gauge(this IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, GaugeConfig config = null)
+        {
+            return CreateTaggedMetric(context, name, config, key1, key2, key3, key4, key5);
+        }
+        public static ITaggedMetric6<IGauge> Gauge(this IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, GaugeConfig config = null)
+        {
+            return CreateTaggedMetric(context, name, config, key1, key2, key3, key4, key5, key6);
+        }
+        public static ITaggedMetric7<IGauge> Gauge(this IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, string key7, GaugeConfig config = null)
+        {
+            return CreateTaggedMetric(context, name, config, key1, key2, key3, key4, key5, key6, key7);
+        }
+        public static ITaggedMetric8<IGauge> Gauge(this IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, string key7, string key8, GaugeConfig config = null)
+        {
+            return CreateTaggedMetric(context, name, config, key1, key2, key3, key4, key5, key6, key7, key8);
+        }
+        #endregion
 
-        private static TaggedMetric<Gauge> CreateTaggedMetric(IMetricContext context, string name, GaugeConfig config, params string[] keys)
+        private static TaggedMetric<Gauge> CreateTaggedMetric(IMetricContext context, string name, GaugeConfig config = null, params string[] keys)
         {
             config = config ?? GaugeConfig.Default;
-            return new TaggedMetric<Gauge>(
-                context,
-                CreateGaugeFactory(context, name, config),
-                config.ScrapePeriod,
-                keys);
+            return new TaggedMetric<Gauge>(CreateTagsFactory(context, name, config), keys);
         }
 
-        private static Func<MetricTags, Gauge> CreateGaugeFactory(IMetricContext context, string name, GaugeConfig config)
+        private static Func<MetricTags, Gauge> CreateTagsFactory(IMetricContext context, string name, GaugeConfig config)
         {
             return tags =>
             {

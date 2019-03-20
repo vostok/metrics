@@ -4,21 +4,15 @@ using Vostok.Metrics.Model;
 
 namespace Vostok.Metrics.DynamicTags.StringKeys
 {
-	public class TaggedMetric<TMetric> : TaggedMetricBase<TMetric>,
+	internal class TaggedMetric<TMetric> : TaggedMetricBase<TMetric>,
 <# for (var keysCount = 1; keysCount <= DynamicTags_StringKeys_MaxKeyCount; keysCount++) { #>
 		ITaggedMetric<#=keysCount#><TMetric><#=keysCount == DynamicTags_StringKeys_MaxKeyCount ? "" : ","#>
 <# } #>
     {
 		private readonly string[] keys;
-
-        public TaggedMetric(IMetricContext context, Func<MetricTags, TMetric> factory, params string[] keys)
-            : base(context, factory)
-        {
-            this.keys = keys;
-        }
-
-        public TaggedMetric(IMetricContext context, Func<MetricTags, TMetric> factory, TimeSpan? scrapePeriod, params string[] keys)
-            : base(context, factory, scrapePeriod)
+		
+        public TaggedMetric(Func<MetricTags, TMetric> factory, params string[] keys)
+            : base(factory)
         {
             this.keys = keys;
         }

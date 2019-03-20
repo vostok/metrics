@@ -14,15 +14,9 @@ namespace Vostok.Metrics.DynamicTags.StringKeys
 		ITaggedMetric8<TMetric>
     {
 		private readonly string[] keys;
-
-        public TaggedMetric(IMetricContext context, Func<MetricTags, TMetric> factory, params string[] keys)
-            : base(context, factory)
-        {
-            this.keys = keys;
-        }
-
-        public TaggedMetric(IMetricContext context, Func<MetricTags, TMetric> factory, TimeSpan? scrapePeriod, params string[] keys)
-            : base(context, factory, scrapePeriod)
+		
+        public TaggedMetric(Func<MetricTags, TMetric> factory, params string[] keys)
+            : base(factory)
         {
             this.keys = keys;
         }

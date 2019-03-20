@@ -7,16 +7,10 @@ namespace Vostok.Metrics.DynamicTags.Typed
     {
         private readonly ITypeTagsConverter<TFor> converter;
 
-        public TaggedMetricT(IMetricContext context, Func<MetricTags, TMetric> factory, ITypeTagsConverter<TFor> converter)
-            : base(context, factory)
+        public TaggedMetricT(Func<MetricTags, TMetric> factory, ITypeTagsConverter<TFor> converter = null)
+            : base(factory)
         {
-            this.converter = converter;
-        }
-
-        public TaggedMetricT(IMetricContext context, Func<MetricTags, TMetric> factory, TimeSpan? scrapePeriod, ITypeTagsConverter<TFor> converter)
-            : base(context, factory, scrapePeriod)
-        {
-            this.converter = converter;
+            this.converter = converter ?? TypeTagsConverter<TFor>.Default;
         }
 
         public TMetric For(TFor value)

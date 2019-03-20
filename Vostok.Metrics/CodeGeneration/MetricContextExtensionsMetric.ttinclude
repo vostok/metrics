@@ -1,15 +1,50 @@
+<#@ include file="./CodeGenerationCommon.ttinclude" once="true" #>
+using System;
 using Vostok.Metrics.DynamicTags.StringKeys;
+using Vostok.Metrics.DynamicTags.Typed;
+using Vostok.Metrics.Model;
 
 namespace <#= model.MetricNamespace #>
 {
     public static partial class <#= model.ExtensionClassName #>
     {
-<# for (var keysCount = 1; keysCount <= DynamicTags_StringKeys_MaxKeyCount; keysCount++) { #>
-        public static ITaggedMetric<#= keysCount #><<#= model.MetricInterface #>> <#= model.MetricClass #>(this IMetricContext context, string name, <#= string.Join(", ", Enumerable.Range(1, keysCount).Select(x => $"string key{x}")) #>, <#= model.MetricConfigClass #> config = null)
+        public static <#= model.MetricInterface #> <#= model.MetricClass #>(this IMetricContext context, string name, <#= model.MetricConfigClass #> config = null)
         {
-            return CreateTaggedMetric(context, name, config, <#= string.Join(", ", Enumerable.Range(1, keysCount).Select(x => $"key{x}")) #>);
+            config = config ?? <#= model.MetricConfigClass #>.Default;
+            var tags = MetricTagsMerger.Merge(context.Tags, name);
+            return new <#= model.MetricClass #>(context, tags, config);
+        }
+
+        #region TaggedMetric
+
+        public static ITaggedMetricT<TFor, <#= model.MetricInterface #>> <#= model.MetricClass #><TFor>(this IMetricContext context, string name, ITypeTagsConverter<TFor> typeTagsConverter, <#= model.MetricConfigClass #> config = null)
+        {
+            config = config ?? <#= model.MetricConfigClass #>.Default;
+            return new TaggedMetricT<TFor, <#= model.MetricInterface #>>(CreateTagsFactory(context, name, config), typeTagsConverter);
+        }
+         
+<# for (var keysCount = 1; keysCount <= DynamicTags_StringKeys_MaxKeyCount; keysCount++) { #>
+        public static ITaggedMetric<#= keysCount #><<#= model.MetricInterface #>> <#= model.MetricClass #>(this IMetricContext context, string name, <#= FormatParameters("string key{0}", keysCount) #>, <#= model.MetricConfigClass #> config = null)
+        {
+            return CreateTaggedMetric(context, name, config, <#= FormatParameters("key{0}", keysCount) #>);
         }
 <# } #>
+        #endregion
+
+        private static TaggedMetric<<#= model.MetricClass #>> CreateTaggedMetric(IMetricContext context, string name, <#= model.MetricConfigClass #> config = null, params string[] keys)
+        {
+            config = config ?? <#= model.MetricConfigClass #>.Default;
+            return new TaggedMetric<<#= model.MetricClass #>>(CreateTagsFactory(context, name, config), keys);
+        }
+
+        private static Func<MetricTags, <#= model.MetricClass #>> CreateTagsFactory(IMetricContext context, string name, <#= model.MetricConfigClass #> config)
+        {
+            return tags =>
+            {
+                var finalTags = MetricTagsMerger.Merge(context.Tags, name, tags);
+                return new <#= model.MetricClass #>(context, finalTags, config);
+            };
+        }
     }
 }
 <#+
