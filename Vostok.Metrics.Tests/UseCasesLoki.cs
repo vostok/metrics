@@ -61,33 +61,22 @@ namespace Vostok.Metrics.Tests
 
             public void ReportCreate(string clid, SignalCreateResult result)
             {
-                //design Why should I always write ToString() here. Stupid library devs =.=
-                GetRequestCounter("create", clid, result.ToString())
-                    .Inc();
+                requestCounter.For("create", clid, result).Inc();
             }
 
             public void ReportSet(string clid, TerminalSignalState result)
             {
-                GetRequestCounter("set", clid, result.ToString())
-                    .Inc();
+                requestCounter.For("set", clid, result).Inc();
             }
 
             public void ReportWait(string clid, SignalServiceWaitResult waitResult)
             {
-                GetRequestCounter("wait", clid, waitResult.ToString())
-                    .Inc();
+                requestCounter.For("wait", clid, waitResult).Inc();
             }
 
             public void ReportExpiredItem(TerminalSignalState state)
             {
-                expiredRequestsCounter
-                    .For(state.ToString())
-                    .Inc();
-            }
-
-            private IGauge GetRequestCounter(string request, string clid, string requestResult)
-            {
-                return requestCounter.For(request, clid, requestResult);
+                expiredRequestsCounter.For(state).Inc();
             }
 
             public void Dispose()
@@ -106,7 +95,6 @@ namespace Vostok.Metrics.Tests
         {
             lockTime = clusterContext
                 .WithTag("lock-namespace", namespaceName)
-                //design It's hard to discover MetricUnits class
                 .Timing("lock-time", new TimingConfig{Unit = MetricUnits.Seconds});
         }
 

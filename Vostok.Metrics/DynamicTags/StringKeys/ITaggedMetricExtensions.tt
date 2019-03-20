@@ -1,0 +1,13 @@
+<#@ include file="./../../CodeGeneration/CodeGenerationCommon.ttinclude" once="true" #>
+namespace Vostok.Metrics.DynamicTags.StringKeys
+{
+    public static partial class ITaggedMetricExtensions
+    {
+<# for (int iface = 1; iface <= DynamicTags_StringKeys_MaxKeyCount; iface++) { #>
+        public static TMetric For<TMetric, <#= FormatParameters("TValue{0}", iface) #>>(this ITaggedMetric<#= iface #><TMetric> metric, <#= FormatParameters("TValue{0} value{0}", iface) #>)
+        {
+            return metric.For(<#= FormatParameters("value{0}.ToString()", iface) #>);
+        }
+<# } #>
+    }
+}
