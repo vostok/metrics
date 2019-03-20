@@ -6,6 +6,7 @@ namespace Vostok.Metrics.Primitives.CounterImpl
     public class CounterConfig
     {
         [CanBeNull]
+        [ValueProvider("Vostok.Metrics.WellKnownConstants.MetricUnits")]
         public string Unit { get; set; }
         
         internal static readonly CounterConfig Default = new CounterConfig();

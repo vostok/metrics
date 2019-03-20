@@ -25,9 +25,9 @@ namespace Vostok.Metrics.Primitives.GaugeImpl
             registration = context.Register(this, config.ScrapePeriod);
         }
 
-        public IEnumerable<MetricEvent> Scrape()
+        public IEnumerable<MetricSample> Scrape()
         {
-            yield return new MetricEvent(value, DateTimeOffset.Now, config.Unit, null, tags);
+            yield return new MetricSample(value, tags, DateTimeOffset.Now, config.Unit, null);
         }
 
         public void Set(double value)

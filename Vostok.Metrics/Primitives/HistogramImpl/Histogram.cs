@@ -18,7 +18,7 @@ namespace Vostok.Metrics.Primitives.HistogramImpl
             registration = context.Register(this, config.ScrapePeriod);
         }
 
-        public IEnumerable<MetricEvent> Scrape()
+        public IEnumerable<MetricSample> Scrape()
         {
             throw new NotImplementedException();
         }

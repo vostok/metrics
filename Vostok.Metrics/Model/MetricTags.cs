@@ -6,15 +6,27 @@ using Vostok.Metrics.DynamicTags.Typed;
 
 namespace Vostok.Metrics.Model
 {
+    /// <summary>
+    /// <para>
+    /// Ordered list of key-value pairs (each pair called a <see cref="MetricTag"/>) distinguishes one metric from another.
+    /// Keys and values are both <see cref="string">strings</see>. 
+    /// </para>
+    /// <para>
+    /// Two <see cref="MetricSample">MetricSamples</see> belong to the same metric if and only if their <see cref="MetricSample.Tags"/> are the same.
+    /// </para>
+    /// <para>
+    /// MetricTags collection is immutable.
+    /// </para>
+    /// </summary>
     [PublicAPI]
     public class MetricTags : IReadOnlyList<MetricTag>, IEquatable<MetricTags>
     {
-        public MetricTags Add(MetricTag tag)
+        public MetricTags Add([NotNull] MetricTag tag)
         {
             throw new NotImplementedException();
         }
 
-        public MetricTags AddRange(MetricTags tags)
+        public MetricTags AddRange([NotNull] MetricTags tags)
         {
             throw new NotImplementedException();
         }

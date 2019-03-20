@@ -27,12 +27,12 @@ namespace Vostok.Metrics.Primitives.CounterImpl
                     nameof(value));
             }
             
-            context.Send(new MetricEvent(
+            context.Send(new MetricSample(
                 value,
+                tags,
                 DateTimeOffset.Now,
                 config.Unit,
-                AggregationTypes.Counter,
-                tags));
+                AggregationTypes.Counter));
         }
 
         public string Unit => config.Unit;

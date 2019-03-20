@@ -10,6 +10,7 @@ namespace Vostok.Metrics
     /// <summary>
     /// <para><see cref="IMetricContext"/> is an entry-point for Vostok.Metrics library.</para>
     /// <para>It provides all that is necessary to create a metric primitive like <see cref="IGauge"/>, <see cref="ITiming"/>, <see cref="IHistogram"/> and others.</para>
+    /// <para>To create <see cref="IMetricContext"/> instance use <see cref="MetricContext"/>.</para>
     /// </summary>
     [PublicAPI]
     public interface IMetricContext
@@ -26,6 +27,9 @@ namespace Vostok.Metrics
         /// Once per <paramref name="scrapePeriod"/> the <see cref="IScrapableMetric.Scrape"/> method
         /// will be called on the specified <paramref name="metric"/>.
         /// </para>
+        /// <para>
+        /// Implementations should guarantee that <see cref="IScrapableMetric.Scrape"/> is never called concurrently on the same <paramref name="metric"/>.
+        /// </para>
         /// </summary>
         /// <param name="metric">The metric to scrape</param>
         /// <param name="scrapePeriod">How often to scrape</param>
@@ -33,8 +37,12 @@ namespace Vostok.Metrics
         IDisposable Register(IScrapableMetric metric, TimeSpan? scrapePeriod);
         
         /// <summary>
-        /// <para>Sends the <see cref="MetricEvent"/> for further processing.</para>
+        /// <para>Sends the <see cref="MetricSample"/> for further processing.</para>
+        /// <para>
+        /// Use this method directly to send custom MetricSample.
+        /// To create <see cref="MetricSample"/> you may use <see cref="MetricSampleBuilder"/>.
+        /// </para>
         /// </summary>
-        void Send(MetricEvent @event);
+        void Send(MetricSample sample);
     }
 }

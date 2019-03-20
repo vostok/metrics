@@ -20,13 +20,13 @@ namespace Vostok.Metrics.Primitives.TimingImpl
 
         public void Report(double value)
         {
-            var metricEvent = new MetricEvent(
+            var MetricSample = new MetricSample(
                 value,
+                tags,
                 DateTimeOffset.Now,
                 config.Unit,
-                AggregationTypes.Timing,
-                tags);
-            context.Send(metricEvent);
+                AggregationTypes.Timing);
+            context.Send(MetricSample);
         }
 
         public string Unit => config.Unit;

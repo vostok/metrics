@@ -4,14 +4,18 @@ using Vostok.Metrics.Model;
 
 namespace Vostok.Metrics
 {
+    /// <inheritdoc cref="IMetricContext"/>
     [PublicAPI]
     public class MetricContext : IMetricContext
     {
-        private readonly IMetricEventSender sender;
+        private readonly IMetricSampleSender sender;
         private readonly MetricContextConfig config;
         private readonly ScrapeScheduler scrapeScheduler;
         
-        public MetricContext(IMetricEventSender sender, MetricContextConfig config = null)
+        /// <inheritdoc cref="IMetricContext"/>
+        /// <param name="sender">Calls to <see cref="Send"/> will be delegated to the specified <see cref="IMetricSampleSender"/></param>
+        /// <param name="config">Optional config. Use it to specify parameters common for all metric primitives in this <see cref="IMetricContext"/></param>
+        public MetricContext(IMetricSampleSender sender, MetricContextConfig config = null)
         {
             this.sender = sender;
             this.config = config ?? MetricContextConfig.Default;
@@ -24,16 +28,16 @@ namespace Vostok.Metrics
             return scrapeScheduler.Register(metric, scrapePeriod ?? config.DefaultScrapePeriod);
         }
 
-        public void Send(MetricEvent @event)
+        public void Send(MetricSample sample)
         {
-            sender.Send(@event);
+            sender.Send(sample);
         }
 
         private void ScrapeAction(IScrapableMetric metric, TimeSpan scrapePeriod, DateTimeOffset scrapeTimestamp)
         {
-            foreach (var metricEvent in metric.Scrape())
+            foreach (var MetricSample in metric.Scrape())
             {
-                Send(metricEvent);
+                Send(MetricSample);
             }
         }
     }
