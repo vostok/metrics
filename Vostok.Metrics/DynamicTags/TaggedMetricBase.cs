@@ -6,8 +6,7 @@ using Vostok.Metrics.Model;
 
 namespace Vostok.Metrics.DynamicTags
 {
-    //design this class and its inheritors are public because they allow user to create custom Metric types
-    public class TaggedMetricBase<TMetric> : IScrapableMetric, IDisposable
+    internal class TaggedMetricBase<TMetric> : IScrapableMetric, IDisposable
     {
         private static readonly bool isTMetricScrapable = typeof(IScrapableMetric).IsAssignableFrom(typeof(TMetric));
         

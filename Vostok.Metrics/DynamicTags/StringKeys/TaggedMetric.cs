@@ -3,7 +3,7 @@ using Vostok.Metrics.Model;
 
 namespace Vostok.Metrics.DynamicTags.StringKeys
 {
-	public class TaggedMetric<TMetric> : TaggedMetricBase<TMetric>,
+	internal class TaggedMetric<TMetric> : TaggedMetricBase<TMetric>,
 		ITaggedMetric1<TMetric>,
 		ITaggedMetric2<TMetric>,
 		ITaggedMetric3<TMetric>,
