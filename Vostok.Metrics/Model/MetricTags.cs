@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Vostok.Metrics.DynamicTags.Typed;
 
 namespace Vostok.Metrics.Model
 {
+    [PublicAPI]
     public class MetricTags : IReadOnlyList<MetricTag>, IEquatable<MetricTags>
     {
         public MetricTags Add(MetricTag tag)

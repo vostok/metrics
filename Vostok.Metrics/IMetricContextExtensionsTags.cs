@@ -1,8 +1,10 @@
 using System;
+using JetBrains.Annotations;
 using Vostok.Metrics.Model;
 
 namespace Vostok.Metrics
 {
+    [PublicAPI]
     public static class IMetricContextExtensionsTags
     {
         public static IMetricContext WithTag(this IMetricContext context, string key, string value)

@@ -1,8 +1,10 @@
 using System;
+using JetBrains.Annotations;
 using Vostok.Metrics.Model;
 
 namespace Vostok.Metrics
 {
+    [PublicAPI]
     public class MetricContextConfig
     {
         public MetricTags Tags { get; set; } = MetricTags.Empty;

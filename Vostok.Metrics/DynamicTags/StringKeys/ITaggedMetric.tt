@@ -1,9 +1,12 @@
 ﻿<#@ include file="./../../CodeGeneration/CodeGenerationCommon.ttinclude" once="true" #>
 using System;
+using JetBrains.Annotations;
 
 namespace Vostok.Metrics.DynamicTags.StringKeys
 {
 <# for (var keysCount = 1; keysCount <= DynamicTags_StringKeys_MaxKeyCount; keysCount++) { #>
+    
+    [PublicAPI]
     public interface ITaggedMetric<#= keysCount #><out TMetric> : IDisposable
     {
         TMetric For(<#= string.Join(", ", Enumerable.Range(1, keysCount).Select(x => $"string value{x}")) #>);

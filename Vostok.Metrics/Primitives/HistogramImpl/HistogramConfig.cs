@@ -4,6 +4,7 @@ using Vostok.Metrics.WellKnownConstants;
 
 namespace Vostok.Metrics.Primitives.HistogramImpl
 {
+    [PublicAPI]
     public class HistogramConfig
     {
         public double[] Buckets { get; set; }

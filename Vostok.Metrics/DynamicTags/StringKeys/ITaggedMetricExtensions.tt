@@ -1,6 +1,9 @@
 <#@ include file="./../../CodeGeneration/CodeGenerationCommon.ttinclude" once="true" #>
+using JetBrains.Annotations;
+
 namespace Vostok.Metrics.DynamicTags.StringKeys
 {
+    [PublicAPI]
     public static partial class ITaggedMetricExtensions
     {
 <# for (int iface = 1; iface <= DynamicTags_StringKeys_MaxKeyCount; iface++) { #>

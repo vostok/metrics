@@ -1,5 +1,8 @@
+using JetBrains.Annotations;
+
 namespace Vostok.Metrics.WellKnownConstants
 {
+    [PublicAPI]
     public static class MetricUnits
     {
         public const string Items = "items";

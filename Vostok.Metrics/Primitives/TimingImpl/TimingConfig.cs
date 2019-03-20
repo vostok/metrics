@@ -3,6 +3,7 @@ using Vostok.Metrics.WellKnownConstants;
 
 namespace Vostok.Metrics.Primitives.TimingImpl
 {
+    [PublicAPI]
     public class TimingConfig
     {
         internal static readonly TimingConfig Default = new TimingConfig();

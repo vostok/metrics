@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 
 namespace Vostok.Metrics.Model
 {
+    [PublicAPI]
     public class MetricTag
     {
         [ValueProvider("Vostok.Metrics.WellKnownConstants.MetricTagKeys")]

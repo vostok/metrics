@@ -1,10 +1,12 @@
 using System;
+using JetBrains.Annotations;
 using Vostok.Metrics.DynamicTags.StringKeys;
 using Vostok.Metrics.DynamicTags.Typed;
 using Vostok.Metrics.Model;
 
 namespace Vostok.Metrics.Primitives.GaugeImpl
 {
+    [PublicAPI]
     public static partial class MetricContextExtensionsGauge
     {
         public static IGauge Gauge(this IMetricContext context, string name, GaugeConfig config = null)

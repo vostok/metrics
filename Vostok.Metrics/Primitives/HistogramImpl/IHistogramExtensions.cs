@@ -1,8 +1,10 @@
 using System;
+using JetBrains.Annotations;
 using Vostok.Metrics.Helpers;
 
 namespace Vostok.Metrics.Primitives.HistogramImpl
 {
+    [PublicAPI]
     public static class IHistogramExtensions
     {
         public static void Report(this IHistogram histogram, TimeSpan timeSpan)

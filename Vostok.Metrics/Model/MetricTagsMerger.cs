@@ -1,7 +1,9 @@
+using JetBrains.Annotations;
 using Vostok.Metrics.WellKnownConstants;
 
 namespace Vostok.Metrics.Model
 {
+    [PublicAPI]
     public static class MetricTagsMerger
     {
         public static MetricTags Merge(MetricTags contextTags, string name, MetricTags dynamicTags)

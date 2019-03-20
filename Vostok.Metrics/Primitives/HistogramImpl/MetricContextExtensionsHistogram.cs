@@ -1,10 +1,12 @@
 using System;
+using JetBrains.Annotations;
 using Vostok.Metrics.DynamicTags.StringKeys;
 using Vostok.Metrics.DynamicTags.Typed;
 using Vostok.Metrics.Model;
 
 namespace Vostok.Metrics.Primitives.HistogramImpl
 {
+    [PublicAPI]
     public static partial class MetricContextExtensionsHistogram
     {
         public static IHistogram Histogram(this IMetricContext context, string name, HistogramConfig config = null)

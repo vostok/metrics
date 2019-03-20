@@ -1,11 +1,13 @@
 <#@ include file="./CodeGenerationCommon.ttinclude" once="true" #>
 using System;
+using JetBrains.Annotations;
 using Vostok.Metrics.DynamicTags.StringKeys;
 using Vostok.Metrics.DynamicTags.Typed;
 using Vostok.Metrics.Model;
 
 namespace <#= model.MetricNamespace #>
 {
+    [PublicAPI]
     public static partial class <#= model.ExtensionClassName #>
     {
         public static <#= model.MetricInterface #> <#= model.MetricClass #>(this IMetricContext context, string name, <#= model.MetricConfigClass #> config = null)

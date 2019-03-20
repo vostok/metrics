@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 
 namespace Vostok.Metrics.Primitives.GaugeImpl
 {
+    [PublicAPI]
     public interface IGauge : IDisposable
     {
         void Set(double value);

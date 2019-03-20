@@ -1,5 +1,8 @@
+using JetBrains.Annotations;
+
 namespace Vostok.Metrics.Primitives.GaugeImpl
 {
+    [PublicAPI]
     public static class IGaugeExtensions
     {
         public static void Inc(this IGauge gauge)

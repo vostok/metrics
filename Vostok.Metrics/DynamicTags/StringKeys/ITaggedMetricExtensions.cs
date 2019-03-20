@@ -1,5 +1,8 @@
+using JetBrains.Annotations;
+
 namespace Vostok.Metrics.DynamicTags.StringKeys
 {
+    [PublicAPI]
     public static partial class ITaggedMetricExtensions
     {
         public static TMetric For<TMetric, TValue1>(this ITaggedMetric1<TMetric> metric, TValue1 value1)

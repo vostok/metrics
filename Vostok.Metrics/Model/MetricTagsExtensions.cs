@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 
 namespace Vostok.Metrics.Model
 {
+    [PublicAPI]
     public static class MetricTagsExtensions
     {
         public static MetricTags Add(
