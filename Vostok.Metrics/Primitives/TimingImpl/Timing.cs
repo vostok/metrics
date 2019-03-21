@@ -30,9 +30,5 @@ namespace Vostok.Metrics.Primitives.TimingImpl
         }
 
         public string Unit => config.Unit;
-
-        public void Dispose()
-        {
-        }
     }
 }

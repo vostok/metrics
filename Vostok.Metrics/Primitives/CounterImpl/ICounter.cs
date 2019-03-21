@@ -23,7 +23,7 @@ namespace Vostok.Metrics.Primitives.CounterImpl
     /// </example>
     /// </summary>
     [PublicAPI]
-    public interface ICounter : IDisposable
+    public interface ICounter
     {
         void Add(double value);
         string Unit { get; }

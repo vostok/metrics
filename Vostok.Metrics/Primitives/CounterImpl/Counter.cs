@@ -36,7 +36,5 @@ namespace Vostok.Metrics.Primitives.CounterImpl
         }
 
         public string Unit => config.Unit;
-
-        public void Dispose() {}
     }
 }
