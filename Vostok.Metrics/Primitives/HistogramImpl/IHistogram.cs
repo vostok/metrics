@@ -27,7 +27,7 @@ namespace Vostok.Metrics.Primitives.HistogramImpl
     /// To create a Histogram use <see cref="MetricContextExtensionsHistogram">extensions</see> for <see cref="IMetricContext"/>.
     /// </para>
     /// <para>
-    /// Call <see cref="IHistogram.Dispose"/> to stop scraping the metric.
+    /// Call <see cref="IDisposable.Dispose"/> to stop scraping the metric.
     /// </para>
     /// </remarks>
     //todo example

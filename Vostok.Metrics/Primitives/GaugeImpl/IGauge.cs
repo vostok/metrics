@@ -16,7 +16,7 @@ namespace Vostok.Metrics.Primitives.GaugeImpl
     /// To create a Gauge use extensions (<see cref="MetricContextExtensionsGauge">1</see>, <see cref="MetricContextExtensionsFuncGauge">2</see>) for <see cref="IMetricContext"/>.
     /// </para>
     /// <para>
-    /// You can call <see cref="IGauge.Dispose"/> to stop observing Gauge values.
+    /// You can call <see cref="IDisposable.Dispose"/> to stop observing Gauge values.
     /// </para>
     /// </remarks>
     /// <example>
