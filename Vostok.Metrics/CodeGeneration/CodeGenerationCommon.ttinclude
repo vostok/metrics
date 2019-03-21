@@ -6,10 +6,7 @@
 <# #>
 <#@ import namespace="System" #>
 <#@ import namespace="System.Linq" #>
-<# #>
-<#
-    const int DynamicTags_StringKeys_MaxKeyCount = 8;
-#><#+ 
+<#+ 
 string FormatParameters(string parameter, int count) 
 {
     return string.Join(", ", Enumerable.Range(1, count).Select(x => string.Format(parameter, x)));

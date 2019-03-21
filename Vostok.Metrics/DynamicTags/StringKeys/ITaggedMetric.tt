@@ -1,4 +1,5 @@
 ﻿<#@ include file="./../../CodeGeneration/CodeGenerationCommon.ttinclude" once="true" #>
+<#@ include file="./../../CodeGeneration/TaggedMetricConstants.ttinclude" once="true" #>
 using System;
 using JetBrains.Annotations;
 
