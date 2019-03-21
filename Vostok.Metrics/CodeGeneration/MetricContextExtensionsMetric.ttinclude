@@ -10,6 +10,10 @@ namespace <#= model.MetricNamespace #>
     [PublicAPI]
     public static partial class <#= model.ExtensionClassName #>
     {
+        /// <inheritdoc cref="<#= model.MetricInterface #>"/>
+        /// <param name="context">Context this metric will belong to</param>
+        /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownConstants.MetricTagKeys.Name"/></param>
+        /// <param name="config">Optional config</param>
         public static <#= model.MetricInterface #> <#= model.MetricClass #>(this IMetricContext context, string name, <#= model.MetricConfigClass #> config = null)
         {
             config = config ?? <#= model.MetricConfigClass #>.Default;
@@ -19,13 +23,48 @@ namespace <#= model.MetricNamespace #>
 
         #region TaggedMetric
 
-        public static ITaggedMetricT<TFor, <#= model.MetricInterface #>> <#= model.MetricClass #><TFor>(this IMetricContext context, string name, ITypeTagsConverter<TFor> typeTagsConverter, <#= model.MetricConfigClass #> config = null)
+        /// <summary>
+        /// <para>
+        /// Creates a group of <see cref="<#= model.MetricInterface #>"><#= model.MetricClass #>s</see>.
+        /// Metrics in the group share the <paramref name="name"/> but have different dynamic tags.
+        /// </para>
+        /// <para>
+        /// Dynamic tags are specified by an instance of <typeparamref name="TFor"/>.
+        /// </para>
+        /// <inheritdoc cref="<#= model.MetricInterface #>"/>
+        /// </summary>
+        /// <param name="context">Context this metric will belong to</param>
+        /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownConstants.MetricTagKeys.Name"/></param>
+        /// <param name="typeTagsConverter">
+        /// Optional custom mapping from <typeparamref name="TFor"/> to <see cref="Vostok.Metrics.Model.MetricTags"/>.
+        /// These tags are specific for every <#= model.MetricClass #> in group and will be added after <paramref name="name"/> tag.
+        /// </param>
+        /// <param name="config">Optional config</param>
+        /// <inheritdoc cref="<#= model.MetricInterface #>"/>
+        public static ITaggedMetricT<TFor, <#= model.MetricInterface #>> <#= model.MetricClass #><TFor>(this IMetricContext context, string name, ITypeTagsConverter<TFor> typeTagsConverter = null, <#= model.MetricConfigClass #> config = null)
         {
             config = config ?? <#= model.MetricConfigClass #>.Default;
             return new TaggedMetricT<TFor, <#= model.MetricInterface #>>(CreateTagsFactory(context, name, config), typeTagsConverter);
-        }
-         
+        }         
 <# for (var keysCount = 1; keysCount <= DynamicTags_StringKeys_MaxKeyCount; keysCount++) { #>
+
+        /// <summary>
+        /// <para>
+        /// Creates a group of <see cref="<#= model.MetricInterface #>"><#= model.MetricClass #>s</see>.
+        /// Metrics in the group share the <paramref name="name"/> but have different dynamic tags.
+        /// </para>
+        /// <para>
+        /// Dynamic tags are specified by string parameters. You define the keys now and pass the values later.
+        /// </para>
+        /// <inheritdoc cref="<#= model.MetricInterface #>"/>
+        /// </summary>
+        /// <param name="context">Context this metric will belong to</param>
+        /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownConstants.MetricTagKeys.Name"/></param>
+<# for (var i = 1; i <= keysCount; i++) { #>
+        /// <param name="key<#= i #>">Key of <#= i #> dynamic tag</param>
+<# } #>
+        /// <param name="config">Optional config</param>
+        /// <inheritdoc cref="<#= model.MetricInterface #>"/>
         public static ITaggedMetric<#= keysCount #><<#= model.MetricInterface #>> <#= model.MetricClass #>(this IMetricContext context, string name, <#= FormatParameters("string key{0}", keysCount) #>, <#= model.MetricConfigClass #> config = null)
         {
             return CreateTaggedMetric(context, name, config, <#= FormatParameters("key{0}", keysCount) #>);
