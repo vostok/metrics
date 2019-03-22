@@ -11,7 +11,7 @@ namespace <#= model.MetricNamespace #>
     [PublicAPI]
     public static partial class <#= model.ExtensionClassName #>
     {
-        /// <inheritdoc cref="<#= model.MetricInterface #>"/>
+        /// <inheritdoc cref="<#= model.InheritDocType #>"/>
         /// <param name="context">Context this metric will belong to</param>
         /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownConstants.MetricTagKeys.Name"/></param>
         /// <param name="config">Optional config</param>
@@ -26,13 +26,13 @@ namespace <#= model.MetricNamespace #>
 
         /// <summary>
         /// <para>
-        /// Creates a group of <see cref="<#= model.MetricInterface #>"><#= model.MetricClass #>s</see>.
+        /// Creates a group of <see cref="<#= model.InheritDocType #>"><#= model.MetricClass #>s</see>.
         /// Metrics in the group share the <paramref name="name"/> but have different dynamic tags.
         /// </para>
         /// <para>
         /// Dynamic tags are specified by an instance of <typeparamref name="TFor"/>.
         /// </para>
-        /// <inheritdoc cref="<#= model.MetricInterface #>"/>
+        /// <inheritdoc cref="<#= model.InheritDocType #>"/>
         /// </summary>
         /// <param name="context">Context this metric will belong to</param>
         /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownConstants.MetricTagKeys.Name"/></param>
@@ -41,7 +41,7 @@ namespace <#= model.MetricNamespace #>
         /// These tags are specific for every <#= model.MetricClass #> in group and will be added after <paramref name="name"/> tag.
         /// </param>
         /// <param name="config">Optional config</param>
-        /// <inheritdoc cref="<#= model.MetricInterface #>"/>
+        /// <inheritdoc cref="<#= model.InheritDocType #>"/>
         public static ITaggedMetricT<TFor, <#= model.MetricInterface #>> <#= model.MetricClass #><TFor>(this IMetricContext context, string name, ITypeTagsConverter<TFor> typeTagsConverter = null, <#= model.MetricConfigClass #> config = null)
         {
             config = config ?? <#= model.MetricConfigClass #>.Default;
@@ -51,13 +51,13 @@ namespace <#= model.MetricNamespace #>
 
         /// <summary>
         /// <para>
-        /// Creates a group of <see cref="<#= model.MetricInterface #>"><#= model.MetricClass #>s</see>.
+        /// Creates a group of <see cref="<#= model.InheritDocType #>"><#= model.MetricClass #>s</see>.
         /// Metrics in the group share the <paramref name="name"/> but have different dynamic tags.
         /// </para>
         /// <para>
         /// Dynamic tags are specified by string parameters. You define the keys now and pass the values later.
         /// </para>
-        /// <inheritdoc cref="<#= model.MetricInterface #>"/>
+        /// <inheritdoc cref="<#= model.InheritDocType #>"/>
         /// </summary>
         /// <param name="context">Context this metric will belong to</param>
         /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownConstants.MetricTagKeys.Name"/></param>
@@ -65,7 +65,7 @@ namespace <#= model.MetricNamespace #>
         /// <param name="key<#= i #>">Key of <#= i #> dynamic tag</param>
 <# } #>
         /// <param name="config">Optional config</param>
-        /// <inheritdoc cref="<#= model.MetricInterface #>"/>
+        /// <inheritdoc cref="<#= model.InheritDocType #>"/>
         public static ITaggedMetric<#= keysCount #><<#= model.MetricInterface #>> <#= model.MetricClass #>(this IMetricContext context, string name, <#= FormatParameters("string key{0}", keysCount) #>, <#= model.MetricConfigClass #> config = null)
         {
             return CreateTaggedMetric(context, name, config, <#= FormatParameters("key{0}", keysCount) #>);
@@ -99,6 +99,7 @@ class MetricExtensionsModel
     public string MetricConfigClass { get; set; }
     public string MetricNamespace { get; set; }
     public string ExtensionClassName { get; set; }
+    public string InheritDocType { get; set; }
 
     public MetricExtensionsModel(string metricClass)
     {
@@ -107,6 +108,7 @@ class MetricExtensionsModel
         MetricConfigClass = $"{MetricClass}Config";
         MetricNamespace = $"Vostok.Metrics.Primitives.{MetricClass}Impl";
         ExtensionClassName = $"MetricContextExtensions{MetricClass}";
+        InheritDocType = MetricInterface;
     }
 }
 #>

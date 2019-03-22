@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 
-namespace Vostok.Metrics.Primitives.CounterImpl
+namespace Vostok.Metrics.Primitives.CounterPrimitive
 {
     [PublicAPI]
     public class ICounterExtensions

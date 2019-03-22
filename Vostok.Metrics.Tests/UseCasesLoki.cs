@@ -3,8 +3,9 @@ using FluentAssertions.Extensions;
 using NSubstitute;
 using NUnit.Framework;
 using Vostok.Metrics.DynamicTags.StringKeys;
-using Vostok.Metrics.Primitives.GaugeImpl;
-using Vostok.Metrics.Primitives.TimingImpl;
+using Vostok.Metrics.Primitives.GaugePrimitive;
+using Vostok.Metrics.Primitives.TimerPrimitive;
+using Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl;
 using Vostok.Metrics.WellKnownConstants;
 
 namespace Vostok.Metrics.Tests
@@ -89,13 +90,13 @@ namespace Vostok.Metrics.Tests
 
     public class LockNamespaceMetrics : IDisposable
     {
-        private readonly ITiming lockTime;
+        private readonly ITimer lockTime;
         
         public LockNamespaceMetrics(string namespaceName, IMetricContext clusterContext, IMetricContext replicaContext)
         {
             lockTime = clusterContext
                 .WithTag("lock-namespace", namespaceName)
-                .Timing("lock-time", new TimingConfig{Unit = MetricUnits.Seconds});
+                .Timer("lock-time", new TimerConfig{Unit = MetricUnits.Seconds});
         }
 
         public void RecordLockTime(TimeSpan time)

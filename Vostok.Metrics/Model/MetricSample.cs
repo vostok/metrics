@@ -1,5 +1,6 @@
 using System;
 using JetBrains.Annotations;
+using Vostok.Metrics.Primitives.CounterPrimitive;
 using Vostok.Metrics.WellKnownConstants;
 
 namespace Vostok.Metrics.Model
@@ -38,7 +39,7 @@ namespace Vostok.Metrics.Model
         /// </para>
         /// <para>
         /// Otherwise, the sample will undergo some aggregation process.
-        /// For example, samples produced by <see cref="Vostok.Metrics.Primitives.CounterImpl.ICounter"/> primitive
+        /// For example, samples produced by <see cref="ICounter"/> primitive
         /// should be summed up server-side before saving.
         /// </para>
         /// <para>

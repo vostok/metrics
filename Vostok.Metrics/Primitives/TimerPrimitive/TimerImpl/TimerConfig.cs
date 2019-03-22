@@ -1,12 +1,12 @@
 using JetBrains.Annotations;
 using Vostok.Metrics.WellKnownConstants;
 
-namespace Vostok.Metrics.Primitives.TimingImpl
+namespace Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl
 {
     [PublicAPI]
-    public class TimingConfig
+    public class TimerConfig
     {
-        internal static readonly TimingConfig Default = new TimingConfig();
+        internal static readonly TimerConfig Default = new TimerConfig();
         
         [CanBeNull]
         [ValueProvider("Vostok.Metrics.WellKnownConstants.MetricUnits")]

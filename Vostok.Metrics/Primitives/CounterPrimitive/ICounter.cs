@@ -1,7 +1,6 @@
-using System;
 using JetBrains.Annotations;
 
-namespace Vostok.Metrics.Primitives.CounterImpl
+namespace Vostok.Metrics.Primitives.CounterPrimitive
 {
     /// <summary>
     /// <para>

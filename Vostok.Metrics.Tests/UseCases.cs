@@ -5,8 +5,8 @@ using FluentAssertions.Extensions;
 using NSubstitute;
 using NUnit.Framework;
 using Vostok.Metrics.Model;
-using Vostok.Metrics.Primitives.GaugeImpl;
-using Vostok.Metrics.Primitives.TimingImpl;
+using Vostok.Metrics.Primitives.GaugePrimitive;
+using Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl;
 using Vostok.Metrics.WellKnownConstants;
 
 namespace Vostok.Metrics.Tests
@@ -58,9 +58,9 @@ namespace Vostok.Metrics.Tests
         public void Dynamic_tags_string_keys()
         {
             var latenciesClidUrl = rootContext
-                .Timing("requests-latency", "clid", "url");
+                .Timer("requests-latency", "clid", "url");
             var latenciesGlobal = rootContext
-                .Timing("requests-latency");
+                .Timer("requests-latency");
 
             // Get these values from http request
             var clid = "fat-service";

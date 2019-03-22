@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 using Vostok.Metrics.Model;
 using Vostok.Metrics.WellKnownConstants;
 
-namespace Vostok.Metrics.Primitives.CounterImpl
+namespace Vostok.Metrics.Primitives.CounterPrimitive
 {
     internal class Counter : ICounter
     {

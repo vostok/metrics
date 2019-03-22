@@ -1,15 +1,15 @@
 using System;
 using JetBrains.Annotations;
 using Vostok.Metrics.Model;
-using Vostok.Metrics.Primitives.GaugeImpl;
-using Vostok.Metrics.Primitives.HistogramImpl;
-using Vostok.Metrics.Primitives.TimingImpl;
+using Vostok.Metrics.Primitives.CounterPrimitive;
+using Vostok.Metrics.Primitives.GaugePrimitive;
+using Vostok.Metrics.Primitives.TimerPrimitive;
 
 namespace Vostok.Metrics
 {
     /// <summary>
     /// <para><see cref="IMetricContext"/> is an entry-point for Vostok.Metrics library.</para>
-    /// <para>It provides all that is necessary to create a metric primitive like <see cref="IGauge"/>, <see cref="ITiming"/>, <see cref="IHistogram"/> and others.</para>
+    /// <para>It provides all that is necessary to create a metric primitive like <see cref="IGauge"/>, <see cref="ICounter"/>, <see cref="ITimer"/> and others.</para>
     /// <para>To create <see cref="IMetricContext"/> instance use <see cref="MetricContext"/>.</para>
     /// </summary>
     [PublicAPI]

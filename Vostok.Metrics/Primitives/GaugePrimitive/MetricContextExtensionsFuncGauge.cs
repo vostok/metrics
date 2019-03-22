@@ -2,7 +2,7 @@ using System;
 using JetBrains.Annotations;
 using Vostok.Metrics.Model;
 
-namespace Vostok.Metrics.Primitives.GaugeImpl
+namespace Vostok.Metrics.Primitives.GaugePrimitive
 {
     [PublicAPI]
     public static class MetricContextExtensionsFuncGauge

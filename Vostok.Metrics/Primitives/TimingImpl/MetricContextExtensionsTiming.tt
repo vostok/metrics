@@ -1,2 +1,0 @@
-<# model = new MetricExtensionsModel("Timing"); #>
-<#@ include file="./../../CodeGeneration/MetricContextExtensionsMetric.ttinclude" once="true" #>

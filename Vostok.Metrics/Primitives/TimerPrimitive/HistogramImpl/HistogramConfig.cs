@@ -2,7 +2,7 @@ using System;
 using JetBrains.Annotations;
 using Vostok.Metrics.WellKnownConstants;
 
-namespace Vostok.Metrics.Primitives.HistogramImpl
+namespace Vostok.Metrics.Primitives.TimerPrimitive.HistogramImpl
 {
     [PublicAPI]
     public class HistogramConfig
