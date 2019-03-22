@@ -106,7 +106,7 @@ class MetricExtensionsModel
         MetricClass = metricClass;
         MetricInterface = $"I{MetricClass}";
         MetricConfigClass = $"{MetricClass}Config";
-        MetricNamespace = $"Vostok.Metrics.Primitives.{MetricClass}Impl";
+        MetricNamespace = $"Vostok.Metrics.Primitives.{MetricClass}Primitive";
         ExtensionClassName = $"MetricContextExtensions{MetricClass}";
         InheritDocType = MetricInterface;
     }
