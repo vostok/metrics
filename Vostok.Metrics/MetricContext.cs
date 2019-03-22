@@ -6,7 +6,7 @@ namespace Vostok.Metrics
 {
     /// <inheritdoc cref="IMetricContext"/>
     [PublicAPI]
-    public class MetricContext : IMetricContext
+    public class MetricContext : IMetricContext, IDisposable
     {
         private readonly IMetricSampleSender sender;
         private readonly MetricContextConfig config;
@@ -35,10 +35,15 @@ namespace Vostok.Metrics
 
         private void ScrapeAction(IScrapableMetric metric, TimeSpan scrapePeriod, DateTimeOffset scrapeTimestamp)
         {
-            foreach (var MetricSample in metric.Scrape())
+            foreach (var metricSample in metric.Scrape())
             {
-                Send(MetricSample);
+                Send(metricSample);
             }
+        }
+
+        public void Dispose()
+        {
+            scrapeScheduler.Dispose();
         }
     }
 }

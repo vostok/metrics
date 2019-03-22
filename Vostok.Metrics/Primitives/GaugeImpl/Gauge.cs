@@ -13,8 +13,6 @@ namespace Vostok.Metrics.Primitives.GaugeImpl
         private readonly GaugeConfig config;
         private readonly IDisposable registration;
 
-        public string Unit => config.Unit;
-
         public Gauge(
             [NotNull] IMetricContext context,
             [NotNull] MetricTags tags,

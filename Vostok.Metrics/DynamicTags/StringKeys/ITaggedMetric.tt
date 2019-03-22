@@ -7,10 +7,24 @@ namespace Vostok.Metrics.DynamicTags.StringKeys
 {
 <# for (var keysCount = 1; keysCount <= DynamicTags_StringKeys_MaxKeyCount; keysCount++) { #>
     
+    /// <summary>
+    /// <para>
+    /// Represents a group of metrics of type <typeparamref name="TMetric"/>.
+    /// </para>
+    /// <para>
+    /// Metrics in group share the name but have different dynamic tags specified in <see cref="For"/> method
+    /// </para>
+    /// </summary>
     [PublicAPI]
     public interface ITaggedMetric<#= keysCount #><out TMetric> : IDisposable
     {
-        TMetric For(<#= string.Join(", ", Enumerable.Range(1, keysCount).Select(x => $"string value{x}")) #>);
+        /// <summary>
+        /// Retrieves a metric with specific tags from this group
+        /// </summary>
+<# for (var i = 1; i <= keysCount; i++) { #>
+        /// <param name="value<#= i #>">Value of <#= i #> tag. Keys were defined at construction time.</param>
+<# } #>
+        TMetric For(<#= FormatParameters("string value{0}", keysCount) #>);
     }
 <# } #>
 }

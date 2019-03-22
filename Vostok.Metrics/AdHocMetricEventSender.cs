@@ -14,7 +14,7 @@ namespace Vostok.Metrics
 
         /// <param name="sendAction">
         /// This will be called every time <see cref="Send"/> occurs.
-        /// The delegate should be thread-safe.
+        /// The delegate should be thread-safe and exception-free.
         /// </param>
         public AdHocMetricSampleSender(Action<MetricSample> sendAction)
         {

@@ -27,6 +27,7 @@ namespace Vostok.Metrics.Primitives.GaugeImpl
 
         public IEnumerable<MetricSample> Scrape()
         {
+            //todo think about exceptions here
             var value = getValue();
             var result = new MetricSample(
                 value,

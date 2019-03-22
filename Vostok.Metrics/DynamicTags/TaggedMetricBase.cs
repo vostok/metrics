@@ -15,7 +15,7 @@ namespace Vostok.Metrics.DynamicTags
         }
 
         protected TMetric For(MetricTags dynamicTags)
-        { 
+        {
             return cache.GetOrAdd(dynamicTags, factory);
         }
 

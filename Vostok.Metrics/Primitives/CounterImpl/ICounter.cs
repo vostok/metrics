@@ -26,6 +26,5 @@ namespace Vostok.Metrics.Primitives.CounterImpl
     public interface ICounter
     {
         void Add(double value);
-        string Unit { get; }
     }
 }

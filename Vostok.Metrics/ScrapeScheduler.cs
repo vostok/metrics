@@ -37,5 +37,10 @@ namespace Vostok.Metrics
                 scheduler.Unregister(metric);
             }
         }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

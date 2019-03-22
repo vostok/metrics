@@ -52,6 +52,5 @@ namespace Vostok.Metrics.Primitives.GaugeImpl
     {
         void Set(double value);
         void Add(double value);
-        [CanBeNull] string Unit { get; }
     }
 }

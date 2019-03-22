@@ -15,7 +15,7 @@ namespace Vostok.Metrics.Model
     /// Two <see cref="MetricSample">MetricSamples</see> belong to the same metric if and only if their <see cref="MetricSample.Tags"/> are the same.
     /// </para>
     /// <para>
-    /// MetricTags collection is immutable.
+    /// MetricTags collection is immutable and append-only.
     /// </para>
     /// </summary>
     [PublicAPI]

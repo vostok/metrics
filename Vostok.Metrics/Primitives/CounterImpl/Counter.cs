@@ -34,7 +34,5 @@ namespace Vostok.Metrics.Primitives.CounterImpl
                 config.Unit,
                 AggregationTypes.Counter));
         }
-
-        public string Unit => config.Unit;
     }
 }
