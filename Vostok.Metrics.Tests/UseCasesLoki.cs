@@ -6,7 +6,6 @@ using Vostok.Metrics.DynamicTags.StringKeys;
 using Vostok.Metrics.Primitives.GaugePrimitive;
 using Vostok.Metrics.Primitives.TimerPrimitive;
 using Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl;
-using Vostok.Metrics.WellKnownConstants;
 
 namespace Vostok.Metrics.Tests
 {
@@ -96,7 +95,7 @@ namespace Vostok.Metrics.Tests
         {
             lockTime = clusterContext
                 .WithTag("lock-namespace", namespaceName)
-                .Timer("lock-time", new TimerConfig{Unit = MetricUnits.Seconds});
+                .Timer("lock-time", new TimerConfig{Unit = WellKnownUnits.Time.Seconds});
         }
 
         public void RecordLockTime(TimeSpan time)

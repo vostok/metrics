@@ -9,14 +9,14 @@ namespace Vostok.Metrics.Model
     public class MetricTag
     {
         [NotNull]
-        [ValueProvider("Vostok.Metrics.WellKnownConstants.MetricTagKeys")]
+        [ValueProvider("Vostok.Metrics.WellKnownTagKeys")]
         public string Key { get; }
         
         [NotNull]
         public string Value { get; }
 
         public MetricTag(
-            [NotNull] [ValueProvider("Vostok.Metrics.WellKnownConstants.MetricTagKeys")] string key,
+            [NotNull] [ValueProvider("Vostok.Metrics.WellKnownTagKeys")] string key,
             [NotNull] string value)
         {
             Key = key;

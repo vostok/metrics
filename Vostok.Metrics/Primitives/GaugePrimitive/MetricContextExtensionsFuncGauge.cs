@@ -9,7 +9,7 @@ namespace Vostok.Metrics.Primitives.GaugePrimitive
     {
         /// <inheritdoc cref="IGauge"/>
         /// <param name="context">Context this metric will belong to</param>
-        /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownConstants.MetricTagKeys.Name"/></param>
+        /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="WellKnownTagKeys.Name"/></param>
         /// <param name="getValue">This func will be called when the value of Gauge is observed</param>
         /// <param name="config">Optional config</param>
         //todo not null annotations

@@ -1,7 +1,6 @@
 using System;
 using JetBrains.Annotations;
 using Vostok.Metrics.Model;
-using Vostok.Metrics.WellKnownConstants;
 
 namespace Vostok.Metrics.Primitives.CounterPrimitive
 {
@@ -32,7 +31,7 @@ namespace Vostok.Metrics.Primitives.CounterPrimitive
                 tags,
                 DateTimeOffset.Now,
                 config.Unit,
-                AggregationTypes.Counter));
+                WellKnownAggregationTypes.Counter));
         }
     }
 }

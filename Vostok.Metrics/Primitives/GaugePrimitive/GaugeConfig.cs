@@ -7,7 +7,7 @@ namespace Vostok.Metrics.Primitives.GaugePrimitive
     public class GaugeConfig
     {
         [CanBeNull] 
-        [ValueProvider("Vostok.Metrics.WellKnownConstants.MetricUnits")]
+        [ValueProvider("Vostok.Metrics.WellKnownUnits")]
         public string Unit { get; set; }  
         [CanBeNull] public TimeSpan? ScrapePeriod { get; set; }
         

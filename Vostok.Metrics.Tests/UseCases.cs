@@ -7,7 +7,6 @@ using NUnit.Framework;
 using Vostok.Metrics.Model;
 using Vostok.Metrics.Primitives.GaugePrimitive;
 using Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl;
-using Vostok.Metrics.WellKnownConstants;
 
 namespace Vostok.Metrics.Tests
 {
@@ -50,7 +49,7 @@ namespace Vostok.Metrics.Tests
                     10,
                     MetricTagsMerger.Merge(rootContext.Tags, "my-custom-metric"),
                     DateTimeOffset.Now,
-                    MetricUnits.Seconds,
+                    WellKnownUnits.Time.Seconds,
                     null));
         }
 

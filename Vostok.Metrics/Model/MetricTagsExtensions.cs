@@ -7,7 +7,7 @@ namespace Vostok.Metrics.Model
     {
         public static MetricTags Add(
             this MetricTags tags, 
-            [ValueProvider("Vostok.Metrics.WellKnownConstants.MetricTagKeys")] string key,
+            [ValueProvider("Vostok.Metrics.WellKnownTagKeys")] string key,
             string value)
         {
             return tags.Add(new MetricTag(key, value));

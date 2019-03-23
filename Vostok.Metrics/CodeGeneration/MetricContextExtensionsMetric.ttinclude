@@ -13,7 +13,7 @@ namespace <#= model.MetricNamespace #>
     {
         /// <inheritdoc cref="<#= model.InheritDocType #>"/>
         /// <param name="context">Context this metric will belong to</param>
-        /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownConstants.MetricTagKeys.Name"/></param>
+        /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownTagKeys.Name"/></param>
         /// <param name="config">Optional config</param>
         public static <#= model.MetricInterface #> <#= model.MetricClass #>(this IMetricContext context, string name, <#= model.MetricConfigClass #> config = null)
         {
@@ -35,7 +35,7 @@ namespace <#= model.MetricNamespace #>
         /// <inheritdoc cref="<#= model.InheritDocType #>"/>
         /// </summary>
         /// <param name="context">Context this metric will belong to</param>
-        /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownConstants.MetricTagKeys.Name"/></param>
+        /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownTagKeys.Name"/></param>
         /// <param name="typeTagsConverter">
         /// Optional custom mapping from <typeparamref name="TFor"/> to <see cref="Vostok.Metrics.Model.MetricTags"/>.
         /// These tags are specific for every <#= model.MetricClass #> in group and will be added after <paramref name="name"/> tag.
@@ -60,7 +60,7 @@ namespace <#= model.MetricNamespace #>
         /// <inheritdoc cref="<#= model.InheritDocType #>"/>
         /// </summary>
         /// <param name="context">Context this metric will belong to</param>
-        /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownConstants.MetricTagKeys.Name"/></param>
+        /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownTagKeys.Name"/></param>
 <# for (var i = 1; i <= keysCount; i++) { #>
         /// <param name="key<#= i #>">Key of <#= i #> dynamic tag</param>
 <# } #>

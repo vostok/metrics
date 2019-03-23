@@ -1,7 +1,6 @@
 using System;
 using JetBrains.Annotations;
 using Vostok.Metrics.Model;
-using Vostok.Metrics.WellKnownConstants;
 
 namespace Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl
 {
@@ -50,7 +49,7 @@ namespace Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl
                 tags,
                 DateTimeOffset.Now,
                 config.Unit,
-                AggregationTypes.Timer);
+                WellKnownAggregationTypes.Timer);
             context.Send(MetricSample);
         }
 
