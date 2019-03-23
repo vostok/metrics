@@ -31,7 +31,8 @@ namespace Vostok.Metrics.Primitives.CounterPrimitive
                 tags,
                 DateTimeOffset.Now,
                 config.Unit,
-                WellKnownAggregationTypes.Counter));
+                WellKnownAggregationTypes.Counter,
+                null));
         }
     }
 }

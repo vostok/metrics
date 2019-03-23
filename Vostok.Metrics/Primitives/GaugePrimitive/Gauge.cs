@@ -25,7 +25,7 @@ namespace Vostok.Metrics.Primitives.GaugePrimitive
 
         public IEnumerable<MetricEvent> Scrape()
         {
-            yield return new MetricEvent(value, tags, DateTimeOffset.Now, config.Unit, null);
+            yield return new MetricEvent(value, tags, DateTimeOffset.Now, config.Unit, null, null);
         }
 
         public void Set(double value)

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 
 namespace Vostok.Metrics.Model
@@ -6,20 +7,18 @@ namespace Vostok.Metrics.Model
     /// <summary>
     /// <para><see cref="MetricEvent"/> is the atomic storage unit of Vostok metrics system.</para>
     /// <para>Every event contains a numeric <see cref="Value"/> measured at some <see cref="Timestamp"/> and bound to a set of <see cref="Tags"/>.</para>
-    /// <para>Events may also contain auxiliary information, such as <see cref="Unit"/> and <see cref="AggregationType"/>.</para>
+    /// <para>Events may also contain auxiliary information, such as <see cref="Unit"/>, <see cref="AggregationType"/> and <see cref="AggregationParameters"/>.</para>
     /// <para><see cref="MetricEvent"/> instances are immutable. Consider using <see cref="MetricEventBuilder"/> to construct them.</para>
     /// </summary>
     [PublicAPI]
     public class MetricEvent
     {
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="value">See <see cref="Value"/>.</param>
         /// <param name="tags">See <see cref="Tags"/>.</param>
         /// <param name="timestamp">See <see cref="Timestamp"/>.</param>
         /// <param name="unit">See <see cref="Unit"/>.</param>
         /// <param name="aggregationType">See <see cref="AggregationType"/>.</param>
+        /// <param name="aggregationParameters">See <see cref="AggregationParameters"/>.</param>
         public MetricEvent(
             double value,
             MetricTags tags,
@@ -27,7 +26,8 @@ namespace Vostok.Metrics.Model
             [CanBeNull] [ValueProvider("Vostok.Metrics.WellKnownUnits")]
             string unit,
             [CanBeNull] [ValueProvider("Vostok.Metrics.WellKnownAggregationTypes")]
-            string aggregationType)
+            string aggregationType,
+            [CanBeNull] IReadOnlyDictionary<string, string> aggregationParameters)
         {
             Tags = tags ?? throw new ArgumentNullException(nameof(tags));
 
@@ -38,6 +38,7 @@ namespace Vostok.Metrics.Model
             Value = value;
             Timestamp = timestamp;
             AggregationType = aggregationType;
+            AggregationParameters = aggregationParameters;
         }
 
         /// <summary>
@@ -73,5 +74,12 @@ namespace Vostok.Metrics.Model
         /// </summary>
         [CanBeNull]
         public string AggregationType { get; }
+
+        /// <summary>
+        /// <para>An optional set of key-value string pairs that may contain customization parameters for server-side aggregation mechanism.</para>
+        /// <para>Contents of <see cref="AggregationParameters"/> are specific to selected <see cref="AggregationType"/>.</para>
+        /// </summary>
+        [CanBeNull]
+        public IReadOnlyDictionary<string, string> AggregationParameters { get; }
     }
 }

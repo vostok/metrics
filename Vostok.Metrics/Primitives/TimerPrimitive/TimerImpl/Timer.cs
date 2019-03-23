@@ -49,7 +49,8 @@ namespace Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl
                 tags,
                 DateTimeOffset.Now,
                 config.Unit,
-                WellKnownAggregationTypes.Timer);
+                WellKnownAggregationTypes.Timer,
+                null);
             context.Send(MetricSample);
         }
 

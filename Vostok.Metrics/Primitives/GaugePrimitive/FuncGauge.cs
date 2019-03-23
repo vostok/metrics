@@ -34,6 +34,7 @@ namespace Vostok.Metrics.Primitives.GaugePrimitive
                 tags,
                 DateTimeOffset.UtcNow,
                 config.Unit,
+                null,
                 null);
             yield return result;
         }
