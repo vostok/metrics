@@ -16,13 +16,14 @@
 
   <PropertyGroup>
     <Title>Vostok.Metrics</Title>
-    <Description>Vostok.Metrics</Description>
+    <Description>Entry point to Vostok metrics system: abstractions, models, gathering primitives.</Description>
   </PropertyGroup>
 
   <PropertyGroup>
     <PackageProjectUrl>https://github.com/vostok/metrics</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/vostok/metrics/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageTags>vostok</PackageTags>
+    <PackageTags>vostok vostok.metrics</PackageTags>
+    <PackageReleaseNotes>https://github.com/vostok/metrics/blob/master/CHANGELOG.md</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/vostok/metrics</RepositoryUrl>
   </PropertyGroup>
   
