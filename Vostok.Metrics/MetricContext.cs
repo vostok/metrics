@@ -28,9 +28,9 @@ namespace Vostok.Metrics
             return scrapeScheduler.Register(metric, scrapePeriod ?? config.DefaultScrapePeriod);
         }
 
-        public void Send(MetricSample sample)
+        public void Send(MetricEvent @event)
         {
-            sender.Send(sample);
+            sender.Send(@event);
         }
 
         private void ScrapeAction(IScrapableMetric metric, TimeSpan scrapePeriod, DateTimeOffset scrapeTimestamp)

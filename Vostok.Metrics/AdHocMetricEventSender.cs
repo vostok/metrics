@@ -10,20 +10,20 @@ namespace Vostok.Metrics
     [PublicAPI]
     public class AdHocMetricSampleSender : IMetricSampleSender
     {
-        private readonly Action<MetricSample> sendAction;
+        private readonly Action<MetricEvent> sendAction;
 
         /// <param name="sendAction">
         /// This will be called every time <see cref="Send"/> occurs.
         /// The delegate should be thread-safe and exception-free.
         /// </param>
-        public AdHocMetricSampleSender(Action<MetricSample> sendAction)
+        public AdHocMetricSampleSender(Action<MetricEvent> sendAction)
         {
             this.sendAction = sendAction;
         }
 
-        public void Send(MetricSample sample)
+        public void Send(MetricEvent @event)
         {
-            sendAction(sample);
+            sendAction(@event);
         }
     }
 }

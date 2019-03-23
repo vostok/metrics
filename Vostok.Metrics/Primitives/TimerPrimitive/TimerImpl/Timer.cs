@@ -44,7 +44,7 @@ namespace Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl
 
         public void Report(double value)
         {
-            var MetricSample = new MetricSample(
+            var MetricSample = new MetricEvent(
                 value,
                 tags,
                 DateTimeOffset.Now,

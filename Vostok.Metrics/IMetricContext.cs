@@ -37,12 +37,12 @@ namespace Vostok.Metrics
         IDisposable Register(IScrapableMetric metric, TimeSpan? scrapePeriod);
         
         /// <summary>
-        /// <para>Sends the <see cref="MetricSample"/> for further processing.</para>
+        /// <para>Sends the <see cref="MetricEvent"/> for further processing.</para>
         /// <para>
         /// Use this method directly to send custom MetricSample.
-        /// To create <see cref="MetricSample"/> you may use <see cref="MetricSampleBuilder"/>.
+        /// To create <see cref="MetricEvent"/> you may use <see cref="MetricSampleBuilder"/>.
         /// </para>
         /// </summary>
-        void Send(MetricSample sample);
+        void Send(MetricEvent @event);
     }
 }

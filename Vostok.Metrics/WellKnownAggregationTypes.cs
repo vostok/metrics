@@ -4,7 +4,7 @@ using Vostok.Metrics.Model;
 namespace Vostok.Metrics
 {
     /// <summary>
-    /// Names for some of well-recognized <see cref="MetricSample.AggregationType">aggregation types</see>.
+    /// Names for some of well-recognized <see cref="MetricEvent.AggregationType">aggregation types</see>.
     /// </summary>
     [PublicAPI]
     public static class WellKnownAggregationTypes

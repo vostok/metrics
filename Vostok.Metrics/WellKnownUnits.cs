@@ -4,7 +4,7 @@ using Vostok.Metrics.Model;
 namespace Vostok.Metrics
 {
     /// <summary>
-    /// Names for some of well-recognized measurement <see cref="MetricSample.Unit">units</see>.
+    /// Names for some of well-recognized measurement <see cref="MetricEvent.Unit">units</see>.
     /// </summary>
     [PublicAPI]
     public static class WellKnownUnits

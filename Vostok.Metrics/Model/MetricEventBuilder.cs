@@ -6,7 +6,7 @@ namespace Vostok.Metrics.Model
     [PublicAPI]
     public class MetricSampleBuilder
     {
-        public MetricSample Build()
+        public MetricEvent Build()
         {
             throw new NotImplementedException();
         }

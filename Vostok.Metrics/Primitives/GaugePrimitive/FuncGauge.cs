@@ -25,11 +25,11 @@ namespace Vostok.Metrics.Primitives.GaugePrimitive
             registration = context.Register(this, config.ScrapePeriod);
         }
 
-        public IEnumerable<MetricSample> Scrape()
+        public IEnumerable<MetricEvent> Scrape()
         {
             //todo think about exceptions here
             var value = getValue();
-            var result = new MetricSample(
+            var result = new MetricEvent(
                 value,
                 tags,
                 DateTimeOffset.UtcNow,

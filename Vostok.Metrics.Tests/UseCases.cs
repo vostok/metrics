@@ -45,7 +45,7 @@ namespace Vostok.Metrics.Tests
             // todo MetricSample builder
             // need this to send custom metrics to storage
             rootContext
-                .Send(new MetricSample(
+                .Send(new MetricEvent(
                     10,
                     MetricTagsMerger.Merge(rootContext.Tags, "my-custom-metric"),
                     DateTimeOffset.Now,

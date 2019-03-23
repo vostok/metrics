@@ -10,7 +10,7 @@ namespace Vostok.Metrics.Model
     /// <summary>
     /// <para><see cref="MetricTags"/> is an ordered list of key-value pairs (each pair called a <see cref="MetricTag"/>) that distinguishes one metric from another.</para>
     /// <para>Keys and values are both non-null <see cref="string">strings</see>.</para>
-    /// <para>Two <see cref="MetricSample"/>s belong to the same metric if and only if their <see cref="MetricSample.Tags"/> are equal.</para>
+    /// <para>Two <see cref="MetricEvent"/>s belong to the same metric if and only if their <see cref="MetricEvent.Tags"/> are equal.</para>
     /// <para><see cref="MetricTags"/> collection is immutable and append-only.</para>
     /// </summary>
     [PublicAPI]

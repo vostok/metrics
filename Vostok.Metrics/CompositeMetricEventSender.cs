@@ -13,11 +13,11 @@ namespace Vostok.Metrics
             this.senders = senders;
         }
 
-        public void Send(MetricSample sample)
+        public void Send(MetricEvent @event)
         {
             foreach (var sender in senders)
             {
-                sender.Send(sample);
+                sender.Send(@event);
             }
         }
     }

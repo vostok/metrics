@@ -26,7 +26,7 @@ namespace Vostok.Metrics.Primitives.CounterPrimitive
                     nameof(value));
             }
             
-            context.Send(new MetricSample(
+            context.Send(new MetricEvent(
                 value,
                 tags,
                 DateTimeOffset.Now,

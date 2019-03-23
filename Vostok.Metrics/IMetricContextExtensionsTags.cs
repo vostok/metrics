@@ -47,9 +47,9 @@ namespace Vostok.Metrics
             public IDisposable Register(IScrapableMetric metric, TimeSpan? scrapePeriod) =>
                 context.Register(metric, scrapePeriod);
 
-            public void Send(MetricSample sample)
+            public void Send(MetricEvent @event)
             {
-                context.Send(sample);
+                context.Send(@event);
             }
         }
     }

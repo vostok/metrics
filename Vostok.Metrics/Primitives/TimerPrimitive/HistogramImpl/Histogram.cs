@@ -46,7 +46,7 @@ namespace Vostok.Metrics.Primitives.TimerPrimitive.HistogramImpl
             registration = context.Register(this, config.ScrapePeriod);
         }
 
-        public IEnumerable<MetricSample> Scrape()
+        public IEnumerable<MetricEvent> Scrape()
         {
             throw new NotImplementedException();
         }
