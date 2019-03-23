@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 namespace Vostok.Metrics.Model
 {
     [PublicAPI]
-    public class MetricSampleBuilder
+    public class MetricEventBuilder
     {
         public MetricEvent Build()
         {

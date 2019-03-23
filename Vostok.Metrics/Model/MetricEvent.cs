@@ -56,7 +56,7 @@ namespace Vostok.Metrics.Model
 
         /// <summary>
         /// <inheritdoc cref="MetricEvent"/>
-        /// <para>You may also use <see cref="MetricSampleBuilder"/> to create a MetricSample</para>
+        /// <para>You may also use <see cref="MetricEventBuilder"/> to create a MetricSample</para>
         /// </summary>
         /// <param name="value">Observed value</param>
         /// <param name="tags">Collection of tags describing the value. See <see cref="Tags"/></param>
