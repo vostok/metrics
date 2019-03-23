@@ -1,53 +1,131 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using JetBrains.Annotations;
-using Vostok.Metrics.DynamicTags.Typed;
 
 namespace Vostok.Metrics.Model
 {
     /// <summary>
-    /// <para>
-    /// Ordered list of key-value pairs (each pair called a <see cref="MetricTag"/>) distinguishes one metric from another.
-    /// Keys and values are both <see cref="string">strings</see>. 
-    /// </para>
-    /// <para>
-    /// Two <see cref="MetricSample">MetricSamples</see> belong to the same metric if and only if their <see cref="MetricSample.Tags"/> are the same.
-    /// </para>
-    /// <para>
-    /// MetricTags collection is immutable and append-only.
-    /// </para>
+    /// <para><see cref="MetricTags"/> is an ordered list of key-value pairs (each pair called a <see cref="MetricTag"/>) that distinguishes one metric from another.</para>
+    /// <para>Keys and values are both non-null <see cref="string">strings</see>.</para>
+    /// <para>Two <see cref="MetricSample"/>s belong to the same metric if and only if their <see cref="MetricSample.Tags"/> are equal.</para>
+    /// <para><see cref="MetricTags"/> collection is immutable and append-only.</para>
     /// </summary>
     [PublicAPI]
     public class MetricTags : IReadOnlyList<MetricTag>, IEquatable<MetricTags>
     {
-        public MetricTags Add([NotNull] MetricTag tag)
+        /// <summary>
+        /// An instance of <see cref="MetricTags"/> with no contents.
+        /// </summary>
+        public static readonly MetricTags Empty = new MetricTags(Array.Empty<MetricTag>(), 0);
+
+        private readonly MetricTag[] items;
+        private readonly int hashCode;
+        private int appendsDone;
+
+        private MetricTags(MetricTag[] items, int count)
         {
-            throw new NotImplementedException();
+            this.items = items;
+
+            Count = count;
+
+            hashCode = items.Aggregate(count, (current, element) => (current * 397) ^ element.GetHashCode());
         }
 
-        public MetricTags AddRange([NotNull] MetricTags tags)
+        public int Count { get; }
+
+        /// <summary>
+        /// <para>Appends a new <see cref="MetricTag"/> with given <paramref name="key"/> and <paramref name="value"/> and returns a new instance of <see cref="MetricTags"/> collection.</para>
+        /// <para>Current instance is not modified.</para>
+        /// </summary>
+        [NotNull]
+        public MetricTags Append([NotNull] string key, [NotNull] string value)
+            => Append(new MetricTag(key, value));
+
+        /// <summary>
+        /// <para>Appends given <paramref name="tag"/> and returns a new instance of <see cref="MetricTags"/> collection.</para>
+        /// <para>Current instance is not modified.</para>
+        /// </summary>
+        [NotNull]
+        public MetricTags Append([NotNull] MetricTag tag)
+            => Append(new[] {tag});
+
+        /// <summary>
+        /// <para>Appends given <paramref name="tags"/> sequence and returns a new instance of <see cref="MetricTags"/> collection.</para>
+        /// <para>Current instance is not modified.</para>
+        /// </summary>
+        [NotNull]
+        public MetricTags Append([NotNull] IReadOnlyList<MetricTag> tags)
         {
-            throw new NotImplementedException();
+            if (tags == null)
+                throw new ArgumentNullException(nameof(tags));
+
+            var currentArray = items;
+            var fitsIntoCurrentArray = currentArray.Length >= Count + tags.Count;
+            var isFirstAppend = Interlocked.Increment(ref appendsDone) == 1;
+
+            if (!isFirstAppend || !fitsIntoCurrentArray)
+            {
+                currentArray = new MetricTag[fitsIntoCurrentArray ? items.Length : Math.Max(4, items.Length * 2)];
+                Array.Copy(items, 0, currentArray, 0, Count);
+            }
+
+            for (var i = 0; i < tags.Count; i++)
+                Interlocked.Exchange(ref currentArray[Count + i], tags[i]);
+
+            return new MetricTags(currentArray, Count + tags.Count);
         }
-        
-        public static readonly MetricTags Empty = new MetricTags();
 
-        #region IReadOnlyList implementation
+        public IEnumerator<MetricTag> GetEnumerator()
+        {
+            for (var i = 0; i < Count; i++)
+                yield return items[i];
+        }
 
-        public IEnumerator<MetricTag> GetEnumerator() =>
-            throw new NotImplementedException();
+        public MetricTag this[int index]
+        {
+            get
+            {
+                if (index >= Count)
+                    throw new IndexOutOfRangeException();
+
+                return items[index];
+            }
+        }
 
         IEnumerator IEnumerable.GetEnumerator() =>
             GetEnumerator();
 
-        public int Count { get; }
-        
-        public MetricTag this[int index] =>
-            throw new NotImplementedException();
-        
-        public bool Equals(MetricTags other) =>
-            throw new NotImplementedException();
+        #region Equality
+
+        public bool Equals(MetricTags other)
+        {
+            if (other == null)
+                return false;
+
+            if (ReferenceEquals(this, other))
+                return true;
+
+            if (Count != other.Count)
+                return false;
+
+            if (hashCode != other.hashCode)
+                return false;
+
+            for (var i = 0; i < Count; i++)
+            {
+                if (!items[i].Equals(other.items[i]))
+                    return false;
+            }
+
+            return true;
+        }
+
+        public override bool Equals(object obj) => Equals(obj as MetricTags);
+
+        public override int GetHashCode() => hashCode;
 
         #endregion
     }

@@ -8,14 +8,14 @@ namespace Vostok.Metrics.Model
         public static MetricTags Merge(MetricTags contextTags, string name, MetricTags dynamicTags)
         {
             return contextTags
-                .Add(WellKnownTagKeys.Name, name)
-                .AddRange(dynamicTags);
+                .Append(WellKnownTagKeys.Name, name)
+                .Append(dynamicTags);
         }
 
         public static MetricTags Merge(MetricTags contextTags, string name)
         {
             return contextTags
-                .Add(WellKnownTagKeys.Name, name);
+                .Append(WellKnownTagKeys.Name, name);
         }
     }
 }

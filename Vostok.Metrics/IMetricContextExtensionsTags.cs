@@ -12,19 +12,19 @@ namespace Vostok.Metrics
         /// </summary>
         public static IMetricContext WithTag(this IMetricContext context, string key, string value)
         {
-            return context.OverwriteTags(context.Tags.Add(key, value));
+            return context.OverwriteTags(context.Tags.Append(key, value));
         }
 
         /// <inheritdoc cref="WithTag(Vostok.Metrics.IMetricContext,string,string)"/>
         public static IMetricContext WithTag(this IMetricContext context, MetricTag tag)
         {
-            return context.OverwriteTags(context.Tags.Add(tag));
+            return context.OverwriteTags(context.Tags.Append(tag));
         }
 
         /// <inheritdoc cref="WithTag(Vostok.Metrics.IMetricContext,string,string)"/>
         public static IMetricContext WithTags(this IMetricContext context, MetricTags tags)
         {
-            return context.OverwriteTags(context.Tags.AddRange(tags));
+            return context.OverwriteTags(context.Tags.Append(tags));
         }
 
         private static IMetricContext OverwriteTags(this IMetricContext context, MetricTags newTags)
