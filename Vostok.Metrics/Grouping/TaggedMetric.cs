@@ -2,7 +2,7 @@
 using System;
 using Vostok.Metrics.Model;
 
-namespace Vostok.Metrics.DynamicTags.StringKeys
+namespace Vostok.Metrics.Grouping
 {
 	internal class TaggedMetric<TMetric> : TaggedMetricBase<TMetric>,
 		ITaggedMetric1<TMetric>,

@@ -1,8 +1,7 @@
 
 using System;
 using JetBrains.Annotations;
-using Vostok.Metrics.DynamicTags.StringKeys;
-using Vostok.Metrics.DynamicTags.Typed;
+using Vostok.Metrics.Grouping;
 using Vostok.Metrics.Model;
 
 namespace Vostok.Metrics.Primitives.GaugePrimitive

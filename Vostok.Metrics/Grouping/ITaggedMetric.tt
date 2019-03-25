@@ -1,9 +1,9 @@
-﻿<#@ include file="./../../CodeGeneration/CodeGenerationCommon.ttinclude" once="true" #>
-<#@ include file="./../../CodeGeneration/TaggedMetricConstants.ttinclude" once="true" #>
+﻿<#@ include file="./../CodeGeneration/CodeGenerationCommon.ttinclude" once="true" #>
+<#@ include file="./../CodeGeneration/TaggedMetricConstants.ttinclude" once="true" #>
 using System;
 using JetBrains.Annotations;
 
-namespace Vostok.Metrics.DynamicTags.StringKeys
+namespace Vostok.Metrics.Grouping
 {
 <# for (var keysCount = 1; keysCount <= DynamicTags_StringKeys_MaxKeyCount; keysCount++) { #>
     

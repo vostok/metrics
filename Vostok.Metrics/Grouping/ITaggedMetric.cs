@@ -2,7 +2,7 @@
 using System;
 using JetBrains.Annotations;
 
-namespace Vostok.Metrics.DynamicTags.StringKeys
+namespace Vostok.Metrics.Grouping
 {
     
     /// <summary>

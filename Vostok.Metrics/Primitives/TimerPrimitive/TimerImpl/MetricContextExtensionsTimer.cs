@@ -1,8 +1,7 @@
 
 using System;
 using JetBrains.Annotations;
-using Vostok.Metrics.DynamicTags.StringKeys;
-using Vostok.Metrics.DynamicTags.Typed;
+using Vostok.Metrics.Grouping;
 using Vostok.Metrics.Model;
 
 namespace Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl
@@ -12,7 +11,7 @@ namespace Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl
     {
         /// <inheritdoc cref="Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl.Timer"/>
         /// <param name="context">Context this metric will belong to</param>
-        /// <param name="name">The name of the metric. It will be added to <see cref="MetricEvent.Tags"/> with key <see cref="WellKnownTagKeys.Name"/></param>
+        /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownTagKeys.Name"/></param>
         /// <param name="config">Optional config</param>
         public static ITimer Timer(this IMetricContext context, string name, TimerConfig config = null)
         {
@@ -34,7 +33,7 @@ namespace Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl
         /// <inheritdoc cref="Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl.Timer"/>
         /// </summary>
         /// <param name="context">Context this metric will belong to</param>
-        /// <param name="name">The name of the metric. It will be added to <see cref="MetricEvent.Tags"/> with key <see cref="WellKnownTagKeys.Name"/></param>
+        /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownTagKeys.Name"/></param>
         /// <param name="typeTagsConverter">
         /// Optional custom mapping from <typeparamref name="TFor"/> to <see cref="Vostok.Metrics.Model.MetricTags"/>.
         /// These tags are specific for every Timer in group and will be added after <paramref name="name"/> tag.
@@ -58,7 +57,7 @@ namespace Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl
         /// <inheritdoc cref="Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl.Timer"/>
         /// </summary>
         /// <param name="context">Context this metric will belong to</param>
-        /// <param name="name">The name of the metric. It will be added to <see cref="MetricEvent.Tags"/> with key <see cref="WellKnownTagKeys.Name"/></param>
+        /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownTagKeys.Name"/></param>
         /// <param name="key1">Key of 1 dynamic tag</param>
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl.Timer"/>
@@ -78,7 +77,7 @@ namespace Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl
         /// <inheritdoc cref="Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl.Timer"/>
         /// </summary>
         /// <param name="context">Context this metric will belong to</param>
-        /// <param name="name">The name of the metric. It will be added to <see cref="MetricEvent.Tags"/> with key <see cref="WellKnownTagKeys.Name"/></param>
+        /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownTagKeys.Name"/></param>
         /// <param name="key1">Key of 1 dynamic tag</param>
         /// <param name="key2">Key of 2 dynamic tag</param>
         /// <param name="config">Optional config</param>
@@ -99,7 +98,7 @@ namespace Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl
         /// <inheritdoc cref="Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl.Timer"/>
         /// </summary>
         /// <param name="context">Context this metric will belong to</param>
-        /// <param name="name">The name of the metric. It will be added to <see cref="MetricEvent.Tags"/> with key <see cref="WellKnownTagKeys.Name"/></param>
+        /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownTagKeys.Name"/></param>
         /// <param name="key1">Key of 1 dynamic tag</param>
         /// <param name="key2">Key of 2 dynamic tag</param>
         /// <param name="key3">Key of 3 dynamic tag</param>
@@ -121,7 +120,7 @@ namespace Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl
         /// <inheritdoc cref="Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl.Timer"/>
         /// </summary>
         /// <param name="context">Context this metric will belong to</param>
-        /// <param name="name">The name of the metric. It will be added to <see cref="MetricEvent.Tags"/> with key <see cref="WellKnownTagKeys.Name"/></param>
+        /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownTagKeys.Name"/></param>
         /// <param name="key1">Key of 1 dynamic tag</param>
         /// <param name="key2">Key of 2 dynamic tag</param>
         /// <param name="key3">Key of 3 dynamic tag</param>
@@ -144,7 +143,7 @@ namespace Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl
         /// <inheritdoc cref="Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl.Timer"/>
         /// </summary>
         /// <param name="context">Context this metric will belong to</param>
-        /// <param name="name">The name of the metric. It will be added to <see cref="MetricEvent.Tags"/> with key <see cref="WellKnownTagKeys.Name"/></param>
+        /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownTagKeys.Name"/></param>
         /// <param name="key1">Key of 1 dynamic tag</param>
         /// <param name="key2">Key of 2 dynamic tag</param>
         /// <param name="key3">Key of 3 dynamic tag</param>
@@ -168,7 +167,7 @@ namespace Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl
         /// <inheritdoc cref="Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl.Timer"/>
         /// </summary>
         /// <param name="context">Context this metric will belong to</param>
-        /// <param name="name">The name of the metric. It will be added to <see cref="MetricEvent.Tags"/> with key <see cref="WellKnownTagKeys.Name"/></param>
+        /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownTagKeys.Name"/></param>
         /// <param name="key1">Key of 1 dynamic tag</param>
         /// <param name="key2">Key of 2 dynamic tag</param>
         /// <param name="key3">Key of 3 dynamic tag</param>
@@ -193,7 +192,7 @@ namespace Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl
         /// <inheritdoc cref="Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl.Timer"/>
         /// </summary>
         /// <param name="context">Context this metric will belong to</param>
-        /// <param name="name">The name of the metric. It will be added to <see cref="MetricEvent.Tags"/> with key <see cref="WellKnownTagKeys.Name"/></param>
+        /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownTagKeys.Name"/></param>
         /// <param name="key1">Key of 1 dynamic tag</param>
         /// <param name="key2">Key of 2 dynamic tag</param>
         /// <param name="key3">Key of 3 dynamic tag</param>
@@ -219,7 +218,7 @@ namespace Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl
         /// <inheritdoc cref="Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl.Timer"/>
         /// </summary>
         /// <param name="context">Context this metric will belong to</param>
-        /// <param name="name">The name of the metric. It will be added to <see cref="MetricEvent.Tags"/> with key <see cref="WellKnownTagKeys.Name"/></param>
+        /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownTagKeys.Name"/></param>
         /// <param name="key1">Key of 1 dynamic tag</param>
         /// <param name="key2">Key of 2 dynamic tag</param>
         /// <param name="key3">Key of 3 dynamic tag</param>

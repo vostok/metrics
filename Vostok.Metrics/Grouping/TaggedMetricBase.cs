@@ -2,7 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using Vostok.Metrics.Model;
 
-namespace Vostok.Metrics.DynamicTags
+namespace Vostok.Metrics.Grouping
 {
     internal abstract class TaggedMetricBase<TMetric> : IDisposable
     {

@@ -1,7 +1,7 @@
 
 using JetBrains.Annotations;
 
-namespace Vostok.Metrics.DynamicTags.StringKeys
+namespace Vostok.Metrics.Grouping
 {
     [PublicAPI]
     public static partial class ITaggedMetricExtensions

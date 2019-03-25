@@ -1,6 +1,6 @@
 using Vostok.Metrics.Model;
 
-namespace Vostok.Metrics.DynamicTags.Typed
+namespace Vostok.Metrics.Grouping
 {
     internal class TypeTagsConverter<TFor> : ITypeTagsConverter<TFor>
     {

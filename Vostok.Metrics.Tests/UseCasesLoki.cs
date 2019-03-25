@@ -2,7 +2,7 @@ using System;
 using FluentAssertions.Extensions;
 using NSubstitute;
 using NUnit.Framework;
-using Vostok.Metrics.DynamicTags.StringKeys;
+using Vostok.Metrics.Grouping;
 using Vostok.Metrics.Primitives.GaugePrimitive;
 using Vostok.Metrics.Primitives.TimerPrimitive;
 using Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl;

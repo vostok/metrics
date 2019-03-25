@@ -36,9 +36,9 @@
     <Compile Update="Primitives\GaugePrimitive\MetricContextExtensionsGauge.cs" DesignTime="True" AutoGen="True" DependentUpon="MetricContextExtensionsGauge.tt" />
     <Compile Update="Primitives\TimerPrimitive\TimerImpl\MetricContextExtensionsTimer.cs" DesignTime="True" AutoGen="True" DependentUpon="MetricContextExtensionsTimer.tt" />
     <Compile Update="Primitives\TimerPrimitive\HistogramImpl\MetricContextExtensionsHistogram.cs" DesignTime="True" AutoGen="True" DependentUpon="MetricContextExtensionsHistogram.tt" />
-    <Compile Update="DynamicTags\StringKeys\ITaggedMetricExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="ITaggedMetricExtensions.tt" />
-    <Compile Update="DynamicTags\StringKeys\ITaggedMetric.cs" DesignTime="True" AutoGen="True" DependentUpon="ITaggedMetric.tt" />
-    <Compile Update="DynamicTags\StringKeys\TaggedMetric.cs" DesignTime="True" AutoGen="True" DependentUpon="TaggedMetric.tt" />
+    <Compile Update="Grouping\ITaggedMetricExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="ITaggedMetricExtensions.tt" />
+    <Compile Update="Grouping\ITaggedMetric.cs" DesignTime="True" AutoGen="True" DependentUpon="ITaggedMetric.tt" />
+    <Compile Update="Grouping\TaggedMetric.cs" DesignTime="True" AutoGen="True" DependentUpon="TaggedMetric.tt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,9 +46,9 @@
     <None Update="Primitives\GaugePrimitive\MetricContextExtensionsGauge.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="MetricContextExtensionsGauge.cs" />
     <None Update="Primitives\TimerPrimitive\TimerImpl\MetricContextExtensionsTimer.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="MetricContextExtensionsTimer.cs" />
     <None Update="Primitives\TimerPrimitive\HistogramImpl\MetricContextExtensionsHistogram.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="MetricContextExtensionsHistogram.cs" />
-    <None Update="DynamicTags\StringKeys\ITaggedMetricExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="ITaggedMetricExtensions.cs" />
-    <None Update="DynamicTags\StringKeys\ITaggedMetric.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="ITaggedMetric.cs" />
-    <None Update="DynamicTags\StringKeys\TaggedMetric.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="TaggedMetric.cs" />
+    <None Update="Grouping\ITaggedMetricExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="ITaggedMetricExtensions.cs" />
+    <None Update="Grouping\ITaggedMetric.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="ITaggedMetric.cs" />
+    <None Update="Grouping\TaggedMetric.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="TaggedMetric.cs" />
   </ItemGroup>
 
   <ItemGroup>

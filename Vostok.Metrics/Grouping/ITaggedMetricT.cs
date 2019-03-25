@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 
-namespace Vostok.Metrics.DynamicTags.Typed
+namespace Vostok.Metrics.Grouping
 {
     [PublicAPI]
     public interface ITaggedMetricT<TFor, out TMetric>

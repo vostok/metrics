@@ -1,7 +1,7 @@
 using System;
 using Vostok.Metrics.Model;
 
-namespace Vostok.Metrics.DynamicTags.Typed
+namespace Vostok.Metrics.Grouping
 {
     internal class TaggedMetricT<TFor, TMetric> : TaggedMetricBase<TMetric>, ITaggedMetricT<TFor, TMetric>
     {
