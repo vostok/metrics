@@ -1,3 +1,4 @@
+
 using JetBrains.Annotations;
 
 namespace Vostok.Metrics.DynamicTags.StringKeys

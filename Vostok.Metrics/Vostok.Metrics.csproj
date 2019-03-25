@@ -3,6 +3,7 @@
   
   <Import Project="..\..\vostok.devtools\library-common-props\Main-Project.props" />
   <Import Project="..\..\vostok.devtools\git-commit-to-assembly-title\Vostok.Tools.GitCommit2AssemblyTitle.props" />
+  <Import Project="Vostok.Metrics.Codegen.props" />
   
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -30,5 +31,51 @@
   <ItemGroup>
     <Compile Include="..\..\vostok.commons.helpers\Vostok.Commons.Helpers\Comparers\DictionaryComparer.cs" Link="Commons\DictionaryComparer.cs" />
   </ItemGroup>
-  
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="DynamicTags\StringKeys\ITaggedMetric.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ITaggedMetric.tt</DependentUpon>
+    </Compile>
+    <Compile Update="DynamicTags\StringKeys\ITaggedMetricExtensions.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ITaggedMetricExtensions.tt</DependentUpon>
+    </Compile>
+    <Compile Update="DynamicTags\StringKeys\TaggedMetric.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TaggedMetric.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Primitives\TimerPrimitive\HistogramImpl\MetricContextExtensionsHistogram.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MetricContextExtensionsHistogram.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="DynamicTags\StringKeys\ITaggedMetric.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ITaggedMetric.cs</LastGenOutput>
+    </None>
+    <None Update="DynamicTags\StringKeys\ITaggedMetricExtensions.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ITaggedMetricExtensions.cs</LastGenOutput>
+    </None>
+    <None Update="DynamicTags\StringKeys\TaggedMetric.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TaggedMetric.cs</LastGenOutput>
+    </None>
+    <None Update="Primitives\TimerPrimitive\HistogramImpl\MetricContextExtensionsHistogram.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MetricContextExtensionsHistogram.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
 </Project>
