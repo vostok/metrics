@@ -20,7 +20,7 @@ namespace Vostok.Metrics.Primitives.TimerPrimitive.HistogramImpl
             return new Histogram(context, tags, config);
         }
 
-        #region TaggedMetric
+        #region IMetricGroup
 
         /// <summary>
         /// <para>
@@ -40,10 +40,10 @@ namespace Vostok.Metrics.Primitives.TimerPrimitive.HistogramImpl
         /// </param>
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="Vostok.Metrics.Primitives.TimerPrimitive.HistogramImpl.Histogram"/>
-        public static ITaggedMetricT<TFor, ITimer> Histogram<TFor>(this IMetricContext context, string name, ITypeTagsConverter<TFor> typeTagsConverter = null, HistogramConfig config = null)
+        public static IMetricGroup<TFor, ITimer> Histogram<TFor>(this IMetricContext context, string name, ITypeTagsConverter<TFor> typeTagsConverter = null, HistogramConfig config = null)
         {
             config = config ?? HistogramConfig.Default;
-            return new TaggedMetricT<TFor, ITimer>(CreateTagsFactory(context, name, config), typeTagsConverter);
+            return new MetricGroup<TFor, ITimer>(CreateTagsFactory(context, name, config), typeTagsConverter);
         }         
 
         /// <summary>
@@ -61,9 +61,9 @@ namespace Vostok.Metrics.Primitives.TimerPrimitive.HistogramImpl
         /// <param name="key1">Key of 1 dynamic tag</param>
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="Vostok.Metrics.Primitives.TimerPrimitive.HistogramImpl.Histogram"/>
-        public static ITaggedMetric1<ITimer> Histogram(this IMetricContext context, string name, string key1, HistogramConfig config = null)
+        public static IMetricGroup1<ITimer> Histogram(this IMetricContext context, string name, string key1, HistogramConfig config = null)
         {
-            return CreateTaggedMetric(context, name, config, key1);
+            return CreateMetricGroup(context, name, config, key1);
         }
 
         /// <summary>
@@ -82,9 +82,9 @@ namespace Vostok.Metrics.Primitives.TimerPrimitive.HistogramImpl
         /// <param name="key2">Key of 2 dynamic tag</param>
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="Vostok.Metrics.Primitives.TimerPrimitive.HistogramImpl.Histogram"/>
-        public static ITaggedMetric2<ITimer> Histogram(this IMetricContext context, string name, string key1, string key2, HistogramConfig config = null)
+        public static IMetricGroup2<ITimer> Histogram(this IMetricContext context, string name, string key1, string key2, HistogramConfig config = null)
         {
-            return CreateTaggedMetric(context, name, config, key1, key2);
+            return CreateMetricGroup(context, name, config, key1, key2);
         }
 
         /// <summary>
@@ -104,9 +104,9 @@ namespace Vostok.Metrics.Primitives.TimerPrimitive.HistogramImpl
         /// <param name="key3">Key of 3 dynamic tag</param>
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="Vostok.Metrics.Primitives.TimerPrimitive.HistogramImpl.Histogram"/>
-        public static ITaggedMetric3<ITimer> Histogram(this IMetricContext context, string name, string key1, string key2, string key3, HistogramConfig config = null)
+        public static IMetricGroup3<ITimer> Histogram(this IMetricContext context, string name, string key1, string key2, string key3, HistogramConfig config = null)
         {
-            return CreateTaggedMetric(context, name, config, key1, key2, key3);
+            return CreateMetricGroup(context, name, config, key1, key2, key3);
         }
 
         /// <summary>
@@ -127,9 +127,9 @@ namespace Vostok.Metrics.Primitives.TimerPrimitive.HistogramImpl
         /// <param name="key4">Key of 4 dynamic tag</param>
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="Vostok.Metrics.Primitives.TimerPrimitive.HistogramImpl.Histogram"/>
-        public static ITaggedMetric4<ITimer> Histogram(this IMetricContext context, string name, string key1, string key2, string key3, string key4, HistogramConfig config = null)
+        public static IMetricGroup4<ITimer> Histogram(this IMetricContext context, string name, string key1, string key2, string key3, string key4, HistogramConfig config = null)
         {
-            return CreateTaggedMetric(context, name, config, key1, key2, key3, key4);
+            return CreateMetricGroup(context, name, config, key1, key2, key3, key4);
         }
 
         /// <summary>
@@ -151,9 +151,9 @@ namespace Vostok.Metrics.Primitives.TimerPrimitive.HistogramImpl
         /// <param name="key5">Key of 5 dynamic tag</param>
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="Vostok.Metrics.Primitives.TimerPrimitive.HistogramImpl.Histogram"/>
-        public static ITaggedMetric5<ITimer> Histogram(this IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, HistogramConfig config = null)
+        public static IMetricGroup5<ITimer> Histogram(this IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, HistogramConfig config = null)
         {
-            return CreateTaggedMetric(context, name, config, key1, key2, key3, key4, key5);
+            return CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5);
         }
 
         /// <summary>
@@ -176,9 +176,9 @@ namespace Vostok.Metrics.Primitives.TimerPrimitive.HistogramImpl
         /// <param name="key6">Key of 6 dynamic tag</param>
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="Vostok.Metrics.Primitives.TimerPrimitive.HistogramImpl.Histogram"/>
-        public static ITaggedMetric6<ITimer> Histogram(this IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, HistogramConfig config = null)
+        public static IMetricGroup6<ITimer> Histogram(this IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, HistogramConfig config = null)
         {
-            return CreateTaggedMetric(context, name, config, key1, key2, key3, key4, key5, key6);
+            return CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5, key6);
         }
 
         /// <summary>
@@ -202,9 +202,9 @@ namespace Vostok.Metrics.Primitives.TimerPrimitive.HistogramImpl
         /// <param name="key7">Key of 7 dynamic tag</param>
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="Vostok.Metrics.Primitives.TimerPrimitive.HistogramImpl.Histogram"/>
-        public static ITaggedMetric7<ITimer> Histogram(this IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, string key7, HistogramConfig config = null)
+        public static IMetricGroup7<ITimer> Histogram(this IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, string key7, HistogramConfig config = null)
         {
-            return CreateTaggedMetric(context, name, config, key1, key2, key3, key4, key5, key6, key7);
+            return CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5, key6, key7);
         }
 
         /// <summary>
@@ -229,16 +229,16 @@ namespace Vostok.Metrics.Primitives.TimerPrimitive.HistogramImpl
         /// <param name="key8">Key of 8 dynamic tag</param>
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="Vostok.Metrics.Primitives.TimerPrimitive.HistogramImpl.Histogram"/>
-        public static ITaggedMetric8<ITimer> Histogram(this IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, string key7, string key8, HistogramConfig config = null)
+        public static IMetricGroup8<ITimer> Histogram(this IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, string key7, string key8, HistogramConfig config = null)
         {
-            return CreateTaggedMetric(context, name, config, key1, key2, key3, key4, key5, key6, key7, key8);
+            return CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5, key6, key7, key8);
         }
         #endregion
 
-        private static TaggedMetric<Histogram> CreateTaggedMetric(IMetricContext context, string name, HistogramConfig config = null, params string[] keys)
+        private static MetricGroup<Histogram> CreateMetricGroup(IMetricContext context, string name, HistogramConfig config = null, params string[] keys)
         {
             config = config ?? HistogramConfig.Default;
-            return new TaggedMetric<Histogram>(CreateTagsFactory(context, name, config), keys);
+            return new MetricGroup<Histogram>(CreateTagsFactory(context, name, config), keys);
         }
 
         private static Func<MetricTags, Histogram> CreateTagsFactory(IMetricContext context, string name, HistogramConfig config)

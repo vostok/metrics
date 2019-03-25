@@ -1,5 +1,5 @@
 <#@ include file="./CodeGenerationCommon.ttinclude" once="true" #>
-<#@ include file="./TaggedMetricConstants.ttinclude" once="true" #>
+<#@ include file="./MetricGroupConstants.ttinclude" once="true" #>
 using System;
 using JetBrains.Annotations;
 using Vostok.Metrics.Grouping;
@@ -21,7 +21,7 @@ namespace <#= model.MetricNamespace #>
             return new <#= model.MetricClass #>(context, tags, config);
         }
 
-        #region TaggedMetric
+        #region IMetricGroup
 
         /// <summary>
         /// <para>
@@ -41,10 +41,10 @@ namespace <#= model.MetricNamespace #>
         /// </param>
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="<#= model.InheritDocType #>"/>
-        public static ITaggedMetricT<TFor, <#= model.MetricInterface #>> <#= model.MetricClass #><TFor>(this IMetricContext context, string name, ITypeTagsConverter<TFor> typeTagsConverter = null, <#= model.MetricConfigClass #> config = null)
+        public static IMetricGroup<TFor, <#= model.MetricInterface #>> <#= model.MetricClass #><TFor>(this IMetricContext context, string name, ITypeTagsConverter<TFor> typeTagsConverter = null, <#= model.MetricConfigClass #> config = null)
         {
             config = config ?? <#= model.MetricConfigClass #>.Default;
-            return new TaggedMetricT<TFor, <#= model.MetricInterface #>>(CreateTagsFactory(context, name, config), typeTagsConverter);
+            return new MetricGroup<TFor, <#= model.MetricInterface #>>(CreateTagsFactory(context, name, config), typeTagsConverter);
         }         
 <# for (var keysCount = 1; keysCount <= DynamicTags_StringKeys_MaxKeyCount; keysCount++) { #>
 
@@ -65,17 +65,17 @@ namespace <#= model.MetricNamespace #>
 <# } #>
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="<#= model.InheritDocType #>"/>
-        public static ITaggedMetric<#= keysCount #><<#= model.MetricInterface #>> <#= model.MetricClass #>(this IMetricContext context, string name, <#= FormatParameters("string key{0}", keysCount) #>, <#= model.MetricConfigClass #> config = null)
+        public static IMetricGroup<#= keysCount #><<#= model.MetricInterface #>> <#= model.MetricClass #>(this IMetricContext context, string name, <#= FormatParameters("string key{0}", keysCount) #>, <#= model.MetricConfigClass #> config = null)
         {
-            return CreateTaggedMetric(context, name, config, <#= FormatParameters("key{0}", keysCount) #>);
+            return CreateMetricGroup(context, name, config, <#= FormatParameters("key{0}", keysCount) #>);
         }
 <# } #>
         #endregion
 
-        private static TaggedMetric<<#= model.MetricClass #>> CreateTaggedMetric(IMetricContext context, string name, <#= model.MetricConfigClass #> config = null, params string[] keys)
+        private static MetricGroup<<#= model.MetricClass #>> CreateMetricGroup(IMetricContext context, string name, <#= model.MetricConfigClass #> config = null, params string[] keys)
         {
             config = config ?? <#= model.MetricConfigClass #>.Default;
-            return new TaggedMetric<<#= model.MetricClass #>>(CreateTagsFactory(context, name, config), keys);
+            return new MetricGroup<<#= model.MetricClass #>>(CreateTagsFactory(context, name, config), keys);
         }
 
         private static Func<MetricTags, <#= model.MetricClass #>> CreateTagsFactory(IMetricContext context, string name, <#= model.MetricConfigClass #> config)

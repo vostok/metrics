@@ -20,7 +20,7 @@ namespace Vostok.Metrics.Primitives.CounterPrimitive
             return new Counter(context, tags, config);
         }
 
-        #region TaggedMetric
+        #region IMetricGroup
 
         /// <summary>
         /// <para>
@@ -40,10 +40,10 @@ namespace Vostok.Metrics.Primitives.CounterPrimitive
         /// </param>
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="ICounter"/>
-        public static ITaggedMetricT<TFor, ICounter> Counter<TFor>(this IMetricContext context, string name, ITypeTagsConverter<TFor> typeTagsConverter = null, CounterConfig config = null)
+        public static IMetricGroup<TFor, ICounter> Counter<TFor>(this IMetricContext context, string name, ITypeTagsConverter<TFor> typeTagsConverter = null, CounterConfig config = null)
         {
             config = config ?? CounterConfig.Default;
-            return new TaggedMetricT<TFor, ICounter>(CreateTagsFactory(context, name, config), typeTagsConverter);
+            return new MetricGroup<TFor, ICounter>(CreateTagsFactory(context, name, config), typeTagsConverter);
         }         
 
         /// <summary>
@@ -61,9 +61,9 @@ namespace Vostok.Metrics.Primitives.CounterPrimitive
         /// <param name="key1">Key of 1 dynamic tag</param>
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="ICounter"/>
-        public static ITaggedMetric1<ICounter> Counter(this IMetricContext context, string name, string key1, CounterConfig config = null)
+        public static IMetricGroup1<ICounter> Counter(this IMetricContext context, string name, string key1, CounterConfig config = null)
         {
-            return CreateTaggedMetric(context, name, config, key1);
+            return CreateMetricGroup(context, name, config, key1);
         }
 
         /// <summary>
@@ -82,9 +82,9 @@ namespace Vostok.Metrics.Primitives.CounterPrimitive
         /// <param name="key2">Key of 2 dynamic tag</param>
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="ICounter"/>
-        public static ITaggedMetric2<ICounter> Counter(this IMetricContext context, string name, string key1, string key2, CounterConfig config = null)
+        public static IMetricGroup2<ICounter> Counter(this IMetricContext context, string name, string key1, string key2, CounterConfig config = null)
         {
-            return CreateTaggedMetric(context, name, config, key1, key2);
+            return CreateMetricGroup(context, name, config, key1, key2);
         }
 
         /// <summary>
@@ -104,9 +104,9 @@ namespace Vostok.Metrics.Primitives.CounterPrimitive
         /// <param name="key3">Key of 3 dynamic tag</param>
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="ICounter"/>
-        public static ITaggedMetric3<ICounter> Counter(this IMetricContext context, string name, string key1, string key2, string key3, CounterConfig config = null)
+        public static IMetricGroup3<ICounter> Counter(this IMetricContext context, string name, string key1, string key2, string key3, CounterConfig config = null)
         {
-            return CreateTaggedMetric(context, name, config, key1, key2, key3);
+            return CreateMetricGroup(context, name, config, key1, key2, key3);
         }
 
         /// <summary>
@@ -127,9 +127,9 @@ namespace Vostok.Metrics.Primitives.CounterPrimitive
         /// <param name="key4">Key of 4 dynamic tag</param>
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="ICounter"/>
-        public static ITaggedMetric4<ICounter> Counter(this IMetricContext context, string name, string key1, string key2, string key3, string key4, CounterConfig config = null)
+        public static IMetricGroup4<ICounter> Counter(this IMetricContext context, string name, string key1, string key2, string key3, string key4, CounterConfig config = null)
         {
-            return CreateTaggedMetric(context, name, config, key1, key2, key3, key4);
+            return CreateMetricGroup(context, name, config, key1, key2, key3, key4);
         }
 
         /// <summary>
@@ -151,9 +151,9 @@ namespace Vostok.Metrics.Primitives.CounterPrimitive
         /// <param name="key5">Key of 5 dynamic tag</param>
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="ICounter"/>
-        public static ITaggedMetric5<ICounter> Counter(this IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, CounterConfig config = null)
+        public static IMetricGroup5<ICounter> Counter(this IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, CounterConfig config = null)
         {
-            return CreateTaggedMetric(context, name, config, key1, key2, key3, key4, key5);
+            return CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5);
         }
 
         /// <summary>
@@ -176,9 +176,9 @@ namespace Vostok.Metrics.Primitives.CounterPrimitive
         /// <param name="key6">Key of 6 dynamic tag</param>
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="ICounter"/>
-        public static ITaggedMetric6<ICounter> Counter(this IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, CounterConfig config = null)
+        public static IMetricGroup6<ICounter> Counter(this IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, CounterConfig config = null)
         {
-            return CreateTaggedMetric(context, name, config, key1, key2, key3, key4, key5, key6);
+            return CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5, key6);
         }
 
         /// <summary>
@@ -202,9 +202,9 @@ namespace Vostok.Metrics.Primitives.CounterPrimitive
         /// <param name="key7">Key of 7 dynamic tag</param>
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="ICounter"/>
-        public static ITaggedMetric7<ICounter> Counter(this IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, string key7, CounterConfig config = null)
+        public static IMetricGroup7<ICounter> Counter(this IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, string key7, CounterConfig config = null)
         {
-            return CreateTaggedMetric(context, name, config, key1, key2, key3, key4, key5, key6, key7);
+            return CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5, key6, key7);
         }
 
         /// <summary>
@@ -229,16 +229,16 @@ namespace Vostok.Metrics.Primitives.CounterPrimitive
         /// <param name="key8">Key of 8 dynamic tag</param>
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="ICounter"/>
-        public static ITaggedMetric8<ICounter> Counter(this IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, string key7, string key8, CounterConfig config = null)
+        public static IMetricGroup8<ICounter> Counter(this IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, string key7, string key8, CounterConfig config = null)
         {
-            return CreateTaggedMetric(context, name, config, key1, key2, key3, key4, key5, key6, key7, key8);
+            return CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5, key6, key7, key8);
         }
         #endregion
 
-        private static TaggedMetric<Counter> CreateTaggedMetric(IMetricContext context, string name, CounterConfig config = null, params string[] keys)
+        private static MetricGroup<Counter> CreateMetricGroup(IMetricContext context, string name, CounterConfig config = null, params string[] keys)
         {
             config = config ?? CounterConfig.Default;
-            return new TaggedMetric<Counter>(CreateTagsFactory(context, name, config), keys);
+            return new MetricGroup<Counter>(CreateTagsFactory(context, name, config), keys);
         }
 
         private static Func<MetricTags, Counter> CreateTagsFactory(IMetricContext context, string name, CounterConfig config)

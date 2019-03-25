@@ -14,7 +14,7 @@ namespace Vostok.Metrics.Grouping
     /// </para>
     /// </summary>
     [PublicAPI]
-    public interface ITaggedMetric1<out TMetric> : IDisposable
+    public interface IMetricGroup1<out TMetric> : IDisposable
     {
         /// <summary>
         /// Retrieves a metric with specific tags from this group
@@ -32,7 +32,7 @@ namespace Vostok.Metrics.Grouping
     /// </para>
     /// </summary>
     [PublicAPI]
-    public interface ITaggedMetric2<out TMetric> : IDisposable
+    public interface IMetricGroup2<out TMetric> : IDisposable
     {
         /// <summary>
         /// Retrieves a metric with specific tags from this group
@@ -51,7 +51,7 @@ namespace Vostok.Metrics.Grouping
     /// </para>
     /// </summary>
     [PublicAPI]
-    public interface ITaggedMetric3<out TMetric> : IDisposable
+    public interface IMetricGroup3<out TMetric> : IDisposable
     {
         /// <summary>
         /// Retrieves a metric with specific tags from this group
@@ -71,7 +71,7 @@ namespace Vostok.Metrics.Grouping
     /// </para>
     /// </summary>
     [PublicAPI]
-    public interface ITaggedMetric4<out TMetric> : IDisposable
+    public interface IMetricGroup4<out TMetric> : IDisposable
     {
         /// <summary>
         /// Retrieves a metric with specific tags from this group
@@ -92,7 +92,7 @@ namespace Vostok.Metrics.Grouping
     /// </para>
     /// </summary>
     [PublicAPI]
-    public interface ITaggedMetric5<out TMetric> : IDisposable
+    public interface IMetricGroup5<out TMetric> : IDisposable
     {
         /// <summary>
         /// Retrieves a metric with specific tags from this group
@@ -114,7 +114,7 @@ namespace Vostok.Metrics.Grouping
     /// </para>
     /// </summary>
     [PublicAPI]
-    public interface ITaggedMetric6<out TMetric> : IDisposable
+    public interface IMetricGroup6<out TMetric> : IDisposable
     {
         /// <summary>
         /// Retrieves a metric with specific tags from this group
@@ -137,7 +137,7 @@ namespace Vostok.Metrics.Grouping
     /// </para>
     /// </summary>
     [PublicAPI]
-    public interface ITaggedMetric7<out TMetric> : IDisposable
+    public interface IMetricGroup7<out TMetric> : IDisposable
     {
         /// <summary>
         /// Retrieves a metric with specific tags from this group
@@ -161,7 +161,7 @@ namespace Vostok.Metrics.Grouping
     /// </para>
     /// </summary>
     [PublicAPI]
-    public interface ITaggedMetric8<out TMetric> : IDisposable
+    public interface IMetricGroup8<out TMetric> : IDisposable
     {
         /// <summary>
         /// Retrieves a metric with specific tags from this group

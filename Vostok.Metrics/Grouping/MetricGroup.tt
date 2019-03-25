@@ -1,18 +1,18 @@
 <#@ include file="./../CodeGeneration/CodeGenerationCommon.ttinclude" once="true" #>
-<#@ include file="./../CodeGeneration/TaggedMetricConstants.ttinclude" once="true" #>
+<#@ include file="./../CodeGeneration/MetricGroupConstants.ttinclude" once="true" #>
 using System;
 using Vostok.Metrics.Model;
 
 namespace Vostok.Metrics.Grouping
 {
-	internal class TaggedMetric<TMetric> : TaggedMetricBase<TMetric>,
+	internal class MetricGroup<TMetric> : MetricGroupBase<TMetric>,
 <# for (var keysCount = 1; keysCount <= DynamicTags_StringKeys_MaxKeyCount; keysCount++) { #>
-		ITaggedMetric<#=keysCount#><TMetric><#=keysCount == DynamicTags_StringKeys_MaxKeyCount ? "" : ","#>
+		IMetricGroup<#=keysCount#><TMetric><#=keysCount == DynamicTags_StringKeys_MaxKeyCount ? "" : ","#>
 <# } #>
     {
 		private readonly string[] keys;
 		
-        public TaggedMetric(Func<MetricTags, TMetric> factory, params string[] keys)
+        public MetricGroup(Func<MetricTags, TMetric> factory, params string[] keys)
             : base(factory)
         {
             this.keys = keys;

@@ -4,12 +4,12 @@ using Vostok.Metrics.Model;
 
 namespace Vostok.Metrics.Grouping
 {
-    internal abstract class TaggedMetricBase<TMetric> : IDisposable
+    internal abstract class MetricGroupBase<TMetric> : IDisposable
     {
         private readonly ConcurrentDictionary<MetricTags, TMetric> cache = new ConcurrentDictionary<MetricTags, TMetric>();
         private readonly Func<MetricTags, TMetric> factory;
 
-        protected TaggedMetricBase(Func<MetricTags, TMetric> factory)
+        protected MetricGroupBase(Func<MetricTags, TMetric> factory)
         {
             this.factory = factory;
         }

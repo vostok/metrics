@@ -3,11 +3,11 @@ using Vostok.Metrics.Model;
 
 namespace Vostok.Metrics.Grouping
 {
-    internal class TaggedMetricT<TFor, TMetric> : TaggedMetricBase<TMetric>, ITaggedMetricT<TFor, TMetric>
+    internal class MetricGroup<TFor, TMetric> : MetricGroupBase<TMetric>, IMetricGroup<TFor, TMetric>
     {
         private readonly ITypeTagsConverter<TFor> converter;
 
-        public TaggedMetricT(Func<MetricTags, TMetric> factory, ITypeTagsConverter<TFor> converter = null)
+        public MetricGroup(Func<MetricTags, TMetric> factory, ITypeTagsConverter<TFor> converter = null)
             : base(factory)
         {
             this.converter = converter ?? TypeTagsConverter<TFor>.Default;

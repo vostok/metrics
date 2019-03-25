@@ -4,19 +4,19 @@ using Vostok.Metrics.Model;
 
 namespace Vostok.Metrics.Grouping
 {
-	internal class TaggedMetric<TMetric> : TaggedMetricBase<TMetric>,
-		ITaggedMetric1<TMetric>,
-		ITaggedMetric2<TMetric>,
-		ITaggedMetric3<TMetric>,
-		ITaggedMetric4<TMetric>,
-		ITaggedMetric5<TMetric>,
-		ITaggedMetric6<TMetric>,
-		ITaggedMetric7<TMetric>,
-		ITaggedMetric8<TMetric>
+	internal class MetricGroup<TMetric> : MetricGroupBase<TMetric>,
+		IMetricGroup1<TMetric>,
+		IMetricGroup2<TMetric>,
+		IMetricGroup3<TMetric>,
+		IMetricGroup4<TMetric>,
+		IMetricGroup5<TMetric>,
+		IMetricGroup6<TMetric>,
+		IMetricGroup7<TMetric>,
+		IMetricGroup8<TMetric>
     {
 		private readonly string[] keys;
 		
-        public TaggedMetric(Func<MetricTags, TMetric> factory, params string[] keys)
+        public MetricGroup(Func<MetricTags, TMetric> factory, params string[] keys)
             : base(factory)
         {
             this.keys = keys;

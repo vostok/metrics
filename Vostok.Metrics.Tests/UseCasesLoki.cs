@@ -44,8 +44,8 @@ namespace Vostok.Metrics.Tests
             // env-Infra.service-Loki.cluster-Loki-default.Replica-1.
             // signals-requests-count.
             // req-{create,set,count}.clid-{fat-service,...}.result-{NotFound,Set,...}
-            private readonly ITaggedMetric3<IGauge> requestCounter;
-            private readonly ITaggedMetric1<IGauge> expiredRequestsCounter;
+            private readonly IMetricGroup3<IGauge> requestCounter;
+            private readonly IMetricGroup1<IGauge> expiredRequestsCounter;
 
             public SignalServiceMetrics(IMetricContext context, TimeSpan scrapePeriod)
             {

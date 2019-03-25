@@ -1,14 +1,14 @@
 <#@ include file="./../CodeGeneration/CodeGenerationCommon.ttinclude" once="true" #>
-<#@ include file="./../CodeGeneration/TaggedMetricConstants.ttinclude" once="true" #>
+<#@ include file="./../CodeGeneration/MetricGroupConstants.ttinclude" once="true" #>
 using JetBrains.Annotations;
 
 namespace Vostok.Metrics.Grouping
 {
     [PublicAPI]
-    public static partial class ITaggedMetricExtensions
+    public static partial class IMetricGroupExtensions
     {
 <# for (int iface = 1; iface <= DynamicTags_StringKeys_MaxKeyCount; iface++) { #>
-        public static TMetric For<TMetric, <#= FormatParameters("TValue{0}", iface) #>>(this ITaggedMetric<#= iface #><TMetric> metric, <#= FormatParameters("TValue{0} value{0}", iface) #>)
+        public static TMetric For<TMetric, <#= FormatParameters("TValue{0}", iface) #>>(this IMetricGroup<#= iface #><TMetric> metric, <#= FormatParameters("TValue{0} value{0}", iface) #>)
         {
             return metric.For(<#= FormatParameters("value{0}.ToString()", iface) #>);
         }
