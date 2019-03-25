@@ -3,7 +3,6 @@
   
   <Import Project="..\..\vostok.devtools\library-common-props\Main-Project.props" />
   <Import Project="..\..\vostok.devtools\git-commit-to-assembly-title\Vostok.Tools.GitCommit2AssemblyTitle.props" />
-  <Import Project="Vostok.Metrics.Codegen.props" />
   
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -33,22 +32,27 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Primitives\CounterPrimitive\MetricContextExtensionsCounter.cs" DesignTime="True" AutoGen="True" DependentUpon="MetricContextExtensionsCounter.tt" />
+    <Compile Update="Primitives\GaugePrimitive\MetricContextExtensionsGauge.cs" DesignTime="True" AutoGen="True" DependentUpon="MetricContextExtensionsGauge.tt" />
+    <Compile Update="Primitives\TimerPrimitive\TimerImpl\MetricContextExtensionsTimer.cs" DesignTime="True" AutoGen="True" DependentUpon="MetricContextExtensionsTimer.tt" />
+    <Compile Update="Primitives\TimerPrimitive\HistogramImpl\MetricContextExtensionsHistogram.cs" DesignTime="True" AutoGen="True" DependentUpon="MetricContextExtensionsHistogram.tt" />
+    <Compile Update="DynamicTags\StringKeys\ITaggedMetricExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="ITaggedMetricExtensions.tt" />
+    <Compile Update="DynamicTags\StringKeys\ITaggedMetric.cs" DesignTime="True" AutoGen="True" DependentUpon="ITaggedMetric.tt" />
+    <Compile Update="DynamicTags\StringKeys\TaggedMetric.cs" DesignTime="True" AutoGen="True" DependentUpon="TaggedMetric.tt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Primitives\CounterPrimitive\MetricContextExtensionsCounter.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="MetricContextExtensionsCounter.cs" />
+    <None Update="Primitives\GaugePrimitive\MetricContextExtensionsGauge.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="MetricContextExtensionsGauge.cs" />
+    <None Update="Primitives\TimerPrimitive\TimerImpl\MetricContextExtensionsTimer.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="MetricContextExtensionsTimer.cs" />
+    <None Update="Primitives\TimerPrimitive\HistogramImpl\MetricContextExtensionsHistogram.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="MetricContextExtensionsHistogram.cs" />
+    <None Update="DynamicTags\StringKeys\ITaggedMetricExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="ITaggedMetricExtensions.cs" />
+    <None Update="DynamicTags\StringKeys\ITaggedMetric.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="ITaggedMetric.cs" />
+    <None Update="DynamicTags\StringKeys\TaggedMetric.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="TaggedMetric.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="DynamicTags\StringKeys\TaggedMetric.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>TaggedMetric.tt</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="DynamicTags\StringKeys\TaggedMetric.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>TaggedMetric.cs</LastGenOutput>
-    </None>
   </ItemGroup>
 
 </Project>
