@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Vostok.Commons.Helpers.Comparers;
 
 namespace Vostok.Metrics.Model
 {
@@ -11,7 +12,7 @@ namespace Vostok.Metrics.Model
     /// <para><see cref="MetricEvent"/> instances are immutable. Consider using <see cref="MetricEventBuilder"/> to construct them.</para>
     /// </summary>
     [PublicAPI]
-    public class MetricEvent
+    public class MetricEvent : IEquatable<MetricEvent>
     {
         /// <param name="value">See <see cref="Value"/>.</param>
         /// <param name="tags">See <see cref="Tags"/>.</param>
@@ -81,5 +82,53 @@ namespace Vostok.Metrics.Model
         /// </summary>
         [CanBeNull]
         public IReadOnlyDictionary<string, string> AggregationParameters { get; }
+
+        #region Equality
+
+        public bool Equals(MetricEvent other)
+        {
+            if (other == null)
+                return false;
+
+            if (ReferenceEquals(this, other))
+                return true;
+
+            if (!Value.Equals(other.Value))
+                return false;
+
+            if (!Timestamp.Equals(other.Timestamp))
+                return false;
+
+            if (!Tags.Equals(other.Tags))
+                return false;
+
+            if (!string.Equals(Unit, other.Unit))
+                return false;
+
+            if (!string.Equals(AggregationType, other.AggregationType))
+                return false;
+
+            return DictionaryComparer<string, string>.Instance.Equals(AggregationParameters, other.AggregationParameters);
+        }
+
+        public override bool Equals(object obj)
+            => Equals(obj as MetricEvent);
+
+        // ReSharper disable once AssignNullToNotNullAttribute
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = Value.GetHashCode();
+                hashCode = (hashCode * 397) ^ Timestamp.GetHashCode();
+                hashCode = (hashCode * 397) ^ Tags.GetHashCode();
+                hashCode = (hashCode * 397) ^ (Unit?.GetHashCode() ?? 0);
+                hashCode = (hashCode * 397) ^ (AggregationType?.GetHashCode() ?? 0);
+                hashCode = (hashCode * 397) ^ DictionaryComparer<string, string>.Instance.GetHashCode(AggregationParameters);
+                return hashCode;
+            }
+        }
+
+        #endregion
     }
 }
