@@ -11,6 +11,6 @@ namespace Vostok.Metrics
     public interface IMetricEventSender
     {
         /// <inheritdoc cref="IMetricEventSender"/>
-        void Send(MetricEvent @event);
+        void Send([NotNull] MetricEvent @event);
     }
 }

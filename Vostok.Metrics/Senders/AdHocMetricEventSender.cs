@@ -2,10 +2,10 @@ using System;
 using JetBrains.Annotations;
 using Vostok.Metrics.Model;
 
-namespace Vostok.Metrics
+namespace Vostok.Metrics.Senders
 {
     /// <summary>
-    /// Delegates <see cref="Send"/> implementation to a custom action
+    /// Delegates <see cref="Send"/> implementation to a custom action.
     /// </summary>
     [PublicAPI]
     public class AdHocMetricEventSender : IMetricEventSender
@@ -16,14 +16,10 @@ namespace Vostok.Metrics
         /// This will be called every time <see cref="Send"/> occurs.
         /// The delegate should be thread-safe and exception-free.
         /// </param>
-        public AdHocMetricEventSender(Action<MetricEvent> sendAction)
-        {
-            this.sendAction = sendAction;
-        }
+        public AdHocMetricEventSender([NotNull] Action<MetricEvent> sendAction)
+            => this.sendAction = sendAction ?? throw new ArgumentNullException(nameof(sendAction));
 
-        public void Send(MetricEvent @event)
-        {
-            sendAction(@event);
-        }
+        public void Send(MetricEvent @event) 
+            => sendAction(@event);
     }
 }
