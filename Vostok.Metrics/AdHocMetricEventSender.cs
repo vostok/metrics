@@ -8,7 +8,7 @@ namespace Vostok.Metrics
     /// Delegates <see cref="Send"/> implementation to a custom action
     /// </summary>
     [PublicAPI]
-    public class AdHocMetricSampleSender : IMetricSampleSender
+    public class AdHocMetricEventSender : IMetricEventSender
     {
         private readonly Action<MetricEvent> sendAction;
 
@@ -16,7 +16,7 @@ namespace Vostok.Metrics
         /// This will be called every time <see cref="Send"/> occurs.
         /// The delegate should be thread-safe and exception-free.
         /// </param>
-        public AdHocMetricSampleSender(Action<MetricEvent> sendAction)
+        public AdHocMetricEventSender(Action<MetricEvent> sendAction)
         {
             this.sendAction = sendAction;
         }

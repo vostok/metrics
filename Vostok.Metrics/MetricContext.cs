@@ -8,14 +8,14 @@ namespace Vostok.Metrics
     [PublicAPI]
     public class MetricContext : IMetricContext, IDisposable
     {
-        private readonly IMetricSampleSender sender;
+        private readonly IMetricEventSender sender;
         private readonly MetricContextConfig config;
         private readonly ScrapeScheduler scrapeScheduler;
         
         /// <inheritdoc cref="IMetricContext"/>
-        /// <param name="sender">Calls to <see cref="Send"/> will be delegated to the specified <see cref="IMetricSampleSender"/></param>
+        /// <param name="sender">Calls to <see cref="Send"/> will be delegated to the specified <see cref="IMetricEventSender"/></param>
         /// <param name="config">Optional config. Use it to specify parameters common for all metric primitives in this <see cref="IMetricContext"/></param>
-        public MetricContext(IMetricSampleSender sender, MetricContextConfig config = null)
+        public MetricContext(IMetricEventSender sender, MetricContextConfig config = null)
         {
             this.sender = sender;
             this.config = config ?? MetricContextConfig.Default;

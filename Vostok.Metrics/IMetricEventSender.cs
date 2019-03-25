@@ -4,13 +4,13 @@ using Vostok.Metrics.Model;
 namespace Vostok.Metrics
 {
     /// <summary>
-    /// Sends <see cref="MetricEvent"/> for further aggregation or to a permanent storage.
+    /// Sends <see cref="MetricEvent"/>s for further aggregation or to a permanent storage.
     /// Implementations are expected to be thread-safe and exception-free.
     /// </summary>
     [PublicAPI]
-    public interface IMetricSampleSender
+    public interface IMetricEventSender
     {
-        /// <inheritdoc cref="IMetricSampleSender"/>
+        /// <inheritdoc cref="IMetricEventSender"/>
         void Send(MetricEvent @event);
     }
 }

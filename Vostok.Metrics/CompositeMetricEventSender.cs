@@ -4,11 +4,11 @@ using Vostok.Metrics.Model;
 namespace Vostok.Metrics
 {
     [PublicAPI]
-    public class CompositeMetricSampleSender : IMetricSampleSender
+    public class CompositeMetricEventSender : IMetricEventSender
     {
-        private readonly IMetricSampleSender[] senders;
+        private readonly IMetricEventSender[] senders;
 
-        public CompositeMetricSampleSender(IMetricSampleSender[] senders)
+        public CompositeMetricEventSender(IMetricEventSender[] senders)
         {
             this.senders = senders;
         }
