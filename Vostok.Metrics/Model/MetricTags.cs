@@ -62,6 +62,9 @@ namespace Vostok.Metrics.Model
             if (tags == null)
                 throw new ArgumentNullException(nameof(tags));
 
+            if (tags.Count == 0)
+                return this;
+
             var currentArray = items;
             var fitsIntoCurrentArray = currentArray.Length >= Count + tags.Count;
             var isFirstAppend = Interlocked.Increment(ref appendsDone) == 1;
