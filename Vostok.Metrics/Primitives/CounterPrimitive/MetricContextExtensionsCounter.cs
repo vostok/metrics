@@ -34,16 +34,15 @@ namespace Vostok.Metrics.Primitives.CounterPrimitive
         /// </summary>
         /// <param name="context">Context this metric will belong to</param>
         /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownTagKeys.Name"/></param>
-        /// <param name="typeTagsConverter">
         /// Optional custom mapping from <typeparamref name="TFor"/> to <see cref="Vostok.Metrics.Model.MetricTags"/>.
         /// These tags are specific for every Counter in group and will be added after <paramref name="name"/> tag.
         /// </param>
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="ICounter"/>
-        public static IMetricGroup<TFor, ICounter> Counter<TFor>(this IMetricContext context, string name, ITypeTagsConverter<TFor> typeTagsConverter = null, CounterConfig config = null)
+        public static IMetricGroup<TFor, ICounter> Counter<TFor>(this IMetricContext context, string name, CounterConfig config = null)
         {
             config = config ?? CounterConfig.Default;
-            return new MetricGroup<TFor, ICounter>(CreateTagsFactory(context, name, config), typeTagsConverter);
+            return new MetricGroup<TFor, ICounter>(CreateTagsFactory(context, name, config));
         }         
 
         /// <summary>

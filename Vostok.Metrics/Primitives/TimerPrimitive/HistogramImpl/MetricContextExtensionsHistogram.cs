@@ -34,16 +34,15 @@ namespace Vostok.Metrics.Primitives.TimerPrimitive.HistogramImpl
         /// </summary>
         /// <param name="context">Context this metric will belong to</param>
         /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownTagKeys.Name"/></param>
-        /// <param name="typeTagsConverter">
         /// Optional custom mapping from <typeparamref name="TFor"/> to <see cref="Vostok.Metrics.Model.MetricTags"/>.
         /// These tags are specific for every Histogram in group and will be added after <paramref name="name"/> tag.
         /// </param>
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="Vostok.Metrics.Primitives.TimerPrimitive.HistogramImpl.Histogram"/>
-        public static IMetricGroup<TFor, ITimer> Histogram<TFor>(this IMetricContext context, string name, ITypeTagsConverter<TFor> typeTagsConverter = null, HistogramConfig config = null)
+        public static IMetricGroup<TFor, ITimer> Histogram<TFor>(this IMetricContext context, string name, HistogramConfig config = null)
         {
             config = config ?? HistogramConfig.Default;
-            return new MetricGroup<TFor, ITimer>(CreateTagsFactory(context, name, config), typeTagsConverter);
+            return new MetricGroup<TFor, ITimer>(CreateTagsFactory(context, name, config));
         }         
 
         /// <summary>
