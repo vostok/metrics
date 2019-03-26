@@ -38,6 +38,6 @@ namespace Vostok.Metrics
         /// <para>Server-side infrastructure computes a count aggregate by summing all the values.</para>
         /// <para>Aggregates are computed over configurable time windows.</para>
         /// </summary>
-        public static string Counter = "counter";
+        public const string Counter = "counter";
     }
 }
