@@ -21,8 +21,8 @@ namespace Vostok.Metrics.Primitives.Counter
         {
             if (value < 0L)
                 throw new ArgumentOutOfRangeException(nameof(value), value, "Only values >= 0 can be added to counter");
-            
-            context.Send(new MetricEvent(value, tags, DateTimeOffset.Now, config.Unit, WellKnownAggregationTypes.Counter, null));
+
+            context.Send(new MetricEvent(value, tags, DateTimeOffset.Now, config.Unit, WellKnownAggregationTypes.Counter, config.AggregationParameters));
         }
     }
 }

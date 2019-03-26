@@ -5,6 +5,7 @@ using Vostok.Metrics.Model;
 
 namespace Vostok.Metrics.Primitives.Timer
 {
+    /// <inheritdoc cref="ITimer"/>
     /// <summary>
     /// <para>
     /// Histogram allows you to estimate the distribution of values.
@@ -21,30 +22,32 @@ namespace Vostok.Metrics.Primitives.Timer
     /// </summary>
     /// <remarks>
     /// <para>
-    /// Consider using <see cref="Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl.Timer"/> instead of Histogram.
-    /// Timer calculates "fair" percentiles and doesn't require configuration.
-    /// However it is not suitable for high workloads.
+    /// Consider using <see cref="Timer"/> instead of Histogram.
+    /// Timer provides exact percentiles and doesn't require any configuration.
+    /// However, it is not suitable for high workloads.
     /// </para>
     /// <para>
-    /// To create a Histogram use <see cref="MetricContextExtensionsHistogram">extensions</see> for <see cref="IMetricContext"/>.
+    /// To create a Histogram use <see cref="HistogramFactoryExtensions">extensions</see> for <see cref="IMetricContext"/>.
     /// </para>
     /// <para>
     /// Call <see cref="IDisposable.Dispose"/> to stop scraping the metric.
     /// </para>
     /// </remarks>
-    //todo example
     internal class Histogram : ITimer, IScrapableMetric
     {
         private readonly MetricTags tags;
         private readonly HistogramConfig config;
         private readonly IDisposable registration;
-        
+
         public Histogram([NotNull] IMetricContext context, [NotNull] MetricTags tags, [NotNull] HistogramConfig config)
         {
-            this.tags = tags;
-            this.config = config;
+            this.tags = tags ?? throw new ArgumentNullException(nameof(tags));
+            this.config = config ?? throw new ArgumentNullException(nameof(config));
+
             registration = context.Register(this, config.ScrapePeriod);
         }
+
+        public string Unit => config.Unit;
 
         public IEnumerable<MetricEvent> Scrape(DateTimeOffset timestamp)
         {
@@ -56,11 +59,7 @@ namespace Vostok.Metrics.Primitives.Timer
             throw new NotImplementedException();
         }
 
-        public string Unit => config.Unit;
-
         public void Dispose()
-        {
-            registration.Dispose();
-        }
+            => registration.Dispose();
     }
 }

@@ -4,6 +4,7 @@ using Vostok.Metrics.Model;
 
 namespace Vostok.Metrics.Primitives.Timer
 {
+    /// <inheritdoc cref="ITimer"/>
     /// <summary>
     /// <para>
     /// Timer immediately sends reported values to aggregation backend.
@@ -12,23 +13,13 @@ namespace Vostok.Metrics.Primitives.Timer
     /// </summary>
     /// <remarks>
     /// <para>
-    /// To create a Timer use <see cref="MetricContextExtensionsTimer">extensions</see> for <see cref="IMetricContext"/>
+    /// To create a Timer use <see cref="TimerFactoryExtensions">extensions</see> for <see cref="IMetricContext"/>
     /// </para>
     /// <para>
     /// Timer could be expensive for high workloads (>10k reports per second).
-    /// In this case consider using <see cref="Vostok.Metrics.Primitives.TimerPrimitive.HistogramImpl.Histogram"/>.
+    /// In this case consider using <see cref="Histogram"/>.
     /// </para>
     /// </remarks>
-    /// <example>
-    /// You can calculate the latency of business operation.
-    /// <code>
-    /// var timer = context.Timer("my-operation-latency");
-    /// using (timer.Measure())
-    /// {
-    ///    //... business code here
-    /// }
-    /// </code>
-    /// </example>
     internal class Timer : ITimer
     {
         private readonly IMetricContext context;
@@ -37,25 +28,18 @@ namespace Vostok.Metrics.Primitives.Timer
 
         public Timer([NotNull] IMetricContext context, [NotNull] MetricTags tags, [NotNull] TimerConfig config)
         {
-            this.context = context;
-            this.tags = tags;
-            this.config = config;
-        }
-
-        public void Report(double value)
-        {
-            var MetricSample = new MetricEvent(
-                value,
-                tags,
-                DateTimeOffset.Now,
-                config.Unit,
-                WellKnownAggregationTypes.Timer,
-                null);
-            context.Send(MetricSample);
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
+            this.tags = tags ?? throw new ArgumentNullException(nameof(tags));
+            this.config = config ?? throw new ArgumentNullException(nameof(config));
         }
 
         public string Unit => config.Unit;
 
-        public void Dispose() {}
+        public void Report(double value)
+            => context.Send(new MetricEvent(value, tags, DateTimeOffset.Now, config.Unit, WellKnownAggregationTypes.Timer, config.AggregationParameters));
+
+        public void Dispose()
+        {
+        }
     }
 }

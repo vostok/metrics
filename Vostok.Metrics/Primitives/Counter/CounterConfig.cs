@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using Vostok.Metrics.Model;
 
@@ -14,5 +15,11 @@ namespace Vostok.Metrics.Primitives.Counter
         [CanBeNull]
         [ValueProvider("Vostok.Metrics.WellKnownUnits")]
         public string Unit { get; set; }
+
+        /// <summary>
+        /// See <see cref="MetricEvent.AggregationParameters"/> for more info.
+        /// </summary>
+        [CanBeNull]
+        public IReadOnlyDictionary<string, string> AggregationParameters { get; set; }
     }
 }
