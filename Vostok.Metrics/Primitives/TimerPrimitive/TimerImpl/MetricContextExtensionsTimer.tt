@@ -1,5 +1,0 @@
-<# model = new MetricExtensionsModel("Timer") {
-    MetricInterface = "ITimer",
-    MetricNamespace = "Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl",
-    InheritDocType = "Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl.Timer"}; #>
-<#@ include file="./../../../CodeGeneration/MetricContextExtensionsMetric.ttinclude" once="true" #>

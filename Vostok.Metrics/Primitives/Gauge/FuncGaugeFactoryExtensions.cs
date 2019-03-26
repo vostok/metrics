@@ -2,10 +2,10 @@ using System;
 using JetBrains.Annotations;
 using Vostok.Metrics.Model;
 
-namespace Vostok.Metrics.Primitives.GaugePrimitive
+namespace Vostok.Metrics.Primitives.Gauge
 {
     [PublicAPI]
-    public static class MetricContextExtensionsFuncGauge
+    public static class FuncGaugeFactoryExtensions
     {
         /// <inheritdoc cref="IGauge"/>
         /// <param name="context">Context this metric will belong to</param>

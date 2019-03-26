@@ -1,0 +1,2 @@
+<# model = new MetricExtensionsModel("Gauge"); #>
+<#@ include file="./../../Codegen/FactoryExtensions.ttinclude" once="true" #>

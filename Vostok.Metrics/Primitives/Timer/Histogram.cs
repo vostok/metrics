@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Vostok.Metrics.Model;
 
-namespace Vostok.Metrics.Primitives.TimerPrimitive.HistogramImpl
+namespace Vostok.Metrics.Primitives.Timer
 {
     /// <summary>
     /// <para>

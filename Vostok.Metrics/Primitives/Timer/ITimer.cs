@@ -1,7 +1,7 @@
 using System;
 using JetBrains.Annotations;
 
-namespace Vostok.Metrics.Primitives.TimerPrimitive
+namespace Vostok.Metrics.Primitives.Timer
 {
     /// <summary>
     /// todo tell about different timer implementations here

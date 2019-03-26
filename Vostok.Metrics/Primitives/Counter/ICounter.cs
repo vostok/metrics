@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 
-namespace Vostok.Metrics.Primitives.CounterPrimitive
+namespace Vostok.Metrics.Primitives.Counter
 {
     /// <summary>
     /// <para>

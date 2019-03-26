@@ -1,5 +1,5 @@
-<#@ include file="./CodeGenerationCommon.ttinclude" once="true" #>
-<#@ include file="./MetricGroupConstants.ttinclude" once="true" #>
+<#@ include file="./CodegenCommons.ttinclude" once="true" #>
+<#@ include file="./GroupingConstants.ttinclude" once="true" #>
 using System;
 using JetBrains.Annotations;
 using Vostok.Metrics.Grouping;
@@ -104,8 +104,8 @@ class MetricExtensionsModel
         MetricClass = metricClass;
         MetricInterface = $"I{MetricClass}";
         MetricConfigClass = $"{MetricClass}Config";
-        MetricNamespace = $"Vostok.Metrics.Primitives.{MetricClass}Primitive";
-        ExtensionClassName = $"MetricContextExtensions{MetricClass}";
+        MetricNamespace = $"Vostok.Metrics.Primitives.{MetricClass}";
+        ExtensionClassName = $"{MetricClass}FactoryExtensions";
         InheritDocType = MetricInterface;
     }
 }

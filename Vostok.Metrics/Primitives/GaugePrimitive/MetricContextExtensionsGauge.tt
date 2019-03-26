@@ -1,2 +1,0 @@
-<# model = new MetricExtensionsModel("Gauge"); #>
-<#@ include file="./../../CodeGeneration/MetricContextExtensionsMetric.ttinclude" once="true" #>

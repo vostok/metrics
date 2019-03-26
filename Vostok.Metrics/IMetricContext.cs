@@ -1,9 +1,9 @@
 using System;
 using JetBrains.Annotations;
 using Vostok.Metrics.Model;
-using Vostok.Metrics.Primitives.CounterPrimitive;
-using Vostok.Metrics.Primitives.GaugePrimitive;
-using Vostok.Metrics.Primitives.TimerPrimitive;
+using Vostok.Metrics.Primitives.Counter;
+using Vostok.Metrics.Primitives.Gauge;
+using Vostok.Metrics.Primitives.Timer;
 
 namespace Vostok.Metrics
 {

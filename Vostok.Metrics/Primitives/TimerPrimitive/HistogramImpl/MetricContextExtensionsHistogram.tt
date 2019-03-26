@@ -1,5 +1,0 @@
-<# model = new MetricExtensionsModel("Histogram") {
-    MetricInterface = "ITimer",
-    MetricNamespace = "Vostok.Metrics.Primitives.TimerPrimitive.HistogramImpl",
-    InheritDocType = "Vostok.Metrics.Primitives.TimerPrimitive.HistogramImpl.Histogram"}; #>
-<#@ include file="./../../../CodeGeneration/MetricContextExtensionsMetric.ttinclude" once="true" #>

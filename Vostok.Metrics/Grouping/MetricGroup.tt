@@ -1,5 +1,5 @@
-<#@ include file="./../CodeGeneration/CodeGenerationCommon.ttinclude" once="true" #>
-<#@ include file="./../CodeGeneration/MetricGroupConstants.ttinclude" once="true" #>
+<#@ include file="./../Codegen/CodegenCommons.ttinclude" once="true" #>
+<#@ include file="./../Codegen/GroupingConstants.ttinclude" once="true" #>
 using System;
 using JetBrains.Annotations;
 using Vostok.Metrics.Model;

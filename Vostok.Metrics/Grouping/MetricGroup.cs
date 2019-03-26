@@ -5,7 +5,6 @@ using Vostok.Metrics.Model;
 
 namespace Vostok.Metrics.Grouping
 {
-    // TODO(iloktionov): avoid construction of new tags on each For() call
 	internal class MetricGroup<TMetric> : MetricGroupBase<TMetric>,
 		IMetricGroup1<TMetric>,
 		IMetricGroup2<TMetric>,

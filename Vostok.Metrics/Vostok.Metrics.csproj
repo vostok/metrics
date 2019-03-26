@@ -32,20 +32,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Primitives\CounterPrimitive\MetricContextExtensionsCounter.cs" DesignTime="True" AutoGen="True" DependentUpon="MetricContextExtensionsCounter.tt" />
-    <Compile Update="Primitives\GaugePrimitive\MetricContextExtensionsGauge.cs" DesignTime="True" AutoGen="True" DependentUpon="MetricContextExtensionsGauge.tt" />
-    <Compile Update="Primitives\TimerPrimitive\TimerImpl\MetricContextExtensionsTimer.cs" DesignTime="True" AutoGen="True" DependentUpon="MetricContextExtensionsTimer.tt" />
-    <Compile Update="Primitives\TimerPrimitive\HistogramImpl\MetricContextExtensionsHistogram.cs" DesignTime="True" AutoGen="True" DependentUpon="MetricContextExtensionsHistogram.tt" />
+    <Compile Update="Primitives\Counter\CounterFactoryExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="CounterFactoryExtensions.tt" />
+    <Compile Update="Primitives\Gauge\GaugeFactoryExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="GaugeFactoryExtensions.tt" />
+    <Compile Update="Primitives\Timer\TimerFactoryExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="TimerFactoryExtensions.tt" />
+    <Compile Update="Primitives\Timer\HistogramFactoryExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="HistogramFactoryExtensions.tt" />
     <Compile Update="Grouping\IMetricGroupExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="IMetricGroupExtensions.tt" />
     <Compile Update="Grouping\IMetricGroup.cs" DesignTime="True" AutoGen="True" DependentUpon="IMetricGroup.tt" />
     <Compile Update="Grouping\MetricGroup.cs" DesignTime="True" AutoGen="True" DependentUpon="MetricGroup.tt" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Primitives\CounterPrimitive\MetricContextExtensionsCounter.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="MetricContextExtensionsCounter.cs" />
-    <None Update="Primitives\GaugePrimitive\MetricContextExtensionsGauge.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="MetricContextExtensionsGauge.cs" />
-    <None Update="Primitives\TimerPrimitive\TimerImpl\MetricContextExtensionsTimer.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="MetricContextExtensionsTimer.cs" />
-    <None Update="Primitives\TimerPrimitive\HistogramImpl\MetricContextExtensionsHistogram.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="MetricContextExtensionsHistogram.cs" />
+    <None Update="Primitives\Counter\CounterFactoryExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="CounterFactoryExtensions.cs" />
+    <None Update="Primitives\Gauge\GaugeFactoryExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="GaugeFactoryExtensions.cs" />
+    <None Update="Primitives\Timer\TimerFactoryExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="TimerFactoryExtensions.cs" />
+    <None Update="Primitives\Timer\HistogramFactoryExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="HistogramFactoryExtensions.cs" />
     <None Update="Grouping\IMetricGroupExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="IMetricGroupExtensions.cs" />
     <None Update="Grouping\IMetricGroup.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="IMetricGroup.cs" />
     <None Update="Grouping\MetricGroup.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="MetricGroup.cs" />

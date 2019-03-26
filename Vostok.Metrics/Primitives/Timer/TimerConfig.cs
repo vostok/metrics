@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 
-namespace Vostok.Metrics.Primitives.TimerPrimitive.TimerImpl
+namespace Vostok.Metrics.Primitives.Timer
 {
     [PublicAPI]
     public class TimerConfig

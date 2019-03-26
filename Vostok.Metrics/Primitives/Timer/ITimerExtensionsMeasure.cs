@@ -3,7 +3,7 @@ using System.Diagnostics;
 using JetBrains.Annotations;
 using Vostok.Metrics.Helpers;
 
-namespace Vostok.Metrics.Primitives.TimerPrimitive
+namespace Vostok.Metrics.Primitives.Timer
 {
     [PublicAPI]
     public static class ITimerExtensionsMeasure

@@ -1,0 +1,2 @@
+<# model = new MetricExtensionsModel("Counter"); #>
+<#@ include file="./../../codegen/FactoryExtensions.ttinclude" once="true" #>

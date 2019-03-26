@@ -4,7 +4,7 @@ using System.Threading;
 using JetBrains.Annotations;
 using Vostok.Metrics.Model;
 
-namespace Vostok.Metrics.Primitives.GaugePrimitive
+namespace Vostok.Metrics.Primitives.Gauge
 {
     internal class Gauge : IScrapableMetric, IGauge
     {

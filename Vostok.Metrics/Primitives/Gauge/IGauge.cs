@@ -1,7 +1,7 @@
 using System;
 using JetBrains.Annotations;
 
-namespace Vostok.Metrics.Primitives.GaugePrimitive
+namespace Vostok.Metrics.Primitives.Gauge
 {
     /// <summary>
     /// <para>
@@ -13,7 +13,7 @@ namespace Vostok.Metrics.Primitives.GaugePrimitive
     /// </summary>
     /// <remarks>
     /// <para>
-    /// To create a Gauge use extensions (<see cref="MetricContextExtensionsGauge">1</see>, <see cref="MetricContextExtensionsFuncGauge">2</see>) for <see cref="IMetricContext"/>.
+    /// To create a Gauge use extensions (<see cref="MetricContextExtensionsGauge">1</see>, <see cref="FuncGaugeFactoryExtensions">2</see>) for <see cref="IMetricContext"/>.
     /// </para>
     /// <para>
     /// You can call <see cref="IDisposable.Dispose"/> to stop observing Gauge values.
@@ -22,7 +22,7 @@ namespace Vostok.Metrics.Primitives.GaugePrimitive
     /// <example>
     /// <para>
     /// You can use Gauge to send system metrics (like CPU usage).
-    /// Your app <see cref="MetricContextExtensionsFuncGauge.Gauge">creates</see> a Gauge.
+    /// Your app <see cref="FuncGaugeFactoryExtensions.Gauge">creates</see> a Gauge.
     /// <code>
     /// var gauge = context.Gauge(
     ///     "cpu-usage",

@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 
-namespace Vostok.Metrics.Primitives.GaugePrimitive
+namespace Vostok.Metrics.Primitives.Gauge
 {
     [PublicAPI]
     public static class IGaugeExtensions

@@ -2,7 +2,7 @@ using System;
 using JetBrains.Annotations;
 using Vostok.Metrics.Model;
 
-namespace Vostok.Metrics.Primitives.CounterPrimitive
+namespace Vostok.Metrics.Primitives.Counter
 {
     internal class Counter : ICounter
     {
