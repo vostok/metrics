@@ -31,7 +31,7 @@ namespace Vostok.Metrics.Model
 
             Count = count;
 
-            hashCode = items.Aggregate(count, (current, element) => (current * 397) ^ element.GetHashCode());
+            hashCode = items.Take(count).Aggregate(count, (current, element) => (current * 397) ^ element.GetHashCode());
         }
 
         public int Count { get; }
