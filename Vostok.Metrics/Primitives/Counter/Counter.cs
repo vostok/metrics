@@ -12,27 +12,17 @@ namespace Vostok.Metrics.Primitives.Counter
 
         public Counter([NotNull] IMetricContext context, [NotNull] MetricTags tags, [NotNull] CounterConfig config)
         {
-            this.context = context;
-            this.tags = tags;
-            this.config = config;
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
+            this.tags = tags ?? throw new ArgumentNullException(nameof(tags));
+            this.config = config ?? throw new ArgumentNullException(nameof(config));
         }
 
-        public void Add(double value)
+        public void Add(long value)
         {
-            if (value < 0)
-            {
-                throw new ArgumentException(
-                    "Only values >= 0 can be added to counter",
-                    nameof(value));
-            }
+            if (value < 0L)
+                throw new ArgumentOutOfRangeException(nameof(value), value, "Only values >= 0 can be added to counter");
             
-            context.Send(new MetricEvent(
-                value,
-                tags,
-                DateTimeOffset.Now,
-                config.Unit,
-                WellKnownAggregationTypes.Counter,
-                null));
+            context.Send(new MetricEvent(value, tags, DateTimeOffset.Now, config.Unit, WellKnownAggregationTypes.Counter, null));
         }
     }
 }

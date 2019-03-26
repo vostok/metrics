@@ -3,11 +3,12 @@ using JetBrains.Annotations;
 namespace Vostok.Metrics.Primitives.Counter
 {
     [PublicAPI]
-    public class ICounterExtensions
+    public static class ICounterExtensions
     {
-        void Inc(ICounter counter)
-        {
-            counter.Add(1);
-        }
+        /// <summary>
+        /// Increment the value of given <paramref name="counter"/> by 1.
+        /// </summary>
+        public static void Increment([NotNull] ICounter counter)
+            => counter.Add(1L);
     }
 }
