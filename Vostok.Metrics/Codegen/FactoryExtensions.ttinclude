@@ -8,83 +8,69 @@ using Vostok.Metrics.Model;
 namespace <#= model.MetricNamespace #>
 {
     [PublicAPI]
-    public static partial class <#= model.ExtensionClassName #>
+    public static class <#= model.ExtensionClassName #>
     {
         /// <inheritdoc cref="<#= model.InheritDocType #>"/>
-        /// <param name="context">Context this metric will belong to</param>
-        /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownTagKeys.Name"/></param>
-        /// <param name="config">Optional config</param>
-        public static <#= model.MetricInterface #> <#= model.MetricClass #>(this IMetricContext context, string name, <#= model.MetricConfigClass #> config = null)
-        {
-            config = config ?? <#= model.MetricConfigClass #>.Default;
-            var tags = MetricTagsMerger.Merge(context.Tags, name);
-            return new <#= model.MetricClass #>(context, tags, config);
-        }
+        /// <param name="context">Context this metric will belong to.</param>
+        /// <param name="name">Name of the metric. It will be added to event's <see cref="MetricEvent.Tags"/> with key set to <see cref="Vostok.Metrics.WellKnownTagKeys.Name"/>.</param>
+        /// <param name="config">Optional metric-specific config.</param>
+        [NotNull]
+		public static <#= model.MetricInterface #> <#= model.MetricClass #>([NotNull] this IMetricContext context, [NotNull] string name, [CanBeNull] <#= model.MetricConfigClass #> config = null)
+            => new <#= model.MetricClass #>(context, MetricTagsMerger.Merge(context.Tags, name), config ?? <#= model.MetricConfigClass #>.Default);
 
-        #region IMetricGroup
+        #region Metric group extensions
 
         /// <summary>
         /// <para>
         /// Creates a group of <see cref="<#= model.InheritDocType #>"><#= model.MetricClass #>s</see>.
-        /// Metrics in the group share the <paramref name="name"/> but have different dynamic tags.
+        /// Metrics in the group share the same context tags and <paramref name="name"/> but have different dynamic tags.
         /// </para>
         /// <para>
         /// Dynamic tags are specified by an instance of <typeparamref name="TFor"/>.
         /// </para>
         /// <inheritdoc cref="<#= model.InheritDocType #>"/>
         /// </summary>
-        /// <param name="context">Context this metric will belong to</param>
-        /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownTagKeys.Name"/></param>
-        /// Optional custom mapping from <typeparamref name="TFor"/> to <see cref="Vostok.Metrics.Model.MetricTags"/>.
-        /// These tags are specific for every <#= model.MetricClass #> in group and will be added after <paramref name="name"/> tag.
-        /// </param>
-        /// <param name="config">Optional config</param>
+        /// <param name="context">Context this metric will belong to.</param>
+        /// <param name="name">Name of the metric. It will be added to event's <see cref="MetricEvent.Tags"/> with key set to <see cref="Vostok.Metrics.WellKnownTagKeys.Name"/>.</param>
+        /// <param name="config">Optional metric-specific config.</param>
         /// <inheritdoc cref="<#= model.InheritDocType #>"/>
-        public static IMetricGroup<TFor, <#= model.MetricInterface #>> <#= model.MetricClass #><TFor>(this IMetricContext context, string name, <#= model.MetricConfigClass #> config = null)
-        {
-            config = config ?? <#= model.MetricConfigClass #>.Default;
-            return new MetricGroup<TFor, <#= model.MetricInterface #>>(CreateTagsFactory(context, name, config));
-        }         
+		[NotNull]
+        public static IMetricGroup<TFor, <#= model.MetricInterface #>> <#= model.MetricClass #><TFor>([NotNull] this IMetricContext context, [NotNull] string name, [CanBeNull] <#= model.MetricConfigClass #> config = null)
+            => new MetricGroup<TFor, <#= model.MetricInterface #>>(CreateTagsFactory(context, name, config ?? <#= model.MetricConfigClass #>.Default));
 <# for (var keysCount = 1; keysCount <= DynamicTags_StringKeys_MaxKeyCount; keysCount++) { #>
 
         /// <summary>
         /// <para>
         /// Creates a group of <see cref="<#= model.InheritDocType #>"><#= model.MetricClass #>s</see>.
-        /// Metrics in the group share the <paramref name="name"/> but have different dynamic tags.
+        /// Metrics in the group share the same context tags and <paramref name="name"/> but have different dynamic tags.
         /// </para>
         /// <para>
-        /// Dynamic tags are specified by string parameters. You define the keys now and pass the values later.
+        /// Dynamic tags are specified by string parameters. Define the keys now and pass the values later.
         /// </para>
         /// <inheritdoc cref="<#= model.InheritDocType #>"/>
         /// </summary>
-        /// <param name="context">Context this metric will belong to</param>
-        /// <param name="name">The name of the metric. It will be added to <see cref="Vostok.Metrics.Model.MetricSample.Tags"/> with key <see cref="Vostok.Metrics.WellKnownTagKeys.Name"/></param>
+        /// <param name="context">Context this metric will belong to.</param>
+        /// <param name="name">Name of the metric. It will be added to event's <see cref="MetricEvent.Tags"/> with key set to <see cref="Vostok.Metrics.WellKnownTagKeys.Name"/>.</param>
 <# for (var i = 1; i <= keysCount; i++) { #>
-        /// <param name="key<#= i #>">Key of <#= i #> dynamic tag</param>
+        /// <param name="key<#= i #>">Key of dynamic tag number <#= i #>.</param>
 <# } #>
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="<#= model.InheritDocType #>"/>
-        public static IMetricGroup<#= keysCount #><<#= model.MetricInterface #>> <#= model.MetricClass #>(this IMetricContext context, string name, <#= FormatParameters("string key{0}", keysCount) #>, <#= model.MetricConfigClass #> config = null)
-        {
-            return CreateMetricGroup(context, name, config, <#= FormatParameters("key{0}", keysCount) #>);
-        }
+		[NotNull]
+        public static IMetricGroup<#= keysCount #><<#= model.MetricInterface #>> <#= model.MetricClass #>([NotNull] this IMetricContext context, [NotNull] string name, <#= FormatParameters("[NotNull] string key{0}", keysCount) #>, [CanBeNull] <#= model.MetricConfigClass #> config = null)
+            => CreateMetricGroup(context, name, config, <#= FormatParameters("key{0}", keysCount) #>);
 <# } #>
         #endregion
 
+		#region Helper methods
+
         private static MetricGroup<<#= model.MetricClass #>> CreateMetricGroup(IMetricContext context, string name, <#= model.MetricConfigClass #> config = null, params string[] keys)
-        {
-            config = config ?? <#= model.MetricConfigClass #>.Default;
-            return new MetricGroup<<#= model.MetricClass #>>(CreateTagsFactory(context, name, config), keys);
-        }
+            => new MetricGroup<<#= model.MetricClass #>>(CreateTagsFactory(context, name, config ?? <#= model.MetricConfigClass #>.Default), keys);
 
         private static Func<MetricTags, <#= model.MetricClass #>> CreateTagsFactory(IMetricContext context, string name, <#= model.MetricConfigClass #> config)
-        {
-            return tags =>
-            {
-                var finalTags = MetricTagsMerger.Merge(context.Tags, name, tags);
-                return new <#= model.MetricClass #>(context, finalTags, config);
-            };
-        }
+            => tags => new <#= model.MetricClass #>(context, MetricTagsMerger.Merge(context.Tags, name, tags), config);
+
+		#endregion
     }
 }
 <#+
