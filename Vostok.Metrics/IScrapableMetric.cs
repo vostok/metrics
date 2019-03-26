@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Vostok.Metrics.Model;
@@ -14,9 +15,10 @@ namespace Vostok.Metrics
         /// <para>Converts internal metric state to one or more <see cref="MetricEvent"/>s.</para>
         /// <para>Implementation could reset the state after this method was called.</para>
         /// </summary>
+        /// <param name="timestamp">Timestamp to include for returned <see cref="MetricEvent"/>s, denoting exact scraping moment.</param>
         /// <returns><see cref="MetricEvent"/>s describing current state of the metric.</returns>
         [NotNull]
         [ItemNotNull]
-        IEnumerable<MetricEvent> Scrape();
+        IEnumerable<MetricEvent> Scrape(DateTimeOffset timestamp);
     }
 }

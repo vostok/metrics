@@ -5,9 +5,9 @@ using Vostok.Metrics.Model;
 namespace Vostok.Metrics.Primitives.Gauge
 {
     [PublicAPI]
-    public class GaugeConfig
+    public class FuncGaugeConfig
     {
-        internal static readonly GaugeConfig Default = new GaugeConfig();
+        internal static readonly FuncGaugeConfig Default = new FuncGaugeConfig();
 
         /// <summary>
         /// See <see cref="MetricEvent.Unit"/> and <see cref="WellKnownUnits"/> for more info.
@@ -21,15 +21,5 @@ namespace Vostok.Metrics.Primitives.Gauge
         /// </summary>
         [CanBeNull]
         public TimeSpan? ScrapePeriod { get; set; }
-
-        /// <summary>
-        /// If set to <c>true</c>, gauge value will be reset to <see cref="InitialValue"/> after each scrape.
-        /// </summary>
-        public bool ResetOnScrape { get; set; }
-
-        /// <summary>
-        /// Initial value of the gauge. Zero by default.
-        /// </summary>
-        public double InitialValue { get; set; }
     }
 }

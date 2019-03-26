@@ -30,7 +30,9 @@ namespace Vostok.Metrics
 
         private void ScrapeAction(IScrapableMetric metric, TimeSpan scrapePeriod, DateTimeOffset scrapeTimestamp)
         {
-            foreach (var metricSample in metric.Scrape())
+            var currentTime = DateTimeOffset.Now;
+
+            foreach (var metricSample in metric.Scrape(currentTime))
             {
                 Send(metricSample);
             }

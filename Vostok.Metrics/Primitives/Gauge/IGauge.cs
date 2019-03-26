@@ -13,7 +13,7 @@ namespace Vostok.Metrics.Primitives.Gauge
     /// </summary>
     /// <remarks>
     /// <para>
-    /// To create a Gauge use extensions (<see cref="MetricContextExtensionsGauge">1</see>, <see cref="FuncGaugeFactoryExtensions">2</see>) for <see cref="IMetricContext"/>.
+    /// To create a Gauge use extensions (<see cref="GaugeFactoryExtensions">1</see>, <see cref="FuncGaugeFactoryExtensions">2</see>) for <see cref="IMetricContext"/>.
     /// </para>
     /// <para>
     /// You can call <see cref="IDisposable.Dispose"/> to stop observing Gauge values.
@@ -50,7 +50,14 @@ namespace Vostok.Metrics.Primitives.Gauge
     [PublicAPI]
     public interface IGauge : IDisposable
     {
+        /// <summary>
+        /// Sets current gauge's value to given <paramref name="value"/>.
+        /// </summary>
         void Set(double value);
-        void Add(double value);
+
+        /// <summary>
+        /// Adds given <paramref name="valueToAdd"/> to current gauge value.
+        /// </summary>
+        void Add(double valueToAdd);
     }
 }

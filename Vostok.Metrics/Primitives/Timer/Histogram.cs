@@ -46,7 +46,7 @@ namespace Vostok.Metrics.Primitives.Timer
             registration = context.Register(this, config.ScrapePeriod);
         }
 
-        public IEnumerable<MetricEvent> Scrape()
+        public IEnumerable<MetricEvent> Scrape(DateTimeOffset timestamp)
         {
             throw new NotImplementedException();
         }

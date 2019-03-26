@@ -60,22 +60,22 @@ namespace Vostok.Metrics.Tests
 
             public void ReportCreate(string clid, SignalCreateResult result)
             {
-                requestCounter.For("create", clid, result).Inc();
+                requestCounter.For("create", clid, result).Increment();
             }
 
             public void ReportSet(string clid, TerminalSignalState result)
             {
-                requestCounter.For("set", clid, result).Inc();
+                requestCounter.For("set", clid, result).Increment();
             }
 
             public void ReportWait(string clid, SignalServiceWaitResult waitResult)
             {
-                requestCounter.For("wait", clid, waitResult).Inc();
+                requestCounter.For("wait", clid, waitResult).Increment();
             }
 
             public void ReportExpiredItem(TerminalSignalState state)
             {
-                expiredRequestsCounter.For(state).Inc();
+                expiredRequestsCounter.For(state).Increment();
             }
 
             public void Dispose()
