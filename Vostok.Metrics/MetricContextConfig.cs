@@ -29,6 +29,12 @@ namespace Vostok.Metrics
         public MetricTags Tags { get; set; }
 
         /// <summary>
+        /// An optional callback invoked when an internal exception occurs (such as an error while scraping a metric).
+        /// </summary>
+        [CanBeNull]
+        public Action<Exception> ErrorCallback { get; set; }
+
+        /// <summary>
         /// Default metric scrape period (used when passing a <c>null</c> period to <see cref="IMetricContext.Register"/> method).
         /// </summary>
         public TimeSpan DefaultScrapePeriod { get; set; } = TimeSpan.FromMinutes(1);
