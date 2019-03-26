@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using JetBrains.Annotations;
 using Vostok.Metrics.Model;
 
 namespace Vostok.Metrics.Grouping
@@ -9,15 +10,11 @@ namespace Vostok.Metrics.Grouping
         private readonly ConcurrentDictionary<MetricTags, TMetric> cache = new ConcurrentDictionary<MetricTags, TMetric>();
         private readonly Func<MetricTags, TMetric> factory;
 
-        protected MetricGroupBase(Func<MetricTags, TMetric> factory)
-        {
-            this.factory = factory;
-        }
+        protected MetricGroupBase([NotNull] Func<MetricTags, TMetric> factory)
+            => this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
 
-        protected TMetric For(MetricTags dynamicTags)
-        {
-            return cache.GetOrAdd(dynamicTags, factory);
-        }
+        protected TMetric For([NotNull] MetricTags dynamicTags)
+            => cache.GetOrAdd(dynamicTags, factory);
 
         public void Dispose()
         {

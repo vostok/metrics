@@ -5,6 +5,7 @@ namespace Vostok.Metrics.Grouping
     [PublicAPI]
     public interface IMetricGroup<in TFor, out TMetric>
     {
-        TMetric For(TFor value);
+        [NotNull]
+        TMetric For([NotNull] TFor value);
     }
 }

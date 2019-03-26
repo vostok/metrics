@@ -5,13 +5,23 @@ using JetBrains.Annotations;
 namespace Vostok.Metrics.Grouping
 {
     [PublicAPI]
-    public static partial class IMetricGroupExtensions
+    public static class IMetricGroupExtensions
     {
 <# for (int iface = 1; iface <= DynamicTags_StringKeys_MaxKeyCount; iface++) { #>
-        public static TMetric For<TMetric, <#= FormatParameters("TValue{0}", iface) #>>(this IMetricGroup<#= iface #><TMetric> metric, <#= FormatParameters("TValue{0} value{0}", iface) #>)
-        {
-            return metric.For(<#= FormatParameters("value{0}.ToString()", iface) #>);
-        }
+        /// <inheritdoc cref="IMetricGroup<#= iface #>{TMetric}.For"/>
+        [NotNull]
+        public static TMetric For<TMetric, <#= FormatParameters("TValue{0}", iface) #>>([NotNull] this IMetricGroup<#= iface #><TMetric> metric, <#= FormatParameters("[NotNull] TValue{0} value{0}", iface) #>)
+            => metric.For(<#= FormatParameters("ToString(value{0})", iface) #>);
+
 <# } #>
+        private static string ToString<T>(T value)
+        {
+            var result = value?.ToString();
+            
+            if (string.IsNullOrEmpty(result))
+                return "none";
+
+            return result;
+        }
     }
 }
