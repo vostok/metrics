@@ -36,6 +36,7 @@
     <Compile Update="Primitives\Gauge\GaugeFactoryExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="GaugeFactoryExtensions.tt" />
     <Compile Update="Primitives\Timer\TimerFactoryExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="TimerFactoryExtensions.tt" />
     <Compile Update="Primitives\Timer\HistogramFactoryExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="HistogramFactoryExtensions.tt" />
+    <Compile Update="Primitives\Timer\SummaryFactoryExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="SummaryFactoryExtensions.tt" />
     <Compile Update="Grouping\IMetricGroupExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="IMetricGroupExtensions.tt" />
     <Compile Update="Grouping\IMetricGroup.cs" DesignTime="True" AutoGen="True" DependentUpon="IMetricGroup.tt" />
     <Compile Update="Grouping\MetricGroup.cs" DesignTime="True" AutoGen="True" DependentUpon="MetricGroup.tt" />
@@ -46,6 +47,7 @@
     <None Update="Primitives\Gauge\GaugeFactoryExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="GaugeFactoryExtensions.cs" />
     <None Update="Primitives\Timer\TimerFactoryExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="TimerFactoryExtensions.cs" />
     <None Update="Primitives\Timer\HistogramFactoryExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="HistogramFactoryExtensions.cs" />
+    <None Update="Primitives\Timer\SummaryFactoryExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="SummaryFactoryExtensions.cs" />
     <None Update="Grouping\IMetricGroupExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="IMetricGroupExtensions.cs" />
     <None Update="Grouping\IMetricGroup.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="IMetricGroup.cs" />
     <None Update="Grouping\MetricGroup.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="MetricGroup.cs" />
