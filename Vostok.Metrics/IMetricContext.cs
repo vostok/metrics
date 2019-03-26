@@ -23,6 +23,12 @@ namespace Vostok.Metrics
         MetricTags Tags { get; }
 
         /// <summary>
+        /// <para>Sends given <see cref="MetricEvent"/> for further processing.</para>
+        /// <para>Use this method directly to send custom events.</para>
+        /// </summary>
+        void Send([NotNull] MetricEvent @event);
+
+        /// <summary>
         /// <para>Registers an instance of <see cref="IScrapableMetric"/> for scraping.</para>
         /// <para>
         /// Once per <paramref name="scrapePeriod"/> the <see cref="IScrapableMetric.Scrape"/> method
@@ -37,11 +43,5 @@ namespace Vostok.Metrics
         /// <returns>The <see cref="IDisposable"/> token. Call <see cref="IDisposable.Dispose"/> to stop scraping the <paramref name="metric"/></returns>
         [NotNull]
         IDisposable Register([NotNull] IScrapableMetric metric, [CanBeNull] TimeSpan? scrapePeriod);
-        
-        /// <summary>
-        /// <para>Sends given <see cref="MetricEvent"/> for further processing.</para>
-        /// <para>Use this method directly to send custom events.</para>
-        /// </summary>
-        void Send([NotNull] MetricEvent @event);
     }
 }
