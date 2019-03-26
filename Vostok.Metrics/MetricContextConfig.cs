@@ -5,15 +5,32 @@ using Vostok.Metrics.Model;
 namespace Vostok.Metrics
 {
     /// <summary>
-    /// <para>Specifies parameters common for all metric primitive in the <see cref="MetricContext"/></para>
-    /// <para>This config is "cold": values of the properties should never change.</para>
+    /// <para>Represents configuration of a <see cref="MetricContext"/> instance.</para>
+    /// <para></para>
     /// </summary>
     [PublicAPI]
     public class MetricContextConfig
     {
-        public MetricTags Tags { get; set; } = MetricTags.Empty;
+        public MetricContextConfig([NotNull] IMetricEventSender sender)
+        {
+            Sender = sender ?? throw new ArgumentNullException(nameof(sender));
+        }
+
+        /// <summary>
+        /// Sender used to offload <see cref="MetricEvent"/>s for further processing.
+        /// </summary>
+        [NotNull]
+        public IMetricEventSender Sender { get; }
+
+        /// <summary>
+        /// A set of tags inherent to every metric produced with configured context instance.
+        /// </summary>
+        [CanBeNull]
+        public MetricTags Tags { get; set; }
+
+        /// <summary>
+        /// Default metric scrape period (used when passing a <c>null</c> period to <see cref="IMetricContext.Register"/> method).
+        /// </summary>
         public TimeSpan DefaultScrapePeriod { get; set; } = TimeSpan.FromMinutes(1);
-        
-        internal static readonly MetricContextConfig Default = new MetricContextConfig();
     }
 }

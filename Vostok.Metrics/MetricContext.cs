@@ -13,26 +13,20 @@ namespace Vostok.Metrics
         private readonly MetricContextConfig config;
         private readonly ScrapeScheduler scrapeScheduler;
         
-        /// <inheritdoc cref="IMetricContext"/>
-        /// <param name="sender">Calls to <see cref="Send"/> will be delegated to the specified <see cref="IMetricEventSender"/></param>
-        /// <param name="config">Optional config. Use it to specify parameters common for all metric primitives in this <see cref="IMetricContext"/></param>
-        public MetricContext(IMetricEventSender sender, MetricContextConfig config = null)
+        public MetricContext([NotNull] MetricContextConfig config)
         {
-            this.sender = sender;
-            this.config = config ?? MetricContextConfig.Default;
+            this.config = config ?? throw new ArgumentNullException(nameof(config));
+
             scrapeScheduler = new ScrapeScheduler(ScrapeAction);
         }
 
-        public MetricTags Tags => config.Tags;
+        public MetricTags Tags => config.Tags ?? MetricTags.Empty;
+
         public IDisposable Register(IScrapableMetric metric, TimeSpan? scrapePeriod)
-        {
-            return scrapeScheduler.Register(metric, scrapePeriod ?? config.DefaultScrapePeriod);
-        }
+            => scrapeScheduler.Register(metric, scrapePeriod ?? config.DefaultScrapePeriod);
 
         public void Send(MetricEvent @event)
-        {
-            sender.Send(@event);
-        }
+            => sender.Send(@event);
 
         private void ScrapeAction(IScrapableMetric metric, TimeSpan scrapePeriod, DateTimeOffset scrapeTimestamp)
         {
@@ -43,8 +37,6 @@ namespace Vostok.Metrics
         }
 
         public void Dispose()
-        {
-            scrapeScheduler.Dispose();
-        }
+            => scrapeScheduler.Dispose();
     }
 }
