@@ -1,6 +1,6 @@
 using System;
 
-namespace Vostok.Metrics
+namespace Vostok.Metrics.Scheduler
 {
     internal class ScrapeScheduler
     {
