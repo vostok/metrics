@@ -49,7 +49,7 @@ namespace Vostok.Metrics.Tests
                     10,
                     MetricTagsMerger.Merge(rootContext.Tags, "my-custom-metric"),
                     DateTimeOffset.Now,
-                    WellKnownUnits.Time.Seconds,
+                    WellKnownUnits.Seconds,
                     null,
                     null));
         }

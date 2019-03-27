@@ -9,25 +9,25 @@ namespace Vostok.Metrics.Primitives.Timer
         {
             switch (unit)
             {
-                case WellKnownUnits.Time.Ticks:
+                case WellKnownUnits.Ticks:
                     return value.Ticks;
 
-                case WellKnownUnits.Time.Microseconds:
+                case WellKnownUnits.Microseconds:
                     return value.TotalMilliseconds / 1000d;
 
-                case WellKnownUnits.Time.Milliseconds:
+                case WellKnownUnits.Milliseconds:
                     return value.TotalMilliseconds;
 
-                case WellKnownUnits.Time.Seconds:
+                case WellKnownUnits.Seconds:
                     return value.TotalSeconds;
 
-                case WellKnownUnits.Time.Minutes:
+                case WellKnownUnits.Minutes:
                     return value.TotalMinutes;
 
-                case WellKnownUnits.Time.Hours:
+                case WellKnownUnits.Hours:
                     return value.TotalMinutes;
 
-                case WellKnownUnits.Time.Days:
+                case WellKnownUnits.Days:
                     return value.TotalDays;
             }
 

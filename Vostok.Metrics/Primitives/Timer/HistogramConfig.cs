@@ -18,7 +18,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// </summary>
         [CanBeNull]
         [ValueProvider("Vostok.Metrics.WellKnownUnits")]
-        public string Unit { get; set; } = WellKnownUnits.Time.Seconds;
+        public string Unit { get; set; } = WellKnownUnits.Seconds;
 
         /// <summary>
         /// See <see cref="MetricEvent.AggregationParameters"/> for more info.

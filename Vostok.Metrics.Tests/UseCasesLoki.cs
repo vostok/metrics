@@ -94,7 +94,7 @@ namespace Vostok.Metrics.Tests
         {
             lockTime = clusterContext
                 .WithTag("lock-namespace", namespaceName)
-                .Timer("lock-time", new TimerConfig{Unit = WellKnownUnits.Time.Seconds});
+                .Timer("lock-time", new TimerConfig{Unit = WellKnownUnits.Seconds});
         }
 
         public void RecordLockTime(TimeSpan time)

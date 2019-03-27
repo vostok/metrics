@@ -9,64 +9,51 @@ namespace Vostok.Metrics
     [PublicAPI]
     public static class WellKnownUnits
     {
-        [PublicAPI]
-        public static class Time
-        {
-            public const string Ticks = "ticks";
-            public const string Nanoseconds = "nanoseconds";
-            public const string Microseconds = "microseconds";
-            public const string Milliseconds = "milliseconds";
-            public const string Seconds = "seconds";
-            public const string Minutes = "minutes";
-            public const string Hours = "hours";
-            public const string Days = "days";
-        }
+        public const string Ticks = "ticks";
+        public const string Nanoseconds = "nanoseconds";
+        public const string Microseconds = "microseconds";
+        public const string Milliseconds = "milliseconds";
+        public const string Seconds = "seconds";
+        public const string Minutes = "minutes";
+        public const string Hours = "hours";
+        public const string Days = "days";
 
-        [PublicAPI]
-        public static class OperationRate
-        {
-            public const string OpsPerSecond = "ops/second";
-            public const string OpsPerMinute = "ops/minute";
-        }
+        public const string OpsPerSecond = "ops" + PerSecondSuffix;
+        public const string OpsPerMinute = "ops" + PerMinuteSuffix;
 
-        [PublicAPI]
-        public static class DataSize
-        {
-            public const string Bytes = "bytes";
-            public const string Kilobytes = "kilobytes";
-            public const string Megabytes = "megabytes";
-            public const string Gigabytes = "gigabytes";
-            public const string Terabytes = "terabytes";
-            public const string Petabytes = "petabytes";
-            public const string Exabytes = "exabytes";
+        public const string Bytes = "bytes";
+        public const string Kilobytes = "kilobytes";
+        public const string Megabytes = "megabytes";
+        public const string Gigabytes = "gigabytes";
+        public const string Terabytes = "terabytes";
+        public const string Petabytes = "petabytes";
+        public const string Exabytes = "exabytes";
 
-            public const string Bits = "bits";
-            public const string Kilobits = "kilobits";
-            public const string Megabits = "megabits";
-            public const string Gigabits = "gigabits";
-            public const string Terabits = "terabits";
-            public const string Petabits = "petabits";
-            public const string Exabits = "exabits";
-        }
+        public const string Bits = "bits";
+        public const string Kilobits = "kilobits";
+        public const string Megabits = "megabits";
+        public const string Gigabits = "gigabits";
+        public const string Terabits = "terabits";
+        public const string Petabits = "petabits";
+        public const string Exabits = "exabits";
 
-        [PublicAPI]
-        public static class DataRate
-        {
-            public static readonly string BytesPerSecond = $"{DataSize.Bytes}/second";
-            public static readonly string KilobytesPerSecond = $"{DataSize.Kilobytes}/second";
-            public static readonly string MegabytesPerSecond = $"{DataSize.Megabytes}/second";
-            public static readonly string GigabytesPerSecond = $"{DataSize.Gigabytes}/second";
-            public static readonly string TerabytesPerSecond = $"{DataSize.Terabytes}/second";
-            public static readonly string PetabytesPerSecond = $"{DataSize.Petabytes}/second";
-            public static readonly string ExabytesPerSecond = $"{DataSize.Exabytes}/second";
+        public const string BytesPerSecond = Bytes + PerSecondSuffix;
+        public const string KilobytesPerSecond = Kilobytes + PerSecondSuffix;
+        public const string MegabytesPerSecond = Megabytes + PerSecondSuffix;
+        public const string GigabytesPerSecond = Gigabytes + PerSecondSuffix;
+        public const string TerabytesPerSecond = Terabytes + PerSecondSuffix;
+        public const string PetabytesPerSecond = Petabytes + PerSecondSuffix;
+        public const string ExabytesPerSecond = Exabytes + PerSecondSuffix;
 
-            public static readonly string BitsPerSecond = $"{DataSize.Bits}/second";
-            public static readonly string KilobitsPerSecond = $"{DataSize.Kilobits}/second";
-            public static readonly string MegabitsPerSecond = $"{DataSize.Megabits}/second";
-            public static readonly string GigabitsPerSecond = $"{DataSize.Gigabits}/second";
-            public static readonly string TerabitsPerSecond = $"{DataSize.Terabits}/second";
-            public static readonly string PetabitsPerSecond = $"{DataSize.Petabits}/second";
-            public static readonly string ExabitsPerSecond = $"{DataSize.Exabits}/second";
-        }
+        public const string BitsPerSecond = Bits + PerSecondSuffix;
+        public const string KilobitsPerSecond = Kilobits + PerSecondSuffix;
+        public const string MegabitsPerSecond = Megabits + PerSecondSuffix;
+        public const string GigabitsPerSecond = Gigabits + PerSecondSuffix;
+        public const string TerabitsPerSecond = Terabits + PerSecondSuffix;
+        public const string PetabitsPerSecond = Petabits + PerSecondSuffix;
+        public const string ExabitsPerSecond = Exabits + PerSecondSuffix;
+
+        private const string PerSecondSuffix = "/second";
+        private const string PerMinuteSuffix = "/minute";
     }
 }
