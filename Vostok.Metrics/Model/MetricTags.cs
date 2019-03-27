@@ -26,7 +26,9 @@ namespace Vostok.Metrics.Model
         private int appendsDone;
 
         public MetricTags(int capacity)
-            => items = new MetricTag[capacity];
+            : this(new MetricTag[capacity], 0)
+        {
+        }
 
         internal MetricTags(params MetricTag[] tags)
             : this(tags, tags.Length)
