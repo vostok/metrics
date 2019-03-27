@@ -11,20 +11,15 @@ namespace Vostok.Metrics.Model
         /// </summary>
         [NotNull]
         public static MetricTags Merge([NotNull] MetricTags contextTags, [NotNull] string name, [NotNull] MetricTags dynamicTags)
-        {
-            return contextTags
+            => contextTags
                 .Append(WellKnownTagKeys.Name, name)
                 .Append(dynamicTags);
-        }
 
         /// <summary>
         /// Appends a <see cref="WellKnownTagKeys.Name"/> tag with value taken from given <paramref name="name"/> parameter to given <paramref name="contextTags"/> and returns resulting tags.
         /// </summary>
         [NotNull]
         public static MetricTags Merge([NotNull] MetricTags contextTags, [NotNull] string name)
-        {
-            return contextTags
-                .Append(WellKnownTagKeys.Name, name);
-        }
+            => contextTags.Append(WellKnownTagKeys.Name, name);
     }
 }
