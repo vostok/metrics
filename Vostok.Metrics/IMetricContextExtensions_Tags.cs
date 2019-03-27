@@ -28,7 +28,7 @@ namespace Vostok.Metrics
         /// Creates a new <see cref="IMetricContext"/> with <see cref="IMetricContext.Tags"/> set to given <paramref name="newTags"/>, but otherwise delegating to given <paramref name="context"/>.
         /// </summary>
         [NotNull]
-        public static IMetricContext OverwriteTags([NotNull] this IMetricContext context, [NotNull] MetricTags newTags)
+        public static IMetricContext OverwriteTags([NotNull] this IMetricContext context, [CanBeNull] MetricTags newTags)
             => new OverwriteTagsWrapper(context, newTags);
         
         private class OverwriteTagsWrapper : IMetricContext
@@ -38,7 +38,7 @@ namespace Vostok.Metrics
             public OverwriteTagsWrapper(IMetricContext context, MetricTags tags)
             {
                 this.context = context;
-                Tags = tags;
+                Tags = tags ?? MetricTags.Empty;
             }
 
             public MetricTags Tags { get; }
