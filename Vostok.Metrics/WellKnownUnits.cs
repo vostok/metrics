@@ -9,6 +9,10 @@ namespace Vostok.Metrics
     [PublicAPI]
     public static class WellKnownUnits
     {
+        public const string None = null;
+        public const string Percent1 = "percent1";
+        public const string Percent100 = "percent100";
+
         public const string Ticks = "ticks";
         public const string Nanoseconds = "nanoseconds";
         public const string Microseconds = "microseconds";
