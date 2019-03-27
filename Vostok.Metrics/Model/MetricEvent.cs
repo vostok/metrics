@@ -96,7 +96,7 @@ namespace Vostok.Metrics.Model
             if (!Value.Equals(other.Value))
                 return false;
 
-            if (!Timestamp.Equals(other.Timestamp))
+            if (!Timestamp.UtcTicks.Equals(other.Timestamp.UtcTicks))
                 return false;
 
             if (!Tags.Equals(other.Tags))
@@ -120,7 +120,7 @@ namespace Vostok.Metrics.Model
             unchecked
             {
                 var hashCode = Value.GetHashCode();
-                hashCode = (hashCode * 397) ^ Timestamp.GetHashCode();
+                hashCode = (hashCode * 397) ^ Timestamp.UtcTicks.GetHashCode();
                 hashCode = (hashCode * 397) ^ Tags.GetHashCode();
                 hashCode = (hashCode * 397) ^ (Unit?.GetHashCode() ?? 0);
                 hashCode = (hashCode * 397) ^ (AggregationType?.GetHashCode() ?? 0);
