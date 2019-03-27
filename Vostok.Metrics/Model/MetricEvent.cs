@@ -22,7 +22,7 @@ namespace Vostok.Metrics.Model
         /// <param name="aggregationParameters">See <see cref="AggregationParameters"/>.</param>
         public MetricEvent(
             double value,
-            MetricTags tags,
+            [NotNull] MetricTags tags,
             DateTimeOffset timestamp,
             [CanBeNull] [ValueProvider("Vostok.Metrics.WellKnownUnits")]
             string unit,
@@ -82,6 +82,8 @@ namespace Vostok.Metrics.Model
         /// </summary>
         [CanBeNull]
         public IReadOnlyDictionary<string, string> AggregationParameters { get; }
+
+        public override string ToString() => MetricEventPrinter.Print(this);
 
         #region Equality
 
