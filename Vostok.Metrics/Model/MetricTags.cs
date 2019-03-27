@@ -28,6 +28,11 @@ namespace Vostok.Metrics.Model
         public MetricTags(int capacity)
             => items = new MetricTag[capacity];
 
+        internal MetricTags(params MetricTag[] tags)
+            : this(tags, tags.Length)
+        {
+        }
+
         private MetricTags(MetricTag[] items, int count)
         {
             this.items = items;
