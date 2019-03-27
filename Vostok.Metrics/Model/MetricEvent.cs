@@ -9,7 +9,7 @@ namespace Vostok.Metrics.Model
     /// <para><see cref="MetricEvent"/> is the atomic storage unit of Vostok metrics system.</para>
     /// <para>Every event contains a numeric <see cref="Value"/> measured at some <see cref="Timestamp"/> and bound to a set of <see cref="Tags"/>.</para>
     /// <para>Events may also contain auxiliary information, such as <see cref="Unit"/>, <see cref="AggregationType"/> and <see cref="AggregationParameters"/>.</para>
-    /// <para><see cref="MetricEvent"/> instances are immutable. Consider using <see cref="MetricEventBuilder"/> to construct them.</para>
+    /// <para><see cref="MetricEvent"/> instances are immutable.</para>
     /// </summary>
     [PublicAPI]
     public class MetricEvent : IEquatable<MetricEvent>
