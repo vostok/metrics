@@ -25,13 +25,16 @@ namespace Vostok.Metrics.Model
         private readonly int hashCode;
         private int appendsDone;
 
+        public MetricTags(int capacity)
+            => items = new MetricTag[capacity];
+
         private MetricTags(MetricTag[] items, int count)
         {
             this.items = items;
 
             Count = count;
 
-            hashCode = items.Take(count).Aggregate(count, (current, element) => (current * 397) ^ element.GetHashCode());
+            hashCode = items.Take(count).Aggregate(count, (hash, tag) => (hash * 397) ^ tag.GetHashCode());
         }
 
         public int Count { get; }
