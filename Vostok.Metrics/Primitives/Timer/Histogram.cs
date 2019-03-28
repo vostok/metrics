@@ -37,33 +37,32 @@ namespace Vostok.Metrics.Primitives.Timer
     /// Build custom <see cref="HistogramBuckets"/> to customize histogram resolution. Avoid creating lots of buckets (> 100).
     /// </para>
     /// <para>
+    /// Histogram resets its internal buckets state on each <see cref="Scrape"/> call.
+    /// </para>
+    /// <para>
     /// Call <see cref="IDisposable.Dispose"/> to stop scraping the metric.
     /// </para>
     /// </remarks>
     internal class Histogram : ITimer, IScrapableMetric
     {
-        private readonly MetricTags tags;
         private readonly HistogramConfig config;
         private readonly IDisposable registration;
-
-        private readonly long[] bucketCounters;
         private readonly MetricTags[] bucketTags;
+        private readonly long[] bucketCounters;
 
         public Histogram([NotNull] IMetricContext context, [NotNull] MetricTags tags, [NotNull] HistogramConfig config)
         {
-            this.tags = tags ?? throw new ArgumentNullException(nameof(tags));
             this.config = config ?? throw new ArgumentNullException(nameof(config));
-
-            registration = context.Register(this, config.ScrapePeriod);
 
             bucketCounters = new long[config.Buckets.Count];
             bucketTags = new MetricTags[config.Buckets.Count];
 
-            // TODO(iloktionov): use name tag instead?
             for (var i = 0; i < config.Buckets.Count - 1; i++)
                 bucketTags[i] = tags.Append(WellKnownTagKeys.UpperBound, config.Buckets[i].RightBound.ToString(CultureInfo.InvariantCulture));
 
             bucketTags[config.Buckets.Count - 1] = tags.Append(WellKnownTagKeys.UpperBound, "+Inf");
+
+            registration = context.Register(this, config.ScrapePeriod);
         }
 
         public string Unit => config.Unit;
@@ -105,14 +104,18 @@ namespace Vostok.Metrics.Primitives.Timer
             while (rightIndex >= leftIndex)
             {
                 var index = leftIndex + (rightIndex - leftIndex) / 2;
-                var comparison = buckets[index].CompareWithValue(value);
-                if (comparison == 0)
+                var comparisonResult = buckets[index].CompareWithValue(value);
+                if (comparisonResult == 0)
                     return index;
 
-                if (comparison < 0)
+                if (comparisonResult < 0)
+                {
                     rightIndex = index - 1;
+                }
                 else
+                {
                     leftIndex = index + 1;
+                }
             }
 
             return -1;
