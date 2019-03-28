@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Vostok.Commons.Time;
+using Vostok.Metrics.Model;
 
 namespace Vostok.Metrics.Scraping
 {
@@ -22,6 +24,8 @@ namespace Vostok.Metrics.Scraping
 
         public async Task RunAsync(ScrapedMetrics metrics, CancellationToken cancellationToken)
         {
+            var metricEvents = new List<MetricEvent>();
+
             while (!cancellationToken.IsCancellationRequested)
             {
                 var initialTimestamp = Now;
@@ -33,6 +37,8 @@ namespace Vostok.Metrics.Scraping
                 var thresholdTimestamp = initialTimestamp + delayToNextScrape;
                 var scrapeTimestamp = await WaitForTimestampRollover(thresholdTimestamp, cancellationToken).ConfigureAwait(false);
 
+                metricEvents.Clear();
+
                 foreach (var metric in metrics)
                 {
                     if (cancellationToken.IsCancellationRequested)
@@ -40,19 +46,26 @@ namespace Vostok.Metrics.Scraping
 
                     try
                     {
-                        foreach (var metricEvent in metric.Scrape(scrapeTimestamp))
-                            sender.Send(metricEvent);
+                        metricEvents.AddRange(metric.Scrape(scrapeTimestamp));
                     }
                     catch (Exception error)
                     {
-                        try
-                        {
-                            errorCallback?.Invoke(error);
-                        }
-                        catch
-                        {
-                            // ignored
-                        }
+                        OnError(error);
+                    }
+                }
+
+                foreach (var metricEvent in metricEvents)
+                {
+                    if (cancellationToken.IsCancellationRequested)
+                        return;
+
+                    try
+                    {
+                        sender.Send(metricEvent);
+                    }
+                    catch (Exception error)
+                    {
+                        OnError(error);
                     }
                 }
             }
@@ -72,6 +85,18 @@ namespace Vostok.Metrics.Scraping
                     return scrapeTimestamp;
 
                 await Task.Delay(RolloverWaitPause, cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        private void OnError(Exception error)
+        {
+            try
+            {
+                errorCallback?.Invoke(error);
+            }
+            catch
+            {
+                // ignored
             }
         }
     }
