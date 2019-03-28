@@ -24,9 +24,8 @@ namespace Vostok.Metrics.Primitives.Gauge
         /// Creates a group of <see cref="IGauge">Gauges</see>.
         /// Metrics in the group share the same context tags and <paramref name="name"/> but have different dynamic tags.
         /// </para>
-        /// <para>
-        /// Dynamic tags are specified by an instance of <typeparamref name="TFor"/>.
-        /// </para>
+        /// <para>Dynamic tags are specified by an instance of <typeparamref name="TFor"/>.</para>
+        /// <para><typeparamref name="TFor"/> type must have at least one public property marked with <see cref="MetricTagAttribute"/>.</para>
         /// <inheritdoc cref="IGauge"/>
         /// </summary>
         /// <param name="context">Context this metric will belong to.</param>
@@ -35,7 +34,7 @@ namespace Vostok.Metrics.Primitives.Gauge
         /// <inheritdoc cref="IGauge"/>
 		[NotNull]
         public static IMetricGroup<TFor, IGauge> Gauge<TFor>([NotNull] this IMetricContext context, [NotNull] string name, [CanBeNull] GaugeConfig config = null)
-            => new MetricGroup<TFor, IGauge>(CreateTagsFactory(context, name, config ?? GaugeConfig.Default));
+            => new MetricGroup<TFor, IGauge>(MetricForTagsFactory(context, name, config ?? GaugeConfig.Default));
 
         /// <summary>
         /// <para>
@@ -221,9 +220,9 @@ namespace Vostok.Metrics.Primitives.Gauge
 		#region Helper methods
 
         private static MetricGroup<Gauge> CreateMetricGroup(IMetricContext context, string name, GaugeConfig config = null, params string[] keys)
-            => new MetricGroup<Gauge>(CreateTagsFactory(context, name, config ?? GaugeConfig.Default), keys);
+            => new MetricGroup<Gauge>(MetricForTagsFactory(context, name, config ?? GaugeConfig.Default), keys);
 
-        private static Func<MetricTags, Gauge> CreateTagsFactory(IMetricContext context, string name, GaugeConfig config)
+        private static Func<MetricTags, Gauge> MetricForTagsFactory(IMetricContext context, string name, GaugeConfig config)
             => tags => new Gauge(context, MetricTagsMerger.Merge(context.Tags, name, tags), config);
 
 		#endregion

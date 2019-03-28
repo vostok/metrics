@@ -24,9 +24,8 @@ namespace Vostok.Metrics.Primitives.Timer
         /// Creates a group of <see cref="Vostok.Metrics.Primitives.Timer.Summary">Summarys</see>.
         /// Metrics in the group share the same context tags and <paramref name="name"/> but have different dynamic tags.
         /// </para>
-        /// <para>
-        /// Dynamic tags are specified by an instance of <typeparamref name="TFor"/>.
-        /// </para>
+        /// <para>Dynamic tags are specified by an instance of <typeparamref name="TFor"/>.</para>
+        /// <para><typeparamref name="TFor"/> type must have at least one public property marked with <see cref="MetricTagAttribute"/>.</para>
         /// <inheritdoc cref="Vostok.Metrics.Primitives.Timer.Summary"/>
         /// </summary>
         /// <param name="context">Context this metric will belong to.</param>
@@ -35,7 +34,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <inheritdoc cref="Vostok.Metrics.Primitives.Timer.Summary"/>
 		[NotNull]
         public static IMetricGroup<TFor, ITimer> Summary<TFor>([NotNull] this IMetricContext context, [NotNull] string name, [CanBeNull] SummaryConfig config = null)
-            => new MetricGroup<TFor, ITimer>(CreateTagsFactory(context, name, config ?? SummaryConfig.Default));
+            => new MetricGroup<TFor, ITimer>(MetricForTagsFactory(context, name, config ?? SummaryConfig.Default));
 
         /// <summary>
         /// <para>
@@ -221,9 +220,9 @@ namespace Vostok.Metrics.Primitives.Timer
 		#region Helper methods
 
         private static MetricGroup<Summary> CreateMetricGroup(IMetricContext context, string name, SummaryConfig config = null, params string[] keys)
-            => new MetricGroup<Summary>(CreateTagsFactory(context, name, config ?? SummaryConfig.Default), keys);
+            => new MetricGroup<Summary>(MetricForTagsFactory(context, name, config ?? SummaryConfig.Default), keys);
 
-        private static Func<MetricTags, Summary> CreateTagsFactory(IMetricContext context, string name, SummaryConfig config)
+        private static Func<MetricTags, Summary> MetricForTagsFactory(IMetricContext context, string name, SummaryConfig config)
             => tags => new Summary(context, MetricTagsMerger.Merge(context.Tags, name, tags), config);
 
 		#endregion

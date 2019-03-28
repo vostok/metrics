@@ -24,9 +24,8 @@ namespace Vostok.Metrics.Primitives.Timer
         /// Creates a group of <see cref="Vostok.Metrics.Primitives.Timer.Histogram">Histograms</see>.
         /// Metrics in the group share the same context tags and <paramref name="name"/> but have different dynamic tags.
         /// </para>
-        /// <para>
-        /// Dynamic tags are specified by an instance of <typeparamref name="TFor"/>.
-        /// </para>
+        /// <para>Dynamic tags are specified by an instance of <typeparamref name="TFor"/>.</para>
+        /// <para><typeparamref name="TFor"/> type must have at least one public property marked with <see cref="MetricTagAttribute"/>.</para>
         /// <inheritdoc cref="Vostok.Metrics.Primitives.Timer.Histogram"/>
         /// </summary>
         /// <param name="context">Context this metric will belong to.</param>
@@ -35,7 +34,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <inheritdoc cref="Vostok.Metrics.Primitives.Timer.Histogram"/>
 		[NotNull]
         public static IMetricGroup<TFor, ITimer> Histogram<TFor>([NotNull] this IMetricContext context, [NotNull] string name, [CanBeNull] HistogramConfig config = null)
-            => new MetricGroup<TFor, ITimer>(CreateTagsFactory(context, name, config ?? HistogramConfig.Default));
+            => new MetricGroup<TFor, ITimer>(MetricForTagsFactory(context, name, config ?? HistogramConfig.Default));
 
         /// <summary>
         /// <para>
@@ -221,9 +220,9 @@ namespace Vostok.Metrics.Primitives.Timer
 		#region Helper methods
 
         private static MetricGroup<Histogram> CreateMetricGroup(IMetricContext context, string name, HistogramConfig config = null, params string[] keys)
-            => new MetricGroup<Histogram>(CreateTagsFactory(context, name, config ?? HistogramConfig.Default), keys);
+            => new MetricGroup<Histogram>(MetricForTagsFactory(context, name, config ?? HistogramConfig.Default), keys);
 
-        private static Func<MetricTags, Histogram> CreateTagsFactory(IMetricContext context, string name, HistogramConfig config)
+        private static Func<MetricTags, Histogram> MetricForTagsFactory(IMetricContext context, string name, HistogramConfig config)
             => tags => new Histogram(context, MetricTagsMerger.Merge(context.Tags, name, tags), config);
 
 		#endregion

@@ -24,9 +24,8 @@ namespace Vostok.Metrics.Primitives.Timer
         /// Creates a group of <see cref="Vostok.Metrics.Primitives.Timer.Timer">Timers</see>.
         /// Metrics in the group share the same context tags and <paramref name="name"/> but have different dynamic tags.
         /// </para>
-        /// <para>
-        /// Dynamic tags are specified by an instance of <typeparamref name="TFor"/>.
-        /// </para>
+        /// <para>Dynamic tags are specified by an instance of <typeparamref name="TFor"/>.</para>
+        /// <para><typeparamref name="TFor"/> type must have at least one public property marked with <see cref="MetricTagAttribute"/>.</para>
         /// <inheritdoc cref="Vostok.Metrics.Primitives.Timer.Timer"/>
         /// </summary>
         /// <param name="context">Context this metric will belong to.</param>
@@ -35,7 +34,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <inheritdoc cref="Vostok.Metrics.Primitives.Timer.Timer"/>
 		[NotNull]
         public static IMetricGroup<TFor, ITimer> Timer<TFor>([NotNull] this IMetricContext context, [NotNull] string name, [CanBeNull] TimerConfig config = null)
-            => new MetricGroup<TFor, ITimer>(CreateTagsFactory(context, name, config ?? TimerConfig.Default));
+            => new MetricGroup<TFor, ITimer>(MetricForTagsFactory(context, name, config ?? TimerConfig.Default));
 
         /// <summary>
         /// <para>
@@ -221,9 +220,9 @@ namespace Vostok.Metrics.Primitives.Timer
 		#region Helper methods
 
         private static MetricGroup<Timer> CreateMetricGroup(IMetricContext context, string name, TimerConfig config = null, params string[] keys)
-            => new MetricGroup<Timer>(CreateTagsFactory(context, name, config ?? TimerConfig.Default), keys);
+            => new MetricGroup<Timer>(MetricForTagsFactory(context, name, config ?? TimerConfig.Default), keys);
 
-        private static Func<MetricTags, Timer> CreateTagsFactory(IMetricContext context, string name, TimerConfig config)
+        private static Func<MetricTags, Timer> MetricForTagsFactory(IMetricContext context, string name, TimerConfig config)
             => tags => new Timer(context, MetricTagsMerger.Merge(context.Tags, name, tags), config);
 
 		#endregion

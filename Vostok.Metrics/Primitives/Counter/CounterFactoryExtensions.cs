@@ -24,9 +24,8 @@ namespace Vostok.Metrics.Primitives.Counter
         /// Creates a group of <see cref="ICounter">Counters</see>.
         /// Metrics in the group share the same context tags and <paramref name="name"/> but have different dynamic tags.
         /// </para>
-        /// <para>
-        /// Dynamic tags are specified by an instance of <typeparamref name="TFor"/>.
-        /// </para>
+        /// <para>Dynamic tags are specified by an instance of <typeparamref name="TFor"/>.</para>
+        /// <para><typeparamref name="TFor"/> type must have at least one public property marked with <see cref="MetricTagAttribute"/>.</para>
         /// <inheritdoc cref="ICounter"/>
         /// </summary>
         /// <param name="context">Context this metric will belong to.</param>
@@ -35,7 +34,7 @@ namespace Vostok.Metrics.Primitives.Counter
         /// <inheritdoc cref="ICounter"/>
 		[NotNull]
         public static IMetricGroup<TFor, ICounter> Counter<TFor>([NotNull] this IMetricContext context, [NotNull] string name, [CanBeNull] CounterConfig config = null)
-            => new MetricGroup<TFor, ICounter>(CreateTagsFactory(context, name, config ?? CounterConfig.Default));
+            => new MetricGroup<TFor, ICounter>(MetricForTagsFactory(context, name, config ?? CounterConfig.Default));
 
         /// <summary>
         /// <para>
@@ -221,9 +220,9 @@ namespace Vostok.Metrics.Primitives.Counter
 		#region Helper methods
 
         private static MetricGroup<Counter> CreateMetricGroup(IMetricContext context, string name, CounterConfig config = null, params string[] keys)
-            => new MetricGroup<Counter>(CreateTagsFactory(context, name, config ?? CounterConfig.Default), keys);
+            => new MetricGroup<Counter>(MetricForTagsFactory(context, name, config ?? CounterConfig.Default), keys);
 
-        private static Func<MetricTags, Counter> CreateTagsFactory(IMetricContext context, string name, CounterConfig config)
+        private static Func<MetricTags, Counter> MetricForTagsFactory(IMetricContext context, string name, CounterConfig config)
             => tags => new Counter(context, MetricTagsMerger.Merge(context.Tags, name, tags), config);
 
 		#endregion

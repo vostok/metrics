@@ -8,12 +8,11 @@ namespace Vostok.Metrics.Grouping
         public MetricGroup(Func<MetricTags, TMetric> factory)
             : base(factory)
         {
+            if (!MetricTagsExtractor.HasTags(typeof(TFor)))
+                throw new ArgumentException($"Tags model type '{typeof(TFor).Name}' doesn't have any public properties marked with '{typeof(MetricTagAttribute).Name}'.");
         }
 
-        // TODO(iloktionov): implement default attribute-based extraction of tags from object fields and properties
         public TMetric For(TFor value)
-        {
-            throw new NotImplementedException();
-        }
+            => For(MetricTagsExtractor.ExtractTags(value));
     }
 }

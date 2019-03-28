@@ -25,9 +25,8 @@ namespace <#= model.MetricNamespace #>
         /// Creates a group of <see cref="<#= model.InheritDocType #>"><#= model.MetricClass #>s</see>.
         /// Metrics in the group share the same context tags and <paramref name="name"/> but have different dynamic tags.
         /// </para>
-        /// <para>
-        /// Dynamic tags are specified by an instance of <typeparamref name="TFor"/>.
-        /// </para>
+        /// <para>Dynamic tags are specified by an instance of <typeparamref name="TFor"/>.</para>
+        /// <para><typeparamref name="TFor"/> type must have at least one public property marked with <see cref="MetricTagAttribute"/>.</para>
         /// <inheritdoc cref="<#= model.InheritDocType #>"/>
         /// </summary>
         /// <param name="context">Context this metric will belong to.</param>
@@ -36,7 +35,7 @@ namespace <#= model.MetricNamespace #>
         /// <inheritdoc cref="<#= model.InheritDocType #>"/>
 		[NotNull]
         public static IMetricGroup<TFor, <#= model.MetricInterface #>> <#= model.MetricClass #><TFor>([NotNull] this IMetricContext context, [NotNull] string name, [CanBeNull] <#= model.MetricConfigClass #> config = null)
-            => new MetricGroup<TFor, <#= model.MetricInterface #>>(CreateTagsFactory(context, name, config ?? <#= model.MetricConfigClass #>.Default));
+            => new MetricGroup<TFor, <#= model.MetricInterface #>>(MetricForTagsFactory(context, name, config ?? <#= model.MetricConfigClass #>.Default));
 <# for (var keysCount = 1; keysCount <= DynamicTags_StringKeys_MaxKeyCount; keysCount++) { #>
 
         /// <summary>
@@ -65,9 +64,9 @@ namespace <#= model.MetricNamespace #>
 		#region Helper methods
 
         private static MetricGroup<<#= model.MetricClass #>> CreateMetricGroup(IMetricContext context, string name, <#= model.MetricConfigClass #> config = null, params string[] keys)
-            => new MetricGroup<<#= model.MetricClass #>>(CreateTagsFactory(context, name, config ?? <#= model.MetricConfigClass #>.Default), keys);
+            => new MetricGroup<<#= model.MetricClass #>>(MetricForTagsFactory(context, name, config ?? <#= model.MetricConfigClass #>.Default), keys);
 
-        private static Func<MetricTags, <#= model.MetricClass #>> CreateTagsFactory(IMetricContext context, string name, <#= model.MetricConfigClass #> config)
+        private static Func<MetricTags, <#= model.MetricClass #>> MetricForTagsFactory(IMetricContext context, string name, <#= model.MetricConfigClass #> config)
             => tags => new <#= model.MetricClass #>(context, MetricTagsMerger.Merge(context.Tags, name, tags), config);
 
 		#endregion
