@@ -1,6 +1,7 @@
 using System;
 using JetBrains.Annotations;
 using Vostok.Metrics.Model;
+using Vostok.Metrics.Scraping;
 
 namespace Vostok.Metrics
 {

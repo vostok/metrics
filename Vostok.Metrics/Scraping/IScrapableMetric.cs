@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Vostok.Metrics.Model;
 
-namespace Vostok.Metrics
+namespace Vostok.Metrics.Scraping
 {
     /// <summary>
     /// Represents a metric whose state can be periodically observed.

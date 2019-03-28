@@ -4,6 +4,7 @@ using Vostok.Metrics.Model;
 using Vostok.Metrics.Primitives.Counter;
 using Vostok.Metrics.Primitives.Gauge;
 using Vostok.Metrics.Primitives.Timer;
+using Vostok.Metrics.Scraping;
 
 namespace Vostok.Metrics
 {

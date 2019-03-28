@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using JetBrains.Annotations;
 using Vostok.Metrics.Model;
+using Vostok.Metrics.Scraping;
 
 namespace Vostok.Metrics.Primitives.Gauge
 {
