@@ -68,7 +68,12 @@ namespace Vostok.Metrics.Grouping
         {
             try
             {
-                return getter(item)?.ToString() ?? "none";
+                var value = getter(item)?.ToString();
+
+                if (string.IsNullOrEmpty(value))
+                    return "none";
+
+                return value;
             }
             catch
             {

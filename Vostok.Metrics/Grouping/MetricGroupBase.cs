@@ -18,10 +18,11 @@ namespace Vostok.Metrics.Grouping
 
         public void Dispose()
         {
-            //todo Should guarantee that all TMetrics are disposed and no new TMetrics are created after Dispose 
-            foreach (var kvp in cache)
+            foreach (var pair in cache)
             {
-                (kvp.Value as IDisposable)?.Dispose();
+                (pair.Value as IDisposable)?.Dispose();
+
+                cache.TryRemove(pair.Key, out _);
             }
         }
     }
