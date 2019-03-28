@@ -48,11 +48,11 @@ namespace Vostok.Metrics.Tests
 
             public SignalServiceMetrics(IMetricContext context, TimeSpan scrapePeriod)
             {
-                requestCounter = context.IntegerGauge(
+                requestCounter = context.CreateIntegerGauge(
                     "signals-requests-count",
                     "req", "clid", "result",
                     new IntegerGaugeConfig{ScrapePeriod = scrapePeriod});
-                expiredRequestsCounter = context.IntegerGauge(
+                expiredRequestsCounter = context.CreateIntegerGauge(
                     "signals-expired-signals",
                     "state",
                     new IntegerGaugeConfig { ScrapePeriod = scrapePeriod});
@@ -94,7 +94,7 @@ namespace Vostok.Metrics.Tests
         {
             lockTime = clusterContext
                 .WithTag("lock-namespace", namespaceName)
-                .Timer("lock-time", new TimerConfig{Unit = WellKnownUnits.Seconds});
+                .CreateTimer("lock-time", new TimerConfig{Unit = WellKnownUnits.Seconds});
         }
 
         public void RecordLockTime(TimeSpan time)

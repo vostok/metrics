@@ -14,7 +14,7 @@ namespace Vostok.Metrics.Primitives.Counter
         /// <param name="name">Name of the metric. It will be added to event's <see cref="MetricEvent.Tags"/> with key set to <see cref="Vostok.Metrics.WellKnownTagKeys.Name"/>.</param>
         /// <param name="config">Optional metric-specific config.</param>
         [NotNull]
-		public static ICounter Counter([NotNull] this IMetricContext context, [NotNull] string name, [CanBeNull] CounterConfig config = null)
+		public static ICounter CreateCounter([NotNull] this IMetricContext context, [NotNull] string name, [CanBeNull] CounterConfig config = null)
             => new Counter(context, MetricTagsMerger.Merge(context.Tags, name), config ?? CounterConfig.Default);
 
         #region Metric group extensions
@@ -33,7 +33,7 @@ namespace Vostok.Metrics.Primitives.Counter
         /// <param name="config">Optional metric-specific config.</param>
         /// <inheritdoc cref="ICounter"/>
 		[NotNull]
-        public static IMetricGroup<TFor, ICounter> Counter<TFor>([NotNull] this IMetricContext context, [NotNull] string name, [CanBeNull] CounterConfig config = null)
+        public static IMetricGroup<TFor, ICounter> CreateCounter<TFor>([NotNull] this IMetricContext context, [NotNull] string name, [CanBeNull] CounterConfig config = null)
             => new MetricGroup<TFor, ICounter>(MetricForTagsFactory(context, name, config ?? CounterConfig.Default));
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Vostok.Metrics.Primitives.Counter
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="ICounter"/>
 		[NotNull]
-        public static IMetricGroup1<ICounter> Counter([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [CanBeNull] CounterConfig config = null)
+        public static IMetricGroup1<ICounter> CreateCounter([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [CanBeNull] CounterConfig config = null)
             => CreateMetricGroup(context, name, config, key1);
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Vostok.Metrics.Primitives.Counter
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="ICounter"/>
 		[NotNull]
-        public static IMetricGroup2<ICounter> Counter([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [CanBeNull] CounterConfig config = null)
+        public static IMetricGroup2<ICounter> CreateCounter([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [CanBeNull] CounterConfig config = null)
             => CreateMetricGroup(context, name, config, key1, key2);
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Vostok.Metrics.Primitives.Counter
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="ICounter"/>
 		[NotNull]
-        public static IMetricGroup3<ICounter> Counter([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [CanBeNull] CounterConfig config = null)
+        public static IMetricGroup3<ICounter> CreateCounter([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [CanBeNull] CounterConfig config = null)
             => CreateMetricGroup(context, name, config, key1, key2, key3);
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Vostok.Metrics.Primitives.Counter
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="ICounter"/>
 		[NotNull]
-        public static IMetricGroup4<ICounter> Counter([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [NotNull] string key4, [CanBeNull] CounterConfig config = null)
+        public static IMetricGroup4<ICounter> CreateCounter([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [NotNull] string key4, [CanBeNull] CounterConfig config = null)
             => CreateMetricGroup(context, name, config, key1, key2, key3, key4);
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Vostok.Metrics.Primitives.Counter
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="ICounter"/>
 		[NotNull]
-        public static IMetricGroup5<ICounter> Counter([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [NotNull] string key4, [NotNull] string key5, [CanBeNull] CounterConfig config = null)
+        public static IMetricGroup5<ICounter> CreateCounter([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [NotNull] string key4, [NotNull] string key5, [CanBeNull] CounterConfig config = null)
             => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5);
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Vostok.Metrics.Primitives.Counter
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="ICounter"/>
 		[NotNull]
-        public static IMetricGroup6<ICounter> Counter([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [NotNull] string key4, [NotNull] string key5, [NotNull] string key6, [CanBeNull] CounterConfig config = null)
+        public static IMetricGroup6<ICounter> CreateCounter([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [NotNull] string key4, [NotNull] string key5, [NotNull] string key6, [CanBeNull] CounterConfig config = null)
             => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5, key6);
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace Vostok.Metrics.Primitives.Counter
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="ICounter"/>
 		[NotNull]
-        public static IMetricGroup7<ICounter> Counter([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [NotNull] string key4, [NotNull] string key5, [NotNull] string key6, [NotNull] string key7, [CanBeNull] CounterConfig config = null)
+        public static IMetricGroup7<ICounter> CreateCounter([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [NotNull] string key4, [NotNull] string key5, [NotNull] string key6, [NotNull] string key7, [CanBeNull] CounterConfig config = null)
             => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5, key6, key7);
 
         /// <summary>
@@ -213,8 +213,9 @@ namespace Vostok.Metrics.Primitives.Counter
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="ICounter"/>
 		[NotNull]
-        public static IMetricGroup8<ICounter> Counter([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [NotNull] string key4, [NotNull] string key5, [NotNull] string key6, [NotNull] string key7, [NotNull] string key8, [CanBeNull] CounterConfig config = null)
+        public static IMetricGroup8<ICounter> CreateCounter([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [NotNull] string key4, [NotNull] string key5, [NotNull] string key6, [NotNull] string key7, [NotNull] string key8, [CanBeNull] CounterConfig config = null)
             => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5, key6, key7, key8);
+
         #endregion
 
 		#region Helper methods

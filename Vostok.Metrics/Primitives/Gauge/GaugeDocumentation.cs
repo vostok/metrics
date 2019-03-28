@@ -24,7 +24,7 @@ namespace Vostok.Metrics.Primitives.Gauge
     /// <example>
     /// <para>
     /// You can use Gauge to send system metrics (like CPU usage).
-    /// Your app <see cref="FuncGaugeFactoryExtensions.FuncGauge">creates</see> a Gauge.
+    /// Your app <see cref="FuncGaugeFactoryExtensions.CreateFuncGauge">creates</see> a Gauge.
     /// <code>
     /// var gauge = context.FuncGauge(
     ///     "cpu-usage",

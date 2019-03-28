@@ -28,14 +28,14 @@ namespace Vostok.Metrics.Tests
             var queue = new Queue<int>();
             
             rootContext
-                .FuncGauge("queue-length",
+                .CreateFuncGauge("queue-length",
                     () => queue.Count,
                     new FuncGaugeConfig
                     {
                         ScrapePeriod = 10.Seconds()
                     });
 
-            var gauge2 = rootContext.IntegerGauge("nag", new IntegerGaugeConfig {ScrapePeriod = 10.Seconds()});
+            var gauge2 = rootContext.CreateIntegerGauge("nag", new IntegerGaugeConfig {ScrapePeriod = 10.Seconds()});
             gauge2.Increment();
         }
 
@@ -58,9 +58,9 @@ namespace Vostok.Metrics.Tests
         public void Dynamic_tags_string_keys()
         {
             var latenciesClidUrl = rootContext
-                .Timer("requests-latency", "clid", "url");
+                .CreateTimer("requests-latency", "clid", "url");
             var latenciesGlobal = rootContext
-                .Timer("requests-latency");
+                .CreateTimer("requests-latency");
 
             // Get these values from http request
             var clid = "fat-service";

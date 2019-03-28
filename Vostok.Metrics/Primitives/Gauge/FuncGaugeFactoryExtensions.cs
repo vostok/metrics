@@ -13,7 +13,7 @@ namespace Vostok.Metrics.Primitives.Gauge
         /// <param name="getValue">Value provider delegate that will be called each time when the value of this gauge is observed.</param>
         /// <param name="config">Optional config.</param>
         [NotNull]
-        public static IDisposable FuncGauge(
+        public static IDisposable CreateFuncGauge(
             [NotNull] this IMetricContext context,
             [NotNull] string name,
             [NotNull] Func<double> getValue, 
