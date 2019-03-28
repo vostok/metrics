@@ -10,8 +10,9 @@ namespace Vostok.Metrics.Primitives.Timer
     {
         internal static readonly HistogramConfig Default = new HistogramConfig();
 
-        [CanBeNull]
-        public double[] Buckets { get; set; }
+        [NotNull]
+        public HistogramBuckets Buckets { get; set; } 
+            = new HistogramBuckets(.005, .01, .025, .05, .075, .1, .25, .5, .75, 1, 2.5, 5, 7.5, 10, 60, double.PositiveInfinity);
 
         /// <summary>
         /// See <see cref="MetricEvent.Unit"/> and <see cref="WellKnownUnits"/> for more info.
