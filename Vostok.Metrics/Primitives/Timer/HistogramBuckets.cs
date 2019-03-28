@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using JetBrains.Annotations;
 
 namespace Vostok.Metrics.Primitives.Timer
@@ -8,13 +7,23 @@ namespace Vostok.Metrics.Primitives.Timer
     [PublicAPI]
     public class HistogramBuckets
     {
-        /// <param name="upperBounds">See <see cref="UpperBounds"/>.</param>
+        private readonly IReadOnlyList<double> upperBounds;
+
+        /// <param name="upperBounds">
+        /// <para>An array of inclusive upper bounds of histogram's buckets.</para>
+        /// <para>Must contain a monotonically increasing sequence of values.</para>
+        /// <para>Must not be empty.</para>
+        /// </param>
         public HistogramBuckets([NotNull] params double[] upperBounds)
             : this(upperBounds as IReadOnlyList<double>)
         {
         }
 
-        /// <param name="upperBounds">See <see cref="UpperBounds"/>.</param>
+        /// <param name="upperBounds">
+        /// <para>A list of inclusive upper bounds of histogram's buckets.</para>
+        /// <para>Must contain a monotonically increasing sequence of values.</para>
+        /// <para>Must not be empty.</para>
+        /// </param>
         public HistogramBuckets([NotNull] IReadOnlyList<double> upperBounds)
         {
             if (upperBounds == null)
@@ -31,19 +40,9 @@ namespace Vostok.Metrics.Primitives.Timer
                     throw new ArgumentException("Upper bounds sequence must be increasing.");
             }
 
-            if (double.IsPositiveInfinity(upperBounds[upperBounds.Count - 1]))
-            {
-                UpperBounds = upperBounds;
-            }
-            else
-            {
-                var newBounds = new List<double>(upperBounds.Count + 1);
+            this.upperBounds = upperBounds;
 
-                newBounds.AddRange(upperBounds);
-                newBounds.Add(double.PositiveInfinity);
-
-                UpperBounds = newBounds;
-            }
+            Count = upperBounds.Count + 1;
         }
 
         [NotNull]
@@ -88,14 +87,21 @@ namespace Vostok.Metrics.Primitives.Timer
             return new HistogramBuckets(upperBounds);
         }
 
-        /// <summary>
-        /// <para>A set of inclusive upper bounds of histogram's buckets.</para>
-        /// <para>Must contain a monotonically increasing sequence of values.</para>
-        /// <para>Must contain <see cref="double.PositiveInfinity"/> as the last element.</para>
-        /// <para>Must not be empty.</para>
-        /// </summary>
-        [NotNull]
-        public IReadOnlyList<double> UpperBounds { get; }
+        public int Count { get; }
+
+        public HistogramBucket this[int index]
+        {
+            get
+            {
+                if (index < 0 || index >= Count)
+                    throw new IndexOutOfRangeException();
+
+                var leftBound = index == 0 ? double.NegativeInfinity : upperBounds[index - 1];
+                var rightBound = index == Count - 1 ? double.PositiveInfinity : upperBounds[index];
+
+                return new HistogramBucket(leftBound, rightBound);
+            }
+        }
 
         [CanBeNull]
         public static HistogramBuckets operator+([CanBeNull] HistogramBuckets left, [CanBeNull] HistogramBuckets right)
@@ -106,10 +112,10 @@ namespace Vostok.Metrics.Primitives.Timer
             if (right == null)
                 return left;
 
-            var upperBounds = new List<double>(left.UpperBounds.Count - 1 + right.UpperBounds.Count);
+            var upperBounds = new List<double>(left.upperBounds.Count + right.upperBounds.Count);
 
-            upperBounds.AddRange(left.UpperBounds.Take(left.UpperBounds.Count - 1));
-            upperBounds.AddRange(right.UpperBounds);
+            upperBounds.AddRange(left.upperBounds);
+            upperBounds.AddRange(right.upperBounds);
 
             return new HistogramBuckets(upperBounds);
         }

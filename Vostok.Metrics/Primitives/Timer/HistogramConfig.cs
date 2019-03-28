@@ -12,7 +12,7 @@ namespace Vostok.Metrics.Primitives.Timer
 
         [NotNull]
         public HistogramBuckets Buckets { get; set; } 
-            = new HistogramBuckets(.005, .01, .025, .05, .075, .1, .25, .5, .75, 1, 2.5, 5, 7.5, 10, 60, double.PositiveInfinity);
+            = new HistogramBuckets(.005, .01, .025, .05, .075, .1, .25, .5, .75, 1, 2.5, 5, 7.5, 10, 60);
 
         /// <summary>
         /// See <see cref="MetricEvent.Unit"/> and <see cref="WellKnownUnits"/> for more info.
