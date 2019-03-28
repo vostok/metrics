@@ -25,7 +25,7 @@ namespace Vostok.Metrics.Primitives.Timer
                     return value.TotalMinutes;
 
                 case WellKnownUnits.Hours:
-                    return value.TotalMinutes;
+                    return value.TotalHours;
 
                 case WellKnownUnits.Days:
                     return value.TotalDays;
