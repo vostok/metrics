@@ -43,19 +43,19 @@ namespace Vostok.Metrics.Tests
             // env-Infra.service-Loki.cluster-Loki-default.Replica-1.
             // signals-requests-count.
             // req-{create,set,count}.clid-{fat-service,...}.result-{NotFound,Set,...}
-            private readonly IMetricGroup3<IGauge> requestCounter;
-            private readonly IMetricGroup1<IGauge> expiredRequestsCounter;
+            private readonly IMetricGroup3<IIntegerGauge> requestCounter;
+            private readonly IMetricGroup1<IIntegerGauge> expiredRequestsCounter;
 
             public SignalServiceMetrics(IMetricContext context, TimeSpan scrapePeriod)
             {
-                requestCounter = context.Gauge(
+                requestCounter = context.IntegerGauge(
                     "signals-requests-count",
                     "req", "clid", "result",
-                    new GaugeConfig{ScrapePeriod = scrapePeriod});
-                expiredRequestsCounter = context.Gauge(
+                    new IntegerGaugeConfig{ScrapePeriod = scrapePeriod});
+                expiredRequestsCounter = context.IntegerGauge(
                     "signals-expired-signals",
                     "state",
-                    new GaugeConfig{ScrapePeriod = scrapePeriod});
+                    new IntegerGaugeConfig { ScrapePeriod = scrapePeriod});
             }
 
             public void ReportCreate(string clid, SignalCreateResult result)

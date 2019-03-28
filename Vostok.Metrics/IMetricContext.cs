@@ -10,7 +10,7 @@ namespace Vostok.Metrics
 {
     /// <summary>
     /// <para><see cref="IMetricContext"/> is an entry-point for Vostok.Metrics library.</para>
-    /// <para>It provides all that is necessary to create a metric primitive like <see cref="IGauge"/>, <see cref="ICounter"/>, <see cref="ITimer"/> and others.</para>
+    /// <para>It provides all that is necessary to create a metric primitive like <see cref="IIntegerGauge"/>, <see cref="ICounter"/>, <see cref="ITimer"/> and others.</para>
     /// <para>To create an <see cref="IMetricContext"/> instance, use <see cref="MetricContext"/> implementation.</para>
     /// </summary>
     [PublicAPI]

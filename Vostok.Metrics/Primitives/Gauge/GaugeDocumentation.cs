@@ -1,20 +1,22 @@
 using System;
-using JetBrains.Annotations;
 
 namespace Vostok.Metrics.Primitives.Gauge
 {
     /// <summary>
     /// <para>
-    /// Gauge metric represents an arbitrary value.
+    /// Gauge metric represents an arbitrary numeric value.
     /// </para>
     /// <para>
     /// The value of Gauge is observed every <see cref="GaugeConfig.ScrapePeriod"/> and saved to a permanent storage without any aggregation process.
     /// </para>
     /// </summary>
     /// <remarks>
-    /// <para>
-    /// To create a Gauge use extensions (<see cref="GaugeFactoryExtensions">1</see>, <see cref="FuncGaugeFactoryExtensions">2</see>) for <see cref="IMetricContext"/>.
-    /// </para>
+    /// <para> To create a Gauge, use factory extensions for <see cref="IMetricContext"/>:</para>
+    /// <list type="bullet">
+    ///     <item><description><see cref="FuncGaugeFactoryExtensions"/> — gauges whose values come from external delegates.</description></item>
+    ///     <item><description><see cref="IntegerGaugeFactoryExtensions"/> — manually manipulated gauges with <see cref="long"/> values.</description></item>
+    ///     <item><description><see cref="FloatingGaugeFactoryExtensions"/> — manually manipulated gauges with <see cref="double"/> values.</description></item>
+    /// </list>
     /// <para>
     /// You can call <see cref="IDisposable.Dispose"/> to stop observing Gauge values.
     /// </para>
@@ -22,9 +24,9 @@ namespace Vostok.Metrics.Primitives.Gauge
     /// <example>
     /// <para>
     /// You can use Gauge to send system metrics (like CPU usage).
-    /// Your app <see cref="FuncGaugeFactoryExtensions.Gauge">creates</see> a Gauge.
+    /// Your app <see cref="FuncGaugeFactoryExtensions.FuncGauge">creates</see> a Gauge.
     /// <code>
-    /// var gauge = context.Gauge(
+    /// var gauge = context.FuncGauge(
     ///     "cpu-usage",
     ///     () => GetCpuUsage(),
     ///     new GaugeConfig { ScrapePeriod = TimeSpan.FromSeconds(10) });
@@ -36,28 +38,20 @@ namespace Vostok.Metrics.Primitives.Gauge
     /// <para>
     /// Another example is the number of concurrent requests to your service split by the identity of a client.
     /// <code>
-    /// var gauge = context.Gauge(
+    /// var gauge = context.IntegerGauge(
     ///     "concurrent-requests",
     ///     "client-id");
     ///
     /// 
-    /// gauge.For("fat-service").Inc();
+    /// gauge.For("fat-service").Increment();
     /// ... // process request
-    /// gauge.For("fat-service").Dec(); 
+    /// gauge.For("fat-service").Decrement(); 
     /// </code>
     /// </para>
     /// </example>
-    [PublicAPI]
-    public interface IGauge : IDisposable
+    // ReSharper disable once UnusedMember.Global
+    internal static class GaugeDocumentation
     {
-        /// <summary>
-        /// Sets current gauge's value to given <paramref name="value"/>.
-        /// </summary>
-        void Set(double value);
 
-        /// <summary>
-        /// Adds given <paramref name="valueToAdd"/> to current gauge value.
-        /// </summary>
-        void Add(double valueToAdd);
     }
 }

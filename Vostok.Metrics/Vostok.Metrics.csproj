@@ -37,7 +37,8 @@
 
   <ItemGroup>
     <Compile Update="Primitives\Counter\CounterFactoryExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="CounterFactoryExtensions.tt" />
-    <Compile Update="Primitives\Gauge\GaugeFactoryExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="GaugeFactoryExtensions.tt" />
+    <Compile Update="Primitives\Gauge\IntegerGaugeFactoryExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="IntegerGaugeFactoryExtensions.tt" />
+    <Compile Update="Primitives\Gauge\FloatingGaugeFactoryExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="FloatingGaugeFactoryExtensions.tt" />
     <Compile Update="Primitives\Timer\TimerFactoryExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="TimerFactoryExtensions.tt" />
     <Compile Update="Primitives\Timer\HistogramFactoryExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="HistogramFactoryExtensions.tt" />
     <Compile Update="Primitives\Timer\SummaryFactoryExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="SummaryFactoryExtensions.tt" />
@@ -48,7 +49,8 @@
 
   <ItemGroup>
     <None Update="Primitives\Counter\CounterFactoryExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="CounterFactoryExtensions.cs" />
-    <None Update="Primitives\Gauge\GaugeFactoryExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="GaugeFactoryExtensions.cs" />
+    <None Update="Primitives\Gauge\IntegerGaugeFactoryExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="IntegerGaugeFactoryExtensions.cs" />
+    <None Update="Primitives\Gauge\FloatingGaugeFactoryExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="FloatingGaugeFactoryExtensions.cs" />
     <None Update="Primitives\Timer\TimerFactoryExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="TimerFactoryExtensions.cs" />
     <None Update="Primitives\Timer\HistogramFactoryExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="HistogramFactoryExtensions.cs" />
     <None Update="Primitives\Timer\SummaryFactoryExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="SummaryFactoryExtensions.cs" />

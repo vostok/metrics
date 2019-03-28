@@ -1,0 +1,3 @@
+<# model = new MetricExtensionsModel("FloatingGauge") {
+    MetricNamespace = "Vostok.Metrics.Primitives.Gauge"}; #>
+<#@ include file="./../../Codegen/FactoryExtensions.ttinclude" once="true" #>

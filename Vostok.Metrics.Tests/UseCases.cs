@@ -28,14 +28,14 @@ namespace Vostok.Metrics.Tests
             var queue = new Queue<int>();
             
             rootContext
-                .Gauge("queue-length",
+                .FuncGauge("queue-length",
                     () => queue.Count,
                     new FuncGaugeConfig
                     {
                         ScrapePeriod = 10.Seconds()
                     });
 
-            var gauge2 = rootContext.Gauge("nag", new GaugeConfig {ScrapePeriod = 10.Seconds()});
+            var gauge2 = rootContext.IntegerGauge("nag", new IntegerGaugeConfig {ScrapePeriod = 10.Seconds()});
             gauge2.Increment();
         }
 
