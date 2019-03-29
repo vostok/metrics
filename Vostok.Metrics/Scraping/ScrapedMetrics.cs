@@ -12,18 +12,15 @@ namespace Vostok.Metrics.Scraping
             = new ConcurrentDictionary<IScrapableMetric, byte>(ByReferenceEqualityComparer<IScrapableMetric>.Instance);
 
         public void Add(IScrapableMetric metric)
-        {
-            if (!metrics.ContainsKey(metric))
-                metrics.TryAdd(metric, byte.MinValue);
-        }
+            => metrics.TryAdd(metric, byte.MinValue);
 
         public void Remove(IScrapableMetric metric)
             => metrics.TryRemove(metric, out _);
 
-        public IEnumerator<IScrapableMetric> GetEnumerator() =>
-            metrics.Select(pair => pair.Key).GetEnumerator();
+        public IEnumerator<IScrapableMetric> GetEnumerator() 
+            => metrics.Select(pair => pair.Key).GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator() =>
-            GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() 
+            => GetEnumerator();
     }
 }
