@@ -57,10 +57,18 @@ namespace Vostok.Metrics.Primitives.Timer
             bucketCounters = new long[config.Buckets.Count];
             bucketTags = new MetricTags[config.Buckets.Count];
 
-            for (var i = 0; i < config.Buckets.Count - 1; i++)
-                bucketTags[i] = tags.Append(WellKnownTagKeys.UpperBound, config.Buckets[i].RightBound.ToString(CultureInfo.InvariantCulture));
+            for (var i = 0; i < config.Buckets.Count; i++)
+            {
+                var lowerBound = config.Buckets[i].LeftBound;
+                var upperBound = config.Buckets[i].RightBound;
 
-            bucketTags[config.Buckets.Count - 1] = tags.Append(WellKnownTagKeys.UpperBound, "+Inf");
+                var lowerBoundString = double.IsNegativeInfinity(lowerBound) ? "-Inf" : lowerBound.ToString(CultureInfo.InvariantCulture);
+                var upperBoundString = double.IsPositiveInfinity(upperBound) ? "+Inf" : upperBound.ToString(CultureInfo.InvariantCulture);
+
+                bucketTags[i] = tags
+                    .Append(WellKnownTagKeys.LowerBound, lowerBoundString)
+                    .Append(WellKnownTagKeys.UpperBound, upperBoundString);
+            }
 
             registration = context.Register(this, config.ScrapePeriod);
         }
@@ -79,7 +87,11 @@ namespace Vostok.Metrics.Primitives.Timer
         {
             for (var i = 0; i < bucketCounters.Length; i++)
             {
-                yield return new MetricEvent(Interlocked.Exchange(ref bucketCounters[i], 0L), bucketTags[i], 
+                var bucketValue = Interlocked.Exchange(ref bucketCounters[i], 0L);
+                if (bucketValue == 0L)
+                    continue;
+
+                yield return new MetricEvent(bucketValue, bucketTags[i], 
                     timestamp, config.Unit, WellKnownAggregationTypes.Histogram, config.AggregationParameters);
             }
         }
