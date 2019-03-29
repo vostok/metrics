@@ -9,7 +9,6 @@ namespace Vostok.Metrics
     [PublicAPI]
     public class MetricContext : IMetricContext, IDisposable
     {
-        private readonly IMetricEventSender sender;
         private readonly MetricContextConfig config;
         private readonly ScrapeScheduler scheduler;
         
@@ -26,7 +25,7 @@ namespace Vostok.Metrics
             => scheduler.Register(metric, scrapePeriod ?? config.DefaultScrapePeriod);
 
         public void Send(MetricEvent @event)
-            => sender.Send(@event);
+            => config.Sender.Send(@event);
 
         public void Dispose()
             => scheduler.Dispose();
