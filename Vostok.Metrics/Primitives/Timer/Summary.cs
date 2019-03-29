@@ -59,8 +59,6 @@ namespace Vostok.Metrics.Primitives.Timer
         }
 
         public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
+            => registration.Dispose();
     }
 }
