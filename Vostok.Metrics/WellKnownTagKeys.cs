@@ -30,5 +30,23 @@ namespace Vostok.Metrics
         /// <para>See <see cref="HistogramFactoryExtensions"/> to learn more about histograms.</para>
         /// </summary>
         public const string UpperBound = "_upperBound";
+
+        /// <summary>
+        /// <para><see cref="Aggregate"/> tag represents a type of numerical aggregate applied to raw values to obtain <see cref="MetricEvent"/>'s <see cref="MetricEvent.Value"/>.</para>
+        /// <para>It's commonly encountered in events produced by <c>Summary</c> primitive and external aggregators that handle timers, histograms and counters.</para>
+        /// <para>Common well-known values for this tag are:</para>
+        /// <list type="bullet">
+        ///     <item><description><c>count</c></description></item>
+        ///     <item><description><c>avg</c></description></item>
+        ///     <item><description><c>min</c></description></item>
+        ///     <item><description><c>max</c></description></item>
+        ///     <item><description><c>p50</c></description></item>
+        ///     <item><description><c>p75</c></description></item>
+        ///     <item><description><c>p95</c></description></item>
+        ///     <item><description><c>p99</c></description></item>
+        ///     <item><description><c>p999</c></description></item>
+        /// </list>
+        /// </summary>
+        public const string Aggregate = "_aggregate";
     }
 }
