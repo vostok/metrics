@@ -15,9 +15,7 @@ namespace Vostok.Metrics
         /// <list type="bullet">
         ///     <item><description>Rate (count per unit of time)</description></item>
         ///     <item><description>Average value</description></item>
-        ///     <item><description>Minimum value</description></item>
-        ///     <item><description>Maximum value</description></item>
-        ///     <item><description>A set of quantiles (median, p75, p95, p99)</description></item>
+        ///     <item><description>A set of exact quantiles (p50, p75, p95, p99)</description></item>
         /// </list>
         /// <para>Aggregates are computed over configurable time windows.</para>
         /// </summary>
@@ -28,8 +26,9 @@ namespace Vostok.Metrics
         /// <para>Server side infrastructure then merges histograms of different processes and computes following aggregates:</para>
         /// <list type="bullet">
         ///     <item><description>Rate (count per unit of time)</description></item>
-        ///     <item><description>A set of quantiles (median, p75, p95, p99) with values clamped to bucket boundaries.</description></item>
+        ///     <item><description>A set of approximate quantiles (p50, p75, p95, p99) with values interpolated from bucket boundaries.</description></item>
         /// </list>
+        /// <para>Aggregates are computed over configurable time windows.</para>
         /// </summary>
         public const string Histogram = "histogram";
 

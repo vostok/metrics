@@ -38,8 +38,6 @@ namespace Vostok.Metrics
         /// <list type="bullet">
         ///     <item><description><c>count</c></description></item>
         ///     <item><description><c>avg</c></description></item>
-        ///     <item><description><c>min</c></description></item>
-        ///     <item><description><c>max</c></description></item>
         ///     <item><description><c>p50</c></description></item>
         ///     <item><description><c>p75</c></description></item>
         ///     <item><description><c>p95</c></description></item>
