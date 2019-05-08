@@ -62,8 +62,8 @@ namespace Vostok.Metrics.Primitives.Timer
                 var lowerBound = config.Buckets[i].LeftBound;
                 var upperBound = config.Buckets[i].RightBound;
 
-                var lowerBoundString = double.IsNegativeInfinity(lowerBound) ? "-Inf" : lowerBound.ToString(CultureInfo.InvariantCulture);
-                var upperBoundString = double.IsPositiveInfinity(upperBound) ? "+Inf" : upperBound.ToString(CultureInfo.InvariantCulture);
+                var lowerBoundString = double.IsNegativeInfinity(lowerBound) ? WellKnownTagValues.NegativeInfinity : lowerBound.ToString(CultureInfo.InvariantCulture);
+                var upperBoundString = double.IsPositiveInfinity(upperBound) ? WellKnownTagValues.PositiveInfinity : upperBound.ToString(CultureInfo.InvariantCulture);
 
                 bucketTags[i] = tags
                     .Append(WellKnownTagKeys.LowerBound, lowerBoundString)

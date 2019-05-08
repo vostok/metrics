@@ -53,8 +53,8 @@ namespace Vostok.Metrics.Primitives.Timer
         {
             this.config = config ?? throw new ArgumentNullException(nameof(config));
 
-            countTags = tags.Append(WellKnownTagKeys.Aggregate, "count");
-            avgTags = tags.Append(WellKnownTagKeys.Aggregate, "avg");
+            countTags = tags.Append(WellKnownTagKeys.Aggregate, WellKnownTagValues.AggregateCount);
+            avgTags = tags.Append(WellKnownTagKeys.Aggregate, WellKnownTagValues.AggregateAverage);
 
             if (config.Quantiles != null)
                 quantileTags = PrepareQuantileTags(config, tags);

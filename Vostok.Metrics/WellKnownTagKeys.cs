@@ -19,14 +19,14 @@ namespace Vostok.Metrics
 
         /// <summary>
         /// <para><see cref="LowerBound"/> tag represents numerical exclusive lower bound for a histogram bucket.</para>
-        /// <para>It has a special value of <c>-Inf</c> to denote negative infinity.</para>
+        /// <para>It has a special value of <c>-Inf</c> (see <see cref="WellKnownTagValues.NegativeInfinity"/>) to denote negative infinity.</para>
         /// <para>See <see cref="HistogramFactoryExtensions"/> to learn more about histograms.</para>
         /// </summary>
         public const string LowerBound = "_lowerBound";
 
         /// <summary>
         /// <para><see cref="UpperBound"/> tag represents numerical inclusive upper bound for a histogram bucket.</para>
-        /// <para>It has a special value of <c>+Inf</c> to denote positive infinity.</para>
+        /// <para>It has a special value of <c>+Inf</c> (see <see cref="WellKnownTagValues.PositiveInfinity"/>) to denote positive infinity.</para>
         /// <para>See <see cref="HistogramFactoryExtensions"/> to learn more about histograms.</para>
         /// </summary>
         public const string UpperBound = "_upperBound";
