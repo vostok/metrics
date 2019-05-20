@@ -17,7 +17,7 @@ namespace Vostok.Metrics.Primitives.Timer
         public string Unit { get; set; } = WellKnownUnits.Seconds;
 
         /// <summary>
-        /// Period of scraping gauge's current value. If left <c>null</c>, context default period will be used.
+        /// Period of scraping summary's current value. If left <c>null</c>, context default period will be used.
         /// </summary>
         [CanBeNull]
         public TimeSpan? ScrapePeriod { get; set; }
