@@ -8,7 +8,7 @@ namespace Vostok.Metrics.Primitives.Counter
         /// <summary>
         /// Increment the value of given <paramref name="counter"/> by 1.
         /// </summary>
-        public static void Increment([NotNull] ICounter counter)
+        public static void Increment([NotNull] this ICounter counter)
             => counter.Add(1L);
     }
 }

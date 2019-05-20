@@ -8,7 +8,7 @@ namespace Vostok.Metrics.Primitives.Timer
     public static class ITimerExtensions_Measurement
     {
         /// <inheritdoc cref="ITimer.Report"/>
-        public static void Report(this ITimer timer, TimeSpan value)
+        public static void Report([NotNull] this ITimer timer, TimeSpan value)
             => timer.Report(TimeValuesConverter.ConvertOrThrow(value, timer.Unit));
 
         public static IDisposable Measure([NotNull] this ITimer timer)
