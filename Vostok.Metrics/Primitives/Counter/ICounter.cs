@@ -9,7 +9,13 @@ namespace Vostok.Metrics.Primitives.Counter
     /// Counter represents a value that can only increase. Counters with the same tags are summed up server side.
     /// </para>
     /// <para>
-    /// Counter immediately produces a <see cref="MetricEvent"/> on each <see cref="Add"/> call: there's no client side aggregation.
+    /// Each <see cref="Add"/> call increases the value of an internal in-memory counter.
+    /// </para>
+    /// <para>
+    /// Counter primitive then periodically produces a <see cref="MetricEvent"/> containing the current of value of that counter and resets it to zero.
+    /// </para>
+    /// <para>
+    /// It's recommended to use a short scraping period for Counters to avoid losing too much resolution.
     /// </para>
     /// <remarks>
     /// <para>
@@ -26,7 +32,7 @@ namespace Vostok.Metrics.Primitives.Counter
     /// </example>
     /// </summary>
     [PublicAPI]
-    public interface ICounter
+    public interface ICounter : IDisposable
     {
         /// <summary>
         /// Adds given non-negative <paramref name="value"/> to the counter.
