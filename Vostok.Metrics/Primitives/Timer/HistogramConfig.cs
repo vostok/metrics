@@ -28,7 +28,7 @@ namespace Vostok.Metrics.Primitives.Timer
         public IReadOnlyDictionary<string, string> AggregationParameters { get; set; }
 
         /// <summary>
-        /// Period of scraping gauge's current value. If left <c>null</c>, context default period will be used.
+        /// Period of scraping histogram's current value. If left <c>null</c>, context default period will be used.
         /// </summary>
         [CanBeNull]
         public TimeSpan? ScrapePeriod { get; set; }
