@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading;
 using JetBrains.Annotations;
 
-namespace Vostok.Metrics.Model
+namespace Vostok.Metrics.Models
 {
     /// <summary>
     /// <para><see cref="MetricTags"/> is an ordered list of key-value pairs (each pair called a <see cref="MetricTag"/>) that distinguishes one metric from another.</para>

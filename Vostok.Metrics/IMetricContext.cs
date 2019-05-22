@@ -1,6 +1,6 @@
 using System;
 using JetBrains.Annotations;
-using Vostok.Metrics.Model;
+using Vostok.Metrics.Models;
 using Vostok.Metrics.Primitives.Counter;
 using Vostok.Metrics.Primitives.Gauge;
 using Vostok.Metrics.Primitives.Timer;

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Vostok.Commons.Collections;
-using Vostok.Metrics.Model;
+using Vostok.Metrics.Models;
 
 namespace Vostok.Metrics.Grouping
 {

@@ -1,5 +1,5 @@
 using JetBrains.Annotations;
-using Vostok.Metrics.Model;
+using Vostok.Metrics.Models;
 using Vostok.Metrics.Primitives.Timer;
 
 namespace Vostok.Metrics

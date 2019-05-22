@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Vostok.Metrics.Model;
+using Vostok.Metrics.Models;
 
 namespace Vostok.Metrics.Primitives.Timer
 {

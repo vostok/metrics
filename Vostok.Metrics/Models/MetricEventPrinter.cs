@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
 
-namespace Vostok.Metrics.Model
+namespace Vostok.Metrics.Models
 {
     internal static class MetricEventPrinter
     {

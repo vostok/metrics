@@ -2,7 +2,7 @@
 using System;
 using JetBrains.Annotations;
 using Vostok.Metrics.Grouping;
-using Vostok.Metrics.Model;
+using Vostok.Metrics.Models;
 
 namespace Vostok.Metrics.Primitives.Counter
 {

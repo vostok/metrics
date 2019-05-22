@@ -1,7 +1,7 @@
 using System;
 using JetBrains.Annotations;
 
-namespace Vostok.Metrics.Model
+namespace Vostok.Metrics.Models
 {
     /// <summary>
     /// Represents a single item in <see cref="MetricTags"/> collection.

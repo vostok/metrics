@@ -1,12 +1,12 @@
 using System;
 using FluentAssertions;
 using NUnit.Framework;
-using Vostok.Metrics.Model;
+using Vostok.Metrics.Models;
 
 // ReSharper disable AssignNullToNotNullAttribute
 // ReSharper disable ObjectCreationAsStatement
 
-namespace Vostok.Metrics.Tests.Model
+namespace Vostok.Metrics.Tests.Models
 {
     [TestFixture]
     internal class MetricEvent_Tests

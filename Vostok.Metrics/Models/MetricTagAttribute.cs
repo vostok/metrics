@@ -2,7 +2,7 @@ using System;
 using JetBrains.Annotations;
 using Vostok.Metrics.Grouping;
 
-namespace Vostok.Metrics.Model
+namespace Vostok.Metrics.Models
 {
     /// <summary>
     /// <para><see cref="MetricTagAttribute"/> marks a public property of the model object as a source of metric tag for <see cref="IMetricGroup{TFor,TMetric}"/>.</para>

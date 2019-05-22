@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 
-namespace Vostok.Metrics.Model
+namespace Vostok.Metrics.Models
 {
     [PublicAPI]
     public static class MetricTagsMerger

@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using JetBrains.Annotations;
-using Vostok.Metrics.Model;
+using Vostok.Metrics.Models;
 using Vostok.Metrics.Scraping;
 
 namespace Vostok.Metrics.Primitives.Timer

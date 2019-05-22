@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Vostok.Commons.Helpers.Comparers;
 
-namespace Vostok.Metrics.Model
+namespace Vostok.Metrics.Models
 {
     /// <summary>
     /// <para><see cref="MetricEvent"/> is the atomic storage unit of Vostok metrics system.</para>

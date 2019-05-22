@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Vostok.Commons.Time;
-using Vostok.Metrics.Model;
+using Vostok.Metrics.Models;
 
 namespace Vostok.Metrics.Scraping
 {

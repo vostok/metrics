@@ -2,9 +2,9 @@ using System;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using Vostok.Metrics.Model;
+using Vostok.Metrics.Models;
 
-namespace Vostok.Metrics.Tests.Model
+namespace Vostok.Metrics.Tests.Models
 {
     [TestFixture]
     internal class MetricTags_Tests

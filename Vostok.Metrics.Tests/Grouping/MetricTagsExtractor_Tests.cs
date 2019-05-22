@@ -1,7 +1,7 @@
 using FluentAssertions;
 using NUnit.Framework;
 using Vostok.Metrics.Grouping;
-using Vostok.Metrics.Model;
+using Vostok.Metrics.Models;
 
 // ReSharper disable MemberCanBePrivate.Local
 // ReSharper disable UnusedAutoPropertyAccessor.Local
