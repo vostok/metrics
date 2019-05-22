@@ -102,22 +102,5 @@ namespace Vostok.Metrics.Primitives.Timer
                 return new HistogramBucket(leftBound, rightBound);
             }
         }
-
-        [CanBeNull]
-        public static HistogramBuckets operator+([CanBeNull] HistogramBuckets left, [CanBeNull] HistogramBuckets right)
-        {
-            if (left == null)
-                return right;
-
-            if (right == null)
-                return left;
-
-            var upperBounds = new List<double>(left.upperBounds.Count + right.upperBounds.Count);
-
-            upperBounds.AddRange(left.upperBounds);
-            upperBounds.AddRange(right.upperBounds);
-
-            return new HistogramBuckets(upperBounds);
-        }
     }
 }
