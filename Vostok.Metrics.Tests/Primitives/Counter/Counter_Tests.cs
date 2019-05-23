@@ -4,9 +4,7 @@ using System.Linq;
 using System.Threading;
 using FluentAssertions;
 using FluentAssertions.Extensions;
-using NSubstitute.ExceptionExtensions;
 using NUnit.Framework;
-using Vostok.Commons.Testing;
 using Vostok.Metrics.Models;
 using Vostok.Metrics.Primitives.Counter;
 using Vostok.Metrics.Senders;
@@ -122,7 +120,7 @@ namespace Vostok.Metrics.Tests.Primitives.Counter
         }
 
         [Test]
-        public void Should_not_scrape_after_dispose()
+        public void Should_not_be_scraped_after_dispose()
         {
             var sum = 0L;
             context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => Interlocked.Add(ref sum, (long)e.Value))));
