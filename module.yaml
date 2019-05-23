@@ -19,3 +19,6 @@ full-build > notests:
   build:
     target: Vostok.Metrics.sln
     configuration: Release
+
+  deps:
+    - vostok.commons.testing
