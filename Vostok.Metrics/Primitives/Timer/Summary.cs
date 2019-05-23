@@ -40,10 +40,7 @@ namespace Vostok.Metrics.Primitives.Timer
         private readonly SummaryConfig config;
         private readonly IDisposable registration;
 
-        private readonly MetricTags countTags;
-        private readonly MetricTags avgTags;
-        private readonly MetricTags[] quantileTags;
-
+        private readonly QuantileMetricsBuilder metricsBuilder;
         private readonly double[] sample;
         private readonly object snapshotSync;
         private double[] snapshot;
@@ -53,12 +50,7 @@ namespace Vostok.Metrics.Primitives.Timer
         {
             this.config = config ?? throw new ArgumentNullException(nameof(config));
 
-            countTags = tags.Append(WellKnownTagKeys.Aggregate, WellKnownTagValues.AggregateCount);
-            avgTags = tags.Append(WellKnownTagKeys.Aggregate, WellKnownTagValues.AggregateAverage);
-
-            if (config.Quantiles != null)
-                quantileTags = PrepareQuantileTags(config, tags);
-
+            metricsBuilder = new QuantileMetricsBuilder(config.Quantiles, tags, config.Unit);
             registration = context.Register(this, config.ScrapePeriod);
             sample = new double[config.BufferSize];
             snapshotSync = new object();
@@ -95,64 +87,11 @@ namespace Vostok.Metrics.Primitives.Timer
                 for (var i = 0; i < snapshotSize; i++)
                     snapshot[i] = Interlocked.CompareExchange(ref sample[i], 0d, 0d);
 
-                Array.Sort(snapshot);
-
-                var result = new List<MetricEvent>
-                {
-                    new MetricEvent(countBeforeReset, countTags, timestamp, null, null, null),
-                    new MetricEvent(GetAverage(snapshot, snapshotSize), avgTags, timestamp, config.Unit, null, null)
-                };
-
-                if (config.Quantiles != null)
-                    for (var i = 0; i < config.Quantiles.Length; i++)
-                        result.Add(new MetricEvent(GetQuantile(config.Quantiles[i], snapshot, snapshotSize), quantileTags[i], timestamp, config.Unit, null, null));
-
-                return result;
+                return metricsBuilder.Build(snapshot, snapshotSize, countBeforeReset, timestamp);
             }
         }
 
         public void Dispose()
             => registration.Dispose();
-
-        private static double GetAverage(double[] snapshot, int snapshotSize)
-            => snapshotSize == 0 ? 0 : snapshot.Take(snapshotSize).Average();
-
-        private static double GetQuantile(double quantile, double[] snapshot, int snapshotSize)
-        {
-            if (snapshotSize == 0)
-                return 0;
-
-            var position = quantile * (snapshotSize + 1);
-            var index = (int)Math.Round(position);
-
-            if (index < 1)
-                return snapshot[0];
-
-            if (index >= snapshotSize)
-                return snapshot[snapshotSize - 1];
-
-            return snapshot[index];
-        }
-
-        private static MetricTags[] PrepareQuantileTags(SummaryConfig config, MetricTags baseTags)
-        {
-            var quantileTags = new MetricTags[config.Quantiles.Length];
-
-            for (var i = 0; i < config.Quantiles.Length; i++)
-            {
-                var quantileValue = config.Quantiles[i];
-                if (quantileValue < 0d || quantileValue > 1d)
-                    throw new ArgumentOutOfRangeException(nameof(config), $"One of provided quantiles has incorrect value '{quantileValue}'.");
-
-                quantileValue *= 100d;
-
-                while (Math.Abs(Math.Truncate(quantileValue) - quantileValue) > double.Epsilon)
-                    quantileValue *= 10d;
-
-                quantileTags[i] = baseTags.Append(WellKnownTagKeys.Aggregate, "p" + (int)quantileValue);
-            }
-
-            return quantileTags;
-        }
     }
 }

@@ -30,6 +30,6 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <summary>
         /// A set of quantiles to compute. Each quantile must be a number from 0 to 1.
         /// </summary>
-        public double[] Quantiles = { 0.5, 0.75, 0.95, 0.99, 0.999 };
+        public double[] Quantiles = Primitives.Timer.Quantiles.DefaultQuantiles;
     }
 }
