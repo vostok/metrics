@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using FluentAssertions;
 using FluentAssertions.Extensions;
 using NUnit.Framework;
@@ -25,7 +26,7 @@ namespace Vostok.Metrics.Tests.Primitives.Counter
         [Test]
         public void Should_calculate_sum_and_reset_on_scrape()
         {
-            var counter = (Metrics.Primitives.Counter.Counter)context.CreateCounter("name", new CounterConfig {ScrapePeriod = TimeSpan.MaxValue});
+            var counter = context.CreateCounter("name", new CounterConfig {ScrapePeriod = TimeSpan.MaxValue});
             counter.Add(1);
             counter.Add(2);
             counter.Add(42);
@@ -40,9 +41,24 @@ namespace Vostok.Metrics.Tests.Primitives.Counter
         [Test]
         public void Should_reject_negative_values()
         {
-            var counter = (Metrics.Primitives.Counter.Counter)context.CreateCounter("name", new CounterConfig { ScrapePeriod = TimeSpan.MaxValue });
+            var counter = context.CreateCounter("name", new CounterConfig {ScrapePeriod = TimeSpan.MaxValue});
             Action check = () => counter.Add(-1);
             check.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+        [Test]
+        public void Should_be_thread_safe()
+        {
+            var n = 100_000L;
+            var counter = context.CreateCounter("name", new CounterConfig {ScrapePeriod = TimeSpan.MaxValue});
+            Parallel.For(
+                0,
+                n + 1,
+                new ParallelOptions {MaxDegreeOfParallelism = 4},
+                i => { counter.Add(i); });
+
+            // ReSharper disable once PossibleLossOfFraction
+            Scrape(counter).Value.Should().Be(n * (n + 1) / 2);
         }
 
         [Test]
@@ -111,7 +127,7 @@ namespace Vostok.Metrics.Tests.Primitives.Counter
             var sum = 0L;
             context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => Interlocked.Add(ref sum, (long)e.Value))));
 
-            var counter = (Metrics.Primitives.Counter.Counter)context.CreateCounter("name", new CounterConfig { ScrapePeriod = 10.Milliseconds() });
+            var counter = (Metrics.Primitives.Counter.Counter)context.CreateCounter("name", new CounterConfig {ScrapePeriod = 10.Milliseconds()});
 
             counter.Add(1);
             Thread.Sleep(300.Milliseconds());
@@ -125,7 +141,7 @@ namespace Vostok.Metrics.Tests.Primitives.Counter
             var sum = 0L;
             context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => Interlocked.Add(ref sum, (long)e.Value))));
 
-            var counter = (Metrics.Primitives.Counter.Counter)context.CreateCounter("name", new CounterConfig { ScrapePeriod = 10.Milliseconds() });
+            var counter = (Metrics.Primitives.Counter.Counter)context.CreateCounter("name", new CounterConfig {ScrapePeriod = 10.Milliseconds()});
 
             counter.Dispose();
 
