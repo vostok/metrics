@@ -111,6 +111,9 @@ namespace Vostok.Metrics.Models
         IEnumerator IEnumerable.GetEnumerator() =>
             GetEnumerator();
 
+        public override string ToString() =>
+            string.Join(".", this);
+
         #region Equality
 
         public bool Equals(MetricTags other)

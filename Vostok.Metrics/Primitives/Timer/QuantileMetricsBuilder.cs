@@ -6,6 +6,9 @@ using Vostok.Metrics.Models;
 
 namespace Vostok.Metrics.Primitives.Timer
 {
+    /// <summary>
+    /// Transforms values to quantile metrics.
+    /// </summary>
     [PublicAPI]
     public class QuantileMetricsBuilder
     {
@@ -26,10 +29,13 @@ namespace Vostok.Metrics.Primitives.Timer
                 quantileTags = Quantiles.QuantileTags(quantiles, tags);
 
             countTags = tags.Append(WellKnownTagKeys.Aggregate, WellKnownTagValues.AggregateCount);
-            minTags = tags.Append(WellKnownTagKeys.Aggregate, WellKnownTagValues.AggregateAverage);
-            maxTags = tags.Append(WellKnownTagKeys.Aggregate, WellKnownTagValues.AggregateAverage);
+            minTags = tags.Append(WellKnownTagKeys.Aggregate, WellKnownTagValues.AggregateMin);
+            maxTags = tags.Append(WellKnownTagKeys.Aggregate, WellKnownTagValues.AggregateMax);
             averageTags = tags.Append(WellKnownTagKeys.Aggregate, WellKnownTagValues.AggregateAverage);
         }
+
+        public IEnumerable<MetricEvent> Build(double[] values, DateTimeOffset timestamp)
+            => Build(values, values.Length, values.Length, timestamp);
 
         public IEnumerable<MetricEvent> Build(double[] values, int size, int totalCount, DateTimeOffset timestamp)
         {

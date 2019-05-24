@@ -13,8 +13,9 @@ namespace Vostok.Metrics.Primitives.Timer
             if (size == 0)
                 return 0;
 
-            var position = quantile * (size + 1);
-            var index = (int)Math.Round(position);
+            var k = (int) (quantile * (size - 1));
+
+            var index = k + 1 <= quantile * size ? k + 1 : k;
 
             if (index < 0)
                 index = 0;
@@ -26,6 +27,7 @@ namespace Vostok.Metrics.Primitives.Timer
 
         public static MetricTags[] QuantileTags(double[] quantiles, MetricTags baseTags)
         {
+            const double epsilon = 1e-9;
             var quantileTags = new MetricTags[quantiles.Length];
 
             for (var i = 0; i < quantiles.Length; i++)
@@ -36,10 +38,14 @@ namespace Vostok.Metrics.Primitives.Timer
 
                 quantileValue *= 100d;
 
-                while (Math.Abs(Math.Truncate(quantileValue) - quantileValue) > double.Epsilon)
+                for (var d = 0; d < 6; d++)
+                {
+                    if (Math.Abs(Math.Round(quantileValue, MidpointRounding.AwayFromZero) - quantileValue) < epsilon)
+                        break;
                     quantileValue *= 10d;
+                }
 
-                quantileTags[i] = baseTags.Append(WellKnownTagKeys.Aggregate, "p" + (int)quantileValue);
+                quantileTags[i] = baseTags.Append(WellKnownTagKeys.Aggregate, "p" + (int)Math.Round(quantileValue, MidpointRounding.AwayFromZero));
             }
 
             return quantileTags;

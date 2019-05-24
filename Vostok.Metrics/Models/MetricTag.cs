@@ -21,6 +21,9 @@ namespace Vostok.Metrics.Models
         [NotNull]
         public string Value { get; }
 
+        public override string ToString() =>
+            $"{nameof(Key)}: {Key}, {nameof(Value)}: {Value}";
+
         #region Equality
 
         public bool Equals(MetricTag other)
