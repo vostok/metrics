@@ -6,11 +6,7 @@ using Vostok.Metrics.Models;
 
 namespace Vostok.Metrics.Primitives.Timer
 {
-    /// <summary>
-    /// Transforms values to quantile metrics.
-    /// </summary>
-    [PublicAPI]
-    public class QuantileMetricsBuilder
+    internal class QuantileMetricsBuilder
     {
         private readonly double[] quantiles;
         private readonly string unit;
