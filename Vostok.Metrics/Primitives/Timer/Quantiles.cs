@@ -1,13 +1,21 @@
 ﻿using System;
+using JetBrains.Annotations;
 using Vostok.Metrics.Models;
 
 namespace Vostok.Metrics.Primitives.Timer
 {
-    internal static class Quantiles
+    /// <summary>
+    /// Quantiles helper class.
+    /// </summary>
+    [PublicAPI]
+    public static class Quantiles
     {
         public static double[] DefaultQuantiles => new[] { 0.5, 0.75, 0.95, 0.99, 0.999 };
 
-        /// <param name="values">Sorted values.</param>
+        /// <summary>
+        /// Calculates quantile by array of sorted <paramref name="values"/>.
+        /// </summary>
+        /// <param name="size">The number of values to be used.</param>
         public static double GetQuantile(double quantile, double[] values, int size)
         {
             if (size == 0)
@@ -25,6 +33,9 @@ namespace Vostok.Metrics.Primitives.Timer
             return values[index];
         }
 
+        /// <summary>
+        /// Appends quantile tag with <see cref="WellKnownTagKeys.Aggregate"/> key and 'pXX' value to <paramref name="baseTags"/>.
+        /// </summary>
         public static MetricTags[] QuantileTags(double[] quantiles, MetricTags baseTags)
         {
             const double epsilon = 1e-9;

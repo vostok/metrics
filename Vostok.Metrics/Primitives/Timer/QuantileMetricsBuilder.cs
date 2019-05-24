@@ -6,7 +6,11 @@ using Vostok.Metrics.Models;
 
 namespace Vostok.Metrics.Primitives.Timer
 {
-    internal class QuantileMetricsBuilder
+    /// <summary>
+    /// Builds array of <see cref="MetricEvent"/>'s from array of values and quantiles.
+    /// </summary>
+    [PublicAPI]
+    public class QuantileMetricsBuilder
     {
         private readonly double[] quantiles;
         private readonly string unit;
