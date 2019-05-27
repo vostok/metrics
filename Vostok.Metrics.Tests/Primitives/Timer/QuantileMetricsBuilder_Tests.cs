@@ -94,6 +94,35 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
             action.Should().Throw<ArgumentOutOfRangeException>();
         }
 
+        [Test]
+        public void SetUnit_should_update_unit()
+        {
+            var values = new double[] {1, 2, 3};
+            var builder = new QuantileMetricsBuilder(new[] { 0, 0.33, 0.73, 1 }, MetricTags.Empty, "unit1");
+
+            var metrics = builder.Build(values, DateTimeOffset.Now).ToList();
+            metrics.All(m => m.Unit == "unit1" || m.Tags.Any(t => t.Value == WellKnownTagValues.AggregateCount)).Should().BeTrue();
+
+            builder.SetUnit("unit2");
+            metrics = builder.Build(values, DateTimeOffset.Now).ToList();
+            metrics.All(m => m.Unit == "unit2" || m.Tags.Any(t => t.Value == WellKnownTagValues.AggregateCount)).Should().BeTrue();
+        }
+
+        [Test]
+        public void SetQuantiles_should_update_quantiles()
+        {
+            var values = new double[] { 1, 2, 3 };
+            var builder = new QuantileMetricsBuilder(null, MetricTags.Empty, "unit1");
+
+            var metrics = builder.Build(values, DateTimeOffset.Now).ToList();
+            metrics.Count.Should().Be(4);
+
+            builder.SetQuantiles(new[] {0.5});
+            metrics = builder.Build(values, DateTimeOffset.Now).ToList();
+            metrics.Count.Should().Be(5);
+            Get(metrics, "p50").Should().Be(2);
+        }
+
         private static double Get(IEnumerable<MetricEvent> metrics, string tag)
         {
             var metric = metrics.Single(m => m.Tags.Any(t => t.Value == tag));

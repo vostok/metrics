@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
+using Vostok.Commons.Helpers.Comparers;
 using Vostok.Metrics.Models;
 
 namespace Vostok.Metrics.Primitives.Timer
@@ -12,21 +13,23 @@ namespace Vostok.Metrics.Primitives.Timer
     [PublicAPI]
     public class QuantileMetricsBuilder
     {
-        private readonly double[] quantiles;
-        private readonly string unit;
+        private readonly MetricTags tags;
         private readonly MetricTags countTags;
         private readonly MetricTags minTags;
         private readonly MetricTags maxTags;
         private readonly MetricTags averageTags;
-        private readonly MetricTags[] quantileTags;
 
-        public QuantileMetricsBuilder([CanBeNull] double[] quantiles, [NotNull] MetricTags tags, string unit)
+        private double[] quantiles;
+        private MetricTags[] quantileTags;
+        private string unit;
+
+        public QuantileMetricsBuilder([CanBeNull] double[] quantiles, [NotNull] MetricTags tags, [CanBeNull] string unit)
         {
-            this.quantiles = quantiles;
+            this.tags = tags;
+            this.quantiles = quantiles = quantiles ?? new double[0];
             this.unit = unit;
 
-            if (quantiles != null)
-                quantileTags = Quantiles.QuantileTags(quantiles, tags);
+            quantileTags = Quantiles.QuantileTags(quantiles, tags);
 
             countTags = tags.Append(WellKnownTagKeys.Aggregate, WellKnownTagValues.AggregateCount);
             minTags = tags.Append(WellKnownTagKeys.Aggregate, WellKnownTagValues.AggregateMin);
@@ -36,6 +39,18 @@ namespace Vostok.Metrics.Primitives.Timer
 
         public IEnumerable<MetricEvent> Build(double[] values, DateTimeOffset timestamp)
             => Build(values, values.Length, values.Length, timestamp);
+
+        public void SetUnit([CanBeNull] string newUnit)
+            => unit = newUnit;
+
+        public void SetQuantiles([CanBeNull] double[] newQuantiles)
+        {
+            if (ListComparer<double>.Instance.Equals(quantiles, newQuantiles))
+                return;
+
+            quantiles = newQuantiles ?? new double[0];
+            quantileTags = Quantiles.QuantileTags(quantiles, tags);
+        }
 
         public IEnumerable<MetricEvent> Build(double[] values, int size, int totalCount, DateTimeOffset timestamp)
         {
@@ -48,9 +63,6 @@ namespace Vostok.Metrics.Primitives.Timer
                 new MetricEvent(GetMax(values, size), maxTags, timestamp, unit, null, null),
                 new MetricEvent(GetAverage(values, size), averageTags, timestamp, unit, null, null)
             };
-
-            if (quantiles == null)
-                return result;
 
             for (var i = 0; i < quantiles.Length; i++)
             {
