@@ -14,7 +14,7 @@ namespace Vostok.Metrics.Primitives.Timer
         private const string QuantilesDelimiter = ";";
 
         [NotNull]
-        public static Dictionary<string, string> AddQuantiles([NotNull] this Dictionary<string, string> aggregationParameters, [NotNull] double[] quantiles)
+        public static Dictionary<string, string> SetQuantiles([NotNull] this Dictionary<string, string> aggregationParameters, [NotNull] double[] quantiles)
         {
             aggregationParameters = aggregationParameters ?? throw new ArgumentNullException(nameof(aggregationParameters));
             quantiles = quantiles ?? throw new ArgumentNullException(nameof(quantiles));
@@ -24,7 +24,7 @@ namespace Vostok.Metrics.Primitives.Timer
         }
 
         [CanBeNull]
-        public static double[] GetQuantiles([CanBeNull] this Dictionary<string, string> aggregationParameters)
+        public static double[] GetQuantiles([CanBeNull] this IReadOnlyDictionary<string, string> aggregationParameters)
         {
             if (aggregationParameters == null)
                 return null;

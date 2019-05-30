@@ -9,21 +9,21 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
     internal class AggregationParametersExtensions_Tests
     {
         [Test]
-        public void AddQuantiles_GetQuantiles_should_work_with_not_empty_quantiles()
+        public void SetQuantiles_GetQuantiles_should_work_with_not_empty_quantiles()
         {
             var quantiles = new[] {0, 0.33, 0.44, 1};
             var parameters = new Dictionary<string, string>()
-                .AddQuantiles(quantiles);
+                .SetQuantiles(quantiles);
             var result = parameters.GetQuantiles();
             result.Should().BeEquivalentTo(quantiles);
         }
 
         [Test]
-        public void AddQuantiles_GetQuantiles_should_work_with_empty_quantiles()
+        public void SetQuantiles_GetQuantiles_should_work_with_empty_quantiles()
         {
             var quantiles = new double[0];
             var parameters = new Dictionary<string, string>()
-                .AddQuantiles(quantiles);
+                .SetQuantiles(quantiles);
             var result = parameters.GetQuantiles();
             result.Should().BeEquivalentTo(quantiles);
         }
