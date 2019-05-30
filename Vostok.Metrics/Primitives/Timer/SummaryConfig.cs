@@ -28,8 +28,9 @@ namespace Vostok.Metrics.Primitives.Timer
         public int BufferSize { get; set; } = 1028;
 
         /// <summary>
-        /// A set of quantiles to compute. Each quantile must be a number from 0 to 1.
+        /// <para>A set of quantiles to compute. Each quantile must be a number from 0 to 1.</para>
+        /// <para>If <c>null</c>, <see cref="Primitives.Timer.Quantiles.DefaultQuantiles"/> will be used.</para>
         /// </summary>
-        public double[] Quantiles = Primitives.Timer.Quantiles.DefaultQuantiles;
+        public double[] Quantiles { get; set; }
     }
 }

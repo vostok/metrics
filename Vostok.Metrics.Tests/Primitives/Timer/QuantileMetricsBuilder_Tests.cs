@@ -31,10 +31,19 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
         }
 
         [Test]
-        public void Should_build_min_max_avg_without_quantiles()
+        public void Should_use_default_quantiles_if_null_specified()
         {
             var values = Enumerable.Range(0, 100).Select(i => (i + 42) % 100).Select(i => (double)i).ToArray();
             var metrics = new QuantileMetricsBuilder(null, MetricTags.Empty, "unit").Build(values, DateTimeOffset.Now).ToList();
+
+            metrics.Count.Should().Be(Quantiles.DefaultQuantiles.Length + 4);
+        }
+
+        [Test]
+        public void Should_build_min_max_avg_without_quantiles()
+        {
+            var values = Enumerable.Range(0, 100).Select(i => (i + 42) % 100).Select(i => (double)i).ToArray();
+            var metrics = new QuantileMetricsBuilder(new double[0], MetricTags.Empty, "unit").Build(values, DateTimeOffset.Now).ToList();
 
             metrics.Count.Should().Be(4);
 
@@ -112,7 +121,7 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
         public void SetQuantiles_should_update_quantiles()
         {
             var values = new double[] { 1, 2, 3 };
-            var builder = new QuantileMetricsBuilder(null, MetricTags.Empty, "unit1");
+            var builder = new QuantileMetricsBuilder(new double[0], MetricTags.Empty, "unit1");
 
             var metrics = builder.Build(values, DateTimeOffset.Now).ToList();
             metrics.Count.Should().Be(4);

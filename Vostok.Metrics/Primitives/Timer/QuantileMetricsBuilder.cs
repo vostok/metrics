@@ -23,10 +23,13 @@ namespace Vostok.Metrics.Primitives.Timer
         private MetricTags[] quantileTags;
         private string unit;
 
+        /// <summary>
+        /// If <paramref name="quantiles"/> is <c>null</c>, <see cref="Quantiles.DefaultQuantiles"/> will be used.
+        /// </summary>
         public QuantileMetricsBuilder([CanBeNull] double[] quantiles, [NotNull] MetricTags tags, [CanBeNull] string unit)
         {
             this.tags = tags;
-            this.quantiles = quantiles = quantiles ?? new double[0];
+            this.quantiles = quantiles = quantiles ?? Quantiles.DefaultQuantiles;
             this.unit = unit;
 
             quantileTags = Quantiles.QuantileTags(quantiles, tags);
@@ -43,12 +46,16 @@ namespace Vostok.Metrics.Primitives.Timer
         public void SetUnit([CanBeNull] string newUnit)
             => unit = newUnit;
 
+        /// <summary>
+        /// If <paramref name="newQuantiles"/> is <c>null</c>, <see cref="Quantiles.DefaultQuantiles"/> will be used.
+        /// </summary>
         public void SetQuantiles([CanBeNull] double[] newQuantiles)
         {
+            newQuantiles = newQuantiles ?? Quantiles.DefaultQuantiles;
             if (ListComparer<double>.Instance.Equals(quantiles, newQuantiles))
                 return;
 
-            quantiles = newQuantiles ?? new double[0];
+            quantiles = newQuantiles;
             quantileTags = Quantiles.QuantileTags(quantiles, tags);
         }
 
