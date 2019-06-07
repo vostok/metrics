@@ -54,35 +54,35 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
         }
 
         [Test]
-        public void Get_Set_AggregatePeriod_and_Get_Set_AggregateLag_should_works()
+        public void Get_Set_AggregationPeriod_and_Get_Set_AggregationLag_should_works()
         {
             var dict = new Dictionary<string, string>()
-                .SetAggregateLag(1.Seconds())
-                .SetAggregatePeriod(2.Seconds());
+                .SetAggregationLag(1.Seconds())
+                .SetAggregationPeriod(2.Seconds());
 
-            dict.GetAggregateLag().Should().Be(1.Seconds());
-            dict.GetAggregatePeriod().Should().Be(2.Seconds());
+            dict.GetAggregationLag().Should().Be(1.Seconds());
+            dict.GetAggregationPeriod().Should().Be(2.Seconds());
         }
 
         [Test]
-        public void Get_AggregatePeriod_AggregateLag_should_be_null_for_null_aggregation_parameters()
+        public void Get_AggregationPeriod_AggregationLag_should_be_null_for_null_aggregation_parameters()
         {
-            ((Dictionary<string, string>)null).GetAggregatePeriod().Should().BeNull();
-            ((Dictionary<string, string>)null).GetAggregateLag().Should().BeNull();
+            ((Dictionary<string, string>)null).GetAggregationPeriod().Should().BeNull();
+            ((Dictionary<string, string>)null).GetAggregationLag().Should().BeNull();
         }
 
         [Test]
-        public void Get_AggregatePeriod_AggregateLag_should_be_null_for_empty_aggregation_parameters()
+        public void Get_AggregationPeriod_AggregationLag_should_be_null_for_empty_aggregation_parameters()
         {
-            new Dictionary<string, string>().GetAggregatePeriod().Should().BeNull();
-            new Dictionary<string, string>().GetAggregateLag().Should().BeNull();
+            new Dictionary<string, string>().GetAggregationPeriod().Should().BeNull();
+            new Dictionary<string, string>().GetAggregationLag().Should().BeNull();
         }
 
         [Test]
-        public void Get_AggregatePeriod_AggregateLag_should_be_null_for_null_quantiles()
+        public void Get_AggregationPeriod_AggregationLag_should_be_null_for_null_quantiles()
         {
-            new Dictionary<string, string> { { "_quantiles", null } }.GetAggregatePeriod().Should().BeNull();
-            new Dictionary<string, string> { { "_quantiles", null } }.GetAggregateLag().Should().BeNull();
+            new Dictionary<string, string> { { "_quantiles", null } }.GetAggregationPeriod().Should().BeNull();
+            new Dictionary<string, string> { { "_quantiles", null } }.GetAggregationLag().Should().BeNull();
         }
     }
 }

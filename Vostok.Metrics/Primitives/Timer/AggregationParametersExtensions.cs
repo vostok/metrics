@@ -37,19 +37,19 @@ namespace Vostok.Metrics.Primitives.Timer
         }
 
         [NotNull]
-        public static Dictionary<string, string> SetAggregatePeriod([NotNull] this Dictionary<string, string> aggregationParameters, TimeSpan period) =>
+        public static Dictionary<string, string> SetAggregationPeriod([NotNull] this Dictionary<string, string> aggregationParameters, TimeSpan period) =>
             SetTimeSpan(aggregationParameters, AggregatePeriodKey, period);
 
         [CanBeNull]
-        public static TimeSpan? GetAggregatePeriod([CanBeNull] this IReadOnlyDictionary<string, string> aggregationParameters) =>
+        public static TimeSpan? GetAggregationPeriod([CanBeNull] this IReadOnlyDictionary<string, string> aggregationParameters) =>
             GetTimeSpan(aggregationParameters, AggregatePeriodKey);
 
         [NotNull]
-        public static Dictionary<string, string> SetAggregateLag([NotNull] this Dictionary<string, string> aggregationParameters, TimeSpan period) =>
+        public static Dictionary<string, string> SetAggregationLag([NotNull] this Dictionary<string, string> aggregationParameters, TimeSpan period) =>
             SetTimeSpan(aggregationParameters, AggregateLagKey, period);
 
         [CanBeNull]
-        public static TimeSpan? GetAggregateLag([CanBeNull] this IReadOnlyDictionary<string, string> aggregationParameters) =>
+        public static TimeSpan? GetAggregationLag([CanBeNull] this IReadOnlyDictionary<string, string> aggregationParameters) =>
             GetTimeSpan(aggregationParameters, AggregateLagKey);
 
         [NotNull]
