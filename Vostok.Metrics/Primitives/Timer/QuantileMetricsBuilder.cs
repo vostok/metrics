@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
-using Vostok.Commons.Helpers.Comparers;
 using Vostok.Metrics.Models;
 
 namespace Vostok.Metrics.Primitives.Timer
@@ -42,22 +41,6 @@ namespace Vostok.Metrics.Primitives.Timer
 
         public IEnumerable<MetricEvent> Build(double[] values, DateTimeOffset timestamp)
             => Build(values, values.Length, values.Length, timestamp);
-
-        public void SetUnit([CanBeNull] string newUnit)
-            => unit = newUnit;
-
-        /// <summary>
-        /// If <paramref name="newQuantiles"/> is <c>null</c>, <see cref="Quantiles.DefaultQuantiles"/> will be used.
-        /// </summary>
-        public void SetQuantiles([CanBeNull] double[] newQuantiles)
-        {
-            newQuantiles = newQuantiles ?? Quantiles.DefaultQuantiles;
-            if (ListComparer<double>.Instance.Equals(quantiles, newQuantiles))
-                return;
-
-            quantiles = newQuantiles;
-            quantileTags = Quantiles.QuantileTags(quantiles, tags);
-        }
 
         public IEnumerable<MetricEvent> Build(double[] values, int size, int totalCount, DateTimeOffset timestamp)
         {
