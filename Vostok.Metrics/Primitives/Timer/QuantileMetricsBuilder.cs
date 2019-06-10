@@ -42,6 +42,7 @@ namespace Vostok.Metrics.Primitives.Timer
         public IEnumerable<MetricEvent> Build(double[] values, DateTimeOffset timestamp)
             => Build(values, values.Length, values.Length, timestamp);
 
+        // CR(iloktionov): Remove min and max by default (they're not of much use). We can specify 0 and 1 quantiles instead.
         public IEnumerable<MetricEvent> Build(double[] values, int size, int totalCount, DateTimeOffset timestamp)
         {
             Array.Sort(values, 0, size);
