@@ -30,7 +30,7 @@ namespace Vostok.Metrics.Models
         {
         }
 
-        internal MetricTags(params MetricTag[] tags)
+        public MetricTags(params MetricTag[] tags)
             : this(tags, tags.Length)
         {
         }
