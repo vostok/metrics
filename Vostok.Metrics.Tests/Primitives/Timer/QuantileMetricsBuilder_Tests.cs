@@ -17,10 +17,8 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
             var values = Enumerable.Range(0, 100).Select(i => (i + 42) % 100).Select(i => (double) i).ToArray();
             var metrics = new QuantileMetricsBuilder(new[] {0, 0.33, 0.73, 1}, MetricTags.Empty, "unit").Build(values, DateTimeOffset.Now).ToList();
 
-            metrics.Count.Should().Be(8);
+            metrics.Count.Should().Be(6);
 
-            Get(metrics, WellKnownTagValues.AggregateMin).Should().Be(0);
-            Get(metrics, WellKnownTagValues.AggregateMax).Should().Be(99);
             Get(metrics, WellKnownTagValues.AggregateAverage).Should().Be(49.5);
             Get(metrics, WellKnownTagValues.AggregateCount).Should().Be(100);
 
@@ -36,21 +34,34 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
             var values = Enumerable.Range(0, 100).Select(i => (i + 42) % 100).Select(i => (double)i).ToArray();
             var metrics = new QuantileMetricsBuilder(null, MetricTags.Empty, "unit").Build(values, DateTimeOffset.Now).ToList();
 
-            metrics.Count.Should().Be(Quantiles.DefaultQuantiles.Length + 4);
+            metrics.Count.Should().Be(Quantiles.DefaultQuantiles.Length + 2);
         }
 
         [Test]
-        public void Should_build_min_max_avg_without_quantiles()
+        public void Should_build_avg_count_without_quantiles()
         {
             var values = Enumerable.Range(0, 100).Select(i => (i + 42) % 100).Select(i => (double)i).ToArray();
             var metrics = new QuantileMetricsBuilder(new double[0], MetricTags.Empty, "unit").Build(values, DateTimeOffset.Now).ToList();
 
-            metrics.Count.Should().Be(4);
+            metrics.Count.Should().Be(2);
 
-            Get(metrics, WellKnownTagValues.AggregateMin).Should().Be(0);
-            Get(metrics, WellKnownTagValues.AggregateMax).Should().Be(99);
             Get(metrics, WellKnownTagValues.AggregateAverage).Should().Be(49.5);
             Get(metrics, WellKnownTagValues.AggregateCount).Should().Be(100);
+        }
+
+        [Test]
+        public void Should_build_min_max_with_0_1_quantiles()
+        {
+            var values = Enumerable.Range(0, 100).Select(i => (i + 42) % 100).Select(i => (double)i).ToArray();
+            var metrics = new QuantileMetricsBuilder(new double[] {0, 1}, MetricTags.Empty, "unit").Build(values, DateTimeOffset.Now).ToList();
+
+            metrics.Count.Should().Be(4);
+
+            Get(metrics, WellKnownTagValues.AggregateAverage).Should().Be(49.5);
+            Get(metrics, WellKnownTagValues.AggregateCount).Should().Be(100);
+
+            Get(metrics, "p0").Should().Be(0);
+            Get(metrics, "p100").Should().Be(99);
         }
 
         [Test]
@@ -59,10 +70,8 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
             var values = new double[0];
             var metrics = new QuantileMetricsBuilder(new[] { 0, 0.33, 0.73, 1 }, MetricTags.Empty, "unit").Build(values, DateTimeOffset.Now).ToList();
 
-            metrics.Count.Should().Be(8);
+            metrics.Count.Should().Be(6);
 
-            Get(metrics, WellKnownTagValues.AggregateMin).Should().Be(0);
-            Get(metrics, WellKnownTagValues.AggregateMax).Should().Be(0);
             Get(metrics, WellKnownTagValues.AggregateAverage).Should().Be(0);
             Get(metrics, WellKnownTagValues.AggregateCount).Should().Be(0);
 
@@ -82,10 +91,8 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
             var metrics = new QuantileMetricsBuilder(new[] { 0, 0.33, 0.73, 1 }, MetricTags.Empty, "unit")
                 .Build(values, 100, 999, DateTimeOffset.Now).ToList();
 
-            metrics.Count.Should().Be(8);
+            metrics.Count.Should().Be(6);
 
-            Get(metrics, WellKnownTagValues.AggregateMin).Should().Be(0);
-            Get(metrics, WellKnownTagValues.AggregateMax).Should().Be(99);
             Get(metrics, WellKnownTagValues.AggregateAverage).Should().Be(49.5);
             Get(metrics, WellKnownTagValues.AggregateCount).Should().Be(999);
 

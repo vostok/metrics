@@ -27,12 +27,6 @@ namespace Vostok.Metrics
         public const string AggregateAverage = "avg";
 
         /// <inheritdoc cref="AggregateCount"/>
-        public const string AggregateMin = "min";
-
-        /// <inheritdoc cref="AggregateCount"/>
-        public const string AggregateMax = "max";
-
-        /// <inheritdoc cref="AggregateCount"/>
         public const string AggregateP50 = "p50";
 
         /// <inheritdoc cref="AggregateCount"/>

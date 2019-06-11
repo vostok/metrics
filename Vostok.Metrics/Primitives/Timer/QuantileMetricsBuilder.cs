@@ -14,35 +14,30 @@ namespace Vostok.Metrics.Primitives.Timer
     {
         private readonly MetricTags tags;
         private readonly MetricTags countTags;
-        private readonly MetricTags minTags;
-        private readonly MetricTags maxTags;
         private readonly MetricTags averageTags;
 
-        private double[] quantiles;
-        private MetricTags[] quantileTags;
-        private string unit;
-
+        private readonly string unit;
+        private readonly double[] quantiles;
+        private readonly MetricTags[] quantileTags;
+        
         /// <summary>
         /// If <paramref name="quantiles"/> is <c>null</c>, <see cref="Quantiles.DefaultQuantiles"/> will be used.
         /// </summary>
         public QuantileMetricsBuilder([CanBeNull] double[] quantiles, [NotNull] MetricTags tags, [CanBeNull] string unit)
         {
             this.tags = tags;
-            this.quantiles = quantiles = quantiles ?? Quantiles.DefaultQuantiles;
             this.unit = unit;
-
+            this.quantiles = quantiles = quantiles ?? Quantiles.DefaultQuantiles;
+            
             quantileTags = Quantiles.QuantileTags(quantiles, tags);
 
             countTags = tags.Append(WellKnownTagKeys.Aggregate, WellKnownTagValues.AggregateCount);
-            minTags = tags.Append(WellKnownTagKeys.Aggregate, WellKnownTagValues.AggregateMin);
-            maxTags = tags.Append(WellKnownTagKeys.Aggregate, WellKnownTagValues.AggregateMax);
             averageTags = tags.Append(WellKnownTagKeys.Aggregate, WellKnownTagValues.AggregateAverage);
         }
 
         public IEnumerable<MetricEvent> Build(double[] values, DateTimeOffset timestamp)
             => Build(values, values.Length, values.Length, timestamp);
 
-        // CR(iloktionov): Remove min and max by default (they're not of much use). We can specify 0 and 1 quantiles instead.
         public IEnumerable<MetricEvent> Build(double[] values, int size, int totalCount, DateTimeOffset timestamp)
         {
             Array.Sort(values, 0, size);
@@ -50,8 +45,6 @@ namespace Vostok.Metrics.Primitives.Timer
             var result = new List<MetricEvent>
             {
                 new MetricEvent(totalCount, countTags, timestamp, null, null, null),
-                new MetricEvent(GetMin(values, size), minTags, timestamp, unit, null, null),
-                new MetricEvent(GetMax(values, size), maxTags, timestamp, unit, null, null),
                 new MetricEvent(GetAverage(values, size), averageTags, timestamp, unit, null, null)
             };
 
@@ -66,11 +59,5 @@ namespace Vostok.Metrics.Primitives.Timer
 
         private static double GetAverage(double[] values, int size)
             => size == 0 ? 0 : values.Take(size).Average();
-
-        private static double GetMin(double[] values, int size)
-            => size == 0 ? 0 : values.Take(size).Min();
-
-        private static double GetMax(double[] values, int size)
-            => size == 0 ? 0 : values.Take(size).Max();
     }
 }
