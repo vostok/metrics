@@ -73,7 +73,7 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
                 i => { summary.Report(i); });
 
             // ReSharper disable once PossibleLossOfFraction
-            Scrape(summary, "avg").Value.Should().Be((n + 1) / 2);
+            Scrape(summary, "avg").Value.Should().Be(n / 2);
         }
 
         [Test]
