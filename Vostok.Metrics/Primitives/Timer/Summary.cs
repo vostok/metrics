@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using JetBrains.Annotations;
 using Vostok.Commons.Threading;
@@ -40,7 +39,7 @@ namespace Vostok.Metrics.Primitives.Timer
         private readonly SummaryConfig config;
         private readonly IDisposable registration;
 
-        private readonly QuantileMetricsBuilder metricsBuilder;
+        private readonly QuantileMetricsBuilder quantileBuilder;
         private readonly double[] sample;
         private readonly object snapshotSync;
         private double[] snapshot;
@@ -50,7 +49,7 @@ namespace Vostok.Metrics.Primitives.Timer
         {
             this.config = config ?? throw new ArgumentNullException(nameof(config));
 
-            metricsBuilder = new QuantileMetricsBuilder(config.Quantiles, tags, config.Unit);
+            quantileBuilder = new QuantileMetricsBuilder(config.Quantiles, tags, config.Unit);
             registration = context.Register(this, config.ScrapePeriod);
             sample = new double[config.BufferSize];
             snapshotSync = new object();
@@ -87,7 +86,7 @@ namespace Vostok.Metrics.Primitives.Timer
                 for (var i = 0; i < snapshotSize; i++)
                     snapshot[i] = Interlocked.CompareExchange(ref sample[i], 0d, 0d);
 
-                return metricsBuilder.Build(snapshot, snapshotSize, countBeforeReset, timestamp);
+                return quantileBuilder.Build(snapshot, snapshotSize, countBeforeReset, timestamp);
             }
         }
 

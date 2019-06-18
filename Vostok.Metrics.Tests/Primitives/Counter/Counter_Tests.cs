@@ -20,13 +20,16 @@ namespace Vostok.Metrics.Tests.Primitives.Counter
         [SetUp]
         public void SetUp()
         {
-            context = new MetricContext(new MetricContextConfig(new DevNullMetricEventSender()));
+            context = new MetricContext(new MetricContextConfig(new DevNullMetricEventSender())
+            {
+                DefaultScrapePeriod = TimeSpan.MaxValue
+            });
         }
 
         [Test]
         public void Should_calculate_sum_and_reset_on_scrape()
         {
-            var counter = context.CreateCounter("name", new CounterConfig {ScrapePeriod = TimeSpan.MaxValue});
+            var counter = context.CreateCounter("name");
             counter.Add(1);
             counter.Add(2);
             counter.Add(42);
@@ -41,7 +44,7 @@ namespace Vostok.Metrics.Tests.Primitives.Counter
         [Test]
         public void Should_reject_negative_values()
         {
-            var counter = context.CreateCounter("name", new CounterConfig {ScrapePeriod = TimeSpan.MaxValue});
+            var counter = context.CreateCounter("name");
             Action check = () => counter.Add(-1);
             check.Should().Throw<ArgumentOutOfRangeException>();
         }
@@ -50,7 +53,7 @@ namespace Vostok.Metrics.Tests.Primitives.Counter
         public void Should_be_thread_safe()
         {
             var n = 100_000L;
-            var counter = context.CreateCounter("name", new CounterConfig {ScrapePeriod = TimeSpan.MaxValue});
+            var counter = context.CreateCounter("name");
             Parallel.For(
                 0,
                 n + 1,
@@ -64,7 +67,7 @@ namespace Vostok.Metrics.Tests.Primitives.Counter
         [Test]
         public void Should_be_same_for_same_dynamic_tags()
         {
-            var counter = context.CreateCounter("name", "dynamic_tag", new CounterConfig {ScrapePeriod = TimeSpan.MaxValue});
+            var counter = context.CreateCounter("name", "dynamic_tag");
 
             counter.For("tag").Add(1);
             counter.For("tag").Add(3);
@@ -75,7 +78,7 @@ namespace Vostok.Metrics.Tests.Primitives.Counter
         [Test]
         public void Should_be_not_same_for_different_dynamic_tags()
         {
-            var counter = context.CreateCounter("name", "dynamic_tag", new CounterConfig {ScrapePeriod = TimeSpan.MaxValue});
+            var counter = context.CreateCounter("name", "dynamic_tag");
 
             counter.For("tag1").Add(1);
 
