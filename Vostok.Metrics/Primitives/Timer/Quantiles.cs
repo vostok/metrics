@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using Vostok.Metrics.Models;
 
@@ -16,7 +17,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// Calculates quantile by array of sorted <paramref name="values"/>.
         /// </summary>
         /// <param name="size">The number of values to be used.</param>
-        public static double GetQuantile(double quantile, double[] values, int size)
+        public static double GetQuantile(double quantile, IList<double> values, int size)
         {
             if (size == 0)
                 return 0;

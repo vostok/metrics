@@ -35,13 +35,23 @@ namespace Vostok.Metrics.Primitives.Timer
             averageTags = tags.Append(WellKnownTagKeys.Aggregate, WellKnownTagValues.AggregateAverage);
         }
 
+        public IEnumerable<MetricEvent> Build(List<double> values, DateTimeOffset timestamp)
+        {
+            values.Sort();
+            return BuildForSorted(values, values.Count, values.Count, timestamp);
+        }
+
         public IEnumerable<MetricEvent> Build(double[] values, DateTimeOffset timestamp)
             => Build(values, values.Length, values.Length, timestamp);
 
         public IEnumerable<MetricEvent> Build(double[] values, int size, int totalCount, DateTimeOffset timestamp)
         {
             Array.Sort(values, 0, size);
-            
+            return BuildForSorted(values, size, totalCount, timestamp);
+        }
+
+        private IEnumerable<MetricEvent> BuildForSorted(IList<double> values, int size, int totalCount, DateTimeOffset timestamp)
+        {
             var result = new List<MetricEvent>
             {
                 new MetricEvent(totalCount, countTags, timestamp, null, null, null),
@@ -57,7 +67,7 @@ namespace Vostok.Metrics.Primitives.Timer
             return result;
         }
 
-        private static double GetAverage(double[] values, int size)
+        private static double GetAverage(IList<double> values, int size)
             => size == 0 ? 0 : values.Take(size).Average();
     }
 }

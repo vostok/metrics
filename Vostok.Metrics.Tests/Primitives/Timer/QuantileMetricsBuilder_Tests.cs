@@ -29,6 +29,23 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
         }
 
         [Test]
+        public void Should_build_quantiles_for_list()
+        {
+            var values = Enumerable.Range(0, 100).Select(i => (i + 42) % 100).Select(i => (double)i).ToList();
+            var metrics = new QuantileMetricsBuilder(new[] { 0, 0.33, 0.73, 1 }, MetricTags.Empty, "unit").Build(values, DateTimeOffset.Now).ToList();
+
+            metrics.Count.Should().Be(6);
+
+            Get(metrics, WellKnownTagValues.AggregateAverage).Should().Be(49.5);
+            Get(metrics, WellKnownTagValues.AggregateCount).Should().Be(100);
+
+            Get(metrics, "p0").Should().Be(0);
+            Get(metrics, "p33").Should().Be(33);
+            Get(metrics, "p73").Should().Be(73);
+            Get(metrics, "p100").Should().Be(99);
+        }
+
+        [Test]
         public void Should_use_default_quantiles_if_null_specified()
         {
             var values = Enumerable.Range(0, 100).Select(i => (i + 42) % 100).Select(i => (double)i).ToArray();
