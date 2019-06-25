@@ -1,3 +1,4 @@
+using System;
 using JetBrains.Annotations;
 
 namespace Vostok.Metrics.Primitives.Timer
@@ -5,13 +6,16 @@ namespace Vostok.Metrics.Primitives.Timer
     [PublicAPI]
     public struct HistogramBucket
     {
-        public readonly double LeftBound;
-        public readonly double RightBound;
+        public readonly double LowerBound;
+        public readonly double UpperBound;
 
-        public HistogramBucket(double leftBound, double rightBound)
+        public HistogramBucket(double lowerBound, double upperBound)
         {
-            LeftBound = leftBound;
-            RightBound = rightBound;
+            if (lowerBound >= upperBound)
+                throw new ArgumentException($"Incorrect bucket bounds: lower bound {lowerBound} >= upper bound {upperBound}.");
+
+            LowerBound = lowerBound;
+            UpperBound = upperBound;
         }
     }
 }

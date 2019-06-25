@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Runtime.CompilerServices;
+using System.Linq;
 using System.Threading;
 using JetBrains.Annotations;
 using Vostok.Metrics.Models;
@@ -47,29 +47,25 @@ namespace Vostok.Metrics.Primitives.Timer
     {
         private readonly HistogramConfig config;
         private readonly IDisposable registration;
-        private readonly MetricTags[] bucketTags;
+        private readonly MetricTags tags;
         private readonly long[] bucketCounters;
+        private readonly IReadOnlyDictionary<string, string>[] aggregationParameters;
         private readonly HistogramBuckets buckets;
 
         public Histogram([NotNull] IMetricContext context, [NotNull] MetricTags tags, [NotNull] HistogramConfig config)
         {
             this.config = config ?? throw new ArgumentNullException(nameof(config));
+            this.tags = tags ?? throw new ArgumentNullException(nameof(tags));
 
             buckets = config.Buckets;
-            bucketCounters = new long[config.Buckets.Count];
-            bucketTags = new MetricTags[config.Buckets.Count];
+            bucketCounters = new long[buckets.Count];
+            aggregationParameters = new IReadOnlyDictionary<string, string>[buckets.Count];
 
-            for (var i = 0; i < config.Buckets.Count; i++)
+            for (var i = 0; i < buckets.Count; i++)
             {
-                var lowerBound = config.Buckets[i].LeftBound;
-                var upperBound = config.Buckets[i].RightBound;
-
-                var lowerBoundString = double.IsNegativeInfinity(lowerBound) ? WellKnownTagValues.NegativeInfinity : lowerBound.ToString(CultureInfo.InvariantCulture);
-                var upperBoundString = double.IsPositiveInfinity(upperBound) ? WellKnownTagValues.PositiveInfinity : upperBound.ToString(CultureInfo.InvariantCulture);
-
-                bucketTags[i] = tags
-                    .Append(WellKnownTagKeys.LowerBound, lowerBoundString)
-                    .Append(WellKnownTagKeys.UpperBound, upperBoundString);
+                var parameters = config.AggregationParameters?.ToDictionary(x => x.Key, x => x.Value) ?? new Dictionary<string, string>();
+                parameters.SetHistogramBucket(buckets[i]);
+                aggregationParameters[i] = parameters;
             }
 
             registration = context.Register(this, config.ScrapePeriod);
@@ -93,8 +89,7 @@ namespace Vostok.Metrics.Primitives.Timer
                 if (bucketValue == 0L)
                     continue;
 
-                yield return new MetricEvent(bucketValue, bucketTags[i], 
-                    timestamp, config.Unit, WellKnownAggregationTypes.Histogram, config.AggregationParameters);
+                yield return new MetricEvent(bucketValue, tags, timestamp, config.Unit, WellKnownAggregationTypes.Histogram, aggregationParameters[i]);
             }
         }
 

@@ -10,7 +10,7 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
     internal class AggregationParametersExtensions_Tests
     {
         [Test]
-        public void SetQuantiles_GetQuantiles_should_work_with_not_empty_quantiles()
+        public void Set_Set_Quantiles_should_work_with_not_empty_quantiles()
         {
             var quantiles = new[] {0, 0.33, 0.44, 1};
             var parameters = new Dictionary<string, string>()
@@ -83,6 +83,36 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
         {
             new Dictionary<string, string> { { "_quantiles", null } }.GetAggregationPeriod().Should().BeNull();
             new Dictionary<string, string> { { "_quantiles", null } }.GetAggregationLag().Should().BeNull();
+        }
+
+        [Test]
+        public void Get_Set_HistogramBucket_should_works()
+        {
+            var bucket = new HistogramBucket(123.4, 567.8);
+            var dict = new Dictionary<string, string>()
+                .SetHistogramBucket(bucket);
+
+            dict.GetHistogramBucket().Should().BeEquivalentTo(bucket);
+        }
+
+        [Test]
+        public void Get_HistogramBucket_should_be_null_for_null_aggregation_parameters()
+        {
+            ((Dictionary<string, string>)null).GetHistogramBucket().Should().BeNull();
+        }
+
+        [Test]
+        public void Get_HistogramBucket_should_be_null_for_empty_aggregation_parameters()
+        {
+            new Dictionary<string, string>().GetHistogramBucket().Should().BeNull();
+        }
+
+        [Test]
+        public void Get_HistogramBucket_should_be_null_for_null_bounds()
+        {
+            new Dictionary<string, string> { { "_lowerBound", null }, { "_upperBound", null } }.GetHistogramBucket().Should().BeNull();
+            new Dictionary<string, string> { { "_lowerBound", null }, { "_upperBound", "42" } }.GetHistogramBucket().Should().BeNull();
+            new Dictionary<string, string> { { "_lowerBound", "42" }, { "_upperBound", null } }.GetHistogramBucket().Should().BeNull();
         }
     }
 }
