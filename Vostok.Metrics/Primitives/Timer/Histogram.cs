@@ -21,7 +21,7 @@ namespace Vostok.Metrics.Primitives.Timer
     /// </para>
     /// <para>
     /// Histograms are aggregated server-side.
-    /// Output of aggregation includes total count, sum and percentiles.
+    /// Output of aggregation includes total count and percentiles.
     /// </para>
     /// </summary>
     /// <remarks>
@@ -49,11 +49,13 @@ namespace Vostok.Metrics.Primitives.Timer
         private readonly IDisposable registration;
         private readonly MetricTags[] bucketTags;
         private readonly long[] bucketCounters;
+        private readonly HistogramBuckets buckets;
 
         public Histogram([NotNull] IMetricContext context, [NotNull] MetricTags tags, [NotNull] HistogramConfig config)
         {
             this.config = config ?? throw new ArgumentNullException(nameof(config));
 
+            buckets = config.Buckets;
             bucketCounters = new long[config.Buckets.Count];
             bucketTags = new MetricTags[config.Buckets.Count];
 
@@ -80,7 +82,7 @@ namespace Vostok.Metrics.Primitives.Timer
             if (double.IsNaN(value))
                 return;
 
-            Interlocked.Increment(ref bucketCounters[FindBucketIndex(value)]);
+            Interlocked.Increment(ref bucketCounters[buckets.FindBucketIndex(value)]);
         }
 
         public IEnumerable<MetricEvent> Scrape(DateTimeOffset timestamp)
@@ -98,39 +100,5 @@ namespace Vostok.Metrics.Primitives.Timer
 
         public void Dispose()
             => registration.Dispose();
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private int FindBucketIndex(double value)
-        {
-            var buckets = config.Buckets;
-
-            if (buckets[0].ContainsValue(value) || double.IsNegativeInfinity(value))
-                return 0;
-
-            if (buckets[buckets.Count - 1].ContainsValue(value))
-                return buckets.Count - 1;
-
-            var leftIndex = 1;
-            var rightIndex = buckets.Count - 2;
-
-            while (rightIndex >= leftIndex)
-            {
-                var index = leftIndex + (rightIndex - leftIndex) / 2;
-                var comparisonResult = buckets[index].CompareWithValue(value);
-                if (comparisonResult == 0)
-                    return index;
-
-                if (comparisonResult < 0)
-                {
-                    rightIndex = index - 1;
-                }
-                else
-                {
-                    leftIndex = index + 1;
-                }
-            }
-
-            return -1;
-        }
     }
 }

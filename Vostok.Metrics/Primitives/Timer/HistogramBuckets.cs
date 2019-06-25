@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 
 namespace Vostok.Metrics.Primitives.Timer
@@ -101,6 +102,26 @@ namespace Vostok.Metrics.Primitives.Timer
 
                 return new HistogramBucket(leftBound, rightBound);
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int FindBucketIndex(double value)
+        {
+            var l = -1;
+            var r = upperBounds.Count;
+
+            // Note(kungurtsev): invariant value <= upperBounds[r]
+
+            while (l + 1 < r)
+            {
+                var m = (l + r) / 2;
+                if (value <= upperBounds[m])
+                    r = m;
+                else
+                    l = m;
+            }
+
+            return r;
         }
     }
 }
