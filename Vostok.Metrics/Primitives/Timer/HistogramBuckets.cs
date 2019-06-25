@@ -97,10 +97,10 @@ namespace Vostok.Metrics.Primitives.Timer
                 if (index < 0 || index >= Count)
                     throw new IndexOutOfRangeException();
 
-                var leftBound = index == 0 ? double.NegativeInfinity : upperBounds[index - 1];
-                var rightBound = index == Count - 1 ? double.PositiveInfinity : upperBounds[index];
+                var lowerBound = index == 0 ? double.NegativeInfinity : upperBounds[index - 1];
+                var upperBound = index == Count - 1 ? double.PositiveInfinity : upperBounds[index];
 
-                return new HistogramBucket(leftBound, rightBound);
+                return new HistogramBucket(lowerBound, upperBound);
             }
         }
 
