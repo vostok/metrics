@@ -22,7 +22,7 @@ namespace Vostok.Metrics.Scraping
             this.period = period;
         }
 
-        public async Task RunAsync(ScrapedMetrics metrics, CancellationToken cancellationToken)
+        public async Task RunAsync(ScrapableMetrics metrics, CancellationToken cancellationToken)
         {
             var metricEvents = new List<MetricEvent>();
 

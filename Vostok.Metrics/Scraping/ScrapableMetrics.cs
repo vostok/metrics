@@ -6,7 +6,7 @@ using Vostok.Commons.Collections;
 
 namespace Vostok.Metrics.Scraping
 {
-    internal class ScrapedMetrics : IEnumerable<IScrapableMetric>
+    internal class ScrapableMetrics : IEnumerable<IScrapableMetric>
     {
         private readonly ConcurrentDictionary<IScrapableMetric, byte> metrics
             = new ConcurrentDictionary<IScrapableMetric, byte>(ByReferenceEqualityComparer<IScrapableMetric>.Instance);
