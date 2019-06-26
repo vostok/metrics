@@ -6,9 +6,9 @@ using Vostok.Metrics.Scraping;
 
 namespace Vostok.Metrics.Primitives.Gauge
 {
-    internal class FuncGauge : IScrapableMetric, IDisposable
+    internal class FuncGauge : IScrapableMetric, IFuncGauge
     {
-        private readonly Func<double> getValue;
+        private volatile Func<double> valueProvider;
         private readonly MetricTags tags;
         private readonly FuncGaugeConfig config;
         private readonly IDisposable registration;
@@ -16,10 +16,21 @@ namespace Vostok.Metrics.Primitives.Gauge
         public FuncGauge(
             [NotNull] IMetricContext context,
             [NotNull] MetricTags tags,
-            [NotNull] Func<double> getValue,
+            [NotNull] Func<double> valueProvider,
             [NotNull] FuncGaugeConfig config)
         {
-            this.getValue = getValue ?? throw new ArgumentNullException(nameof(getValue));
+            this.valueProvider = valueProvider ?? throw new ArgumentNullException(nameof(valueProvider));
+            this.tags = tags ?? throw new ArgumentNullException(nameof(tags));
+            this.config = config ?? throw new ArgumentNullException(nameof(config));
+
+            registration = context.Register(this, config.ScrapePeriod);
+        }
+
+        public FuncGauge(
+            [NotNull] IMetricContext context,
+            [NotNull] MetricTags tags,
+            [NotNull] FuncGaugeConfig config)
+        {
             this.tags = tags ?? throw new ArgumentNullException(nameof(tags));
             this.config = config ?? throw new ArgumentNullException(nameof(config));
 
@@ -28,7 +39,15 @@ namespace Vostok.Metrics.Primitives.Gauge
 
         public IEnumerable<MetricEvent> Scrape(DateTimeOffset timestamp)
         {
-            yield return new MetricEvent(getValue(), tags, timestamp, config.Unit, null, null);
+            var provider = valueProvider;
+            if (provider != null)
+                yield return new MetricEvent(provider(), tags, timestamp, config.Unit, null, null);
+        }
+
+        // ReSharper disable once ParameterHidesMember
+        public void SetValueProvider(Func<double> valueProvider)
+        {
+            this.valueProvider = valueProvider;
         }
 
         public void Dispose()
