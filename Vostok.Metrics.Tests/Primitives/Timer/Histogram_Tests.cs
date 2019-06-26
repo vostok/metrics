@@ -24,21 +24,21 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
                 });
         }
 
-        [Test]
-        public void Should_calculate_quantiles_and_reset_on_scrape()
-        {
-            var summary = context.CreateHistogram("name");
-            summary.Report(10);
-            summary.Report(5);
-            summary.Report(0);
+        //[Test]
+        //public void Should_calculate_quantiles_and_reset_on_scrape()
+        //{
+        //    var summary = context.CreateHistogram("name");
+        //    summary.Report(10);
+        //    summary.Report(5);
+        //    summary.Report(0);
 
-            Scrape(summary, "p50").Value.Should().Be(5);
+        //    Scrape(summary, "p50").Value.Should().Be(5);
 
-            Scrape(summary, "p50").Value.Should().Be(0);
+        //    Scrape(summary, "p50").Value.Should().Be(0);
 
-            summary.Report(42);
-            Scrape(summary, "p50").Value.Should().Be(42);
-        }
+        //    summary.Report(42);
+        //    Scrape(summary, "p50").Value.Should().Be(42);
+        //}
 
         //[Test]
         //public void Should_calculate_quantiles_given_in_config()
