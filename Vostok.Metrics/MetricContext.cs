@@ -1,6 +1,7 @@
 using System;
 using JetBrains.Annotations;
 using Vostok.Metrics.Models;
+using Vostok.Metrics.Primitives.Gauge;
 using Vostok.Metrics.Scraping;
 
 namespace Vostok.Metrics
@@ -11,18 +12,21 @@ namespace Vostok.Metrics
     {
         private readonly MetricContextConfig config;
         private readonly ScrapeScheduler scheduler;
-        
+        private readonly ScrapeScheduler funcScheduler;
+
         public MetricContext([NotNull] MetricContextConfig config)
         {
             this.config = config ?? throw new ArgumentNullException(nameof(config));
 
             scheduler = new ScrapeScheduler(config.Sender, config.ErrorCallback);
+            funcScheduler = new ScrapeScheduler(config.Sender, config.ErrorCallback);
         }
 
         public MetricTags Tags => config.Tags ?? MetricTags.Empty;
 
         public IDisposable Register(IScrapableMetric metric, TimeSpan? scrapePeriod)
-            => scheduler.Register(metric, scrapePeriod ?? config.DefaultScrapePeriod);
+            => (metric is FuncGauge ? funcScheduler : scheduler)
+                .Register(metric, scrapePeriod ?? config.DefaultScrapePeriod);
 
         public void Send(MetricEvent @event)
             => config.Sender.Send(@event);
