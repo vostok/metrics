@@ -42,26 +42,22 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
             var buckets = HistogramBuckets.CreateExponential(10, 3, 4);
             buckets.Count.Should().Be(5);
             buckets[0].Should().BeEquivalentTo(new HistogramBucket(double.NegativeInfinity, 10));
-            buckets[1].Should().BeEquivalentTo(new HistogramBucket(10, 10*3));
-            buckets[2].Should().BeEquivalentTo(new HistogramBucket(10*3, 10*9));
-            buckets[3].Should().BeEquivalentTo(new HistogramBucket(10*9, 10*27));
-            buckets[4].Should().BeEquivalentTo(new HistogramBucket(10*27, double.PositiveInfinity));
+            buckets[1].Should().BeEquivalentTo(new HistogramBucket(10, 10 * 3));
+            buckets[2].Should().BeEquivalentTo(new HistogramBucket(10 * 3, 10 * 9));
+            buckets[3].Should().BeEquivalentTo(new HistogramBucket(10 * 9, 10 * 27));
+            buckets[4].Should().BeEquivalentTo(new HistogramBucket(10 * 27, double.PositiveInfinity));
         }
 
         [TestCase(-1000, 0)]
-
         [TestCase(-11, 0)]
         [TestCase(-10, 0)]
         [TestCase(-9, 1)]
-
         [TestCase(4, 1)]
         [TestCase(5, 1)]
         [TestCase(6, 2)]
-
         [TestCase(29, 2)]
         [TestCase(30, 2)]
         [TestCase(31, 3)]
-
         [TestCase(1000, 3)]
         public void FindBucketIndex_should_works_correctly(double value, int index)
         {

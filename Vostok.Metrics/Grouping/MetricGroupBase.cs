@@ -13,9 +13,6 @@ namespace Vostok.Metrics.Grouping
         protected MetricGroupBase([NotNull] Func<MetricTags, TMetric> factory)
             => this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
 
-        protected TMetric For([NotNull] MetricTags dynamicTags)
-            => cache.GetOrAdd(dynamicTags, factory);
-
         public void Dispose()
         {
             foreach (var pair in cache)
@@ -25,5 +22,8 @@ namespace Vostok.Metrics.Grouping
                 cache.TryRemove(pair.Key, out _);
             }
         }
+
+        protected TMetric For([NotNull] MetricTags dynamicTags)
+            => cache.GetOrAdd(dynamicTags, factory);
     }
 }

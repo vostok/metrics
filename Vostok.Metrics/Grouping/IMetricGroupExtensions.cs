@@ -1,4 +1,3 @@
-
 using JetBrains.Annotations;
 
 namespace Vostok.Metrics.Grouping
@@ -49,7 +48,7 @@ namespace Vostok.Metrics.Grouping
         private static string ToString<T>(T value)
         {
             var result = value?.ToString();
-            
+
             if (string.IsNullOrEmpty(result))
                 return "none";
 

@@ -33,7 +33,7 @@ namespace <#= model.MetricNamespace #>
         /// <param name="name">Name of the metric. It will be added to event's <see cref="MetricEvent.Tags"/> with key set to <see cref="Vostok.Metrics.WellKnownTagKeys.Name"/>.</param>
         /// <param name="config">Optional metric-specific config.</param>
         /// <inheritdoc cref="<#= model.InheritDocType #>"/>
-		[NotNull]
+        [NotNull]
         public static IMetricGroup<TFor, <#= model.MetricInterface #>> Create<#= model.MetricClass #><TFor>([NotNull] this IMetricContext context, [NotNull] string name, [CanBeNull] <#= model.MetricConfigClass #> config = null)
             => new MetricGroup<TFor, <#= model.MetricInterface #>>(MetricForTagsFactory(context, name, config ?? <#= model.MetricConfigClass #>.Default));
 <# for (var keysCount = 1; keysCount <= DynamicTags_StringKeys_MaxKeyCount; keysCount++) { #>
@@ -55,14 +55,14 @@ namespace <#= model.MetricNamespace #>
 <# } #>
         /// <param name="config">Optional config</param>
         /// <inheritdoc cref="<#= model.InheritDocType #>"/>
-		[NotNull]
+        [NotNull]
         public static IMetricGroup<#= keysCount #><<#= model.MetricInterface #>> Create<#= model.MetricClass #>([NotNull] this IMetricContext context, [NotNull] string name, <#= FormatParameters("[NotNull] string key{0}", keysCount) #>, [CanBeNull] <#= model.MetricConfigClass #> config = null)
             => CreateMetricGroup(context, name, config, <#= FormatParameters("key{0}", keysCount) #>);
 <# } #>
 
         #endregion
 
-		#region Helper methods
+        #region Helper methods
 
         private static MetricGroup<<#= model.MetricClass #>> CreateMetricGroup(IMetricContext context, string name, <#= model.MetricConfigClass #> config = null, params string[] keys)
             => new MetricGroup<<#= model.MetricClass #>>(MetricForTagsFactory(context, name, config ?? <#= model.MetricConfigClass #>.Default), keys);
@@ -70,7 +70,7 @@ namespace <#= model.MetricNamespace #>
         private static Func<MetricTags, <#= model.MetricClass #>> MetricForTagsFactory(IMetricContext context, string name, <#= model.MetricConfigClass #> config)
             => tags => new <#= model.MetricClass #>(context, MetricTagsMerger.Merge(context.Tags, name, tags), config);
 
-		#endregion
+        #endregion
     }
 }
 <#+

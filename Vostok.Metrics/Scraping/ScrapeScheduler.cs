@@ -43,6 +43,18 @@ namespace Vostok.Metrics.Scraping
             return new Registration(metric, metrics);
         }
 
+        public void Dispose()
+        {
+            cancellation.Cancel();
+
+            Task.WhenAll(scraperTasks.Values)
+                .GetAwaiter()
+                .GetResult();
+
+            scraperTasks.Clear();
+            scrapableMetrics.Clear();
+        }
+
         private (ScrapableMetrics metrics, bool created) ObtainMetricsForPeriod(TimeSpan scrapePeriod)
         {
             if (scrapableMetrics.TryGetValue(scrapePeriod, out var metrics))
@@ -54,18 +66,6 @@ namespace Vostok.Metrics.Scraping
                 return (newMetrics, true);
 
             return (scrapableMetrics[scrapePeriod], false);
-        }
-
-        public void Dispose()
-        {
-            cancellation.Cancel();
-
-            Task.WhenAll(scraperTasks.Values)
-                .GetAwaiter()
-                .GetResult();
-
-            scraperTasks.Clear();
-            scrapableMetrics.Clear();
         }
 
         private class Registration : IDisposable

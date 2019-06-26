@@ -157,9 +157,9 @@ namespace Vostok.Metrics.Tests.Models
         {
             tags = tags.Append(tag1);
 
-            var tags2 = tags.Append(new [] {tag2, tag3});
-            var tags3 = tags.Append(new [] {tag4, tag5});
-            var tags4 = tags2.Append(new [] {tag4, tag5});
+            var tags2 = tags.Append(new[] {tag2, tag3});
+            var tags3 = tags.Append(new[] {tag4, tag5});
+            var tags4 = tags2.Append(new[] {tag4, tag5});
 
             tags.Should().Equal(tag1);
             tags2.Should().Equal(tag1, tag2, tag3);
@@ -222,7 +222,7 @@ namespace Vostok.Metrics.Tests.Models
             var tags5 = new MetricTags(tag2, tag1);
             var tags6 = new MetricTags(tag2, tag1, tag3);
 
-            new[] { tags1, tags2, tags3, tags4, tags5, tags6 }.Select(t => t.GetHashCode()).Should().OnlyHaveUniqueItems();
+            new[] {tags1, tags2, tags3, tags4, tags5, tags6}.Select(t => t.GetHashCode()).Should().OnlyHaveUniqueItems();
         }
     }
 }

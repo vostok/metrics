@@ -20,10 +20,11 @@ namespace Vostok.Metrics.Tests.Primitives.Counter
         [SetUp]
         public void SetUp()
         {
-            context = new MetricContext(new MetricContextConfig(new DevNullMetricEventSender())
-            {
-                DefaultScrapePeriod = TimeSpan.MaxValue
-            });
+            context = new MetricContext(
+                new MetricContextConfig(new DevNullMetricEventSender())
+                {
+                    DefaultScrapePeriod = TimeSpan.MaxValue
+                });
         }
 
         [Test]

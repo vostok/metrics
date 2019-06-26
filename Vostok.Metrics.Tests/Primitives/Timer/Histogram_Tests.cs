@@ -17,10 +17,11 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
         [SetUp]
         public void SetUp()
         {
-            context = new MetricContext(new MetricContextConfig(new DevNullMetricEventSender())
-            {
-                DefaultScrapePeriod = TimeSpan.MaxValue
-            });
+            context = new MetricContext(
+                new MetricContextConfig(new DevNullMetricEventSender())
+                {
+                    DefaultScrapePeriod = TimeSpan.MaxValue
+                });
         }
 
         [Test]
@@ -145,5 +146,4 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
             return ((Summary)summary).Scrape(timestamp ?? DateTimeOffset.Now).Single(e => e.Tags.Any(t => t.Value == tag));
         }
     }
-
 }

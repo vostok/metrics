@@ -50,7 +50,7 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
         [Test]
         public void GetQuantiles_should_be_empty_for_empty_quantiles()
         {
-            new Dictionary<string, string> { { "_quantiles", "" } }.GetQuantiles().Should().BeEmpty();
+            new Dictionary<string, string> {{"_quantiles", ""}}.GetQuantiles().Should().BeEmpty();
         }
 
         [Test]
@@ -81,8 +81,8 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
         [Test]
         public void Get_AggregationPeriod_AggregationLag_should_be_null_for_null_quantiles()
         {
-            new Dictionary<string, string> { { "_quantiles", null } }.GetAggregationPeriod().Should().BeNull();
-            new Dictionary<string, string> { { "_quantiles", null } }.GetAggregationLag().Should().BeNull();
+            new Dictionary<string, string> {{"_quantiles", null}}.GetAggregationPeriod().Should().BeNull();
+            new Dictionary<string, string> {{"_quantiles", null}}.GetAggregationLag().Should().BeNull();
         }
 
         [Test]
@@ -110,9 +110,9 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
         [Test]
         public void Get_HistogramBucket_should_be_null_for_null_bounds()
         {
-            new Dictionary<string, string> { { "_lowerBound", null }, { "_upperBound", null } }.GetHistogramBucket().Should().BeNull();
-            new Dictionary<string, string> { { "_lowerBound", null }, { "_upperBound", "42" } }.GetHistogramBucket().Should().BeNull();
-            new Dictionary<string, string> { { "_lowerBound", "42" }, { "_upperBound", null } }.GetHistogramBucket().Should().BeNull();
+            new Dictionary<string, string> {{"_lowerBound", null}, {"_upperBound", null}}.GetHistogramBucket().Should().BeNull();
+            new Dictionary<string, string> {{"_lowerBound", null}, {"_upperBound", "42"}}.GetHistogramBucket().Should().BeNull();
+            new Dictionary<string, string> {{"_lowerBound", "42"}, {"_upperBound", null}}.GetHistogramBucket().Should().BeNull();
         }
     }
 }

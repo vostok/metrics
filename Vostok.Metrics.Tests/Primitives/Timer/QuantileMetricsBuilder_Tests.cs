@@ -14,7 +14,7 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
         [Test]
         public void Should_build_quantiles()
         {
-            var values = Enumerable.Range(0, 100).Select(i => (i + 42) % 100).Select(i => (double) i).ToArray();
+            var values = Enumerable.Range(0, 100).Select(i => (i + 42) % 100).Select(i => (double)i).ToArray();
             var metrics = new QuantileMetricsBuilder(new[] {0, 0.33, 0.73, 1}, MetricTags.Empty, "unit").Build(values, DateTimeOffset.Now).ToList();
 
             metrics.Count.Should().Be(6);
@@ -32,7 +32,7 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
         public void Should_build_quantiles_for_list()
         {
             var values = Enumerable.Range(0, 100).Select(i => (i + 42) % 100).Select(i => (double)i).ToList();
-            var metrics = new QuantileMetricsBuilder(new[] { 0, 0.33, 0.73, 1 }, MetricTags.Empty, "unit").Build(values, DateTimeOffset.Now).ToList();
+            var metrics = new QuantileMetricsBuilder(new[] {0, 0.33, 0.73, 1}, MetricTags.Empty, "unit").Build(values, DateTimeOffset.Now).ToList();
 
             metrics.Count.Should().Be(6);
 
@@ -85,7 +85,7 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
         public void Should_return_zeros_without_values()
         {
             var values = new double[0];
-            var metrics = new QuantileMetricsBuilder(new[] { 0, 0.33, 0.73, 1 }, MetricTags.Empty, "unit").Build(values, DateTimeOffset.Now).ToList();
+            var metrics = new QuantileMetricsBuilder(new[] {0, 0.33, 0.73, 1}, MetricTags.Empty, "unit").Build(values, DateTimeOffset.Now).ToList();
 
             metrics.Count.Should().Be(6);
 
@@ -101,12 +101,14 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
         [Test]
         public void Should_use_only_prefix_of_values_if_size_specified()
         {
-            var values = Enumerable.Range(0, 100).Select(i => (i + 42) % 100)
+            var values = Enumerable.Range(0, 100)
+                .Select(i => (i + 42) % 100)
                 .Concat(Enumerable.Repeat(999, 100))
                 .Select(i => (double)i)
                 .ToArray();
-            var metrics = new QuantileMetricsBuilder(new[] { 0, 0.33, 0.73, 1 }, MetricTags.Empty, "unit")
-                .Build(values, 100, 999, DateTimeOffset.Now).ToList();
+            var metrics = new QuantileMetricsBuilder(new[] {0, 0.33, 0.73, 1}, MetricTags.Empty, "unit")
+                .Build(values, 100, 999, DateTimeOffset.Now)
+                .ToList();
 
             metrics.Count.Should().Be(6);
 

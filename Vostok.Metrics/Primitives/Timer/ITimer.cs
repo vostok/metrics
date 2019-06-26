@@ -25,7 +25,8 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <summary>
         /// Returns the unit this timer's <see cref="Report"/> method assumes for passed values.
         /// </summary>
-        [CanBeNull] string Unit { get; }
+        [CanBeNull]
+        string Unit { get; }
 
         /// <summary>
         /// Reports a measurement with given <paramref name="value"/> to the timer implementation.

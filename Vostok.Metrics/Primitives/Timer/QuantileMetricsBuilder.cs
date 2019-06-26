@@ -19,7 +19,7 @@ namespace Vostok.Metrics.Primitives.Timer
         private readonly string unit;
         private readonly double[] quantiles;
         private readonly MetricTags[] quantileTags;
-        
+
         /// <summary>
         /// If <paramref name="quantiles"/> is <c>null</c>, <see cref="Quantiles.DefaultQuantiles"/> will be used.
         /// </summary>
@@ -28,7 +28,7 @@ namespace Vostok.Metrics.Primitives.Timer
             this.tags = tags;
             this.unit = unit;
             this.quantiles = quantiles = quantiles ?? Quantiles.DefaultQuantiles;
-            
+
             quantileTags = Quantiles.QuantileTags(quantiles, tags);
 
             countTags = tags.Append(WellKnownTagKeys.Aggregate, WellKnownTagValues.AggregateCount);
@@ -50,6 +50,9 @@ namespace Vostok.Metrics.Primitives.Timer
             return BuildForSorted(values, size, totalCount, timestamp);
         }
 
+        private static double GetAverage(IList<double> values, int size)
+            => size == 0 ? 0 : values.Take(size).Average();
+
         private IEnumerable<MetricEvent> BuildForSorted(IList<double> values, int size, int totalCount, DateTimeOffset timestamp)
         {
             var result = new List<MetricEvent>
@@ -60,14 +63,17 @@ namespace Vostok.Metrics.Primitives.Timer
 
             for (var i = 0; i < quantiles.Length; i++)
             {
-                result.Add(new MetricEvent(
-                    Quantiles.GetQuantile(quantiles[i], values, size), quantileTags[i], timestamp, unit, null, null));
+                result.Add(
+                    new MetricEvent(
+                        Quantiles.GetQuantile(quantiles[i], values, size),
+                        quantileTags[i],
+                        timestamp,
+                        unit,
+                        null,
+                        null));
             }
 
             return result;
         }
-
-        private static double GetAverage(IList<double> values, int size)
-            => size == 0 ? 0 : values.Take(size).Average();
     }
 }

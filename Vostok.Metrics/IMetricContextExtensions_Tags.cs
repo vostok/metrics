@@ -31,7 +31,7 @@ namespace Vostok.Metrics
         [NotNull]
         public static IMetricContext OverwriteTags([NotNull] this IMetricContext context, [CanBeNull] MetricTags newTags)
             => new OverwriteTagsWrapper(context, newTags);
-        
+
         private class OverwriteTagsWrapper : IMetricContext
         {
             private readonly IMetricContext context;
@@ -44,7 +44,7 @@ namespace Vostok.Metrics
 
             public MetricTags Tags { get; }
 
-            public IDisposable Register(IScrapableMetric metric, TimeSpan? scrapePeriod) 
+            public IDisposable Register(IScrapableMetric metric, TimeSpan? scrapePeriod)
                 => context.Register(metric, scrapePeriod);
 
             public void Send(MetricEvent @event)

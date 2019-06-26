@@ -97,6 +97,9 @@ namespace Vostok.Metrics.Models
                 yield return items[i];
         }
 
+        public override string ToString() =>
+            string.Join(".", this);
+
         public MetricTag this[int index]
         {
             get
@@ -110,9 +113,6 @@ namespace Vostok.Metrics.Models
 
         IEnumerator IEnumerable.GetEnumerator() =>
             GetEnumerator();
-
-        public override string ToString() =>
-            string.Join(".", this);
 
         #region Equality
 

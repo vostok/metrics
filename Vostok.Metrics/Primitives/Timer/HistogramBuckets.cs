@@ -90,20 +90,6 @@ namespace Vostok.Metrics.Primitives.Timer
 
         public int Count { get; }
 
-        public HistogramBucket this[int index]
-        {
-            get
-            {
-                if (index < 0 || index >= Count)
-                    throw new IndexOutOfRangeException();
-
-                var lowerBound = index == 0 ? double.NegativeInfinity : upperBounds[index - 1];
-                var upperBound = index == Count - 1 ? double.PositiveInfinity : upperBounds[index];
-
-                return new HistogramBucket(lowerBound, upperBound);
-            }
-        }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int FindBucketIndex(double value)
         {
@@ -122,6 +108,20 @@ namespace Vostok.Metrics.Primitives.Timer
             }
 
             return r;
+        }
+
+        public HistogramBucket this[int index]
+        {
+            get
+            {
+                if (index < 0 || index >= Count)
+                    throw new IndexOutOfRangeException();
+
+                var lowerBound = index == 0 ? double.NegativeInfinity : upperBounds[index - 1];
+                var upperBound = index == Count - 1 ? double.PositiveInfinity : upperBounds[index];
+
+                return new HistogramBucket(lowerBound, upperBound);
+            }
         }
     }
 }

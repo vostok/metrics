@@ -8,10 +8,10 @@ namespace Vostok.Metrics.Primitives.Gauge
 {
     internal class FuncGauge : IScrapableMetric, IFuncGauge
     {
-        private volatile Func<double> valueProvider;
         private readonly MetricTags tags;
         private readonly FuncGaugeConfig config;
         private readonly IDisposable registration;
+        private volatile Func<double> valueProvider;
 
         public FuncGauge(
             [NotNull] IMetricContext context,

@@ -19,7 +19,7 @@ namespace Vostok.Metrics.Senders
         public AdHocMetricEventSender([NotNull] Action<MetricEvent> sendAction)
             => this.sendAction = sendAction ?? throw new ArgumentNullException(nameof(sendAction));
 
-        public void Send(MetricEvent @event) 
+        public void Send(MetricEvent @event)
             => sendAction(@event);
     }
 }

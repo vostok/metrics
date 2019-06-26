@@ -19,10 +19,11 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
         [SetUp]
         public void SetUp()
         {
-            context = new MetricContext(new MetricContextConfig(new DevNullMetricEventSender())
-            {
-                DefaultScrapePeriod = TimeSpan.MaxValue
-            });
+            context = new MetricContext(
+                new MetricContextConfig(new DevNullMetricEventSender())
+                {
+                    DefaultScrapePeriod = TimeSpan.MaxValue
+                });
         }
 
         [Test]
@@ -44,7 +45,7 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
         [Test]
         public void Should_calculate_quantiles_given_in_config()
         {
-            var summary = context.CreateSummary("name", new SummaryConfig {Quantiles = new []{0.17}});
+            var summary = context.CreateSummary("name", new SummaryConfig {Quantiles = new[] {0.17}});
             for (var i = 0; i < 100; i++)
                 summary.Report(i);
 
@@ -54,7 +55,7 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
         [Test]
         public void Should_keep_only_some_values()
         {
-            var summary = context.CreateSummary("name", new SummaryConfig { BufferSize = 10 });
+            var summary = context.CreateSummary("name", new SummaryConfig {BufferSize = 10});
             for (var i = 0; i < 100; i++)
                 summary.Report(i);
 
@@ -69,7 +70,7 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
             Parallel.For(
                 0,
                 n + 1,
-                new ParallelOptions { MaxDegreeOfParallelism = 4 },
+                new ParallelOptions {MaxDegreeOfParallelism = 4},
                 i => { summary.Report(i); });
 
             // ReSharper disable once PossibleLossOfFraction
@@ -107,13 +108,16 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
         public void Should_be_auto_scrapable()
         {
             var sum = 0.0;
-            context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e =>
-            {
-                if (e.Tags.Any(t => t.Value == "avg"))
-                    sum += e.Value;
-            })));
+            context = new MetricContext(
+                new MetricContextConfig(
+                    new AdHocMetricEventSender(
+                        e =>
+                        {
+                            if (e.Tags.Any(t => t.Value == "avg"))
+                                sum += e.Value;
+                        })));
 
-            var summary = (Summary)context.CreateSummary("name", new SummaryConfig { ScrapePeriod = 10.Milliseconds() });
+            var summary = (Summary)context.CreateSummary("name", new SummaryConfig {ScrapePeriod = 10.Milliseconds()});
 
             summary.Report(42);
             Thread.Sleep(300.Milliseconds());
@@ -125,13 +129,16 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
         public void Should_not_be_scraped_after_dispose()
         {
             var sum = 0.0;
-            context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e =>
-            {
-                if (e.Tags.Any(t => t.Value == "avg"))
-                    sum += e.Value;
-            })));
+            context = new MetricContext(
+                new MetricContextConfig(
+                    new AdHocMetricEventSender(
+                        e =>
+                        {
+                            if (e.Tags.Any(t => t.Value == "avg"))
+                                sum += e.Value;
+                        })));
 
-            var summary = (Summary)context.CreateSummary("name", new SummaryConfig { ScrapePeriod = 10.Milliseconds() });
+            var summary = (Summary)context.CreateSummary("name", new SummaryConfig {ScrapePeriod = 10.Milliseconds()});
 
             summary.Dispose();
 
@@ -141,7 +148,7 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
 
             sum.Should().Be(0);
         }
-        
+
         private static MetricEvent Scrape(ITimer summary, string tag, DateTimeOffset? timestamp = null)
         {
             return ((Summary)summary).Scrape(timestamp ?? DateTimeOffset.Now).Single(e => e.Tags.Any(t => t.Value == tag));

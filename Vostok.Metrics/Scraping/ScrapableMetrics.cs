@@ -17,10 +17,10 @@ namespace Vostok.Metrics.Scraping
         public void Remove(IScrapableMetric metric)
             => metrics.TryRemove(metric, out _);
 
-        public IEnumerator<IScrapableMetric> GetEnumerator() 
+        public IEnumerator<IScrapableMetric> GetEnumerator()
             => metrics.Select(pair => pair.Key).GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator() 
+        IEnumerator IEnumerable.GetEnumerator()
             => GetEnumerator();
     }
 }

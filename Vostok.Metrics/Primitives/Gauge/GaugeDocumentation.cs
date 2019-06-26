@@ -52,6 +52,5 @@ namespace Vostok.Metrics.Primitives.Gauge
     // ReSharper disable once UnusedMember.Global
     internal static class GaugeDocumentation
     {
-
     }
 }

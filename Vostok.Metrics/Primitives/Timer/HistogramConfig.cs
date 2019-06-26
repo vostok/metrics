@@ -11,7 +11,7 @@ namespace Vostok.Metrics.Primitives.Timer
         internal static readonly HistogramConfig Default = new HistogramConfig();
 
         [NotNull]
-        public HistogramBuckets Buckets { get; set; } 
+        public HistogramBuckets Buckets { get; set; }
             = new HistogramBuckets(.005, .01, .025, .05, .075, .1, .25, .5, .75, 1, 2.5, 5, 7.5, 10, 60);
 
         /// <summary>

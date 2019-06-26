@@ -14,19 +14,23 @@ namespace Vostok.Metrics.Tests.Grouping
         [Test]
         public void ExtractTags_should_extract_tags_from_model_properties_in_correct_order()
         {
-            MetricTagsExtractor.ExtractTags(new Model(123, "foo", "bar")).Should().Equal(
-                new MetricTag("Prop2", "foo"),
-                new MetricTag("Prop3", "bar"),
-                new MetricTag("Prop1", "123"));
+            MetricTagsExtractor.ExtractTags(new Model(123, "foo", "bar"))
+                .Should()
+                .Equal(
+                    new MetricTag("Prop2", "foo"),
+                    new MetricTag("Prop3", "bar"),
+                    new MetricTag("Prop1", "123"));
         }
 
         [Test]
         public void ExtractTags_should_tolerate_null_property_values()
         {
-            MetricTagsExtractor.ExtractTags(new Model(123, null, null)).Should().Equal(
-                new MetricTag("Prop2", "none"),
-                new MetricTag("Prop3", "none"),
-                new MetricTag("Prop1", "123"));
+            MetricTagsExtractor.ExtractTags(new Model(123, null, null))
+                .Should()
+                .Equal(
+                    new MetricTag("Prop2", "none"),
+                    new MetricTag("Prop3", "none"),
+                    new MetricTag("Prop1", "123"));
         }
 
         [Test]

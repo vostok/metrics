@@ -87,7 +87,7 @@ namespace Vostok.Metrics.Models
                     hash ^= hash << 25;
                     hash += hash >> 6;
 
-                    return (int) hash;
+                    return (int)hash;
                 }
             }
         }

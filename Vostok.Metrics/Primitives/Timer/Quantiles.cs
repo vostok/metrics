@@ -11,7 +11,7 @@ namespace Vostok.Metrics.Primitives.Timer
     [PublicAPI]
     public static class Quantiles
     {
-        public static double[] DefaultQuantiles => new[] { 0.5, 0.75, 0.95, 0.99, 0.999 };
+        public static double[] DefaultQuantiles => new[] {0.5, 0.75, 0.95, 0.99, 0.999};
 
         /// <summary>
         /// Calculates quantile by array of sorted <paramref name="values"/>.
@@ -22,7 +22,7 @@ namespace Vostok.Metrics.Primitives.Timer
             if (size == 0)
                 return 0;
 
-            var k = (int) (quantile * (size - 1));
+            var k = (int)(quantile * (size - 1));
 
             var index = k + 1 <= quantile * size ? k + 1 : k;
 

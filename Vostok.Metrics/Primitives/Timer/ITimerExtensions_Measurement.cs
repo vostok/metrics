@@ -13,11 +13,11 @@ namespace Vostok.Metrics.Primitives.Timer
 
         public static IDisposable Measure([NotNull] this ITimer timer)
             => new Measurement(timer);
-        
+
         private class Measurement : Stopwatch, IDisposable
         {
             private readonly ITimer timer;
-            
+
             public Measurement(ITimer timer)
             {
                 this.timer = timer;
