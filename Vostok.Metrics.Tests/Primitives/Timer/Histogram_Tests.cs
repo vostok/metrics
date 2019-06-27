@@ -1,10 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using FluentAssertions;
+using FluentAssertions.Extensions;
 using NUnit.Framework;
 using Vostok.Metrics.Models;
 using Vostok.Metrics.Primitives.Timer;
 using Vostok.Metrics.Senders;
+// ReSharper disable CompareOfFloatsByEqualityOperator
+// ReSharper disable PossibleInvalidOperationException
 
 namespace Vostok.Metrics.Tests.Primitives.Timer
 {
@@ -24,126 +30,140 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
                 });
         }
 
-        //[Test]
-        //public void Should_calculate_quantiles_and_reset_on_scrape()
-        //{
-        //    var summary = context.CreateHistogram("name");
-        //    summary.Report(10);
-        //    summary.Report(5);
-        //    summary.Report(0);
-
-        //    Scrape(summary, "p50").Value.Should().Be(5);
-
-        //    Scrape(summary, "p50").Value.Should().Be(0);
-
-        //    summary.Report(42);
-        //    Scrape(summary, "p50").Value.Should().Be(42);
-        //}
-
-        //[Test]
-        //public void Should_calculate_quantiles_given_in_config()
-        //{
-        //    var summary = context.CreateHistogram("name", new HistogramConfig { Quantiles = new[] { 0.17 } });
-        //    for (var i = 0; i < 100; i++)
-        //        summary.Report(i);
-
-        //    Scrape(summary, "p17").Value.Should().Be(17);
-        //}
-
-        //[Test]
-        //public void Should_keep_only_some_values()
-        //{
-        //    var summary = context.CreateHistogram("name", new HistogramConfig { BufferSize = 10 });
-        //    for (var i = 0; i < 100; i++)
-        //        summary.Report(i);
-
-        //    Scrape(summary, "avg").Value.Should().BeInRange(40, 60);
-        //}
-
-        //[Test]
-        //public void Should_be_thread_safe()
-        //{
-        //    var n = 1_000L;
-        //    var summary = context.CreateHistogram("name");
-        //    Parallel.For(
-        //        0,
-        //        n + 1,
-        //        new ParallelOptions { MaxDegreeOfParallelism = 4 },
-        //        i => { summary.Report(i); });
-
-        //    // ReSharper disable once PossibleLossOfFraction
-        //    Scrape(summary, "avg").Value.Should().Be(n / 2);
-        //}
-
-        //[Test]
-        //public void Should_fill_metric_event()
-        //{
-        //    var summary = context.CreateHistogram(
-        //        "name",
-        //        new HistogramConfig
-        //        {
-        //            Unit = "unit"
-        //        });
-
-        //    summary.Report(42);
-
-        //    var timestamp = DateTimeOffset.Now;
-        //    var metric = Scrape(summary, "p50", timestamp);
-
-        //    metric.Should()
-        //        .BeEquivalentTo(
-        //            new MetricEvent(
-        //                42,
-        //                new MetricTags(new MetricTag(WellKnownTagKeys.Name, "name"), new MetricTag(WellKnownTagKeys.Aggregate, "p50")),
-        //                timestamp,
-        //                "unit",
-        //                null,
-        //                null
-        //            ));
-        //}
-
-        //[Test]
-        //public void Should_be_auto_scrapable()
-        //{
-        //    var sum = 0.0;
-        //    context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e =>
-        //    {
-        //        if (e.Tags.Any(t => t.Value == "avg"))
-        //            sum += e.Value;
-        //    })));
-
-        //    var summary = (Summary)context.CreateHistogram("name", new HistogramConfig { ScrapePeriod = 10.Milliseconds() });
-
-        //    summary.Report(42);
-        //    Thread.Sleep(300.Milliseconds());
-
-        //    sum.Should().Be(42);
-        //}
-
-        //[Test]
-        //public void Should_not_be_scraped_after_dispose()
-        //{
-        //    var sum = 0.0;
-        //    context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e =>
-        //    {
-        //        if (e.Tags.Any(t => t.Value == "avg"))
-        //            sum += e.Value;
-        //    })));
-
-        //    var summary = (Summary)context.CreateHistogram("name", new HistogramConfig { ScrapePeriod = 10.Milliseconds() });
-
-        //    summary.Dispose();
-
-        //    Thread.Sleep(100.Milliseconds());
-        //    summary.Report(42);
-        //    Thread.Sleep(300.Milliseconds());
-
-        //    sum.Should().Be(0);
-        //}
-
-        private static MetricEvent Scrape(ITimer summary, string tag, DateTimeOffset? timestamp = null)
+        [Test]
+        public void Should_calculate_buckets_and_reset_on_scrape()
         {
-            return ((Summary)summary).Scrape(timestamp ?? DateTimeOffset.Now).Single(e => e.Tags.Any(t => t.Value == tag));
+            var histogram = context.CreateHistogram("name", new HistogramConfig {Buckets = new HistogramBuckets(10, 20, 30)});
+            for (var i = -2; i < 50; i++)
+                histogram.Report(i);
+
+            Scrape(histogram).Should().BeEquivalentTo(new List<(double, double)>
+            {
+                (13, 10),
+                (10, 20),
+                (10, 30),
+                (19, double.PositiveInfinity)
+            });
+
+            Scrape(histogram).Should().BeEquivalentTo(new List<(double, double)>
+            {
+                (0, 10),
+                (0, 20),
+                (0, 30),
+                (0, double.PositiveInfinity)
+            });
+
+            histogram.Report(42);
+            Scrape(histogram).Should().BeEquivalentTo(new List<(double, double)>
+            {
+                (0, 10),
+                (0, 20),
+                (0, 30),
+                (1, double.PositiveInfinity)
+            });
+        }
+
+        [Test]
+        public void Should_be_thread_safe()
+        {
+            var n = 1_000L;
+            var histogram = context.CreateHistogram("name", new HistogramConfig { Buckets = new HistogramBuckets(100, 200, 300) });
+            Parallel.For(
+                0,
+                n,
+                new ParallelOptions { MaxDegreeOfParallelism = 4 },
+                i => { histogram.Report(i); });
+
+            Scrape(histogram).Should().BeEquivalentTo(new List<(double, double)>
+            {
+                (101, 100),
+                (100, 200),
+                (100, 300),
+                (699, double.PositiveInfinity)
+            });
+        }
+
+        [Test]
+        public void Should_fill_metric_event()
+        {
+            var aggregationParameters = new Dictionary<string, string>
+            {
+                {"a", "aa"},
+                {"b", "bb"}
+            };
+
+            var histogram = context.CreateHistogram(
+                "name",
+                new HistogramConfig
+                {
+                    Unit = "unit",
+                    AggregationParameters = aggregationParameters,
+                    Buckets = new HistogramBuckets(10, 20, 30)
+                });
+
+            histogram.Report(42);
+            histogram.Report(42);
+
+            var timestamp = DateTimeOffset.Now;
+            var metric = ((Histogram)histogram).Scrape(timestamp).Single(e => e.AggregationParameters.GetHistogramBucket().Value.UpperBound == double.PositiveInfinity);
+
+            metric.Should()
+                .BeEquivalentTo(
+                    new MetricEvent(
+                        2,
+                        new MetricTags(new MetricTag(WellKnownTagKeys.Name, "name")),
+                        timestamp,
+                        "unit",
+                        WellKnownAggregationTypes.Histogram,
+                        aggregationParameters.SetHistogramBucket(new HistogramBucket(30, double.PositiveInfinity))
+                    ));
+        }
+
+        [Test]
+        public void Should_be_auto_scrapable()
+        {
+            var sum = 0.0;
+            context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e =>
+            {
+                sum += e.Value;
+            })));
+
+            var histogram = (Histogram)context.CreateHistogram("name", new HistogramConfig { ScrapePeriod = 10.Milliseconds() });
+
+            histogram.Report(1);
+            histogram.Report(2);
+            histogram.Report(3);
+            Thread.Sleep(300.Milliseconds());
+
+            sum.Should().Be(3);
+        }
+
+        [Test]
+        public void Should_not_be_scraped_after_dispose()
+        {
+            var sum = 0.0;
+            context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e =>
+            {
+                sum += e.Value;
+            })));
+
+            var histogram = (Histogram)context.CreateHistogram("name", new HistogramConfig { ScrapePeriod = 10.Milliseconds() });
+
+            histogram.Dispose();
+
+            Thread.Sleep(100.Milliseconds());
+            histogram.Report(42);
+            Thread.Sleep(300.Milliseconds());
+
+            sum.Should().Be(0);
+        }
+
+        private static List<(double count, double upperBound)> Scrape(ITimer histogram, DateTimeOffset? timestamp = null)
+        {
+            return ((Histogram)histogram)
+                .Scrape(timestamp ?? DateTimeOffset.Now)
+                .Select(e => (e.Value, e.AggregationParameters.GetHistogramBucket().Value.UpperBound))
+                .ToList();
         }
     }
 }
