@@ -66,31 +66,6 @@ namespace Vostok.Metrics.Tests.Primitives.Counter
         }
 
         [Test]
-        public void Should_be_same_for_same_dynamic_tags()
-        {
-            var counter = context.CreateCounter("name", "dynamic_tag");
-
-            counter.For("tag").Add(1);
-            counter.For("tag").Add(3);
-
-            Scrape(counter.For("tag")).Value.Should().Be(4);
-        }
-
-        [Test]
-        public void Should_be_not_same_for_different_dynamic_tags()
-        {
-            var counter = context.CreateCounter("name", "dynamic_tag");
-
-            counter.For("tag1").Add(1);
-
-            counter.For("tag2").Add(3);
-
-            Scrape(counter.For("tag0")).Value.Should().Be(0);
-            Scrape(counter.For("tag1")).Value.Should().Be(1);
-            Scrape(counter.For("tag2")).Value.Should().Be(3);
-        }
-
-        [Test]
         public void Should_fill_metric_event()
         {
             var aggregationParameters = new Dictionary<string, string>
