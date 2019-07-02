@@ -59,7 +59,7 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
             for (var i = 0; i < 100; i++)
                 summary.Report(i);
 
-            Scrape(summary, "avg").Value.Should().BeInRange(0, 100);
+            Scrape(summary, "count").Value.Should().Be(100);
         }
 
         [Test]
