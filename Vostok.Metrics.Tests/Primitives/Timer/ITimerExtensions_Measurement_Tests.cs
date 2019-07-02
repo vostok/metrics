@@ -66,7 +66,7 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
             {
                 Thread.Sleep(0.1.Seconds());
             }
-            
+
             @event.Value.Should().BeGreaterOrEqualTo(0.1);
         }
     }

@@ -44,7 +44,7 @@ namespace Vostok.Metrics.Tests.Primitives.Gauge
         [Test]
         public void Should_calculate_sum_and_reset_on_scrape_if_specified()
         {
-            var gauge = context.CreateIntegerGauge("name", new IntegerGaugeConfig { ResetOnScrape = true });
+            var gauge = context.CreateIntegerGauge("name", new IntegerGaugeConfig {ResetOnScrape = true});
             gauge.Increment();
             gauge.Substract(2);
             gauge.Add(42);
@@ -70,7 +70,7 @@ namespace Vostok.Metrics.Tests.Primitives.Gauge
         [Test]
         public void Should_use_initial_value()
         {
-            var gauge = context.CreateIntegerGauge("name", new IntegerGaugeConfig { InitialValue = 100 });
+            var gauge = context.CreateIntegerGauge("name", new IntegerGaugeConfig {InitialValue = 100});
             gauge.Add(10);
             Scrape(gauge).Value.Should().Be(100 + 10);
         }
@@ -93,7 +93,7 @@ namespace Vostok.Metrics.Tests.Primitives.Gauge
             Parallel.For(
                 0,
                 n + 1,
-                new ParallelOptions { MaxDegreeOfParallelism = 4 },
+                new ParallelOptions {MaxDegreeOfParallelism = 4},
                 i => { gauge.Add(i); });
 
             // ReSharper disable once PossibleLossOfFraction
@@ -135,7 +135,7 @@ namespace Vostok.Metrics.Tests.Primitives.Gauge
             var x = 0L;
             context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => Interlocked.Exchange(ref x, (long)e.Value))));
 
-            var gauge = (IntegerGauge)context.CreateIntegerGauge("name", new IntegerGaugeConfig { ScrapePeriod = 10.Milliseconds() });
+            var gauge = (IntegerGauge)context.CreateIntegerGauge("name", new IntegerGaugeConfig {ScrapePeriod = 10.Milliseconds()});
 
             gauge.Add(1);
             Thread.Sleep(300.Milliseconds());
@@ -149,7 +149,7 @@ namespace Vostok.Metrics.Tests.Primitives.Gauge
             var x = 0L;
             context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => Interlocked.Exchange(ref x, (long)e.Value))));
 
-            var gauge = (IntegerGauge)context.CreateIntegerGauge("name", new IntegerGaugeConfig { ScrapePeriod = 10.Milliseconds() });
+            var gauge = (IntegerGauge)context.CreateIntegerGauge("name", new IntegerGaugeConfig {ScrapePeriod = 10.Milliseconds()});
 
             gauge.Dispose();
 

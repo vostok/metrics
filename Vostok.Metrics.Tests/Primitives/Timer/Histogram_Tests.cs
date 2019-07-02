@@ -9,6 +9,7 @@ using NUnit.Framework;
 using Vostok.Metrics.Models;
 using Vostok.Metrics.Primitives.Timer;
 using Vostok.Metrics.Senders;
+
 // ReSharper disable CompareOfFloatsByEqualityOperator
 // ReSharper disable PossibleInvalidOperationException
 
@@ -37,50 +38,62 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
             for (var i = -2; i < 50; i++)
                 histogram.Report(i);
 
-            Scrape(histogram).Should().BeEquivalentTo(new List<(double, double)>
-            {
-                (13, 10),
-                (10, 20),
-                (10, 30),
-                (19, double.PositiveInfinity)
-            });
+            Scrape(histogram)
+                .Should()
+                .BeEquivalentTo(
+                    new List<(double, double)>
+                    {
+                        (13, 10),
+                        (10, 20),
+                        (10, 30),
+                        (19, double.PositiveInfinity)
+                    });
 
-            Scrape(histogram).Should().BeEquivalentTo(new List<(double, double)>
-            {
-                (0, 10),
-                (0, 20),
-                (0, 30),
-                (0, double.PositiveInfinity)
-            });
+            Scrape(histogram)
+                .Should()
+                .BeEquivalentTo(
+                    new List<(double, double)>
+                    {
+                        (0, 10),
+                        (0, 20),
+                        (0, 30),
+                        (0, double.PositiveInfinity)
+                    });
 
             histogram.Report(42);
-            Scrape(histogram).Should().BeEquivalentTo(new List<(double, double)>
-            {
-                (0, 10),
-                (0, 20),
-                (0, 30),
-                (1, double.PositiveInfinity)
-            });
+            Scrape(histogram)
+                .Should()
+                .BeEquivalentTo(
+                    new List<(double, double)>
+                    {
+                        (0, 10),
+                        (0, 20),
+                        (0, 30),
+                        (1, double.PositiveInfinity)
+                    });
         }
 
         [Test]
         public void Should_be_thread_safe()
         {
             var n = 1_000L;
-            var histogram = context.CreateHistogram("name", new HistogramConfig { Buckets = new HistogramBuckets(100, 200, 300) });
+            var histogram = context.CreateHistogram("name", new HistogramConfig {Buckets = new HistogramBuckets(100, 200, 300)});
             Parallel.For(
                 0,
                 n,
-                new ParallelOptions { MaxDegreeOfParallelism = 4 },
+                new ParallelOptions {MaxDegreeOfParallelism = 4},
                 i => { histogram.Report(i); });
 
-            Scrape(histogram).Should().BeEquivalentTo(new List<(double, double)>
-            {
-                (101, 100),
-                (100, 200),
-                (100, 300),
-                (699, double.PositiveInfinity)
-            });
+            Scrape(histogram)
+                .Should()
+                .BeEquivalentTo(
+                    new List<(double, double)>
+                    {
+                        (101, 100),
+                        (100, 200),
+                        (100, 300),
+                        (699, double.PositiveInfinity)
+                    });
         }
 
         [Test]
@@ -123,12 +136,9 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
         public void Should_be_auto_scrapable()
         {
             var sum = 0.0;
-            context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e =>
-            {
-                sum += e.Value;
-            })));
+            context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => { sum += e.Value; })));
 
-            var histogram = (Histogram)context.CreateHistogram("name", new HistogramConfig { ScrapePeriod = 10.Milliseconds() });
+            var histogram = (Histogram)context.CreateHistogram("name", new HistogramConfig {ScrapePeriod = 10.Milliseconds()});
 
             histogram.Report(1);
             histogram.Report(2);
@@ -142,12 +152,9 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
         public void Should_not_be_scraped_after_dispose()
         {
             var sum = 0.0;
-            context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e =>
-            {
-                sum += e.Value;
-            })));
+            context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => { sum += e.Value; })));
 
-            var histogram = (Histogram)context.CreateHistogram("name", new HistogramConfig { ScrapePeriod = 10.Milliseconds() });
+            var histogram = (Histogram)context.CreateHistogram("name", new HistogramConfig {ScrapePeriod = 10.Milliseconds()});
 
             histogram.Dispose();
 

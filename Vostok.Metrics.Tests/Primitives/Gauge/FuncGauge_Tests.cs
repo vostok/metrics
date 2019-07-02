@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using FluentAssertions;
 using FluentAssertions.Extensions;
 using NUnit.Framework;
@@ -77,7 +76,7 @@ namespace Vostok.Metrics.Tests.Primitives.Gauge
             var x = 0.0;
             context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => Interlocked.Exchange(ref x, e.Value))));
 
-            context.CreateFuncGauge("name", func, new FuncGaugeConfig { ScrapePeriod = 10.Milliseconds() });
+            context.CreateFuncGauge("name", func, new FuncGaugeConfig {ScrapePeriod = 10.Milliseconds()});
 
             value = 1;
             Thread.Sleep(300.Milliseconds());
@@ -91,7 +90,7 @@ namespace Vostok.Metrics.Tests.Primitives.Gauge
             var x = 0.0;
             context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => Interlocked.Exchange(ref x, e.Value))));
 
-            var gauge = context.CreateFuncGauge("name", func, new FuncGaugeConfig { ScrapePeriod = 10.Milliseconds() });
+            var gauge = context.CreateFuncGauge("name", func, new FuncGaugeConfig {ScrapePeriod = 10.Milliseconds()});
 
             gauge.Dispose();
 

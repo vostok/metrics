@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,7 +6,6 @@ using FluentAssertions;
 using FluentAssertions.Extensions;
 using NUnit.Framework;
 using Vostok.Metrics.Models;
-using Vostok.Metrics.Primitives.Counter;
 using Vostok.Metrics.Primitives.Gauge;
 using Vostok.Metrics.Senders;
 
@@ -95,7 +93,7 @@ namespace Vostok.Metrics.Tests.Primitives.Gauge
             Parallel.For(
                 0,
                 n + 1,
-                new ParallelOptions { MaxDegreeOfParallelism = 4 },
+                new ParallelOptions {MaxDegreeOfParallelism = 4},
                 i => { gauge.Add(i); });
 
             // ReSharper disable once PossibleLossOfFraction
@@ -137,7 +135,7 @@ namespace Vostok.Metrics.Tests.Primitives.Gauge
             var x = 0.0;
             context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => Interlocked.Exchange(ref x, e.Value))));
 
-            var gauge = (FloatingGauge)context.CreateFloatingGauge("name", new FloatingGaugeConfig { ScrapePeriod = 10.Milliseconds() });
+            var gauge = (FloatingGauge)context.CreateFloatingGauge("name", new FloatingGaugeConfig {ScrapePeriod = 10.Milliseconds()});
 
             gauge.Add(1);
             Thread.Sleep(300.Milliseconds());
@@ -151,7 +149,7 @@ namespace Vostok.Metrics.Tests.Primitives.Gauge
             var x = 0.0;
             context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => Interlocked.Exchange(ref x, e.Value))));
 
-            var gauge = (FloatingGauge)context.CreateFloatingGauge("name", new FloatingGaugeConfig { ScrapePeriod = 10.Milliseconds() });
+            var gauge = (FloatingGauge)context.CreateFloatingGauge("name", new FloatingGaugeConfig {ScrapePeriod = 10.Milliseconds()});
 
             gauge.Dispose();
 
