@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Vostok.Metrics.Models;
 
-namespace Vostok.Metrics.Tests.TestsHelpers
+namespace Vostok.Metrics.Tests
 {
     internal class TestMetricSender : IMetricEventSender
     {

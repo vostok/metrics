@@ -12,7 +12,7 @@ namespace Vostok.Metrics.Tests.Models
     internal class MetricEvent_Tests
     {
         [Test]
-        public void Should_not_tolerate_null_tags()
+        public void Should_not_accept_null_tags()
         {
             Action action = () => new MetricEvent(default, default, default, default, default, default);
 
@@ -20,7 +20,7 @@ namespace Vostok.Metrics.Tests.Models
         }
 
         [Test]
-        public void Should_not_tolerate_empty_tags()
+        public void Should_not_accept_empty_tags()
         {
             Action action = () => new MetricEvent(default, MetricTags.Empty, default, default, default, default);
 
@@ -28,7 +28,7 @@ namespace Vostok.Metrics.Tests.Models
         }
 
         [Test]
-        public void Should_consider_two_events_differing_only_in_time_zone_equal()
+        public void Equals_should_ignore_timezone()
         {
             var event1 = new MetricEvent(12.34d, MetricTags.Empty.Append("k", "v").Append("k2", "v2"), DateTimeOffset.Now, WellKnownUnits.Seconds, WellKnownAggregationTypes.Timer, null);
             var event2 = new MetricEvent(event1.Value, event1.Tags, event1.Timestamp.ToUniversalTime(), event1.Unit, event1.AggregationType, event1.AggregationParameters);
