@@ -4,7 +4,7 @@ using FluentAssertions.Extensions;
 using NUnit.Framework;
 using Vostok.Metrics.Primitives.Timer;
 
-namespace Vostok.Metrics.Tests.Primitives.Timer
+namespace Vostok.Metrics.Tests
 {
     [TestFixture]
     internal class AggregationParametersExtensions_Tests

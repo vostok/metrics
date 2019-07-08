@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Vostok.Metrics.Helpers;
+using Vostok.Metrics.Primitives.Timer;
 
-namespace Vostok.Metrics.Primitives.Timer
+namespace Vostok.Metrics
 {
     [PublicAPI]
     public static class AggregationParametersExtensions
