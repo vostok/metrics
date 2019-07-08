@@ -13,7 +13,7 @@ namespace Vostok.Metrics.Primitives.Counter
         private readonly CounterConfig config;
         private readonly IDisposable registration;
 
-        private long counter;
+        private long count;
 
         public Counter([NotNull] IMetricContext context, [NotNull] MetricTags tags, [NotNull] CounterConfig config)
         {
@@ -26,15 +26,15 @@ namespace Vostok.Metrics.Primitives.Counter
         public void Add(long value)
         {
             if (value < 0L)
-                throw new ArgumentOutOfRangeException(nameof(value), value, "Only values >= 0 can be added to a counter.");
+                throw new ArgumentOutOfRangeException(nameof(value), value, "Only values >= 0 can be added.");
 
-            Interlocked.Add(ref counter, value);
+            Interlocked.Add(ref count, value);
         }
 
         public IEnumerable<MetricEvent> Scrape(DateTimeOffset timestamp)
         {
             yield return new MetricEvent(
-                Interlocked.Exchange(ref counter, 0),
+                Interlocked.Exchange(ref count, 0),
                 tags,
                 timestamp,
                 config.Unit,
