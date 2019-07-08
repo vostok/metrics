@@ -14,9 +14,6 @@ namespace Vostok.Metrics.Primitives.Counter
     /// <para>
     /// Counter primitive then periodically produces a <see cref="MetricEvent"/> containing the current of value of that counter and resets it to zero.
     /// </para>
-    /// <para>
-    /// It's recommended to use a short scraping period for Counters to avoid losing too much resolution.
-    /// </para>
     /// <remarks>
     /// <para>
     /// To create a Counter, use <see cref="CounterFactoryExtensions">extensions</see> for <see cref="IMetricContext"/>.
