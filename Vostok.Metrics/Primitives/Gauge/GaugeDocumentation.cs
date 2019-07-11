@@ -28,7 +28,7 @@ namespace Vostok.Metrics.Primitives.Gauge
     /// <code>
     /// var gauge = context.FuncGauge(
     ///     "cpu-usage",
-    ///     () => GetCpuUsage(),
+    ///     GetCpuUsage,
     ///     new GaugeConfig { ScrapePeriod = TimeSpan.FromSeconds(10) });
     /// </code>
     /// Every 10 seconds <c>GetCpuUsage</c> is called and returned value is saved to a permanent storage.
