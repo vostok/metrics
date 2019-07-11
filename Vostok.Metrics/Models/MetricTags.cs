@@ -98,7 +98,7 @@ namespace Vostok.Metrics.Models
         }
 
         public override string ToString() =>
-            string.Join(".", this);
+            string.Join(", ", this);
 
         public MetricTag this[int index]
         {

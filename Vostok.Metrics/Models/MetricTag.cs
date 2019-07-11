@@ -22,7 +22,7 @@ namespace Vostok.Metrics.Models
         public string Value { get; }
 
         public override string ToString() =>
-            $"{nameof(Key)}: {Key}, {nameof(Value)}: {Value}";
+            $"{{ \"{Key}\": \"{Value}\" }}";
 
         #region Equality
 
