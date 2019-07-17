@@ -14,22 +14,22 @@ namespace Vostok.Metrics.Tests.Grouping
         [Test]
         public void ExtractTags_should_extract_tags_from_model_properties_in_correct_order()
         {
-            MetricTagsExtractor.ExtractTags(new Model(123, "foo", "bar"))
+            MetricTagsExtractor.ExtractTags(new Model(123, "foo", Prop3Values.B))
                 .Should()
                 .Equal(
                     new MetricTag("Prop2", "foo"),
-                    new MetricTag("Prop3", "bar"),
+                    new MetricTag("Prop3", "B"),
                     new MetricTag("Prop1", "123"));
         }
 
         [Test]
         public void ExtractTags_should_tolerate_null_property_values()
         {
-            MetricTagsExtractor.ExtractTags(new Model(123, null, null))
+            MetricTagsExtractor.ExtractTags(new Model(123, null, Prop3Values.A))
                 .Should()
                 .Equal(
                     new MetricTag("Prop2", "none"),
-                    new MetricTag("Prop3", "none"),
+                    new MetricTag("Prop3", "A"),
                     new MetricTag("Prop1", "123"));
         }
 
@@ -47,7 +47,7 @@ namespace Vostok.Metrics.Tests.Grouping
 
         private class Model
         {
-            public Model(int prop1, string prop2, string prop3)
+            public Model(int prop1, string prop2, Prop3Values prop3)
             {
                 Prop1 = prop1;
                 Prop2 = prop2;
@@ -61,7 +61,13 @@ namespace Vostok.Metrics.Tests.Grouping
             public string Prop2 { get; }
 
             [MetricTag(2)]
-            public string Prop3 { get; }
+            public Prop3Values Prop3 { get; }
+        }
+
+        private enum Prop3Values
+        {
+            A,
+            B
         }
 
         private class NonModel
