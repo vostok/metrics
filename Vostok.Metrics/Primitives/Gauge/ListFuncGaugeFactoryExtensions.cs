@@ -14,7 +14,7 @@ namespace Vostok.Metrics.Primitives.Gauge
         /// <param name="valuesProvider">
         ///     <para>Delegate, that returns objects with value and dynamic tags (optional).</para>
         ///     <para>Mark object property as <see cref="MetricEvent.Value"/> source with <see cref="MetricValueAttribute"/>.</para>
-        ///     <para>Mark object properties as dynamic <see cref="MetricEvent.Tags"/> source with <see cref="MetricValueAttribute"/>.</para>
+        ///     <para>Mark object properties as dynamic <see cref="MetricEvent.Tags"/> source with <see cref="MetricTagAttribute"/>.</para>
         /// </param>
         /// <param name="config">Optional metric-specific config.</param>
         [NotNull]
