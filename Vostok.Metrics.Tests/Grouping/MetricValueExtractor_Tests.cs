@@ -15,38 +15,44 @@ namespace Vostok.Metrics.Tests.Grouping
         public void ExtractValue_should_extract_double_value()
         {
             MetricValueExtractor.ExtractValue(new DoubleValueModel {Prop1 = 1, Prop2 = 2, Prop3 = 3.3})
-                .Should().Be(3.3);
+                .Should()
+                .Be(3.3);
         }
 
         [Test]
         public void ExtractValue_should_extract_nullable_double_value_if_filled()
         {
-            MetricValueExtractor.ExtractValue(new NullableDoubleValueModel { Value = 42 })
-                .Should().Be(42);
+            MetricValueExtractor.ExtractValue(new NullableDoubleValueModel {Value = 42})
+                .Should()
+                .Be(42);
 
-            MetricValueExtractor.ExtractValue(new NullableDoubleValueModel { Value = null })
-                .Should().Be(null);
+            MetricValueExtractor.ExtractValue(new NullableDoubleValueModel {Value = null})
+                .Should()
+                .Be(null);
         }
 
         [Test]
         public void ExtractValue_should_extract_int_value()
         {
-            MetricValueExtractor.ExtractValue(new IntValueModel { Value = 42 })
-                .Should().Be(42);
+            MetricValueExtractor.ExtractValue(new IntValueModel {Value = 42})
+                .Should()
+                .Be(42);
         }
 
         [Test]
         public void ExtractValue_should_be_null_for_non_value_model()
         {
-            MetricValueExtractor.ExtractValue(new NonValueModel { Value = 42 })
-                .Should().BeNull();
+            MetricValueExtractor.ExtractValue(new NonValueModel {Value = 42})
+                .Should()
+                .BeNull();
         }
 
         [Test]
         public void ExtractValue_should_be_null_for_multi_value_model()
         {
-            MetricValueExtractor.ExtractValue(new MultiValueModel { Value1 = 1, Value2 = 2})
-                .Should().BeNull();
+            MetricValueExtractor.ExtractValue(new MultiValueModel {Value1 = 1, Value2 = 2})
+                .Should()
+                .BeNull();
         }
 
         private class DoubleValueModel

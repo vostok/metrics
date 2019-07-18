@@ -45,6 +45,12 @@ namespace Vostok.Metrics.Tests.Grouping
             MetricTagsExtractor.HasTags(typeof(NonModel)).Should().BeFalse();
         }
 
+        private enum Prop3Values
+        {
+            A,
+            B
+        }
+
         private class Model
         {
             public Model(int prop1, string prop2, Prop3Values prop3)
@@ -62,12 +68,6 @@ namespace Vostok.Metrics.Tests.Grouping
 
             [MetricTag(2)]
             public Prop3Values Prop3 { get; }
-        }
-
-        private enum Prop3Values
-        {
-            A,
-            B
         }
 
         private class NonModel

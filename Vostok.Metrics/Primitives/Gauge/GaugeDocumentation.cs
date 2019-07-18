@@ -12,10 +12,11 @@ namespace Vostok.Metrics.Primitives.Gauge
     /// </summary>
     /// <remarks>
     /// <para> To create a Gauge, use factory extensions for <see cref="IMetricContext"/>:</para>
-    /// <list type="bullet">
-    ///     <item><description><see cref="FuncGaugeFactoryExtensions"/> — gauges whose values come from external delegates.</description></item>
+    /// <list type="bullet">     
     ///     <item><description><see cref="IntegerGaugeFactoryExtensions"/> — manually manipulated gauges with <see cref="long"/> values.</description></item>
     ///     <item><description><see cref="FloatingGaugeFactoryExtensions"/> — manually manipulated gauges with <see cref="double"/> values.</description></item>
+    ///     <item><description><see cref="FuncGaugeFactoryExtensions"/> — gauges whose values come from external delegates.</description></item>
+    ///     <item><description><see cref="ListFuncGaugeFactoryExtensions"/> — gauges whose values is a list of metrics coming from external delegates.</description></item> 
     /// </list>
     /// <para>
     /// You can call <see cref="IDisposable.Dispose"/> to stop observing Gauge values.

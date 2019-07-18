@@ -13,7 +13,7 @@ namespace Vostok.Metrics.Grouping
 
         private static readonly RecyclingBoundedCache<Type, Func<object, object>> Cache =
             new RecyclingBoundedCache<Type, Func<object, object>>(CacheCapacity);
-        
+
         public static double? ExtractValue(object item)
         {
             var property = Cache.Obtain(item.GetType(), LocateProperty);
