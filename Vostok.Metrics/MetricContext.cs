@@ -32,6 +32,9 @@ namespace Vostok.Metrics
             => config.Sender.Send(@event);
 
         public void Dispose()
-            => scheduler.Dispose();
+        {
+            scheduler.Dispose();
+            funcScheduler.Dispose();
+        }
     }
 }
