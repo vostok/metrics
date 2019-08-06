@@ -168,6 +168,17 @@ namespace Vostok.Metrics.Tests.Models
         }
 
         [Test]
+        public void Append_should_handle_long_lists()
+        {
+            tags = tags.Append(tag1);
+
+            var tags2 = tags.Append(new[] {tag2, tag3, tag4, tag5, tag5, tag5, tag5, tag5});
+
+            tags.Should().Equal(tag1);
+            tags2.Should().Equal(tag1, tag2, tag3, tag4, tag5, tag5, tag5, tag5, tag5);
+        }
+
+        [Test]
         public void Equals_should_return_true_for_equal_tags()
         {
             MetricTags.Empty.Equals(new MetricTags(10)).Should().BeTrue();

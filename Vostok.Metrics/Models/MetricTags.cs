@@ -81,7 +81,10 @@ namespace Vostok.Metrics.Models
 
             if (!isFirstAppend || !fitsIntoCurrentArray)
             {
-                currentArray = new MetricTag[fitsIntoCurrentArray ? items.Length : Math.Max(4, items.Length * 2)];
+                var newLength = fitsIntoCurrentArray
+                    ? items.Length
+                    : Math.Max(4, Math.Max(items.Length * 2, Count + tags.Count));
+                currentArray = new MetricTag[newLength];
                 Array.Copy(items, 0, currentArray, 0, Count);
             }
 
