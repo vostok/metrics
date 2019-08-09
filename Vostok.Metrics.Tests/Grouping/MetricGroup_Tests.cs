@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Globalization;
+using FluentAssertions;
 using NUnit.Framework;
 using Vostok.Metrics.Grouping;
 using Vostok.Metrics.Models;
@@ -49,6 +50,24 @@ namespace Vostok.Metrics.Tests.Grouping
                 .Tags.Should()
                 .BeEquivalentTo(
                     MetricTags.Empty.Append("key1", "a").Append("key2", "a"));
+        }
+
+        [Test]
+        public void Should_use_InvariantCulture_for_key_values()
+        {
+            var prevCulture = CultureInfo.CurrentCulture;
+            CultureInfo.CurrentCulture = new CultureInfo("ru-RU");
+            try
+            {
+                var group1 = new MetricGroup<SimpleCounter>(tags => new SimpleCounter(tags), "key1");
+                group1.For(1.1).Value = 1;
+                
+                group1.For("1.1").Value.Should().Be(1);
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = prevCulture;
+            }
         }
 
         private class SimpleCounter
