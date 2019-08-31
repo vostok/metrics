@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using Vostok.Metrics.Models;
 using Vostok.Metrics.Primitives.Counter;
 using Vostok.Metrics.Primitives.Gauge;
+using Vostok.Metrics.Primitives.Reporter;
 using Vostok.Metrics.Primitives.Timer;
 using Vostok.Metrics.Scraping;
 
@@ -10,7 +11,7 @@ namespace Vostok.Metrics
 {
     /// <summary>
     /// <para><see cref="IMetricContext"/> is an entry-point for Vostok.Metrics library.</para>
-    /// <para>It provides all that is necessary to create a metric primitive like <see cref="IIntegerGauge"/>, <see cref="ICounter"/>, <see cref="ITimer"/> and others.</para>
+    /// <para>It provides all that is necessary to create a metric primitive like <see cref="IIntegerGauge"/>, <see cref="ICounter"/>, <see cref="ITimer"/>, <see cref="IReporter"/> and others.</para>
     /// <para>To create an <see cref="IMetricContext"/> instance, use <see cref="MetricContext"/> implementation.</para>
     /// </summary>
     [PublicAPI]
@@ -18,7 +19,7 @@ namespace Vostok.Metrics
     {
         /// <summary>
         /// <para>A collection of <see cref="MetricTag"/>s associated with this <see cref="IMetricContext"/></para>
-        /// <para>All metrics created with this context will include this <see cref="Tags"/>.</para>
+        /// <para>All metrics created with this context will include these <see cref="Tags"/>.</para>
         /// </summary>
         [NotNull]
         MetricTags Tags { get; }
