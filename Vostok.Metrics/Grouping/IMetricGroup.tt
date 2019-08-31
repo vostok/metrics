@@ -11,7 +11,7 @@ namespace Vostok.Metrics.Grouping
     /// <para>Metrics in a group share the name but have different dynamic tags specified in <see cref="For"/> method.</para>
     /// </summary>
     [PublicAPI]
-    public interface IMetricGroup<#= keysCount #><out TMetric> : IDisposable
+    public interface IMetricGroup<#= keysCount #><out TMetric>
     {
         /// <summary>
         /// Retrieves a metric associated with specific tags from this group.

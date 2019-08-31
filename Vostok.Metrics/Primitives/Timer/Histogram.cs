@@ -42,7 +42,7 @@ namespace Vostok.Metrics.Primitives.Timer
     /// Call <see cref="IDisposable.Dispose"/> to stop scraping the metric.
     /// </para>
     /// </remarks>
-    internal class Histogram : ITimer, IScrapableMetric
+    internal class Histogram : ITimer, IScrapableMetric, IDisposable
     {
         private readonly HistogramConfig config;
         private readonly IDisposable registration;

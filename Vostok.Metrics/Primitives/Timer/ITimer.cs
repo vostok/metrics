@@ -1,4 +1,3 @@
-using System;
 using JetBrains.Annotations;
 
 namespace Vostok.Metrics.Primitives.Timer
@@ -20,7 +19,7 @@ namespace Vostok.Metrics.Primitives.Timer
     /// </code>
     /// </example>
     [PublicAPI]
-    public interface ITimer : IDisposable
+    public interface ITimer
     {
         /// <summary>
         /// Returns the unit this timer's <see cref="Report"/> method assumes for passed values.
