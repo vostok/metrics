@@ -1,7 +1,9 @@
+
 using System;
 using JetBrains.Annotations;
 using Vostok.Metrics.Grouping;
 using Vostok.Metrics.Models;
+using Vostok.Metrics.Primitives.Caching;
 
 namespace Vostok.Metrics.Primitives.Timer
 {
@@ -14,7 +16,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <param name="config">Optional metric-specific config.</param>
         [NotNull]
         public static ITimer CreateHistogram([NotNull] this IMetricContext context, [NotNull] string name, [CanBeNull] HistogramConfig config = null)
-            => new Histogram(context, MetricTagsMerger.Merge(context.Tags, name), config ?? HistogramConfig.Default);
+			=> GlobalCache.Obtain(context, name, () => new Histogram(context, MetricTagsMerger.Merge(context.Tags, name), config ?? HistogramConfig.Default));
 
         #region Metric group extensions
 
@@ -33,7 +35,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <inheritdoc cref="Vostok.Metrics.Primitives.Timer.Histogram"/>
         [NotNull]
         public static IMetricGroup<TFor, ITimer> CreateHistogram<TFor>([NotNull] this IMetricContext context, [NotNull] string name, [CanBeNull] HistogramConfig config = null)
-            => new MetricGroup<TFor, ITimer>(MetricForTagsFactory(context, name, config ?? HistogramConfig.Default));
+            => GlobalCache.Obtain(context, name, () => new MetricGroup<TFor, ITimer>(MetricForTagsFactory(context, name, config ?? HistogramConfig.Default)));
 
         /// <summary>
         /// <para>
@@ -52,7 +54,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <inheritdoc cref="Vostok.Metrics.Primitives.Timer.Histogram"/>
         [NotNull]
         public static IMetricGroup1<ITimer> CreateHistogram([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [CanBeNull] HistogramConfig config = null)
-            => CreateMetricGroup(context, name, config, key1);
+            => GlobalCache.Obtain(context, name, () => CreateMetricGroup(context, name, config, key1));
 
         /// <summary>
         /// <para>
@@ -72,7 +74,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <inheritdoc cref="Vostok.Metrics.Primitives.Timer.Histogram"/>
         [NotNull]
         public static IMetricGroup2<ITimer> CreateHistogram([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [CanBeNull] HistogramConfig config = null)
-            => CreateMetricGroup(context, name, config, key1, key2);
+            => GlobalCache.Obtain(context, name, () => CreateMetricGroup(context, name, config, key1, key2));
 
         /// <summary>
         /// <para>
@@ -93,7 +95,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <inheritdoc cref="Vostok.Metrics.Primitives.Timer.Histogram"/>
         [NotNull]
         public static IMetricGroup3<ITimer> CreateHistogram([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [CanBeNull] HistogramConfig config = null)
-            => CreateMetricGroup(context, name, config, key1, key2, key3);
+            => GlobalCache.Obtain(context, name, () => CreateMetricGroup(context, name, config, key1, key2, key3));
 
         /// <summary>
         /// <para>
@@ -115,7 +117,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <inheritdoc cref="Vostok.Metrics.Primitives.Timer.Histogram"/>
         [NotNull]
         public static IMetricGroup4<ITimer> CreateHistogram([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [NotNull] string key4, [CanBeNull] HistogramConfig config = null)
-            => CreateMetricGroup(context, name, config, key1, key2, key3, key4);
+            => GlobalCache.Obtain(context, name, () => CreateMetricGroup(context, name, config, key1, key2, key3, key4));
 
         /// <summary>
         /// <para>
@@ -138,7 +140,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <inheritdoc cref="Vostok.Metrics.Primitives.Timer.Histogram"/>
         [NotNull]
         public static IMetricGroup5<ITimer> CreateHistogram([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [NotNull] string key4, [NotNull] string key5, [CanBeNull] HistogramConfig config = null)
-            => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5);
+            => GlobalCache.Obtain(context, name, () => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5));
 
         /// <summary>
         /// <para>
@@ -162,7 +164,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <inheritdoc cref="Vostok.Metrics.Primitives.Timer.Histogram"/>
         [NotNull]
         public static IMetricGroup6<ITimer> CreateHistogram([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [NotNull] string key4, [NotNull] string key5, [NotNull] string key6, [CanBeNull] HistogramConfig config = null)
-            => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5, key6);
+            => GlobalCache.Obtain(context, name, () => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5, key6));
 
         /// <summary>
         /// <para>
@@ -187,7 +189,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <inheritdoc cref="Vostok.Metrics.Primitives.Timer.Histogram"/>
         [NotNull]
         public static IMetricGroup7<ITimer> CreateHistogram([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [NotNull] string key4, [NotNull] string key5, [NotNull] string key6, [NotNull] string key7, [CanBeNull] HistogramConfig config = null)
-            => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5, key6, key7);
+            => GlobalCache.Obtain(context, name, () => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5, key6, key7));
 
         /// <summary>
         /// <para>
@@ -213,7 +215,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <inheritdoc cref="Vostok.Metrics.Primitives.Timer.Histogram"/>
         [NotNull]
         public static IMetricGroup8<ITimer> CreateHistogram([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [NotNull] string key4, [NotNull] string key5, [NotNull] string key6, [NotNull] string key7, [NotNull] string key8, [CanBeNull] HistogramConfig config = null)
-            => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5, key6, key7, key8);
+            => GlobalCache.Obtain(context, name, () => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5, key6, key7, key8));
 
         #endregion
 
