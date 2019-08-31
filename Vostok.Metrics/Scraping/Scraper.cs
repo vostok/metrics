@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Vostok.Commons.Time;
 using Vostok.Metrics.Models;
+using Vostok.Metrics.Primitives.Caching;
 
 namespace Vostok.Metrics.Scraping
 {
@@ -71,6 +72,9 @@ namespace Vostok.Metrics.Scraping
                     }
                 }
             }
+
+            if (!ownerReference.IsAlive)
+                GlobalCache.Cleanup();
         }
 
         private static DateTime Now => PreciseDateTime.UtcNow.UtcDateTime;
