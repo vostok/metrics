@@ -11,14 +11,16 @@ namespace Vostok.Metrics.Scraping
         private readonly IMetricEventSender sender;
         private readonly Action<Exception> errorCallback;
         private readonly CancellationTokenSource cancellation;
+        private readonly WeakReference contextReference;
         private readonly ConcurrentDictionary<TimeSpan, ScrapableMetrics> scrapableMetrics;
         private readonly ConcurrentDictionary<TimeSpan, Task> scraperTasks;
 
-        public ScrapeScheduler(IMetricEventSender sender, Action<Exception> errorCallback)
+        public ScrapeScheduler(IMetricContext context, IMetricEventSender sender, Action<Exception> errorCallback)
         {
             this.sender = sender;
             this.errorCallback = errorCallback;
 
+            contextReference = new WeakReference(context);
             cancellation = new CancellationTokenSource();
             scraperTasks = new ConcurrentDictionary<TimeSpan, Task>();
             scrapableMetrics = new ConcurrentDictionary<TimeSpan, ScrapableMetrics>();
@@ -35,7 +37,7 @@ namespace Vostok.Metrics.Scraping
 
             if (created)
             {
-                scraperTasks[scrapePeriod] = new Scraper(sender, errorCallback, scrapePeriod)
+                scraperTasks[scrapePeriod] = new Scraper(sender, errorCallback, scrapePeriod, contextReference)
                     .RunAsync(metrics, cancellation.Token)
                     .SilentlyContinue();
             }

@@ -14,19 +14,21 @@ namespace Vostok.Metrics.Scraping
         private readonly IMetricEventSender sender;
         private readonly Action<Exception> errorCallback;
         private readonly TimeSpan period;
+        private readonly WeakReference ownerReference;
 
-        public Scraper(IMetricEventSender sender, Action<Exception> errorCallback, TimeSpan period)
+        public Scraper(IMetricEventSender sender, Action<Exception> errorCallback, TimeSpan period, WeakReference ownerReference)
         {
             this.sender = sender;
             this.errorCallback = errorCallback;
             this.period = period;
+            this.ownerReference = ownerReference;
         }
 
         public async Task RunAsync(ScrapableMetrics metrics, CancellationToken cancellationToken)
         {
             var metricEvents = new List<MetricEvent>();
 
-            while (!cancellationToken.IsCancellationRequested)
+            while (!cancellationToken.IsCancellationRequested && ownerReference.IsAlive)
             {
                 var initialTimestamp = Now;
 
