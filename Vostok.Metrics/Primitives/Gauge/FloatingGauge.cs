@@ -8,7 +8,7 @@ using Vostok.Metrics.Scraping;
 namespace Vostok.Metrics.Primitives.Gauge
 {
     /// <inheritdoc cref="IFloatingGauge"/>
-    internal class FloatingGauge : IScrapableMetric, IFloatingGauge
+    internal class FloatingGauge : IFastScrapableMetric, IFloatingGauge
     {
         private readonly MetricTags tags;
         private readonly FloatingGaugeConfig config;

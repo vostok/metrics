@@ -34,7 +34,7 @@ namespace Vostok.Metrics.Primitives.Timer
     /// Call <see cref="IDisposable.Dispose"/> to stop scraping the metric.
     /// </para>
     /// </remarks>
-    internal class Summary : ITimer, IScrapableMetric
+    internal class Summary : ITimer, IFastScrapableMetric
     {
         private readonly SummaryConfig config;
         private readonly IDisposable registration;
