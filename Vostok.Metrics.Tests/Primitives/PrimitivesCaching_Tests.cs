@@ -127,8 +127,8 @@ namespace Vostok.Metrics.Tests.Primitives
             var group2 = context1.CreateCounter("primitive", "t1");
             var group3 = context1.CreateCounter("primitive", "t2");
 
-            group1.Should().BeSameAs(group2);
-            group1.Should().NotBeSameAs(group3);
+            group2.Should().BeSameAs(group1);
+            group3.Should().NotBeSameAs(group1);
         }
 
         [Test]
