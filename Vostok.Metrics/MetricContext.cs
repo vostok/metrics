@@ -17,8 +17,8 @@ namespace Vostok.Metrics
         {
             this.config = config ?? throw new ArgumentNullException(nameof(config));
 
-            scheduler = new ScrapeScheduler(this, config.Sender, config.ErrorCallback);
-            fastScheduler = new ScrapeScheduler(this, config.Sender, config.ErrorCallback);
+            scheduler = new ScrapeScheduler(config.Sender, config.ErrorCallback);
+            fastScheduler = new ScrapeScheduler(config.Sender, config.ErrorCallback);
         }
 
         public MetricTags Tags => config.Tags ?? MetricTags.Empty;

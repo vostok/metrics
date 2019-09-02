@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Vostok.Commons.Time;
 using Vostok.Metrics.Models;
-using Vostok.Metrics.Primitives.Caching;
 
 namespace Vostok.Metrics.Scraping
 {
@@ -15,21 +14,19 @@ namespace Vostok.Metrics.Scraping
         private readonly IMetricEventSender sender;
         private readonly Action<Exception> errorCallback;
         private readonly TimeSpan period;
-        private readonly WeakReference ownerReference;
 
-        public Scraper(IMetricEventSender sender, Action<Exception> errorCallback, TimeSpan period, WeakReference ownerReference)
+        public Scraper(IMetricEventSender sender, Action<Exception> errorCallback, TimeSpan period)
         {
             this.sender = sender;
             this.errorCallback = errorCallback;
             this.period = period;
-            this.ownerReference = ownerReference;
         }
 
         public async Task RunAsync(ScrapableMetrics metrics, CancellationToken cancellationToken)
         {
             var metricEvents = new List<MetricEvent>();
 
-            while (!cancellationToken.IsCancellationRequested && ownerReference.IsAlive)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 var initialTimestamp = Now;
 
@@ -72,9 +69,6 @@ namespace Vostok.Metrics.Scraping
                     }
                 }
             }
-
-            if (!ownerReference.IsAlive)
-                GlobalCache.Cleanup();
         }
 
         private static DateTime Now => PreciseDateTime.UtcNow.UtcDateTime;
