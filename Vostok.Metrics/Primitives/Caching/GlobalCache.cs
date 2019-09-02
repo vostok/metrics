@@ -11,8 +11,8 @@ namespace Vostok.Metrics.Primitives.Caching
         private static readonly ConcurrentDictionary<WeakKey, PerContextCache> PerContextCaches =
             new ConcurrentDictionary<WeakKey, PerContextCache>(new WeakKeyComparer());
 
-        public static TMetric Obtain<TMetric>([NotNull] IMetricContext context, [NotNull] string name, [NotNull] Func<TMetric> factory)
-            => (TMetric)PerContextCaches.GetOrAdd(new WeakKey(context), _ => new PerContextCache()).Obtain(name, typeof(TMetric), () => factory());
+        public static TMetric Obtain<TMetric>([NotNull] IMetricContext context, [NotNull] string name, [CanBeNull] object details, [NotNull] Func<TMetric> factory)
+            => (TMetric)PerContextCaches.GetOrAdd(new WeakKey(context), _ => new PerContextCache()).Obtain(name, typeof(TMetric), details, () => factory());
 
         public static void Cleanup()
         {

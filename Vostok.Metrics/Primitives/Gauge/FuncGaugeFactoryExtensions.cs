@@ -1,3 +1,4 @@
+
 using System;
 using JetBrains.Annotations;
 using Vostok.Metrics.Grouping;
@@ -14,7 +15,7 @@ namespace Vostok.Metrics.Primitives.Gauge
         /// <param name="config">Optional metric-specific config.</param>
         [NotNull]
         public static IFuncGauge CreateFuncGauge([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] Func<double> valueProvider, [CanBeNull] FuncGaugeConfig config = null)
-            => new FuncGauge(context, MetricTagsMerger.Merge(context.Tags, name), valueProvider, config ?? FuncGaugeConfig.Default);
+			=> new FuncGauge(context, MetricTagsMerger.Merge(context.Tags, name), valueProvider, config ?? FuncGaugeConfig.Default);
 
         #region Metric group extensions
 

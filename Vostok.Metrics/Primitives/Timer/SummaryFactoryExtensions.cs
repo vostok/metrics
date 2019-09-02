@@ -16,7 +16,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <param name="config">Optional metric-specific config.</param>
         [NotNull]
         public static ITimer CreateSummary([NotNull] this IMetricContext context, [NotNull] string name, [CanBeNull] SummaryConfig config = null)
-			=> GlobalCache.Obtain(context, name, () => new Summary(context, MetricTagsMerger.Merge(context.Tags, name), config ?? SummaryConfig.Default));
+			=> GlobalCache.Obtain(context, name, null, () => new Summary(context, MetricTagsMerger.Merge(context.Tags, name), config ?? SummaryConfig.Default));
 
         #region Metric group extensions
 
@@ -35,7 +35,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <inheritdoc cref="Vostok.Metrics.Primitives.Timer.Summary"/>
         [NotNull]
         public static IMetricGroup<TFor, ITimer> CreateSummary<TFor>([NotNull] this IMetricContext context, [NotNull] string name, [CanBeNull] SummaryConfig config = null)
-            => GlobalCache.Obtain(context, name, () => new MetricGroup<TFor, ITimer>(MetricForTagsFactory(context, name, config ?? SummaryConfig.Default)));
+            => GlobalCache.Obtain(context, name, typeof(TFor), () => new MetricGroup<TFor, ITimer>(MetricForTagsFactory(context, name, config ?? SummaryConfig.Default)));
 
         /// <summary>
         /// <para>
@@ -54,7 +54,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <inheritdoc cref="Vostok.Metrics.Primitives.Timer.Summary"/>
         [NotNull]
         public static IMetricGroup1<ITimer> CreateSummary([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [CanBeNull] SummaryConfig config = null)
-            => GlobalCache.Obtain(context, name, () => CreateMetricGroup(context, name, config, key1));
+            => GlobalCache.Obtain(context, name, (key1), () => CreateMetricGroup(context, name, config, key1));
 
         /// <summary>
         /// <para>
@@ -74,7 +74,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <inheritdoc cref="Vostok.Metrics.Primitives.Timer.Summary"/>
         [NotNull]
         public static IMetricGroup2<ITimer> CreateSummary([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [CanBeNull] SummaryConfig config = null)
-            => GlobalCache.Obtain(context, name, () => CreateMetricGroup(context, name, config, key1, key2));
+            => GlobalCache.Obtain(context, name, (key1, key2), () => CreateMetricGroup(context, name, config, key1, key2));
 
         /// <summary>
         /// <para>
@@ -95,7 +95,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <inheritdoc cref="Vostok.Metrics.Primitives.Timer.Summary"/>
         [NotNull]
         public static IMetricGroup3<ITimer> CreateSummary([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [CanBeNull] SummaryConfig config = null)
-            => GlobalCache.Obtain(context, name, () => CreateMetricGroup(context, name, config, key1, key2, key3));
+            => GlobalCache.Obtain(context, name, (key1, key2, key3), () => CreateMetricGroup(context, name, config, key1, key2, key3));
 
         /// <summary>
         /// <para>
@@ -117,7 +117,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <inheritdoc cref="Vostok.Metrics.Primitives.Timer.Summary"/>
         [NotNull]
         public static IMetricGroup4<ITimer> CreateSummary([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [NotNull] string key4, [CanBeNull] SummaryConfig config = null)
-            => GlobalCache.Obtain(context, name, () => CreateMetricGroup(context, name, config, key1, key2, key3, key4));
+            => GlobalCache.Obtain(context, name, (key1, key2, key3, key4), () => CreateMetricGroup(context, name, config, key1, key2, key3, key4));
 
         /// <summary>
         /// <para>
@@ -140,7 +140,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <inheritdoc cref="Vostok.Metrics.Primitives.Timer.Summary"/>
         [NotNull]
         public static IMetricGroup5<ITimer> CreateSummary([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [NotNull] string key4, [NotNull] string key5, [CanBeNull] SummaryConfig config = null)
-            => GlobalCache.Obtain(context, name, () => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5));
+            => GlobalCache.Obtain(context, name, (key1, key2, key3, key4, key5), () => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5));
 
         /// <summary>
         /// <para>
@@ -164,7 +164,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <inheritdoc cref="Vostok.Metrics.Primitives.Timer.Summary"/>
         [NotNull]
         public static IMetricGroup6<ITimer> CreateSummary([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [NotNull] string key4, [NotNull] string key5, [NotNull] string key6, [CanBeNull] SummaryConfig config = null)
-            => GlobalCache.Obtain(context, name, () => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5, key6));
+            => GlobalCache.Obtain(context, name, (key1, key2, key3, key4, key5, key6), () => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5, key6));
 
         /// <summary>
         /// <para>
@@ -189,7 +189,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <inheritdoc cref="Vostok.Metrics.Primitives.Timer.Summary"/>
         [NotNull]
         public static IMetricGroup7<ITimer> CreateSummary([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [NotNull] string key4, [NotNull] string key5, [NotNull] string key6, [NotNull] string key7, [CanBeNull] SummaryConfig config = null)
-            => GlobalCache.Obtain(context, name, () => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5, key6, key7));
+            => GlobalCache.Obtain(context, name, (key1, key2, key3, key4, key5, key6, key7), () => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5, key6, key7));
 
         /// <summary>
         /// <para>
@@ -215,7 +215,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <inheritdoc cref="Vostok.Metrics.Primitives.Timer.Summary"/>
         [NotNull]
         public static IMetricGroup8<ITimer> CreateSummary([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [NotNull] string key4, [NotNull] string key5, [NotNull] string key6, [NotNull] string key7, [NotNull] string key8, [CanBeNull] SummaryConfig config = null)
-            => GlobalCache.Obtain(context, name, () => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5, key6, key7, key8));
+            => GlobalCache.Obtain(context, name, (key1, key2, key3, key4, key5, key6, key7, key8), () => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5, key6, key7, key8));
 
         #endregion
 
