@@ -119,5 +119,30 @@ namespace Vostok.Metrics.Tests.Primitives
 
             counter2.Should().NotBeSameAs(counter1);
         }
+
+        [Test]
+        public void Should_cache_metric_groups_correctly()
+        {
+            var group1 = context1.CreateCounter("primitive", "t1");
+            var group2 = context1.CreateCounter("primitive", "t1");
+            var group3 = context1.CreateCounter("primitive", "t2");
+
+            group1.Should().BeSameAs(group2);
+            group1.Should().NotBeSameAs(group3);
+        }
+
+        [Test]
+        public void Should_cache_for_metric_groups_correctly()
+        {
+            var group1 = context1.CreateCounter("primitive", "t1");
+            var group2 = context1.CreateCounter("primitive", "t2");
+
+            var counter1 = group1.For("c1");
+            var counter2 = group1.For("c1");
+            var counter3 = group2.For("c1");
+
+            counter2.Should().BeSameAs(counter1);
+            counter3.Should().NotBeSameAs(counter1);
+        }
     }
 }
