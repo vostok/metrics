@@ -42,7 +42,7 @@ namespace Vostok.Metrics.Tests.Primitives.Counter
         [Test]
         public void Should_reject_negative_values()
         {
-            var counter = context.CreateCounter("name", new CounterConfig { ScrapePeriod = TimeSpan.MaxValue });
+            var counter = context.CreateCounter("name", new CounterConfig {ScrapePeriod = TimeSpan.MaxValue});
             Action check = () => counter.Add(-1);
             check.Should().Throw<ArgumentOutOfRangeException>();
         }
@@ -51,7 +51,7 @@ namespace Vostok.Metrics.Tests.Primitives.Counter
         public void Should_be_thread_safe()
         {
             var n = 100_000L;
-            var counter = context.CreateCounter("name", new CounterConfig { ScrapePeriod = TimeSpan.MaxValue });
+            var counter = context.CreateCounter("name", new CounterConfig {ScrapePeriod = TimeSpan.MaxValue});
             Parallel.For(
                 0,
                 n + 1,

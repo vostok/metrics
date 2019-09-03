@@ -61,9 +61,12 @@ namespace Vostok.Metrics.Tests.Models
 
             point = new MetricDataPoint(1, ("k1", "v1"), ("k2", "v2"));
 
-            point.ToMetricEvent(contextTags).Tags.Should().Equal(contextTags
-                .Append("k1", "v1")
-                .Append("k2", "v2"));
+            point.ToMetricEvent(contextTags)
+                .Tags.Should()
+                .Equal(
+                    contextTags
+                        .Append("k1", "v1")
+                        .Append("k2", "v2"));
         }
 
         [Test]
@@ -75,10 +78,13 @@ namespace Vostok.Metrics.Tests.Models
 
             point = new MetricDataPoint(1, "metric", ("k1", "v1"), ("k2", "v2"));
 
-            point.ToMetricEvent(contextTags).Tags.Should().Equal(contextTags
-                .Append(WellKnownTagKeys.Name, "metric")
-                .Append("k1", "v1")
-                .Append("k2", "v2"));
+            point.ToMetricEvent(contextTags)
+                .Tags.Should()
+                .Equal(
+                    contextTags
+                        .Append(WellKnownTagKeys.Name, "metric")
+                        .Append("k1", "v1")
+                        .Append("k2", "v2"));
         }
 
         [Test]

@@ -1,4 +1,3 @@
-
 using System;
 using JetBrains.Annotations;
 using Vostok.Metrics.Grouping;
@@ -16,7 +15,7 @@ namespace Vostok.Metrics.Primitives.Gauge
         /// <param name="config">Optional metric-specific config.</param>
         [NotNull]
         public static IFloatingGauge CreateFloatingGauge([NotNull] this IMetricContext context, [NotNull] string name, [CanBeNull] FloatingGaugeConfig config = null)
-			=> GlobalCache.Obtain(context, name, null, () => new FloatingGauge(context, MetricTagsMerger.Merge(context.Tags, name), config ?? FloatingGaugeConfig.Default));
+            => GlobalCache.Obtain(context, name, null, () => new FloatingGauge(context, MetricTagsMerger.Merge(context.Tags, name), config ?? FloatingGaugeConfig.Default));
 
         #region Metric group extensions
 
@@ -54,7 +53,7 @@ namespace Vostok.Metrics.Primitives.Gauge
         /// <inheritdoc cref="IFloatingGauge"/>
         [NotNull]
         public static IMetricGroup1<IFloatingGauge> CreateFloatingGauge([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [CanBeNull] FloatingGaugeConfig config = null)
-            => GlobalCache.Obtain(context, name, (key1), () => CreateMetricGroup(context, name, config, key1));
+            => GlobalCache.Obtain(context, name, key1, () => CreateMetricGroup(context, name, config, key1));
 
         /// <summary>
         /// <para>

@@ -1,6 +1,4 @@
-﻿
-using System;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace Vostok.Metrics.Grouping
 {
@@ -151,5 +149,4 @@ namespace Vostok.Metrics.Grouping
         [NotNull]
         TMetric For([NotNull] string value1, [NotNull] string value2, [NotNull] string value3, [NotNull] string value4, [NotNull] string value5, [NotNull] string value6, [NotNull] string value7, [NotNull] string value8);
     }
-
 }

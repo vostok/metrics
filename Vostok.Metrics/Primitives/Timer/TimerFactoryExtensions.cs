@@ -1,4 +1,3 @@
-
 using System;
 using JetBrains.Annotations;
 using Vostok.Metrics.Grouping;
@@ -15,7 +14,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <param name="config">Optional metric-specific config.</param>
         [NotNull]
         public static ITimer CreateTimer([NotNull] this IMetricContext context, [NotNull] string name, [CanBeNull] TimerConfig config = null)
-			=> new Timer(context, MetricTagsMerger.Merge(context.Tags, name), config ?? TimerConfig.Default);
+            => new Timer(context, MetricTagsMerger.Merge(context.Tags, name), config ?? TimerConfig.Default);
 
         #region Metric group extensions
 

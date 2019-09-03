@@ -1,4 +1,3 @@
-
 using System;
 using JetBrains.Annotations;
 using Vostok.Metrics.Grouping;
@@ -16,7 +15,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <param name="config">Optional metric-specific config.</param>
         [NotNull]
         public static ITimer CreateSummary([NotNull] this IMetricContext context, [NotNull] string name, [CanBeNull] SummaryConfig config = null)
-			=> GlobalCache.Obtain(context, name, null, () => new Summary(context, MetricTagsMerger.Merge(context.Tags, name), config ?? SummaryConfig.Default));
+            => GlobalCache.Obtain(context, name, null, () => new Summary(context, MetricTagsMerger.Merge(context.Tags, name), config ?? SummaryConfig.Default));
 
         #region Metric group extensions
 
@@ -54,7 +53,7 @@ namespace Vostok.Metrics.Primitives.Timer
         /// <inheritdoc cref="Vostok.Metrics.Primitives.Timer.Summary"/>
         [NotNull]
         public static IMetricGroup1<ITimer> CreateSummary([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [CanBeNull] SummaryConfig config = null)
-            => GlobalCache.Obtain(context, name, (key1), () => CreateMetricGroup(context, name, config, key1));
+            => GlobalCache.Obtain(context, name, key1, () => CreateMetricGroup(context, name, config, key1));
 
         /// <summary>
         /// <para>
