@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
+using Vostok.Metrics.Models;
 using Vostok.Metrics.Primitives.Counter;
 using Vostok.Metrics.Primitives.Gauge;
 using Vostok.Metrics.Primitives.Timer;
@@ -33,6 +34,15 @@ namespace Vostok.Metrics.Tests.Primitives
         {
             var gauge1 = context1.CreateFuncGauge("gauge", () => 1);
             var gauge2 = context1.CreateFuncGauge("gauge", () => 2);
+
+            gauge2.Should().NotBeSameAs(gauge1);
+        }
+
+        [Test]
+        public void Should_not_cache_multi_func_gauges()
+        {
+            var gauge1 = context1.CreateMultiFuncGauge(() => new [] {new MetricDataPoint(1, "metric1")});
+            var gauge2 = context1.CreateMultiFuncGauge(() => new [] {new MetricDataPoint(1, "metric1")});
 
             gauge2.Should().NotBeSameAs(gauge1);
         }
