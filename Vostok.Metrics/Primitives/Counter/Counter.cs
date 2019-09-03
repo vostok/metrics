@@ -7,7 +7,7 @@ using Vostok.Metrics.Scraping;
 
 namespace Vostok.Metrics.Primitives.Counter
 {
-    internal class Counter : ICounter, IFastScrapableMetric
+    internal class Counter : ICounter, IFastScrapableMetric, IDisposable
     {
         private readonly MetricTags tags;
         private readonly CounterConfig config;

@@ -2,7 +2,7 @@
 <#@ include file="./../Codegen/GroupingConstants.ttinclude" once="true" #>
 using System;
 using JetBrains.Annotations;
-using Vostok.Metrics.Model;
+using Vostok.Metrics.Models;
 
 namespace Vostok.Metrics.Grouping
 {

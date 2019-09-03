@@ -29,7 +29,7 @@ namespace Vostok.Metrics.Primitives.Counter
     /// </example>
     /// </summary>
     [PublicAPI]
-    public interface ICounter : IDisposable
+    public interface ICounter
     {
         /// <summary>
         /// Adds given non-negative <paramref name="value"/> to the counter.

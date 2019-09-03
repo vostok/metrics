@@ -1,11 +1,10 @@
-using System;
 using JetBrains.Annotations;
 
 namespace Vostok.Metrics.Primitives.Gauge
 {
     /// <inheritdoc cref="GaugeDocumentation"/>
     [PublicAPI]
-    public interface IFloatingGauge : IDisposable
+    public interface IFloatingGauge
     {
         /// <summary>
         /// Sets current gauge's value to given <paramref name="value"/>.

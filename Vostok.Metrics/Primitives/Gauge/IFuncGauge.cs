@@ -5,7 +5,7 @@ namespace Vostok.Metrics.Primitives.Gauge
 {
     /// <inheritdoc cref="GaugeDocumentation"/>
     [PublicAPI]
-    public interface IFuncGauge : IDisposable
+    public interface IFuncGauge
     {
         void SetValueProvider([NotNull] Func<double> valueProvider);
     }
