@@ -1,5 +1,0 @@
-<# model = new MetricExtensionsModel("Reporter") {
-    MetricInterface = "IReporter",
-    MetricNamespace = "Vostok.Metrics.Primitives.Reporter",
-    InheritDocType = "Vostok.Metrics.Primitives.Reporter.IReporter"}; #>
-<#@ include file="./../../Codegen/FactoryExtensions.ttinclude" once="true" #>

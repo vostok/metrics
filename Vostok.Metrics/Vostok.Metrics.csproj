@@ -38,7 +38,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Primitives\Reporter\ReporterFactoryExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="ReporterFactoryExtensions.tt" />
     <Compile Update="Primitives\Counter\CounterFactoryExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="CounterFactoryExtensions.tt" />
     <Compile Update="Primitives\Gauge\FuncGaugeFactoryExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="FuncGaugeFactoryExtensions.tt" />
     <Compile Update="Primitives\Gauge\IntegerGaugeFactoryExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="IntegerGaugeFactoryExtensions.tt" />
@@ -52,7 +51,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Primitives\Reporter\ReporterFactoryExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="ReporterFactoryExtensions.cs" />
     <None Update="Primitives\Counter\CounterFactoryExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="CounterFactoryExtensions.cs" />
     <None Update="Primitives\Gauge\FuncGaugeFactoryExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="FuncGaugeFactoryExtensions.cs" />
     <None Update="Primitives\Gauge\IntegerGaugeFactoryExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="IntegerGaugeFactoryExtensions.cs" />
