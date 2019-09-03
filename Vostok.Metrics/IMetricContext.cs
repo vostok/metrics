@@ -18,7 +18,7 @@ namespace Vostok.Metrics
     {
         /// <summary>
         /// <para>A collection of <see cref="MetricTag"/>s associated with this <see cref="IMetricContext"/></para>
-        /// <para>All metrics created with this context will include this <see cref="Tags"/>.</para>
+        /// <para>All metrics created with this context will include these <see cref="Tags"/>.</para>
         /// </summary>
         [NotNull]
         MetricTags Tags { get; }

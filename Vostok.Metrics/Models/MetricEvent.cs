@@ -10,6 +10,7 @@ namespace Vostok.Metrics.Models
     /// <para>Every event contains a numeric <see cref="Value"/> measured at some <see cref="Timestamp"/> and bound to a set of <see cref="Tags"/>.</para>
     /// <para>Events may also contain auxiliary information, such as <see cref="Unit"/>, <see cref="AggregationType"/> and <see cref="AggregationParameters"/>.</para>
     /// <para><see cref="MetricEvent"/> instances are immutable.</para>
+    /// <para><see cref="MetricEvent"/>s are not meant to be instantiated manually. It's recommended to either use one of the primitives or utilize <see cref="MetricDataPoint"/>.</para>
     /// </summary>
     [PublicAPI]
     public class MetricEvent : IEquatable<MetricEvent>
