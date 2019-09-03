@@ -101,6 +101,28 @@ namespace Vostok.Metrics.Tests.Primitives.Gauge
             x.Should().Be(0);
         }
 
+        [Test]
+        public void Should_be_scraped_after_recreating()
+        {
+            var x = 0.0;
+            context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => Interlocked.Exchange(ref x, e.Value))));
+
+            var gauge = context.CreateFuncGauge("name", func, new FuncGaugeConfig { ScrapePeriod = 10.Milliseconds() });
+
+            gauge.Dispose();
+
+            Thread.Sleep(100.Milliseconds());
+            value = 2;
+            Thread.Sleep(300.Milliseconds());
+
+            x.Should().Be(0);
+
+            context.CreateFuncGauge("name", func, new FuncGaugeConfig {ScrapePeriod = 10.Milliseconds()});
+            Thread.Sleep(300.Milliseconds());
+
+            x.Should().Be(2);
+        }
+
         private static MetricEvent Scrape(IFuncGauge gauge, DateTimeOffset? timestamp = null)
         {
             return ((FuncGauge)gauge).Scrape(timestamp ?? DateTimeOffset.Now).Single();
