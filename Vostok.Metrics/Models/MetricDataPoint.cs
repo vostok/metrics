@@ -40,7 +40,7 @@ namespace Vostok.Metrics.Models
             if (Tags == null)
                 throw new ArgumentNullException(nameof(tags));
 
-            if (Name == null && Tags.Count == 0)
+            if (string.IsNullOrEmpty(name) && Tags.Count == 0)
                 throw new ArgumentException("Tags can't be empty when there's no name.", nameof(tags));
         }
 
