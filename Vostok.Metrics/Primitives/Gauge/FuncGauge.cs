@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Threading;
 using JetBrains.Annotations;
 using Vostok.Metrics.Models;
 using Vostok.Metrics.Scraping;
@@ -11,26 +13,36 @@ namespace Vostok.Metrics.Primitives.Gauge
         private readonly MetricTags tags;
         private readonly FuncGaugeConfig config;
         private readonly IDisposable registration;
+        private readonly IMetricContext context;
         private volatile Func<double> valueProvider;
 
-        public FuncGauge(
+        private static readonly ConcurrentDictionary<(IMetricContext, MetricTags), FuncGauge> Cache = new ConcurrentDictionary<(IMetricContext, MetricTags), FuncGauge>();
+
+        public static FuncGauge GetOrCreate(
             [NotNull] IMetricContext context,
             [NotNull] MetricTags tags,
-            [NotNull] Func<double> valueProvider,
+            [CanBeNull] Func<double> valueProvider,
             [NotNull] FuncGaugeConfig config)
         {
-            this.valueProvider = valueProvider ?? throw new ArgumentNullException(nameof(valueProvider));
-            this.tags = tags ?? throw new ArgumentNullException(nameof(tags));
-            this.config = config ?? throw new ArgumentNullException(nameof(config));
+            var key = (context, tags);
+            if (Cache.TryGetValue(key, out var result))
+                return result;
 
-            registration = context.Register(this, config.ScrapePeriod);
+            var lazy = new Lazy<FuncGauge>(
+                () => new FuncGauge(context, tags, valueProvider, config),
+                LazyThreadSafetyMode.ExecutionAndPublication);
+
+            return Cache.GetOrAdd(key, _ => lazy.Value);
         }
 
-        public FuncGauge(
+        private FuncGauge(
             [NotNull] IMetricContext context,
             [NotNull] MetricTags tags,
+            [CanBeNull] Func<double> valueProvider,
             [NotNull] FuncGaugeConfig config)
         {
+            this.context = context;
+            this.valueProvider = valueProvider;
             this.tags = tags ?? throw new ArgumentNullException(nameof(tags));
             this.config = config ?? throw new ArgumentNullException(nameof(config));
 
@@ -51,6 +63,9 @@ namespace Vostok.Metrics.Primitives.Gauge
         }
 
         public void Dispose()
-            => registration.Dispose();
+        {
+            registration.Dispose();
+            Cache.TryRemove((context, tags), out _);
+        }
     }
 }

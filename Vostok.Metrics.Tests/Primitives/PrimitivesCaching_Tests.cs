@@ -29,12 +29,38 @@ namespace Vostok.Metrics.Tests.Primitives
         }
 
         [Test]
-        public void Should_not_cache_func_gauges()
+        public void Should_cache_func_gauges()
         {
             var gauge1 = context1.CreateFuncGauge("gauge", () => 1);
             var gauge2 = context1.CreateFuncGauge("gauge", () => 2);
 
+            gauge2.Should().BeSameAs(gauge1);
+        }
+
+        [Test]
+        public void Should_create_new_instance_after_dispose()
+        {
+            var gauge1 = context1.CreateFuncGauge("gauge", () => 1);
+            gauge1.Dispose();
+            var gauge2 = context1.CreateFuncGauge("gauge", () => 2);
+
             gauge2.Should().NotBeSameAs(gauge1);
+        }
+
+        [Test]
+        public void Should_create_new_instance_after_dispose_for_metric_group()
+        {
+            var group1 = context1.CreateFuncGauge("gauge", "key1");
+            var gauge1 = group1.For("value1");
+            var gauge2 = group1.For("value1");
+
+            gauge2.Should().BeSameAs(gauge1);
+
+            group1.Dispose();
+
+            var gauge3 = group1.For("value1");
+
+            gauge3.Should().NotBeSameAs(group1);
         }
 
         [Test]
