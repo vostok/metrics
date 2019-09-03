@@ -1,3 +1,5 @@
 <# model = new MetricExtensionsModel("IntegerGauge") {
-    MetricNamespace = "Vostok.Metrics.Primitives.Gauge"}; #>
+    MetricNamespace = "Vostok.Metrics.Primitives.Gauge",
+    UseCaching = true
+}; #>
 <#@ include file="./../../Codegen/FactoryExtensions.ttinclude" once="true" #>
