@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentAssertions;
 using NUnit.Framework;
 using Vostok.Metrics.Models;
 using Vostok.Metrics.Primitives.Counter;
@@ -93,16 +94,7 @@ namespace Vostok.Metrics.Tests.Primitives
         }
 
         [Test]
-        public void Should_not_cache_instances_between_different_contexts()
-        {
-            var counter1 = context1.CreateCounter("counter");
-            var counter2 = context2.CreateCounter("counter");
-
-            counter2.Should().NotBeSameAs(counter1);
-        }
-
-        [Test]
-        public void Should_not_cache_instances_between_context_and_its_wrapper()
+        public void Should_not_cache_instances_between_contexts_with_different_tags()
         {
             context2 = context1.WithTag("k", "v");
 
@@ -153,6 +145,15 @@ namespace Vostok.Metrics.Tests.Primitives
 
             counter2.Should().BeSameAs(counter1);
             counter3.Should().NotBeSameAs(counter1);
+        }
+
+        [Test]
+        public void Should_cache_between_different_contexts_with_same_tags()
+        {
+            var counter1 = context1.WithTag("a", "b").CreateCounter("counter");
+            var counter2 = context1.WithTag("a", "b").CreateCounter("counter");
+
+            counter2.Should().BeSameAs(counter1);
         }
     }
 }

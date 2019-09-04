@@ -1,16 +1,47 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
-using Vostok.Commons.Collections;
+using Vostok.Metrics.Models;
 
 namespace Vostok.Metrics.Primitives.Caching
 {
     internal static class GlobalCache
     {
-        private static readonly ConcurrentDictionary<IMetricContext, PerContextCache> PerContextCaches =
-            new ConcurrentDictionary<IMetricContext, PerContextCache>(ByReferenceEqualityComparer<IMetricContext>.Instance);
+        private static readonly ConcurrentDictionary<CacheKey, PerContextCache> PerContextCaches =
+            new ConcurrentDictionary<CacheKey, PerContextCache>();
 
         public static TMetric Obtain<TMetric>([NotNull] IMetricContext context, [NotNull] string name, [CanBeNull] object details, [NotNull] Func<TMetric> factory)
-            => (TMetric)PerContextCaches.GetOrAdd(context, _ => new PerContextCache()).Obtain(name, typeof(TMetric), details, () => factory());
+            => (TMetric)PerContextCaches.GetOrAdd(new CacheKey(context), _ => new PerContextCache()).Obtain(name, typeof(TMetric), details, () => factory());
+
+        #region CacheKey
+
+        private struct CacheKey
+        {
+            public CacheKey(IMetricContext context)
+            {
+                Tags = context.Tags;
+                BaseContext = context.Unwrap();
+            }
+
+            public readonly MetricTags Tags;
+            public readonly IMetricContext BaseContext;
+        }
+
+        #endregion
+
+        #region CacheKeyComparer
+
+        private class CacheKeyComparer : IEqualityComparer<CacheKey>
+        {
+            public bool Equals(CacheKey x, CacheKey y) =>
+                x.Tags.Equals(y.Tags) && ReferenceEquals(x.BaseContext, y.BaseContext);
+
+            public int GetHashCode(CacheKey key) =>
+                (key.Tags.GetHashCode() * 397) ^ RuntimeHelpers.GetHashCode(key.BaseContext);
+        } 
+
+        #endregion
     }
 }
