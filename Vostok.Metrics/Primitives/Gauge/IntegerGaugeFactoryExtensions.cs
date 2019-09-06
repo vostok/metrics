@@ -2,6 +2,7 @@ using System;
 using JetBrains.Annotations;
 using Vostok.Metrics.Grouping;
 using Vostok.Metrics.Models;
+using Vostok.Metrics.Primitives.Caching;
 
 namespace Vostok.Metrics.Primitives.Gauge
 {
@@ -14,7 +15,7 @@ namespace Vostok.Metrics.Primitives.Gauge
         /// <param name="config">Optional metric-specific config.</param>
         [NotNull]
         public static IIntegerGauge CreateIntegerGauge([NotNull] this IMetricContext context, [NotNull] string name, [CanBeNull] IntegerGaugeConfig config = null)
-            => new IntegerGauge(context, MetricTagsMerger.Merge(context.Tags, name), config ?? IntegerGaugeConfig.Default);
+            => GlobalCache.Obtain(context, name, null, () => new IntegerGauge(context, MetricTagsMerger.Merge(context.Tags, name), config ?? IntegerGaugeConfig.Default));
 
         #region Metric group extensions
 
@@ -33,7 +34,7 @@ namespace Vostok.Metrics.Primitives.Gauge
         /// <inheritdoc cref="IIntegerGauge"/>
         [NotNull]
         public static IMetricGroup<TFor, IIntegerGauge> CreateIntegerGauge<TFor>([NotNull] this IMetricContext context, [NotNull] string name, [CanBeNull] IntegerGaugeConfig config = null)
-            => new MetricGroup<TFor, IIntegerGauge>(MetricForTagsFactory(context, name, config ?? IntegerGaugeConfig.Default));
+            => GlobalCache.Obtain(context, name, typeof(TFor), () => new MetricGroup<TFor, IIntegerGauge>(MetricForTagsFactory(context, name, config ?? IntegerGaugeConfig.Default)));
 
         /// <summary>
         /// <para>
@@ -52,7 +53,7 @@ namespace Vostok.Metrics.Primitives.Gauge
         /// <inheritdoc cref="IIntegerGauge"/>
         [NotNull]
         public static IMetricGroup1<IIntegerGauge> CreateIntegerGauge([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [CanBeNull] IntegerGaugeConfig config = null)
-            => CreateMetricGroup(context, name, config, key1);
+            => GlobalCache.Obtain(context, name, key1, () => CreateMetricGroup(context, name, config, key1));
 
         /// <summary>
         /// <para>
@@ -72,7 +73,7 @@ namespace Vostok.Metrics.Primitives.Gauge
         /// <inheritdoc cref="IIntegerGauge"/>
         [NotNull]
         public static IMetricGroup2<IIntegerGauge> CreateIntegerGauge([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [CanBeNull] IntegerGaugeConfig config = null)
-            => CreateMetricGroup(context, name, config, key1, key2);
+            => GlobalCache.Obtain(context, name, (key1, key2), () => CreateMetricGroup(context, name, config, key1, key2));
 
         /// <summary>
         /// <para>
@@ -93,7 +94,7 @@ namespace Vostok.Metrics.Primitives.Gauge
         /// <inheritdoc cref="IIntegerGauge"/>
         [NotNull]
         public static IMetricGroup3<IIntegerGauge> CreateIntegerGauge([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [CanBeNull] IntegerGaugeConfig config = null)
-            => CreateMetricGroup(context, name, config, key1, key2, key3);
+            => GlobalCache.Obtain(context, name, (key1, key2, key3), () => CreateMetricGroup(context, name, config, key1, key2, key3));
 
         /// <summary>
         /// <para>
@@ -115,7 +116,7 @@ namespace Vostok.Metrics.Primitives.Gauge
         /// <inheritdoc cref="IIntegerGauge"/>
         [NotNull]
         public static IMetricGroup4<IIntegerGauge> CreateIntegerGauge([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [NotNull] string key4, [CanBeNull] IntegerGaugeConfig config = null)
-            => CreateMetricGroup(context, name, config, key1, key2, key3, key4);
+            => GlobalCache.Obtain(context, name, (key1, key2, key3, key4), () => CreateMetricGroup(context, name, config, key1, key2, key3, key4));
 
         /// <summary>
         /// <para>
@@ -138,7 +139,7 @@ namespace Vostok.Metrics.Primitives.Gauge
         /// <inheritdoc cref="IIntegerGauge"/>
         [NotNull]
         public static IMetricGroup5<IIntegerGauge> CreateIntegerGauge([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [NotNull] string key4, [NotNull] string key5, [CanBeNull] IntegerGaugeConfig config = null)
-            => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5);
+            => GlobalCache.Obtain(context, name, (key1, key2, key3, key4, key5), () => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5));
 
         /// <summary>
         /// <para>
@@ -162,7 +163,7 @@ namespace Vostok.Metrics.Primitives.Gauge
         /// <inheritdoc cref="IIntegerGauge"/>
         [NotNull]
         public static IMetricGroup6<IIntegerGauge> CreateIntegerGauge([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [NotNull] string key4, [NotNull] string key5, [NotNull] string key6, [CanBeNull] IntegerGaugeConfig config = null)
-            => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5, key6);
+            => GlobalCache.Obtain(context, name, (key1, key2, key3, key4, key5, key6), () => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5, key6));
 
         /// <summary>
         /// <para>
@@ -187,7 +188,7 @@ namespace Vostok.Metrics.Primitives.Gauge
         /// <inheritdoc cref="IIntegerGauge"/>
         [NotNull]
         public static IMetricGroup7<IIntegerGauge> CreateIntegerGauge([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [NotNull] string key4, [NotNull] string key5, [NotNull] string key6, [NotNull] string key7, [CanBeNull] IntegerGaugeConfig config = null)
-            => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5, key6, key7);
+            => GlobalCache.Obtain(context, name, (key1, key2, key3, key4, key5, key6, key7), () => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5, key6, key7));
 
         /// <summary>
         /// <para>
@@ -213,7 +214,7 @@ namespace Vostok.Metrics.Primitives.Gauge
         /// <inheritdoc cref="IIntegerGauge"/>
         [NotNull]
         public static IMetricGroup8<IIntegerGauge> CreateIntegerGauge([NotNull] this IMetricContext context, [NotNull] string name, [NotNull] string key1, [NotNull] string key2, [NotNull] string key3, [NotNull] string key4, [NotNull] string key5, [NotNull] string key6, [NotNull] string key7, [NotNull] string key8, [CanBeNull] IntegerGaugeConfig config = null)
-            => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5, key6, key7, key8);
+            => GlobalCache.Obtain(context, name, (key1, key2, key3, key4, key5, key6, key7, key8), () => CreateMetricGroup(context, name, config, key1, key2, key3, key4, key5, key6, key7, key8));
 
         #endregion
 

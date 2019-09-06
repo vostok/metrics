@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <VersionPrefix>0.1.3</VersionPrefix>
+    <VersionPrefix>0.2.0</VersionPrefix>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -39,11 +39,7 @@
 
   <ItemGroup>
     <Compile Update="Primitives\Counter\CounterFactoryExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="CounterFactoryExtensions.tt" />
-    <Compile Update="Primitives\Gauge\FuncGaugeFactoryExtensions.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>FuncGaugeFactoryExtensions.tt</DependentUpon>
-    </Compile>
+    <Compile Update="Primitives\Gauge\FuncGaugeFactoryExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="FuncGaugeFactoryExtensions.tt" />
     <Compile Update="Primitives\Gauge\IntegerGaugeFactoryExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="IntegerGaugeFactoryExtensions.tt" />
     <Compile Update="Primitives\Gauge\FloatingGaugeFactoryExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="FloatingGaugeFactoryExtensions.tt" />
     <Compile Update="Primitives\Timer\TimerFactoryExtensions.cs" DesignTime="True" AutoGen="True" DependentUpon="TimerFactoryExtensions.tt" />
@@ -56,10 +52,7 @@
 
   <ItemGroup>
     <None Update="Primitives\Counter\CounterFactoryExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="CounterFactoryExtensions.cs" />
-    <None Update="Primitives\Gauge\FuncGaugeFactoryExtensions.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>FuncGaugeFactoryExtensions.cs</LastGenOutput>
-    </None>
+    <None Update="Primitives\Gauge\FuncGaugeFactoryExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="FuncGaugeFactoryExtensions.cs" />
     <None Update="Primitives\Gauge\IntegerGaugeFactoryExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="IntegerGaugeFactoryExtensions.cs" />
     <None Update="Primitives\Gauge\FloatingGaugeFactoryExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="FloatingGaugeFactoryExtensions.cs" />
     <None Update="Primitives\Timer\TimerFactoryExtensions.tt" Generator="TextTemplatingFileGenerator" LastGenOutput="TimerFactoryExtensions.cs" />

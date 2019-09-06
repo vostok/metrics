@@ -37,9 +37,5 @@ namespace Vostok.Metrics.Primitives.Timer
 
         public void Report(double value)
             => context.Send(new MetricEvent(value, tags, DateTimeOffset.Now, config.Unit, WellKnownAggregationTypes.Timer, config.AggregationParameters));
-
-        public void Dispose()
-        {
-        }
     }
 }

@@ -92,7 +92,7 @@ namespace Vostok.Metrics.Tests.Primitives.Gauge
 
             var gauge = context.CreateFuncGauge("name", func, new FuncGaugeConfig {ScrapePeriod = 10.Milliseconds()});
 
-            gauge.Dispose();
+            (gauge as IDisposable)?.Dispose();
 
             Thread.Sleep(100.Milliseconds());
             value = 2;

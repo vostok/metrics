@@ -1,5 +1,4 @@
-﻿using System;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace Vostok.Metrics.Grouping
 {
@@ -8,7 +7,7 @@ namespace Vostok.Metrics.Grouping
     /// <para>Metrics in a group share the name but have different dynamic tags specified in <see cref="For"/> method.</para>
     /// </summary>
     [PublicAPI]
-    public interface IMetricGroup1<out TMetric> : IDisposable
+    public interface IMetricGroup1<out TMetric>
     {
         /// <summary>
         /// Retrieves a metric associated with specific tags from this group.
@@ -23,7 +22,7 @@ namespace Vostok.Metrics.Grouping
     /// <para>Metrics in a group share the name but have different dynamic tags specified in <see cref="For"/> method.</para>
     /// </summary>
     [PublicAPI]
-    public interface IMetricGroup2<out TMetric> : IDisposable
+    public interface IMetricGroup2<out TMetric>
     {
         /// <summary>
         /// Retrieves a metric associated with specific tags from this group.
@@ -39,7 +38,7 @@ namespace Vostok.Metrics.Grouping
     /// <para>Metrics in a group share the name but have different dynamic tags specified in <see cref="For"/> method.</para>
     /// </summary>
     [PublicAPI]
-    public interface IMetricGroup3<out TMetric> : IDisposable
+    public interface IMetricGroup3<out TMetric>
     {
         /// <summary>
         /// Retrieves a metric associated with specific tags from this group.
@@ -56,7 +55,7 @@ namespace Vostok.Metrics.Grouping
     /// <para>Metrics in a group share the name but have different dynamic tags specified in <see cref="For"/> method.</para>
     /// </summary>
     [PublicAPI]
-    public interface IMetricGroup4<out TMetric> : IDisposable
+    public interface IMetricGroup4<out TMetric>
     {
         /// <summary>
         /// Retrieves a metric associated with specific tags from this group.
@@ -74,7 +73,7 @@ namespace Vostok.Metrics.Grouping
     /// <para>Metrics in a group share the name but have different dynamic tags specified in <see cref="For"/> method.</para>
     /// </summary>
     [PublicAPI]
-    public interface IMetricGroup5<out TMetric> : IDisposable
+    public interface IMetricGroup5<out TMetric>
     {
         /// <summary>
         /// Retrieves a metric associated with specific tags from this group.
@@ -93,7 +92,7 @@ namespace Vostok.Metrics.Grouping
     /// <para>Metrics in a group share the name but have different dynamic tags specified in <see cref="For"/> method.</para>
     /// </summary>
     [PublicAPI]
-    public interface IMetricGroup6<out TMetric> : IDisposable
+    public interface IMetricGroup6<out TMetric>
     {
         /// <summary>
         /// Retrieves a metric associated with specific tags from this group.
@@ -113,7 +112,7 @@ namespace Vostok.Metrics.Grouping
     /// <para>Metrics in a group share the name but have different dynamic tags specified in <see cref="For"/> method.</para>
     /// </summary>
     [PublicAPI]
-    public interface IMetricGroup7<out TMetric> : IDisposable
+    public interface IMetricGroup7<out TMetric>
     {
         /// <summary>
         /// Retrieves a metric associated with specific tags from this group.
@@ -134,7 +133,7 @@ namespace Vostok.Metrics.Grouping
     /// <para>Metrics in a group share the name but have different dynamic tags specified in <see cref="For"/> method.</para>
     /// </summary>
     [PublicAPI]
-    public interface IMetricGroup8<out TMetric> : IDisposable
+    public interface IMetricGroup8<out TMetric>
     {
         /// <summary>
         /// Retrieves a metric associated with specific tags from this group.

@@ -61,7 +61,7 @@ namespace Vostok.Metrics.Tests.Grouping
             {
                 var group1 = new MetricGroup<SimpleCounter>(tags => new SimpleCounter(tags), "key1");
                 group1.For(1.1).Value = 1;
-                
+
                 group1.For("1.1").Value.Should().Be(1);
             }
             finally

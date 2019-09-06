@@ -1,2 +1,2 @@
-<# model = new MetricExtensionsModel("Counter"); #>
+<# model = new MetricExtensionsModel("Counter") { UseCaching = true }; #>
 <#@ include file="./../../codegen/FactoryExtensions.ttinclude" once="true" #>

@@ -4,6 +4,7 @@ using System;
 using JetBrains.Annotations;
 using Vostok.Metrics.Grouping;
 using Vostok.Metrics.Models;
+<# if (model.UseCaching) { this.WriteLine("using Vostok.Metrics.Primitives.Caching;"); } #>
 
 namespace <#= model.MetricNamespace #>
 {
@@ -16,7 +17,7 @@ namespace <#= model.MetricNamespace #>
         /// <param name="config">Optional metric-specific config.</param>
         [NotNull]
         public static <#= model.MetricInterface #> Create<#= model.MetricClass #>([NotNull] this IMetricContext context, [NotNull] string name, <#= model.AdditionalArgs #>[CanBeNull] <#= model.MetricConfigClass #> config = null)
-            => new <#= model.MetricClass #>(context, MetricTagsMerger.Merge(context.Tags, name), <#= model.AdditionalArgsCall #>config ?? <#= model.MetricConfigClass #>.Default);
+			<# if (model.UseCaching) { this.Write("=> GlobalCache.Obtain(context, name, null, () "); } #>=> new <#= model.MetricClass #>(context, MetricTagsMerger.Merge(context.Tags, name), <#= model.AdditionalArgsCall #>config ?? <#= model.MetricConfigClass #>.Default)<# if (model.UseCaching) { this.Write(")"); } #>;
 
         #region Metric group extensions
 
@@ -35,7 +36,7 @@ namespace <#= model.MetricNamespace #>
         /// <inheritdoc cref="<#= model.InheritDocType #>"/>
         [NotNull]
         public static IMetricGroup<TFor, <#= model.MetricInterface #>> Create<#= model.MetricClass #><TFor>([NotNull] this IMetricContext context, [NotNull] string name, [CanBeNull] <#= model.MetricConfigClass #> config = null)
-            => new MetricGroup<TFor, <#= model.MetricInterface #>>(MetricForTagsFactory(context, name, config ?? <#= model.MetricConfigClass #>.Default));
+            <# if (model.UseCaching) { this.Write("=> GlobalCache.Obtain(context, name, typeof(TFor), () "); } #>=> new MetricGroup<TFor, <#= model.MetricInterface #>>(MetricForTagsFactory(context, name, config ?? <#= model.MetricConfigClass #>.Default))<# if (model.UseCaching) { this.Write(")"); } #>;
 <# for (var keysCount = 1; keysCount <= DynamicTags_StringKeys_MaxKeyCount; keysCount++) { #>
 
         /// <summary>
@@ -57,7 +58,7 @@ namespace <#= model.MetricNamespace #>
         /// <inheritdoc cref="<#= model.InheritDocType #>"/>
         [NotNull]
         public static IMetricGroup<#= keysCount #><<#= model.MetricInterface #>> Create<#= model.MetricClass #>([NotNull] this IMetricContext context, [NotNull] string name, <#= FormatParameters("[NotNull] string key{0}", keysCount) #>, [CanBeNull] <#= model.MetricConfigClass #> config = null)
-            => CreateMetricGroup(context, name, config, <#= FormatParameters("key{0}", keysCount) #>);
+            <# if (model.UseCaching) { this.Write("=> GlobalCache.Obtain(context, name, (" + FormatParameters("key{0}", keysCount) + "), () "); } #>=> CreateMetricGroup(context, name, config, <#= FormatParameters("key{0}", keysCount) #>)<# if (model.UseCaching) { this.Write(")"); } #>;
 <# } #>
 
         #endregion
@@ -86,6 +87,7 @@ class MetricExtensionsModel
     public string InheritDocType { get; set; }
     public string AdditionalArgs { get; set; }
     public string AdditionalArgsCall { get; set; }
+    public bool UseCaching { get; set; }
 
     public MetricExtensionsModel(string metricClass, string additionalArgs = "", string additionalArgsCall = "")
     {

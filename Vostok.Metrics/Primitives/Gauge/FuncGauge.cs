@@ -6,7 +6,7 @@ using Vostok.Metrics.Scraping;
 
 namespace Vostok.Metrics.Primitives.Gauge
 {
-    internal class FuncGauge : IScrapableMetric, IFuncGauge
+    internal class FuncGauge : IScrapableMetric, IFuncGauge, IDisposable
     {
         private readonly MetricTags tags;
         private readonly FuncGaugeConfig config;
