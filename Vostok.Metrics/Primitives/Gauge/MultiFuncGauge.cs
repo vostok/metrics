@@ -7,7 +7,7 @@ using Vostok.Metrics.Scraping;
 
 namespace Vostok.Metrics.Primitives.Gauge
 {
-    internal class MultiFuncGauge : IScrapableMetric, IDisposable
+    internal class MultiFuncGauge : IScrapableMetric, IMultiFuncGauge, IDisposable
     {
         private readonly MetricTags contextTags;
         private readonly FuncGaugeConfig config;

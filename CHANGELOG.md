@@ -1,3 +1,6 @@
+## 0.2.1 (13-09-2019):
+- Fixed `CreateMultiFuncGauge` not `IDisposable` anymore.
+
 ## 0.2.0 (04-09-2019):
 
 - Public interface primitives (such as `ICounter` and `ITimer` and `IMetricGroup`) no longer inherit from `IDisposable`.
@@ -7,8 +10,8 @@
 	- `CreateHistogram`
 	- `CreateIntegerGauge`
 	- `CreateFloatingGauge`
-- Added a new lightweight model — `MetricDataPoint`. It's a simple alternative to `MetricEvent` that can be constructed by users.
-- Added a new primitive — `MultiFuncGauge`. It allows to provide multiple metric values at once using `MetricDataPoints`.
+- Added a new lightweight model â€” `MetricDataPoint`. It's a simple alternative to `MetricEvent` that can be constructed by users.
+- Added a new primitive â€” `MultiFuncGauge`. It allows to provide multiple metric values at once using `MetricDataPoints`.
 - Added a new extension for `IMetricContext` that allows to send `MetricDataPoints` as if they were `MetricEvents`.
 - All custom user-implemented scrapable primitives now use a separate internal scheduler.
 

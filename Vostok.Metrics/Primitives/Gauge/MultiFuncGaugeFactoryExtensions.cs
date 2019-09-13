@@ -9,7 +9,7 @@ namespace Vostok.Metrics.Primitives.Gauge
     [PublicAPI]
     public static class MultiFuncGaugeFactoryExtensions
     {
-        public static IDisposable CreateMultiFuncGauge(
+        public static IMultiFuncGauge CreateMultiFuncGauge(
             [NotNull] this IMetricContext context,
             [NotNull] Func<IEnumerable<MetricDataPoint>> pointProvider,
             [CanBeNull] FuncGaugeConfig config = null)
