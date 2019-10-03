@@ -13,7 +13,7 @@ namespace Vostok.Metrics.Primitives.Timer
                     return value.Ticks;
 
                 case WellKnownUnits.Microseconds:
-                    return value.TotalMilliseconds / 1000d;
+                    return value.TotalMilliseconds * 1000d;
 
                 case WellKnownUnits.Milliseconds:
                     return value.TotalMilliseconds;
