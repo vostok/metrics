@@ -10,7 +10,7 @@ namespace Vostok.Metrics.Primitives.Caching
     internal static class GlobalCache
     {
         private static readonly ConcurrentDictionary<CacheKey, PerContextCache> PerContextCaches =
-            new ConcurrentDictionary<CacheKey, PerContextCache>();
+            new ConcurrentDictionary<CacheKey, PerContextCache>(new CacheKeyComparer());
 
         public static TMetric Obtain<TMetric>([NotNull] IMetricContext context, [NotNull] string name, [CanBeNull] object details, [NotNull] Func<TMetric> factory)
             => (TMetric)PerContextCaches.GetOrAdd(new CacheKey(context), _ => new PerContextCache()).Obtain(name, typeof(TMetric), details, () => factory());

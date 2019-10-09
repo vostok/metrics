@@ -155,5 +155,23 @@ namespace Vostok.Metrics.Tests.Primitives
 
             counter2.Should().BeSameAs(counter1);
         }
+
+        [Test]
+        public void Should_cache_between_different_contexts_with_same_multiple_tags()
+        {
+            var counter1 = context1.WithTags(new MetricTags(new MetricTag("a1", "b1"), new MetricTag("a2", "b2"))).CreateCounter("counter");
+            var counter2 = context1.WithTags(new MetricTags(new MetricTag("a1", "b1"), new MetricTag("a2", "b2"))).CreateCounter("counter");
+
+            counter2.Should().BeSameAs(counter1);
+        }
+
+        [Test]
+        public void Should_cache_between_different_contexts_with_same_multiple_tags_structure()
+        {
+            var counter1 = context1.WithTags(new MetricTags(new MetricTag("a1", "b1"), new MetricTag("a2", "b2"))).CreateCounter("counter");
+            var counter2 = context1.WithTag("a1", "b1").WithTag("a2", "b2").CreateCounter("counter");
+
+            counter2.Should().BeSameAs(counter1);
+        }
     }
 }

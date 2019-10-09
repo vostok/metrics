@@ -1,3 +1,6 @@
+## 0.2.2 (09-10-2019):
+- Made `IMetricContextWrapper` public.
+
 ## 0.2.1 (13-09-2019):
 - Fixed `CreateMultiFuncGauge` not `IDisposable` anymore.
 
