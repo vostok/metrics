@@ -52,13 +52,7 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
             Scrape(histogram)
                 .Should()
                 .BeEquivalentTo(
-                    new List<(double, double)>
-                    {
-                        (0, 10),
-                        (0, 20),
-                        (0, 30),
-                        (0, double.PositiveInfinity)
-                    });
+                    new List<(double, double)>());
 
             histogram.Report(42);
             Scrape(histogram)
@@ -66,9 +60,6 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
                 .BeEquivalentTo(
                     new List<(double, double)>
                     {
-                        (0, 10),
-                        (0, 20),
-                        (0, 30),
                         (1, double.PositiveInfinity)
                     });
         }

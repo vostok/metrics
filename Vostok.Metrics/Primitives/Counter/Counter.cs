@@ -33,13 +33,16 @@ namespace Vostok.Metrics.Primitives.Counter
 
         public IEnumerable<MetricEvent> Scrape(DateTimeOffset timestamp)
         {
-            yield return new MetricEvent(
-                Interlocked.Exchange(ref count, 0),
-                tags,
-                timestamp,
-                config.Unit,
-                WellKnownAggregationTypes.Counter,
-                config.AggregationParameters);
+            var value = Interlocked.Exchange(ref count, 0);
+
+            if (value != 0 || config.SendZeroValues)
+                yield return new MetricEvent(
+                    value,
+                    tags,
+                    timestamp,
+                    config.Unit,
+                    WellKnownAggregationTypes.Counter,
+                    config.AggregationParameters);
         }
 
         public void Dispose()

@@ -85,7 +85,8 @@ namespace Vostok.Metrics.Primitives.Timer
             for (var i = 0; i < bucketCounters.Length; i++)
             {
                 var bucketValue = Interlocked.Exchange(ref bucketCounters[i], 0L);
-                yield return new MetricEvent(bucketValue, tags, timestamp, config.Unit, WellKnownAggregationTypes.Histogram, aggregationParameters[i]);
+                if (bucketValue != 0)
+                    yield return new MetricEvent(bucketValue, tags, timestamp, config.Unit, WellKnownAggregationTypes.Histogram, aggregationParameters[i]);
             }
         }
 

@@ -24,6 +24,11 @@ namespace Vostok.Metrics.Primitives.Counter
         public IReadOnlyDictionary<string, string> AggregationParameters { get; set; }
 
         /// <summary>
+        /// Whether or not to send counter with zero value.
+        /// </summary>
+        public bool SendZeroValues { get; set; } = true;
+
+        /// <summary>
         /// Period of scraping counter's current value. If set to <c>null</c>, context default period will be used.
         /// </summary>
         [CanBeNull]

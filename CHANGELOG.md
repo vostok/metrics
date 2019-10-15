@@ -1,3 +1,7 @@
+## 0.2.3 (15-10-2019):
+- Removed sending empty hisogram buckets.
+- Added `SendZeroValues` setting to `CounterConfig`.
+
 ## 0.2.2 (09-10-2019):
 - Made `IMetricContextWrapper` public.
 

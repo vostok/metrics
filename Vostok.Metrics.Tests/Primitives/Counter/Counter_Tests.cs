@@ -40,6 +40,17 @@ namespace Vostok.Metrics.Tests.Primitives.Counter
         }
 
         [Test]
+        public void Should_not_send_zero_values_if_specified()
+        {
+            var counter = context.CreateCounter("name", new CounterConfig {ScrapePeriod = TimeSpan.MaxValue, SendZeroValues = false});
+            counter.Add(42);
+
+            ((Metrics.Primitives.Counter.Counter)counter).Scrape(DateTimeOffset.Now).Should().NotBeEmpty();
+
+            ((Metrics.Primitives.Counter.Counter)counter).Scrape(DateTimeOffset.Now).Should().BeEmpty();
+        }
+
+        [Test]
         public void Should_reject_negative_values()
         {
             var counter = context.CreateCounter("name", new CounterConfig {ScrapePeriod = TimeSpan.MaxValue});
