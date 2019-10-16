@@ -1,3 +1,6 @@
+## 0.2.4 (16-10-2019):
+- Removed sending empty summary.
+
 ## 0.2.3 (15-10-2019):
 - Removed sending empty hisogram buckets.
 - Added `SendZeroValues` setting to `CounterConfig`.

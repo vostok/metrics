@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using JetBrains.Annotations;
 using Vostok.Commons.Threading;
@@ -79,6 +80,8 @@ namespace Vostok.Metrics.Primitives.Timer
                 var countBeforeReset = Interlocked.Exchange(ref count, 0);
 
                 var snapshotSize = Math.Min(countBeforeReset, sample.Length);
+                if (snapshotSize == 0)
+                    return Enumerable.Empty<MetricEvent>();
 
                 if (snapshot == null || snapshot.Length < snapshotSize)
                     snapshot = new double[snapshotSize];

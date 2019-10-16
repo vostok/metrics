@@ -36,7 +36,7 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
 
             Scrape(summary, "p50").Value.Should().Be(5);
 
-            Scrape(summary, "p50").Value.Should().Be(0);
+            Scrape(summary, "p50").Should().BeNull();
 
             summary.Report(42);
             Scrape(summary, "p50").Value.Should().Be(42);
@@ -151,7 +151,7 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
 
         private static MetricEvent Scrape(ITimer summary, string tag, DateTimeOffset? timestamp = null)
         {
-            return ((Summary)summary).Scrape(timestamp ?? DateTimeOffset.Now).Single(e => e.Tags.Any(t => t.Value == tag));
+            return ((Summary)summary).Scrape(timestamp ?? DateTimeOffset.Now).FirstOrDefault(e => e.Tags.Any(t => t.Value == tag));
         }
     }
 }
