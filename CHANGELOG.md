@@ -1,18 +1,26 @@
+## 0.2.6 (06.01.2020):
+
+- Fixed a race condition occurring in initialization of scrapable metric groups (gauges, counters, etc).
+
 ## 0.2.5 (06.01.2020):
 
 - IntegerGauge and FloatingGauge: added `TryIncreaseTo` and `TryReduceTo` methods to track max/min values.
 
 ## 0.2.4 (16-10-2019):
+
 - Removed sending empty summary.
 
 ## 0.2.3 (15-10-2019):
-- Removed sending empty hisogram buckets.
+
+- Removed sending empty histogram buckets.
 - Added `SendZeroValues` setting to `CounterConfig`.
 
 ## 0.2.2 (09-10-2019):
+
 - Made `IMetricContextWrapper` public.
 
 ## 0.2.1 (13-09-2019):
+
 - Fixed `CreateMultiFuncGauge` not `IDisposable` anymore.
 
 ## 0.2.0 (04-09-2019):

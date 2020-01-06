@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Threading;
 using JetBrains.Annotations;
 using Vostok.Metrics.Models;
 
@@ -7,7 +8,7 @@ namespace Vostok.Metrics.Grouping
 {
     internal abstract class MetricGroupBase<TMetric> : IDisposable
     {
-        private readonly ConcurrentDictionary<MetricTags, TMetric> cache = new ConcurrentDictionary<MetricTags, TMetric>();
+        private readonly ConcurrentDictionary<MetricTags, Lazy<TMetric>> cache = new ConcurrentDictionary<MetricTags, Lazy<TMetric>>();
         private readonly Func<MetricTags, TMetric> factory;
 
         protected MetricGroupBase([NotNull] Func<MetricTags, TMetric> factory)
@@ -17,13 +18,15 @@ namespace Vostok.Metrics.Grouping
         {
             foreach (var pair in cache)
             {
-                (pair.Value as IDisposable)?.Dispose();
+                var lazy = pair.Value;
+                if (lazy.IsValueCreated)
+                    (lazy.Value as IDisposable)?.Dispose();
 
                 cache.TryRemove(pair.Key, out _);
             }
         }
 
         protected TMetric For([NotNull] MetricTags dynamicTags)
-            => cache.GetOrAdd(dynamicTags, factory);
+            => cache.GetOrAdd(dynamicTags, t => new Lazy<TMetric>(() => factory(t), LazyThreadSafetyMode.ExecutionAndPublication)).Value;
     }
 }
