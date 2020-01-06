@@ -160,6 +160,44 @@ namespace Vostok.Metrics.Tests.Primitives.Gauge
             x.Should().Be(0);
         }
 
+        [Test]
+        public void TryIncreaseTo_should_work_correctly()
+        {
+            var gauge = (FloatingGauge) context.CreateFloatingGauge("name");
+
+            gauge.TryIncreaseTo(10);
+            gauge.CurrentValue.Should().Be(10);
+
+            gauge.TryIncreaseTo(9);
+            gauge.CurrentValue.Should().Be(10);
+
+            gauge.TryIncreaseTo(15);
+            gauge.CurrentValue.Should().Be(15);
+
+            gauge.TryIncreaseTo(-1);
+            gauge.CurrentValue.Should().Be(15);
+        }
+
+        [Test]
+        public void TryReduceTo_should_work_correctly()
+        {
+            var gauge = (FloatingGauge) context.CreateFloatingGauge("name");
+
+            gauge.Set(100);
+
+            gauge.TryReduceTo(10);
+            gauge.CurrentValue.Should().Be(10);
+
+            gauge.TryReduceTo(11);
+            gauge.CurrentValue.Should().Be(10);
+
+            gauge.TryReduceTo(5);
+            gauge.CurrentValue.Should().Be(5);
+
+            gauge.TryReduceTo(8);
+            gauge.CurrentValue.Should().Be(5);
+        }
+
         private static MetricEvent Scrape(IFloatingGauge gauge, DateTimeOffset? timestamp = null)
         {
             return ((FloatingGauge)gauge).Scrape(timestamp ?? DateTimeOffset.Now).Single();

@@ -30,5 +30,17 @@ namespace Vostok.Metrics.Primitives.Gauge
         /// Decrements current gauge value by one.
         /// </summary>
         void Decrement();
+
+        /// <summary>
+        /// <para>This method will <see cref="Set"/> given <paramref name="value"/> if it's greater than current one.</para>
+        /// <para>This is useful to track max values.</para>
+        /// </summary>
+        void TryIncreaseTo(long value);
+
+        /// <summary>
+        /// <para>This method will <see cref="Set"/> given <paramref name="value"/> if it's lesser than current one.</para>
+        /// <para>This is useful to track min values.</para>
+        /// </summary>
+        void TryReduceTo(long value);
     }
 }

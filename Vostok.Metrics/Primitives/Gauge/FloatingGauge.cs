@@ -49,14 +49,35 @@ namespace Vostok.Metrics.Primitives.Gauge
             while (true)
             {
                 var currentValue = value;
-                var newValue = currentValue + valueToAdd;
+                if (TrySet(currentValue + valueToAdd, currentValue))
+                    return;
+            }
+        }
 
-                if (Math.Abs(Interlocked.CompareExchange(ref value, newValue, currentValue) - currentValue) < double.Epsilon * 100)
+        public void TryIncreaseTo(double candidateValue)
+        {
+            while (true)
+            {
+                var currentValue = CurrentValue;
+                if (candidateValue <= currentValue || TrySet(candidateValue, currentValue))
+                    return;
+            }
+        }
+
+        public void TryReduceTo(double candidateValue)
+        {
+            while (true)
+            {
+                var currentValue = CurrentValue;
+                if (candidateValue >= currentValue || TrySet(candidateValue, currentValue))
                     return;
             }
         }
 
         public void Dispose()
             => registration.Dispose();
+
+        private bool TrySet(double newValue, double expectedValue)
+            => Math.Abs(Interlocked.CompareExchange(ref value, newValue, expectedValue) - expectedValue) < double.Epsilon * 100;
     }
 }

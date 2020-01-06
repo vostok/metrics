@@ -53,7 +53,30 @@ namespace Vostok.Metrics.Primitives.Gauge
         public void Substract(long valueToSubstract)
             => Add(-valueToSubstract);
 
+        public void TryIncreaseTo(long candidateValue)
+        {
+            while (true)
+            {
+                var currentValue = CurrentValue;
+                if (candidateValue <= currentValue || TrySet(candidateValue, currentValue))
+                    return;
+            }
+        }
+
+        public void TryReduceTo(long candidateValue)
+        {
+            while (true)
+            {
+                var currentValue = CurrentValue;
+                if (candidateValue >= currentValue || TrySet(candidateValue, currentValue))
+                    return;
+            }
+        }
+
         public void Dispose()
             => registration.Dispose();
+
+        private bool TrySet(long newValue, long expectedValue)
+            => Interlocked.CompareExchange(ref value, newValue, expectedValue) == expectedValue;
     }
 }

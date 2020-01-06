@@ -1,3 +1,7 @@
+## 0.2.5 (06.01.2020):
+
+- IntegerGauge and FloatingGauge: added `TryIncreaseTo` and `TryReduceTo` methods to track max/min values.
+
 ## 0.2.4 (16-10-2019):
 - Removed sending empty summary.
 

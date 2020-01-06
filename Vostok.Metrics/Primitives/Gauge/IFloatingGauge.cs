@@ -20,5 +20,17 @@ namespace Vostok.Metrics.Primitives.Gauge
         /// Substracts given <paramref name="value"/> from current gauge value.
         /// </summary>
         void Substract(double value);
+
+        /// <summary>
+        /// <para>This method will <see cref="Set"/> given <paramref name="value"/> if it's greater than current one.</para>
+        /// <para>This is useful to track max values.</para>
+        /// </summary>
+        void TryIncreaseTo(double value);
+
+        /// <summary>
+        /// <para>This method will <see cref="Set"/> given <paramref name="value"/> if it's lesser than current one.</para>
+        /// <para>This is useful to track min values.</para>
+        /// </summary>
+        void TryReduceTo(double value);
     }
 }
