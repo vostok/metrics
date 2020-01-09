@@ -18,9 +18,7 @@ namespace Vostok.Metrics.Grouping
         {
             foreach (var pair in cache)
             {
-                var lazy = pair.Value;
-                if (lazy.IsValueCreated)
-                    (lazy.Value as IDisposable)?.Dispose();
+                (pair.Value.Value as IDisposable)?.Dispose();
 
                 cache.TryRemove(pair.Key, out _);
             }
