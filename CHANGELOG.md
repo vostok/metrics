@@ -1,3 +1,7 @@
+## 0.2.7 (09.01.2020):
+
+- WellKnownTagKeys: added Component tag.
+
 ## 0.2.6 (06.01.2020):
 
 - Fixed a race condition occurring in initialization of scrapable metric groups (gauges, counters, etc).

@@ -46,5 +46,10 @@ namespace Vostok.Metrics
         /// </list>
         /// </summary>
         public const string Aggregate = "_aggregate";
+
+        /// <summary>
+        /// <see cref="Component"/> tag represents the application's subsystem responsible for producing metrics.
+        /// </summary>
+        public const string Component = "component";
     }
 }
