@@ -32,6 +32,6 @@ namespace Vostok.Metrics.Primitives.Counter
         /// Period of scraping counter's current value. If set to <c>null</c>, context default period will be used.
         /// </summary>
         [CanBeNull]
-        public TimeSpan? ScrapePeriod { get; set; } = TimeSpan.FromSeconds(1);
+        public TimeSpan? ScrapePeriod { get; set; }
     }
 }
