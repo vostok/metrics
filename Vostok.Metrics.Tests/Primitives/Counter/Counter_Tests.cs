@@ -139,6 +139,36 @@ namespace Vostok.Metrics.Tests.Primitives.Counter
             sum.Should().Be(0);
         }
 
+        [Test]
+        public void Should_be_scraped_on_primitive_dispose()
+        {
+            var sum = 0L;
+            context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => Interlocked.Add(ref sum, (long)e.Value))));
+
+            var counter = (Metrics.Primitives.Counter.Counter)context.CreateCounter("name", new CounterConfig { ScrapePeriod = TimeSpan.MaxValue });
+
+            counter.Add(1);
+            
+            counter.Dispose();
+
+            sum.Should().Be(1);
+        }
+
+        [Test]
+        public void Should_be_scraped_on_context_dispose()
+        {
+            var sum = 0L;
+            context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => Interlocked.Add(ref sum, (long)e.Value))));
+
+            var counter = (Metrics.Primitives.Counter.Counter)context.CreateCounter("name", new CounterConfig { ScrapePeriod = TimeSpan.MaxValue });
+
+            counter.Add(1);
+
+            context.Dispose();
+
+            sum.Should().Be(1);
+        }
+
         private static MetricEvent Scrape(ICounter counter, DateTimeOffset? timestamp = null)
         {
             return ((Metrics.Primitives.Counter.Counter)counter).Scrape(timestamp ?? DateTimeOffset.Now).Single();

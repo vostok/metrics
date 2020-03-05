@@ -1,6 +1,7 @@
 using System;
 using JetBrains.Annotations;
 using Vostok.Metrics.Models;
+using Vostok.Metrics.Primitives.Counter;
 using Vostok.Metrics.Scraping;
 
 namespace Vostok.Metrics
@@ -12,6 +13,7 @@ namespace Vostok.Metrics
         private readonly MetricContextConfig config;
         private readonly ScrapeScheduler scheduler;
         private readonly ScrapeScheduler fastScheduler;
+        private readonly ScrapeScheduler scrapeOnDisposeScheduler;
 
         public MetricContext([NotNull] MetricContextConfig config)
         {
@@ -19,12 +21,13 @@ namespace Vostok.Metrics
 
             scheduler = new ScrapeScheduler(config.Sender, config.ErrorCallback);
             fastScheduler = new ScrapeScheduler(config.Sender, config.ErrorCallback);
+            scrapeOnDisposeScheduler = new ScrapeScheduler(config.Sender, config.ErrorCallback, true);
         }
 
         public MetricTags Tags => config.Tags ?? MetricTags.Empty;
 
-        public IDisposable Register(IScrapableMetric metric, TimeSpan? scrapePeriod)
-            => (metric is IFastScrapableMetric ? fastScheduler : scheduler)
+        public IDisposable Register(IScrapableMetric metric, TimeSpan? scrapePeriod) =>
+            GetScheduler(metric)
                 .Register(metric, scrapePeriod ?? config.DefaultScrapePeriod);
 
         public void Send(MetricEvent @event)
@@ -34,6 +37,18 @@ namespace Vostok.Metrics
         {
             scheduler.Dispose();
             fastScheduler.Dispose();
+            scrapeOnDisposeScheduler.Dispose();
+        }
+
+        private ScrapeScheduler GetScheduler(IScrapableMetric metric)
+        {
+            if (metric is ICounter)
+                return scrapeOnDisposeScheduler;
+
+            if (metric is IFastScrapableMetric)
+                return fastScheduler;
+
+            return scheduler;
         }
     }
 }
