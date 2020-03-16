@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Vostok.Commons.Helpers.Disposable;
 using Vostok.Commons.Helpers.Extensions;
-using Vostok.Commons.Time;
 
 namespace Vostok.Metrics.Scraping
 {
@@ -40,8 +39,8 @@ namespace Vostok.Metrics.Scraping
 
             if (created)
             {
-                scraperTasks[scrapePeriod] = new Scraper(sender, errorCallback, scrapePeriod)
-                    .RunAsync(metrics, cancellation.Token)
+                scraperTasks[scrapePeriod] = new Scraper(sender, errorCallback)
+                    .RunAsync(metrics, scrapePeriod, cancellation.Token)
                     .SilentlyContinue();
             }
 
@@ -72,8 +71,8 @@ namespace Vostok.Metrics.Scraping
             if (!scrapeOnDispose)
                 return;
 
-            foreach (var metric in scrapableMetrics.SelectMany(m => m.Value))
-                ScrapeOnDispose(metric);
+            new Scraper(sender, errorCallback)
+                .ScrapeOnce(scrapableMetrics.SelectMany(m => m.Value));
         }
 
         private void ScrapeOnDispose(IScrapableMetric metric)
@@ -81,17 +80,8 @@ namespace Vostok.Metrics.Scraping
             if (!scrapeOnDispose)
                 return;
 
-            var scrapeTimestamp = PreciseDateTime.UtcNow.UtcDateTime;
-
-            try
-            {
-                foreach (var metricEvent in metric.Scrape(scrapeTimestamp))
-                    sender.Send(metricEvent);
-            }
-            catch (Exception error)
-            {
-                errorCallback(error);
-            }
+            new Scraper(sender, errorCallback)
+                .ScrapeOnce(new[] {metric});
         }
 
         private (ScrapableMetrics metrics, bool created) ObtainMetricsForPeriod(TimeSpan scrapePeriod)
