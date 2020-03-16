@@ -1,3 +1,8 @@
+## 0.2.8 (16.03.2020):
+
+- Increase default scrape period for counters from 1 second to 1 minute.
+- Forcibly send counter values on dispose of metric context.
+
 ## 0.2.7 (09.01.2020):
 
 - WellKnownTagKeys: added Component tag.
