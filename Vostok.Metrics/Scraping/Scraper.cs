@@ -13,19 +13,17 @@ namespace Vostok.Metrics.Scraping
 
         private readonly IMetricEventSender sender;
         private readonly Action<Exception> errorCallback;
-        private readonly TimeSpan period;
+        private readonly List<MetricEvent> metricEventsBuffer;
 
-        public Scraper(IMetricEventSender sender, Action<Exception> errorCallback, TimeSpan period)
+        public Scraper(IMetricEventSender sender, Action<Exception> errorCallback)
         {
             this.sender = sender;
             this.errorCallback = errorCallback;
-            this.period = period;
+            metricEventsBuffer = new List<MetricEvent>();
         }
 
-        public async Task RunAsync(ScrapableMetrics metrics, CancellationToken cancellationToken)
+        public async Task RunAsync(ScrapableMetrics metrics, TimeSpan period, CancellationToken cancellationToken)
         {
-            var metricEvents = new List<MetricEvent>();
-
             while (!cancellationToken.IsCancellationRequested)
             {
                 var initialTimestamp = Now;
@@ -37,36 +35,42 @@ namespace Vostok.Metrics.Scraping
                 var thresholdTimestamp = initialTimestamp + delayToNextScrape;
                 var scrapeTimestamp = await WaitForTimestampRollover(thresholdTimestamp, cancellationToken).ConfigureAwait(false);
 
-                metricEvents.Clear();
+                ScrapeOnce(metrics, scrapeTimestamp, cancellationToken);
+            }
+        }
 
-                foreach (var metric in metrics)
+        public void ScrapeOnce(IEnumerable<IScrapableMetric> metrics, DateTime? scrapeTimestamp = null, CancellationToken cancellationToken = default)
+        {
+            metricEventsBuffer.Clear();
+            scrapeTimestamp = scrapeTimestamp ?? Now;
+
+            foreach (var metric in metrics)
+            {
+                if (cancellationToken.IsCancellationRequested)
+                    return;
+
+                try
                 {
-                    if (cancellationToken.IsCancellationRequested)
-                        return;
-
-                    try
-                    {
-                        metricEvents.AddRange(metric.Scrape(scrapeTimestamp));
-                    }
-                    catch (Exception error)
-                    {
-                        OnError(error);
-                    }
+                    metricEventsBuffer.AddRange(metric.Scrape(scrapeTimestamp.Value));
                 }
-
-                foreach (var metricEvent in metricEvents)
+                catch (Exception error)
                 {
-                    if (cancellationToken.IsCancellationRequested)
-                        return;
+                    OnError(error);
+                }
+            }
 
-                    try
-                    {
-                        sender.Send(metricEvent);
-                    }
-                    catch (Exception error)
-                    {
-                        OnError(error);
-                    }
+            foreach (var metricEvent in metricEventsBuffer)
+            {
+                if (cancellationToken.IsCancellationRequested)
+                    return;
+
+                try
+                {
+                    sender.Send(metricEvent);
+                }
+                catch (Exception error)
+                {
+                    OnError(error);
                 }
             }
         }

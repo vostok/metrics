@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Concurrent;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Vostok.Commons.Helpers.Disposable;
 using Vostok.Commons.Helpers.Extensions;
 
 namespace Vostok.Metrics.Scraping
@@ -10,14 +12,16 @@ namespace Vostok.Metrics.Scraping
     {
         private readonly IMetricEventSender sender;
         private readonly Action<Exception> errorCallback;
+        private readonly bool scrapeOnDispose;
         private readonly CancellationTokenSource cancellation;
         private readonly ConcurrentDictionary<TimeSpan, ScrapableMetrics> scrapableMetrics;
         private readonly ConcurrentDictionary<TimeSpan, Task> scraperTasks;
 
-        public ScrapeScheduler(IMetricEventSender sender, Action<Exception> errorCallback)
+        public ScrapeScheduler(IMetricEventSender sender, Action<Exception> errorCallback, bool scrapeOnDispose = false)
         {
             this.sender = sender;
             this.errorCallback = errorCallback;
+            this.scrapeOnDispose = scrapeOnDispose;
 
             cancellation = new CancellationTokenSource();
             scraperTasks = new ConcurrentDictionary<TimeSpan, Task>();
@@ -35,12 +39,17 @@ namespace Vostok.Metrics.Scraping
 
             if (created)
             {
-                scraperTasks[scrapePeriod] = new Scraper(sender, errorCallback, scrapePeriod)
-                    .RunAsync(metrics, cancellation.Token)
+                scraperTasks[scrapePeriod] = new Scraper(sender, errorCallback)
+                    .RunAsync(metrics, scrapePeriod, cancellation.Token)
                     .SilentlyContinue();
             }
 
-            return new Registration(metric, metrics);
+            return new ActionDisposable(
+                () =>
+                {
+                    metrics.Remove(metric);
+                    ScrapeOnDispose(metric);
+                });
         }
 
         public void Dispose()
@@ -51,8 +60,28 @@ namespace Vostok.Metrics.Scraping
                 .GetAwaiter()
                 .GetResult();
 
+            ScrapeOnDispose();
+
             scraperTasks.Clear();
             scrapableMetrics.Clear();
+        }
+
+        private void ScrapeOnDispose()
+        {
+            if (!scrapeOnDispose)
+                return;
+
+            new Scraper(sender, errorCallback)
+                .ScrapeOnce(scrapableMetrics.SelectMany(m => m.Value));
+        }
+
+        private void ScrapeOnDispose(IScrapableMetric metric)
+        {
+            if (!scrapeOnDispose)
+                return;
+
+            new Scraper(sender, errorCallback)
+                .ScrapeOnce(new[] {metric});
         }
 
         private (ScrapableMetrics metrics, bool created) ObtainMetricsForPeriod(TimeSpan scrapePeriod)
@@ -66,21 +95,6 @@ namespace Vostok.Metrics.Scraping
                 return (newMetrics, true);
 
             return (scrapableMetrics[scrapePeriod], false);
-        }
-
-        private class Registration : IDisposable
-        {
-            private readonly IScrapableMetric metric;
-            private readonly ScrapableMetrics metrics;
-
-            public Registration(IScrapableMetric metric, ScrapableMetrics metrics)
-            {
-                this.metric = metric;
-                this.metrics = metrics;
-            }
-
-            public void Dispose()
-                => metrics.Remove(metric);
         }
     }
 }
