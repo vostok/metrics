@@ -8,5 +8,7 @@ namespace Vostok.Metrics.Primitives.Gauge
     public interface IFuncGauge
     {
         void SetValueProvider([NotNull] Func<double> valueProvider);
+
+        void SetValueProvider([NotNull] Func<double?> valueProvider);
     }
 }

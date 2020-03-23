@@ -1,3 +1,4 @@
-<# model = new MetricExtensionsModel("FuncGauge", "[NotNull] Func<double> valueProvider, ", "valueProvider, ") {
-    MetricNamespace = "Vostok.Metrics.Primitives.Gauge"}; #>
+<# model = new MetricExtensionsModel("FuncGauge") {
+    MetricNamespace = "Vostok.Metrics.Primitives.Gauge",
+    NoGenerateCreate = true}; #>
 <#@ include file="./../../Codegen/FactoryExtensions.ttinclude" once="true" #>
