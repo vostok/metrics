@@ -1,3 +1,7 @@
+## 0.2.9 (24.03.2020):
+
+- Added new `CreateFuncGauge` extension with nullable values provider (`Func<double?> valueProvider`).
+
 ## 0.2.8 (16.03.2020):
 
 - Increase default scrape period for counters from 1 second to 1 minute.
