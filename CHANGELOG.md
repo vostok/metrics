@@ -1,3 +1,7 @@
+## 0.2.10 (24.03.2020):
+
+Reverted potentially breaking changes from 0.2.9.
+
 ## 0.2.9 (24.03.2020):
 
 - Added new `CreateFuncGauge` extension with nullable values provider (`Func<double?> valueProvider`).
