@@ -7,6 +7,7 @@ using NUnit.Framework;
 using Vostok.Metrics.Models;
 using Vostok.Metrics.Primitives.Gauge;
 using Vostok.Metrics.Senders;
+// ReSharper disable AccessToModifiedClosure
 
 namespace Vostok.Metrics.Tests.Primitives.Gauge
 {
@@ -39,6 +40,21 @@ namespace Vostok.Metrics.Tests.Primitives.Gauge
 
             value = 2;
             Scrape(gauge).Value.Should().Be(2);
+        }
+
+        [Test]
+        public void Should_not_scrape_null_func_value()
+        {
+            double? nullableValue = 5;
+            var gauge = context.CreateFuncGauge("name", () => nullableValue);
+
+            Scrape(gauge).Value.Should().Be(5);
+
+            nullableValue = null;
+            Scrape(gauge).Should().BeNull();
+
+            nullableValue = 6;
+            Scrape(gauge).Value.Should().Be(6);
         }
 
         [Test]
@@ -103,7 +119,7 @@ namespace Vostok.Metrics.Tests.Primitives.Gauge
 
         private static MetricEvent Scrape(IFuncGauge gauge, DateTimeOffset? timestamp = null)
         {
-            return ((FuncGauge)gauge).Scrape(timestamp ?? DateTimeOffset.Now).Single();
+            return ((FuncGauge)gauge).Scrape(timestamp ?? DateTimeOffset.Now).FirstOrDefault();
         }
     }
 }
