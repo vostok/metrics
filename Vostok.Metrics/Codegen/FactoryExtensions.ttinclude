@@ -11,14 +11,16 @@ namespace <#= model.MetricNamespace #>
     [PublicAPI]
     public static class <#= model.ExtensionClassName #>
     {
-<# if (!model.NoGenerateCreate) { #>
+<# if (model.CustomCreate != null) { this.Write(model.CustomCreate); } #>
+
+<# if (model.CustomCreate == null) { #>
         /// <inheritdoc cref="<#= model.InheritDocType #>"/>
         /// <param name="context">Context this metric will belong to.</param>
         /// <param name="name">Name of the metric. It will be added to event's <see cref="MetricEvent.Tags"/> with key set to <see cref="Vostok.Metrics.WellKnownTagKeys.Name"/>.</param>
         /// <param name="config">Optional metric-specific config.</param>
         [NotNull]
         public static <#= model.MetricInterface #> Create<#= model.MetricClass #>([NotNull] this IMetricContext context, [NotNull] string name, [CanBeNull] <#= model.MetricConfigClass #> config = null)
-			<# if (model.UseCaching) { this.Write("=> GlobalCache.Obtain(context, name, null, () "); } #>=> new <#= model.MetricClass #>(context, MetricTagsMerger.Merge(context.Tags, name), config ?? <#= model.MetricConfigClass #>.Default)<# if (model.UseCaching) { this.Write(")"); } #>;
+            <# if (model.UseCaching) { this.Write("=> GlobalCache.Obtain(context, name, null, () "); } #>=> new <#= model.MetricClass #>(context, MetricTagsMerger.Merge(context.Tags, name), config ?? <#= model.MetricConfigClass #>.Default)<# if (model.UseCaching) { this.Write(")"); } #>;
 <# } #>
 
         #region Metric group extensions
@@ -87,7 +89,7 @@ class MetricExtensionsModel
     public string MetricNamespace { get; set; }
     public string ExtensionClassName { get; set; }
     public string InheritDocType { get; set; }
-    public bool NoGenerateCreate { get; set; }
+    public string CustomCreate { get; set; }
     public bool UseCaching { get; set; }
 
     public MetricExtensionsModel(string metricClass)
