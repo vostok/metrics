@@ -15,7 +15,7 @@ namespace Vostok.Metrics.Tests.Models
         [Test]
         public void Should_not_accept_empty_tags_with_null_name()
         {
-            Action action = () => point = new MetricDataPoint(1);
+            Action action = () => new MetricDataPoint(1).ToMetricEvent(MetricTags.Empty);
 
             action.Should().Throw<ArgumentException>().Which.ShouldBePrinted();
         }
@@ -23,7 +23,7 @@ namespace Vostok.Metrics.Tests.Models
         [Test]
         public void Should_not_accept_empty_tags_with_empty_name()
         {
-            Action action = () => point = new MetricDataPoint(1, "");
+            Action action = () => new MetricDataPoint(1).ToMetricEvent(MetricTags.Empty);
 
             action.Should().Throw<ArgumentException>().Which.ShouldBePrinted();
         }

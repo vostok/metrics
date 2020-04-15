@@ -39,9 +39,6 @@ namespace Vostok.Metrics.Models
 
             if (Tags == null)
                 throw new ArgumentNullException(nameof(tags));
-
-            if (string.IsNullOrEmpty(name) && Tags.Count == 0)
-                throw new ArgumentException("Tags can't be empty when there's no name.", nameof(tags));
         }
 
         /// <inheritdoc cref="MetricEvent.Value"/>
@@ -66,13 +63,20 @@ namespace Vostok.Metrics.Models
 
         [NotNull]
         public MetricEvent ToMetricEvent([NotNull] MetricTags contextTags)
-            => new MetricEvent(
+        {
+            var metricTags = MetricTagsMerger.Merge(contextTags, Name, ConvertTags());
+
+            if (!metricTags.Any())
+                throw new ArgumentException("Tags can't be empty when there's no name and no point tags.", nameof(contextTags));
+
+            return new MetricEvent(
                 Value,
-                MetricTagsMerger.Merge(contextTags, Name, ConvertTags()),
+                metricTags,
                 Timestamp ?? DateTimeOffset.Now,
                 Unit,
                 null,
                 null);
+        }
 
         [NotNull]
         private MetricTag[] ConvertTags()
