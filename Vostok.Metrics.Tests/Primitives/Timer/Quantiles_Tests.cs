@@ -38,7 +38,7 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
         [TestCase(0.999999, "p999999")]
         public void QuantileTags_should_works_for_double_percentiles(double quantile, string expected)
         {
-            Quantiles.QuantileTags(new[] {quantile}, MetricTags.Empty).Single().First().Value.Should().Be(expected);
+            Quantiles.QuantileTag(quantile).Value.Should().Be(expected);
         }
     }
 }

@@ -39,28 +39,31 @@ namespace Vostok.Metrics.Primitives.Timer
         /// </summary>
         public static MetricTags[] QuantileTags(double[] quantiles, MetricTags baseTags)
         {
-            const double epsilon = 1e-9;
             var quantileTags = new MetricTags[quantiles.Length];
 
             for (var i = 0; i < quantiles.Length; i++)
-            {
-                var quantileValue = quantiles[i];
-                if (quantileValue < 0d || quantileValue > 1d)
-                    throw new ArgumentOutOfRangeException(nameof(quantiles), $"One of provided quantiles has incorrect value '{quantileValue}'.");
-
-                quantileValue *= 100d;
-
-                for (var d = 0; d < 6; d++)
-                {
-                    if (Math.Abs(Math.Round(quantileValue, MidpointRounding.AwayFromZero) - quantileValue) < epsilon)
-                        break;
-                    quantileValue *= 10d;
-                }
-
-                quantileTags[i] = baseTags.Append(WellKnownTagKeys.Aggregate, "p" + (int)Math.Round(quantileValue, MidpointRounding.AwayFromZero));
-            }
+                quantileTags[i] = baseTags.Append(QuantileTag(quantiles[i]));
 
             return quantileTags;
+        }
+
+        public static MetricTag QuantileTag(double quantile)
+        {
+            const double epsilon = 1e-9;
+
+            if (quantile < 0d || quantile > 1d)
+                throw new ArgumentOutOfRangeException(nameof(quantile), $"Provided quantile has incorrect value '{quantile}'.");
+
+            quantile *= 100d;
+
+            for (var d = 0; d < 6; d++)
+            {
+                if (Math.Abs(Math.Round(quantile, MidpointRounding.AwayFromZero) - quantile) < epsilon)
+                    break;
+                quantile *= 10d;
+            }
+
+            return new MetricTag(WellKnownTagKeys.Aggregate, "p" + (int)Math.Round(quantile, MidpointRounding.AwayFromZero));
         }
     }
 }
