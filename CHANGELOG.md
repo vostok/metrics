@@ -1,3 +1,8 @@
+## 0.2.12 (16.04.2020):
+
+- Allow emtpy tags in `MetricDataPoint`.
+- Make `Quantiles.QuantileTag` method public.
+
 ## 0.2.11 (27.03.2020):
 
 - Added new `CreateFuncGauge` extension with nullable values provider (`Func<double?> valueProvider`).
