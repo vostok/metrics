@@ -1,3 +1,7 @@
+## 0.2.13 (17.06.2020):
+
+- Added `MetricContextProvider`.
+
 ## 0.2.12 (16.04.2020):
 
 - Allow emtpy tags in `MetricDataPoint`.
