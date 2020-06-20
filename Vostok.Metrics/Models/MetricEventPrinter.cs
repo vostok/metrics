@@ -16,18 +16,41 @@ namespace Vostok.Metrics.Models
         private const char Comma = ',';
         private const char Colon = ':';
         private const char Space = ' ';
+        private const char Equal = '=';
 
         [NotNull]
-        public static string Print([NotNull] MetricEvent @event)
+        public static string Print([NotNull] MetricEvent @event, MetricEventPrintFormat format)
         {
             var builder = new StringBuilder();
 
-            Print(@event, builder);
+            switch (format)
+            {
+                case MetricEventPrintFormat.Json:
+                    PrintJson(@event, builder);
+                    break;
 
+                case MetricEventPrintFormat.Flat:
+                    PrintFlat(@event, builder);
+                    break;
+            }
+          
             return builder.ToString();
         }
 
-        private static void Print([NotNull] MetricEvent @event, [NotNull] StringBuilder builder)
+        private static void PrintFlat([NotNull] MetricEvent @event, [NotNull] StringBuilder builder)
+        {
+            builder
+                .Append(string.Join(".", @event.Tags.Select(tag => tag.Value)))
+                .Append(Space)
+                .Append(Equal)
+                .Append(Space)
+                .Append(@event.Value.ToString("0.000", CultureInfo.InvariantCulture));
+
+            if (!string.IsNullOrEmpty(@event.Unit))
+                builder.Append(Space).Append(@event.Unit);
+        }
+
+        private static void PrintJson([NotNull] MetricEvent @event, [NotNull] StringBuilder builder)
         {
             builder.AppendLine(OpeningCurlyBracket);
 
