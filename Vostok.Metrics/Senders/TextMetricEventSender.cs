@@ -5,15 +5,15 @@ using Vostok.Metrics.Models;
 namespace Vostok.Metrics.Senders
 {
     /// <summary>
-    /// Prints incoming <see cref="MetricEvent"/>s to text and executes an arbitrary delegate on them.
+    /// Renders incoming <see cref="MetricEvent"/>s to text and executes an arbitrary delegate on them.
     /// </summary>
     [PublicAPI]
-    public class PrintedMetricEventSender : IMetricEventSender
+    public class TextMetricEventSender : IMetricEventSender
     {
         private readonly Action<string> send;
         private readonly MetricEventPrintFormat format;
 
-        public PrintedMetricEventSender([NotNull] Action<string> send, MetricEventPrintFormat format)
+        public TextMetricEventSender([NotNull] Action<string> send, MetricEventPrintFormat format)
         {
             this.send = send ?? throw new ArgumentNullException(nameof(send));
             this.format = format;

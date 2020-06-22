@@ -8,7 +8,7 @@ namespace Vostok.Metrics.Senders
     /// Prints incoming <see cref="MetricEvent"/>s to system console.
     /// </summary>
     [PublicAPI]
-    public class ConsoleMetricEventSender : PrintedMetricEventSender
+    public class ConsoleMetricEventSender : TextMetricEventSender
     {
         public ConsoleMetricEventSender(MetricEventPrintFormat format)
             : base(Console.Out.WriteLine, format)
