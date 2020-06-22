@@ -1,3 +1,8 @@
+## 0.2.14 (22.06.2020):
+
+Added an easy-to-use way to print all metric events for debug purposes.
+This includes static global senders in `MetricContext` and new diagnostic senders: `ConsoleMetricEventSender` and `TextMetricEventSender`.
+
 ## 0.2.13 (17.06.2020):
 
 - Added `MetricContextProvider`.
