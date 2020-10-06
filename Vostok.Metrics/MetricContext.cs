@@ -6,6 +6,8 @@ using Vostok.Metrics.Primitives.Counter;
 using Vostok.Metrics.Scraping;
 using Vostok.Metrics.Senders;
 
+// ReSharper disable SuspiciousTypeConversion.Global
+
 namespace Vostok.Metrics
 {
     /// <inheritdoc cref="IMetricContext"/>
@@ -28,7 +30,9 @@ namespace Vostok.Metrics
             this.config = config ?? throw new ArgumentNullException(nameof(config));
 
             metricSender = new CompositeDynamicMetricEventSender(config.Sender, () => globalMetricSenders);
-            annotationSender = new CompositeDynamicAnnotationEventSender(config.AnnotationSender ?? new DevNullAnnotationEventSender(), () => globalAnnotationSenders);
+
+            annotationSender = new CompositeDynamicAnnotationEventSender(
+                config.AnnotationSender ?? config.Sender as IAnnotationEventSender ?? new DevNullAnnotationEventSender(), () => globalAnnotationSenders);
 
             scheduler = new ScrapeScheduler(metricSender, config.ErrorCallback);
             fastScheduler = new ScrapeScheduler(metricSender, config.ErrorCallback);
