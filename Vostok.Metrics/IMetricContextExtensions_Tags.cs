@@ -49,6 +49,9 @@ namespace Vostok.Metrics
 
             public void Send(MetricEvent @event)
                 => BaseContext.Send(@event);
+
+            public void Send(AnnotationEvent @event)
+                => BaseContext.Send(@event);
         }
     }
 }

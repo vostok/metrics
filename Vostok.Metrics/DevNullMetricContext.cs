@@ -20,6 +20,10 @@ namespace Vostok.Metrics
         {
         }
 
+        public void Send(AnnotationEvent @event)
+        {
+        }
+
         private class DummyRegistrationToken : IDisposable
         {
             public void Dispose()

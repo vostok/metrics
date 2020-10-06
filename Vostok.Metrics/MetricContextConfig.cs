@@ -12,15 +12,19 @@ namespace Vostok.Metrics
     public class MetricContextConfig
     {
         public MetricContextConfig([NotNull] IMetricEventSender sender)
-        {
-            Sender = sender ?? throw new ArgumentNullException(nameof(sender));
-        }
+            => Sender = sender ?? throw new ArgumentNullException(nameof(sender));
 
         /// <summary>
         /// Sender used to offload <see cref="MetricEvent"/>s for further processing.
         /// </summary>
         [NotNull]
         public IMetricEventSender Sender { get; }
+
+        /// <summary>
+        /// Sender used to offload <see cref="AnnotationEvent"/>s for further processing.
+        /// </summary>
+        [CanBeNull]
+        public IAnnotationEventSender AnnotationSender { get; set; }
 
         /// <summary>
         /// A set of tags inherent to every metric produced with configured context instance.

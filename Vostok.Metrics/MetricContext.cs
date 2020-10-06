@@ -12,10 +12,13 @@ namespace Vostok.Metrics
     [PublicAPI]
     public class MetricContext : IMetricContext, IDisposable
     {
-        private static volatile IMetricEventSender[] globalSenders = Array.Empty<IMetricEventSender>();
+        private static IMetricEventSender[] globalMetricSenders = Array.Empty<IMetricEventSender>();
+        private static IAnnotationEventSender[] globalAnnotationSenders = Array.Empty<IAnnotationEventSender>();
 
         private readonly MetricContextConfig config;
-        private readonly IMetricEventSender sender;
+        private readonly IMetricEventSender metricSender;
+        private readonly IAnnotationEventSender annotationSender;
+
         private readonly ScrapeScheduler scheduler;
         private readonly ScrapeScheduler fastScheduler;
         private readonly ScrapeScheduler scrapeOnDisposeScheduler;
@@ -24,26 +27,19 @@ namespace Vostok.Metrics
         {
             this.config = config ?? throw new ArgumentNullException(nameof(config));
 
-            sender = new CompositeDynamicMetricEventSender(config.Sender, () => globalSenders);
-            scheduler = new ScrapeScheduler(sender, config.ErrorCallback);
-            fastScheduler = new ScrapeScheduler(sender, config.ErrorCallback);
-            scrapeOnDisposeScheduler = new ScrapeScheduler(sender, config.ErrorCallback, true);
+            metricSender = new CompositeDynamicMetricEventSender(config.Sender, () => globalMetricSenders);
+            annotationSender = new CompositeDynamicAnnotationEventSender(config.AnnotationSender ?? new DevNullAnnotationEventSender(), () => globalAnnotationSenders);
+
+            scheduler = new ScrapeScheduler(metricSender, config.ErrorCallback);
+            fastScheduler = new ScrapeScheduler(metricSender, config.ErrorCallback);
+            scrapeOnDisposeScheduler = new ScrapeScheduler(metricSender, config.ErrorCallback, true);
         }
 
         public static void AddGlobalSender([NotNull] IMetricEventSender sender)
-        {
-            if (sender == null)
-                throw new ArgumentNullException(nameof(sender));
+            => AddGlobalSender(sender, ref globalMetricSenders);
 
-            var oldGlobalSenders = globalSenders;
-            var newGlobalSenders = new IMetricEventSender[oldGlobalSenders.Length + 1];
-
-            Array.Copy(oldGlobalSenders, newGlobalSenders, oldGlobalSenders.Length);
-
-            newGlobalSenders[oldGlobalSenders.Length] = sender;
-
-            Interlocked.Exchange(ref globalSenders, newGlobalSenders);
-        }
+        public static void AddGlobalSender([NotNull] IAnnotationEventSender sender)
+            => AddGlobalSender(sender, ref globalAnnotationSenders);
 
         public MetricTags Tags => config.Tags ?? MetricTags.Empty;
 
@@ -52,13 +48,31 @@ namespace Vostok.Metrics
                 .Register(metric, scrapePeriod ?? config.DefaultScrapePeriod);
 
         public void Send(MetricEvent @event)
-            => sender.Send(@event);
+            => metricSender.Send(@event);
+
+        public void Send(AnnotationEvent @event)
+            => annotationSender.Send(@event);
 
         public void Dispose()
         {
             scheduler.Dispose();
             fastScheduler.Dispose();
             scrapeOnDisposeScheduler.Dispose();
+        }
+
+        private static void AddGlobalSender<TSender>([NotNull] TSender sender, ref TSender[] globalSenders)
+        {
+            if (sender == null)
+                throw new ArgumentNullException(nameof(sender));
+
+            var oldGlobalSenders = globalSenders;
+            var newGlobalSenders = new TSender[oldGlobalSenders.Length + 1];
+
+            Array.Copy(oldGlobalSenders, newGlobalSenders, oldGlobalSenders.Length);
+
+            newGlobalSenders[oldGlobalSenders.Length] = sender;
+
+            Interlocked.Exchange(ref globalSenders, newGlobalSenders);
         }
 
         private ScrapeScheduler GetScheduler(IScrapableMetric metric)
