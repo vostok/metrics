@@ -38,6 +38,8 @@ namespace Vostok.Metrics.Models
         [NotNull]
         public string Description { get; }
 
+        public override string ToString() => EventPrinter.Print(this);
+
         #region Equality members
 
         public bool Equals(AnnotationEvent other)
