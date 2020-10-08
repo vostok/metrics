@@ -20,15 +20,10 @@ namespace Vostok.Metrics
             [NotNull] params (string key, string value)[] tags)
             => context.Send(CreateAnnotationEvent(context.Tags, tags, description));
 
-        public static void SendAnnotation(
-            [NotNull] this IMetricContext context,
-            [NotNull] params (string key, string value)[] tags)
-            => context.Send(CreateAnnotationEvent(context.Tags, tags, null));
-
         private static AnnotationEvent CreateAnnotationEvent(
             [NotNull] MetricTags contextTags, 
             [NotNull] (string key, string value)[] customTags,
-            [CanBeNull] string description)
+            [NotNull] string description)
         {
             var eventTags = contextTags.Append(customTags.Select(pair => new MetricTag(pair.key, pair.value)).ToArray());
 

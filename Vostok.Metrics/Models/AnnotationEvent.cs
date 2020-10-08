@@ -6,15 +6,18 @@ namespace Vostok.Metrics.Models
     [PublicAPI]
     public class AnnotationEvent : IEquatable<AnnotationEvent>
     {
-        public AnnotationEvent(DateTimeOffset timestamp, [NotNull] MetricTags tags, [CanBeNull] string description)
+        public AnnotationEvent(DateTimeOffset timestamp, [NotNull] MetricTags tags, [NotNull] string description)
         {
             Tags = tags ?? throw new ArgumentNullException(nameof(tags));
+            Description = description ?? throw new ArgumentNullException(nameof(description));
 
             if (tags.Count == 0)
                 throw new ArgumentException("Empty tags are not allowed in annotation events.", nameof(tags));
 
+            if (string.IsNullOrEmpty(description))
+                throw new ArgumentException("Empty description is not allowed in annotation events.", nameof(description));
+
             Timestamp = timestamp;
-            Description = description;
         }
 
         /// <summary>
@@ -32,7 +35,7 @@ namespace Vostok.Metrics.Models
         /// <summary>
         /// A free-form text description of the described event.
         /// </summary>
-        [CanBeNull]
+        [NotNull]
         public string Description { get; }
 
         #region Equality members
