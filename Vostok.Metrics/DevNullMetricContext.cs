@@ -9,7 +9,7 @@ namespace Vostok.Metrics
     /// A trivial implementation of <see cref="IMetricContext"/> that simply does nothing.
     /// </summary>
     [PublicAPI]
-    public class DevNullMetricContext : IMetricContext
+    public class DevNullMetricContext : IMetricContext, IAnnotationContext
     {
         public MetricTags Tags => MetricTags.Empty;
 

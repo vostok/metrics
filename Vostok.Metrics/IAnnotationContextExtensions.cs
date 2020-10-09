@@ -11,7 +11,7 @@ namespace Vostok.Metrics
         /// <summary>
         /// Converts given <paramref name="description"/> and <paramref name="tags"/> to an <see cref="AnnotationEvent"/> using given <paramref name="context"/>'s tags and sends it for further processing.
         /// </summary>
-        public static void SendAnnotation(
+        public static void Send(
             [NotNull] this IAnnotationContext context,
             [NotNull] string description,
             [NotNull] params (string key, string value)[] tags)

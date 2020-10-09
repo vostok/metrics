@@ -20,6 +20,6 @@ namespace Vostok.Metrics
             [NotNull] this IMetricContext context,
             [NotNull] string description,
             [NotNull] params (string key, string value)[] tags)
-            => context.AsAnnotationContext().SendAnnotation(description, tags);
+            => context.AsAnnotationContext().Send(description, tags);
     }
 }
