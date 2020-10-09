@@ -30,12 +30,6 @@ namespace Vostok.Metrics
         void Send([NotNull] MetricEvent @event);
 
         /// <summary>
-        /// <para>Sends given <see cref="AnnotationEvent"/> for further processing.</para>
-        /// <para>Use this method directly to send events with complete tags.</para>
-        /// </summary>
-        void Send([NotNull] AnnotationEvent @event);
-
-        /// <summary>
         /// <para>Registers an instance of <see cref="IScrapableMetric"/> for scraping.</para>
         /// <para>
         /// Once per <paramref name="scrapePeriod"/> the <see cref="IScrapableMetric.Scrape"/> method

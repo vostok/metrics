@@ -12,7 +12,7 @@ namespace Vostok.Metrics
 {
     /// <inheritdoc cref="IMetricContext"/>
     [PublicAPI]
-    public class MetricContext : IMetricContext, IDisposable
+    public class MetricContext : IMetricContext, IAnnotationContext, IDisposable
     {
         private static IMetricEventSender[] globalMetricSenders = Array.Empty<IMetricEventSender>();
         private static IAnnotationEventSender[] globalAnnotationSenders = Array.Empty<IAnnotationEventSender>();
