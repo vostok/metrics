@@ -84,7 +84,7 @@ namespace Vostok.Metrics.Models
         [CanBeNull]
         public IReadOnlyDictionary<string, string> AggregationParameters { get; }
 
-        public override string ToString() => MetricEventPrinter.Print(this, MetricEventPrintFormat.Json);
+        public override string ToString() => EventPrinter.Print(this, MetricEventPrintFormat.Json);
 
         #region Equality
 

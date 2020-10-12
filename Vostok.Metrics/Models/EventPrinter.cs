@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 
 namespace Vostok.Metrics.Models
 {
-    internal static class MetricEventPrinter
+    internal static class EventPrinter
     {
         private const string OpeningCurlyBracket = "{";
         private const string ClosingCurlyBracket = "}";
@@ -34,6 +34,16 @@ namespace Vostok.Metrics.Models
                     break;
             }
           
+            return builder.ToString();
+        }
+
+        [NotNull]
+        public static string Print([NotNull] AnnotationEvent @event)
+        {
+            var builder = new StringBuilder();
+
+            PrintJson(@event, builder);
+
             return builder.ToString();
         }
 
@@ -67,6 +77,20 @@ namespace Vostok.Metrics.Models
 
             if (@event.AggregationParameters != null)
                 PrintObject(builder, nameof(MetricEvent.AggregationParameters), @event.AggregationParameters.Select(pair => (pair.Key, pair.Value)));
+
+            builder.RemoveCommaBeforeNewline();
+            builder.AppendLine(ClosingCurlyBracket);
+        }
+
+        private static void PrintJson([NotNull] AnnotationEvent @event, [NotNull] StringBuilder builder)
+        {
+            builder.AppendLine(OpeningCurlyBracket);
+
+            PrintProperty(builder, nameof(AnnotationEvent.Timestamp), @event.Timestamp.ToString("O", CultureInfo.InvariantCulture), 1);
+            
+            PrintProperty(builder, nameof(AnnotationEvent.Description), @event.Timestamp.ToString("O", CultureInfo.InvariantCulture), 1);
+            
+            PrintObject(builder, nameof(AnnotationEvent.Tags), @event.Tags.Select(tag => (tag.Key, tag.Value)));
 
             builder.RemoveCommaBeforeNewline();
             builder.AppendLine(ClosingCurlyBracket);

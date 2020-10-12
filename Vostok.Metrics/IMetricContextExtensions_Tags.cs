@@ -32,7 +32,7 @@ namespace Vostok.Metrics
         public static IMetricContext OverwriteTags([NotNull] this IMetricContext context, [CanBeNull] MetricTags newTags)
             => new OverwriteTagsWrapper(context, newTags);
 
-        private class OverwriteTagsWrapper : IMetricContext, IMetricContextWrapper
+        private class OverwriteTagsWrapper : IMetricContext, IAnnotationContext, IMetricContextWrapper
         {
             public OverwriteTagsWrapper(IMetricContext context, MetricTags tags)
             {
@@ -49,6 +49,9 @@ namespace Vostok.Metrics
 
             public void Send(MetricEvent @event)
                 => BaseContext.Send(@event);
+
+            public void Send(AnnotationEvent @event)
+                => BaseContext.AsAnnotationContext().Send(@event);
         }
     }
 }

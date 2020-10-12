@@ -20,6 +20,6 @@ namespace Vostok.Metrics.Senders
         }
 
         public void Send(MetricEvent @event)
-            => send(MetricEventPrinter.Print(@event, format));
+            => send(EventPrinter.Print(@event, format));
     }
 }
