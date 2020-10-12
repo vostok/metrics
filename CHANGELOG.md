@@ -1,3 +1,7 @@
+## 0.2.15 (12.10.2020):
+
+Added support for annotations (AnnotationEvent, IAnnotationContext).
+
 ## 0.2.14 (22.06.2020):
 
 Added an easy-to-use way to print all metric events for debug purposes.
