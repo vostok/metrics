@@ -39,7 +39,7 @@ namespace Vostok.Metrics.Primitives.Gauge
         public IEnumerable<MetricEvent> Scrape(DateTimeOffset timestamp)
         {
             var value = valueProvider?.Invoke();
-            if (value != null)
+            if (value != null && (value != 0 || config.SendZeroValues))
                 yield return new MetricEvent(value.Value, tags, timestamp, config.Unit, null, null);
         }
 

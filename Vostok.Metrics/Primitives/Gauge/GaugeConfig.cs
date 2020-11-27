@@ -19,5 +19,10 @@ namespace Vostok.Metrics.Primitives.Gauge
         /// </summary>
         [CanBeNull]
         public TimeSpan? ScrapePeriod { get; set; }
+
+        /// <summary>
+        /// Whether or not to send gauge with zero value.
+        /// </summary>
+        public bool SendZeroValues { get; set; } = true;
     }
 }

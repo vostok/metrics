@@ -35,7 +35,8 @@ namespace Vostok.Metrics.Primitives.Gauge
                 ? Interlocked.Exchange(ref value, config.InitialValue)
                 : CurrentValue;
 
-            yield return new MetricEvent(valueToReport, tags, timestamp, config.Unit, null, null);
+            if (valueToReport != 0 || config.SendZeroValues)
+                yield return new MetricEvent(valueToReport, tags, timestamp, config.Unit, null, null);
         }
 
         public void Set(double newValue)

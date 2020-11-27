@@ -1,3 +1,7 @@
+## 0.2.16 (27.11.2020):
+
+- Added `SendZeroValues` setting to `GaugeConfig`.
+
 ## 0.2.15 (12.10.2020):
 
 Added support for annotations (AnnotationEvent, IAnnotationContext).
