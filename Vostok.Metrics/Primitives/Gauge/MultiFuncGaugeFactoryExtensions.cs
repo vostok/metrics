@@ -14,5 +14,11 @@ namespace Vostok.Metrics.Primitives.Gauge
             [NotNull] Func<IEnumerable<MetricDataPoint>> pointProvider,
             [CanBeNull] FuncGaugeConfig config = null)
             => new MultiFuncGauge(context, pointProvider, config ?? FuncGaugeConfig.Default);
+        
+        public static IMultiFuncGauge CreateMultiFuncGauge(
+            [NotNull] this IMetricContext context,
+            [NotNull] Func<IEnumerable<MetricEvent>> eventsProvider,
+            [CanBeNull] FuncGaugeConfig config = null)
+            => new MultiFuncGauge(context, eventsProvider, config ?? FuncGaugeConfig.Default);
     }
 }
