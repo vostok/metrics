@@ -13,13 +13,26 @@ namespace Vostok.Metrics.Primitives.Gauge
         private readonly FuncGaugeConfig config;
         private readonly IDisposable registration;
         private readonly Func<IEnumerable<MetricDataPoint>> pointsProvider;
+        private readonly Func<IEnumerable<MetricEvent>> eventsProvider;
+
+        public MultiFuncGauge(
+            [NotNull] IMetricContext context,
+            [NotNull] Func<IEnumerable<MetricEvent>> eventsProvider,
+            [NotNull] FuncGaugeConfig config)
+            : this(context, config) =>
+            this.eventsProvider = eventsProvider ?? throw new ArgumentNullException(nameof(eventsProvider));
 
         public MultiFuncGauge(
             [NotNull] IMetricContext context,
             [NotNull] Func<IEnumerable<MetricDataPoint>> pointsProvider,
             [NotNull] FuncGaugeConfig config)
-        {
+            : this(context, config) =>
             this.pointsProvider = pointsProvider ?? throw new ArgumentNullException(nameof(pointsProvider));
+
+        private MultiFuncGauge(
+            [NotNull] IMetricContext context,
+            [NotNull] FuncGaugeConfig config)
+        {
             this.config = config ?? throw new ArgumentNullException(nameof(config));
 
             contextTags = context.Tags;
@@ -30,7 +43,13 @@ namespace Vostok.Metrics.Primitives.Gauge
             => registration.Dispose();
 
         public IEnumerable<MetricEvent> Scrape(DateTimeOffset timestamp)
-            => pointsProvider().Select(point => CreateEvent(point, timestamp));
+        {
+            if (pointsProvider != null)
+                return pointsProvider().Select(point => CreateEvent(point, timestamp));
+            if (eventsProvider != null)
+                return eventsProvider().Select(@event => CreateEvent(@event, timestamp));
+            return Array.Empty<MetricEvent>();
+        }
 
         private MetricEvent CreateEvent(MetricDataPoint point, DateTimeOffset timestamp)
         {
@@ -38,6 +57,17 @@ namespace Vostok.Metrics.Primitives.Gauge
             point.Unit = point.Unit ?? config.Unit;
 
             return point.ToMetricEvent(contextTags);
+        }
+
+        private MetricEvent CreateEvent(MetricEvent @event, DateTimeOffset timestamp)
+        {
+            return new MetricEvent(
+                @event.Value,
+                contextTags.Append(@event.Tags),
+                timestamp,
+                @event.Unit,
+                @event.AggregationType,
+                @event.AggregationParameters);
         }
     }
 }
