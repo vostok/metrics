@@ -1,3 +1,7 @@
+## 0.2.19 (25.02.2021):
+
+Added `CreateMultiFuncGaugeFromEvents` extension.
+
 ## 0.2.16 (27.11.2020):
 
 - Added `SendZeroValues` setting to `GaugeConfig`.
