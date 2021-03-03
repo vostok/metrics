@@ -50,9 +50,10 @@ namespace Vostok.Metrics.Primitives.Timer
         {
             this.config = config ?? throw new ArgumentNullException(nameof(config));
 
-            quantileBuilder = new QuantileMetricsBuilder(config.Quantiles, tags, config.Unit);
-            registration = context.Register(this, config.ScrapePeriod);
             sample = new double[config.BufferSize];
+            quantileBuilder = new QuantileMetricsBuilder(config.Quantiles, tags, config.Unit);
+
+            registration = context.Register(this, config.ScrapePeriod);
         }
 
         public string Unit => config.Unit;
