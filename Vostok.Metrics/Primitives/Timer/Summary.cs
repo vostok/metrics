@@ -42,7 +42,7 @@ namespace Vostok.Metrics.Primitives.Timer
 
         private readonly QuantileMetricsBuilder quantileBuilder;
         private readonly double[] sample;
-        private readonly object snapshotSync;
+        private readonly object snapshotSync = new object();
         private double[] snapshot;
         private int count;
 
@@ -53,7 +53,6 @@ namespace Vostok.Metrics.Primitives.Timer
             quantileBuilder = new QuantileMetricsBuilder(config.Quantiles, tags, config.Unit);
             registration = context.Register(this, config.ScrapePeriod);
             sample = new double[config.BufferSize];
-            snapshotSync = new object();
         }
 
         public string Unit => config.Unit;
