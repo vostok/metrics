@@ -16,10 +16,12 @@ namespace Vostok.Metrics.Tests.Grouping
         {
             MetricTagsExtractor.ExtractTags(new Model(123, "foo", Prop3Values.B))
                 .Should()
-                .Equal(
-                    new MetricTag("Prop2", "foo"),
-                    new MetricTag("Prop3", "B"),
-                    new MetricTag("Prop1", "123"));
+                .BeEquivalentTo(new ReadonlyInternalMetricTags(new[]
+                {
+                    new ReadonlyInternalMetricTag("Prop2", "foo"),
+                    new ReadonlyInternalMetricTag("Prop3", "B"),
+                    new ReadonlyInternalMetricTag("Prop1", "123")
+                }));
         }
 
         [Test]
@@ -27,10 +29,12 @@ namespace Vostok.Metrics.Tests.Grouping
         {
             MetricTagsExtractor.ExtractTags(new Model(123, null, Prop3Values.A))
                 .Should()
-                .Equal(
-                    new MetricTag("Prop2", "none"),
-                    new MetricTag("Prop3", "A"),
-                    new MetricTag("Prop1", "123"));
+                .BeEquivalentTo(new ReadonlyInternalMetricTags(new[]
+                {
+                    new ReadonlyInternalMetricTag("Prop2", "none"),
+                    new ReadonlyInternalMetricTag("Prop3", "A"),
+                    new ReadonlyInternalMetricTag("Prop1", "123")
+                }));
         }
 
         [Test]

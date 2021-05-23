@@ -22,12 +22,18 @@ namespace Vostok.Metrics.Tests.Grouping
 
             group.For("a", "b1")
                 .Tags.Should()
-                .BeEquivalentTo(
-                    MetricTags.Empty.Append("key1", "a").Append("key2", "b1"));
+                .BeEquivalentTo(new ReadonlyInternalMetricTags(new[]
+                {
+                    new ReadonlyInternalMetricTag("key1", "a"),
+                    new ReadonlyInternalMetricTag("key2", "b1")
+                }));
             group.For("a", "b2")
                 .Tags.Should()
-                .BeEquivalentTo(
-                    MetricTags.Empty.Append("key1", "a").Append("key2", "b2"));
+                .BeEquivalentTo(new ReadonlyInternalMetricTags(new[]
+                {
+                    new ReadonlyInternalMetricTag("key1", "a"),
+                    new ReadonlyInternalMetricTag("key2", "b2")
+                }));
         }
 
         [Test]
@@ -44,12 +50,17 @@ namespace Vostok.Metrics.Tests.Grouping
 
             group1.For("a")
                 .Tags.Should()
-                .BeEquivalentTo(
-                    MetricTags.Empty.Append("key1", "a"));
+                .BeEquivalentTo(new ReadonlyInternalMetricTags(new[]
+                {
+                    new ReadonlyInternalMetricTag("key1", "a"),
+                }));
             group2.For("a", "a")
                 .Tags.Should()
-                .BeEquivalentTo(
-                    MetricTags.Empty.Append("key1", "a").Append("key2", "a"));
+                .BeEquivalentTo(new ReadonlyInternalMetricTags(new[]
+                {
+                    new ReadonlyInternalMetricTag("key1", "a"),
+                    new ReadonlyInternalMetricTag("key2", "a")
+                }));
         }
 
         [Test]
@@ -72,10 +83,10 @@ namespace Vostok.Metrics.Tests.Grouping
 
         private class SimpleCounter
         {
-            public readonly MetricTags Tags;
+            public readonly ReadonlyInternalMetricTags Tags;
             public int Value;
 
-            public SimpleCounter(MetricTags tags)
+            public SimpleCounter(ReadonlyInternalMetricTags tags)
             {
                 Tags = tags;
             }

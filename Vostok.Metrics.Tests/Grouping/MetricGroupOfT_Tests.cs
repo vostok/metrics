@@ -26,12 +26,18 @@ namespace Vostok.Metrics.Tests.Grouping
 
             group.For(new Model2("a", "b1"))
                 .Tags.Should()
-                .BeEquivalentTo(
-                    MetricTags.Empty.Append("Prop1", "a").Append("Prop2", "b1"));
+                .BeEquivalentTo(new ReadonlyInternalMetricTags(new[]
+                {
+                    new ReadonlyInternalMetricTag("Prop1", "a"),
+                    new ReadonlyInternalMetricTag("Prop2", "b1")
+                }));
             group.For(new Model2("a", "b2"))
                 .Tags.Should()
-                .BeEquivalentTo(
-                    MetricTags.Empty.Append("Prop1", "a").Append("Prop2", "b2"));
+                .BeEquivalentTo(new ReadonlyInternalMetricTags(new[]
+                {
+                    new ReadonlyInternalMetricTag("Prop1", "a"),
+                    new ReadonlyInternalMetricTag("Prop2", "b2"),
+                }));
         }
 
         [Test]
@@ -48,12 +54,17 @@ namespace Vostok.Metrics.Tests.Grouping
 
             group1.For(new Model1("a"))
                 .Tags.Should()
-                .BeEquivalentTo(
-                    MetricTags.Empty.Append("Prop1", "a"));
+                .BeEquivalentTo(new ReadonlyInternalMetricTags(new[]
+                {
+                    new ReadonlyInternalMetricTag("Prop1", "a")
+                }));
             group2.For(new Model2("a", "a"))
                 .Tags.Should()
-                .BeEquivalentTo(
-                    MetricTags.Empty.Append("Prop1", "a").Append("Prop2", "a"));
+                .BeEquivalentTo(new ReadonlyInternalMetricTags(new[]
+                {
+                    new ReadonlyInternalMetricTag("Prop1", "a"),
+                    new ReadonlyInternalMetricTag("Prop2", "a")
+                }));
         }
 
         [Test]
@@ -92,10 +103,10 @@ namespace Vostok.Metrics.Tests.Grouping
 
         private class SimpleCounter
         {
-            public readonly MetricTags Tags;
+            public readonly ReadonlyInternalMetricTags Tags;
             public int Value;
 
-            public SimpleCounter(MetricTags tags)
+            public SimpleCounter(ReadonlyInternalMetricTags tags)
             {
                 Tags = tags;
             }

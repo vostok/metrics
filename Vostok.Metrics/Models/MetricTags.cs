@@ -1,9 +1,9 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using JetBrains.Annotations;
 
 namespace Vostok.Metrics.Models
 {
@@ -145,6 +145,76 @@ namespace Vostok.Metrics.Models
         public override bool Equals(object obj) => Equals(obj as MetricTags);
 
         public override int GetHashCode() => hashCode;
+
+        #endregion
+
+        internal MetricTags Append(ReadonlyInternalMetricTags dynamicTags)
+        {
+            var tags = dynamicTags.Items;
+            if (tags.Length == 0)
+                return this;
+
+            var currentArray = items;
+            var fitsIntoCurrentArray = currentArray.Length >= Count + tags.Length;
+            var isFirstAppend = Interlocked.Increment(ref appendsDone) == 1;
+
+            if (!isFirstAppend || !fitsIntoCurrentArray)
+            {
+                var newLength = fitsIntoCurrentArray
+                    ? items.Length
+                    : Math.Max(4, Math.Max(items.Length * 2, Count + tags.Length));
+                currentArray = new MetricTag[newLength];
+                Array.Copy(items, 0, currentArray, 0, Count);
+            }
+
+            for (var i = 0; i < tags.Length; i++)
+            {
+                var tag = tags[i];
+                Interlocked.Exchange(ref currentArray[Count + i], new MetricTag(tag.Key, tag.Value));
+            }
+
+            return new MetricTags(currentArray, Count + tags.Length);
+        }
+    }
+    
+    internal readonly struct ReadonlyInternalMetricTags : IEquatable<ReadonlyInternalMetricTags>
+    {
+        public readonly ReadonlyInternalMetricTag[] Items;
+        private readonly int hashCode;
+
+        public ReadonlyInternalMetricTags(ReadonlyInternalMetricTag[] items)
+        {
+            Items = items;
+            
+            hashCode = items.Aggregate(items.Length, (hash, tag) => (hash * 397) ^ tag.GetHashCode());
+        }
+
+        #region Equality
+
+        public bool Equals(ReadonlyInternalMetricTags other)
+        {
+            if (hashCode != other.hashCode)
+                return false;
+
+            if (Items.Length != other.Items.Length)
+                return false;
+
+            for (var i = 0; i < Items.Length; i++)
+            {
+                if (!Items[i].Equals(other.Items[i]))
+                    return false;
+            }
+
+            return true;
+        }
+
+        public override bool Equals(object obj)
+            => obj is ReadonlyInternalMetricTags other && Equals(other);
+
+        public override int GetHashCode()
+        {
+            return hashCode;
+        }
 
         #endregion
     }

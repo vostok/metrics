@@ -51,4 +51,42 @@ namespace Vostok.Metrics.Models
 
         #endregion
     }
+    
+    internal readonly struct ReadonlyInternalMetricTag : IEquatable<ReadonlyInternalMetricTag>
+    {
+        public ReadonlyInternalMetricTag([NotNull] string key, [NotNull] string value)
+        {
+            Key = key ?? throw new ArgumentNullException(nameof(key));
+            Value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        [NotNull]
+        public readonly string Key;
+
+        [NotNull]
+        public readonly string Value;
+
+        public override string ToString() =>
+            $"{{ \"{Key}\": \"{Value}\" }}";
+
+        #region Equality
+
+        public bool Equals(ReadonlyInternalMetricTag other)
+        {
+            return string.Equals(Key, other.Key) && string.Equals(Value, other.Value);
+        }
+
+        public override bool Equals(object obj)
+            => obj is ReadonlyInternalMetricTag other && Equals(other);
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (Key.GetStableHashCode() * 397) ^ Value.GetStableHashCode();
+            }
+        }
+
+        #endregion
+    }
 }

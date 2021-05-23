@@ -17,15 +17,15 @@ namespace Vostok.Metrics.Grouping
         public static bool HasTags(Type type) =>
             Cache.Obtain(type, LocateProperties).Length > 0;
 
-        public static MetricTags ExtractTags(object item)
+        public static ReadonlyInternalMetricTags ExtractTags(object item)
         {
             var properties = Cache.Obtain(item.GetType(), LocateProperties);
-            var tags = new MetricTag[properties.Length];
+            var tags = new ReadonlyInternalMetricTag[properties.Length];
 
             for (var i = 0; i < properties.Length; i++)
-                tags[i] = new MetricTag(properties[i].name, ObtainPropertyValue(item, properties[i].getter));
+                tags[i] = new ReadonlyInternalMetricTag(properties[i].name, ObtainPropertyValue(item, properties[i].getter));
 
-            return new MetricTags(tags);
+            return new ReadonlyInternalMetricTags(tags);
         }
 
         private static (string, Func<object, object>)[] LocateProperties(Type type)

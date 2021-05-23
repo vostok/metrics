@@ -223,7 +223,7 @@ namespace Vostok.Metrics.Primitives.Gauge
         private static MetricGroup<IntegerGauge> CreateMetricGroup(IMetricContext context, string name, IntegerGaugeConfig config = null, params string[] keys)
             => new MetricGroup<IntegerGauge>(MetricForTagsFactory(context, name, config ?? IntegerGaugeConfig.Default), keys);
 
-        private static Func<MetricTags, IntegerGauge> MetricForTagsFactory(IMetricContext context, string name, IntegerGaugeConfig config)
+        private static Func<ReadonlyInternalMetricTags, IntegerGauge> MetricForTagsFactory(IMetricContext context, string name, IntegerGaugeConfig config)
             => tags => new IntegerGauge(context, MetricTagsMerger.Merge(context.Tags, name, tags), config);
 
         #endregion

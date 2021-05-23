@@ -222,7 +222,7 @@ namespace Vostok.Metrics.Primitives.Timer
         private static MetricGroup<Timer> CreateMetricGroup(IMetricContext context, string name, TimerConfig config = null, params string[] keys)
             => new MetricGroup<Timer>(MetricForTagsFactory(context, name, config ?? TimerConfig.Default), keys);
 
-        private static Func<MetricTags, Timer> MetricForTagsFactory(IMetricContext context, string name, TimerConfig config)
+        private static Func<ReadonlyInternalMetricTags, Timer> MetricForTagsFactory(IMetricContext context, string name, TimerConfig config)
             => tags => new Timer(context, MetricTagsMerger.Merge(context.Tags, name, tags), config);
 
         #endregion

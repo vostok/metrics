@@ -240,7 +240,7 @@ namespace Vostok.Metrics.Primitives.Gauge
         private static MetricGroup<FuncGauge> CreateMetricGroup(IMetricContext context, string name, FuncGaugeConfig config = null, params string[] keys)
             => new MetricGroup<FuncGauge>(MetricForTagsFactory(context, name, config ?? FuncGaugeConfig.Default), keys);
 
-        private static Func<MetricTags, FuncGauge> MetricForTagsFactory(IMetricContext context, string name, FuncGaugeConfig config)
+        private static Func<ReadonlyInternalMetricTags, FuncGauge> MetricForTagsFactory(IMetricContext context, string name, FuncGaugeConfig config)
             => tags => new FuncGauge(context, MetricTagsMerger.Merge(context.Tags, name, tags), config);
 
         #endregion

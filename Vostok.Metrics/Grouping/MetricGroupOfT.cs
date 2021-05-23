@@ -5,7 +5,7 @@ namespace Vostok.Metrics.Grouping
 {
     internal class MetricGroup<TFor, TMetric> : MetricGroupBase<TMetric>, IMetricGroup<TFor, TMetric>
     {
-        public MetricGroup(Func<MetricTags, TMetric> factory)
+        public MetricGroup(Func<ReadonlyInternalMetricTags, TMetric> factory)
             : base(factory)
         {
             if (!MetricTagsExtractor.HasTags(typeof(TFor)))

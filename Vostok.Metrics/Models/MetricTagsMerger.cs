@@ -27,5 +27,15 @@ namespace Vostok.Metrics.Models
         [NotNull]
         public static MetricTags Merge([NotNull] MetricTags contextTags, [NotNull] string name)
             => contextTags.Append(WellKnownTagKeys.Name, name);
+
+        internal static MetricTags Merge(MetricTags contextTags, string name, ReadonlyInternalMetricTags dynamicTags)
+        {
+            var result = contextTags;
+
+            if (!string.IsNullOrEmpty(name))
+                result = result.Append(WellKnownTagKeys.Name, name);
+
+            return result.Append(dynamicTags);
+        }
     }
 }

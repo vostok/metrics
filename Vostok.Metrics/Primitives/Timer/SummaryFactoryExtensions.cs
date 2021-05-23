@@ -223,7 +223,7 @@ namespace Vostok.Metrics.Primitives.Timer
         private static MetricGroup<Summary> CreateMetricGroup(IMetricContext context, string name, SummaryConfig config = null, params string[] keys)
             => new MetricGroup<Summary>(MetricForTagsFactory(context, name, config ?? SummaryConfig.Default), keys);
 
-        private static Func<MetricTags, Summary> MetricForTagsFactory(IMetricContext context, string name, SummaryConfig config)
+        private static Func<ReadonlyInternalMetricTags, Summary> MetricForTagsFactory(IMetricContext context, string name, SummaryConfig config)
             => tags => new Summary(context, MetricTagsMerger.Merge(context.Tags, name, tags), config);
 
         #endregion

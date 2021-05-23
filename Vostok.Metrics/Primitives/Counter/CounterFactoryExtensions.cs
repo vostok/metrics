@@ -223,7 +223,7 @@ namespace Vostok.Metrics.Primitives.Counter
         private static MetricGroup<Counter> CreateMetricGroup(IMetricContext context, string name, CounterConfig config = null, params string[] keys)
             => new MetricGroup<Counter>(MetricForTagsFactory(context, name, config ?? CounterConfig.Default), keys);
 
-        private static Func<MetricTags, Counter> MetricForTagsFactory(IMetricContext context, string name, CounterConfig config)
+        private static Func<ReadonlyInternalMetricTags, Counter> MetricForTagsFactory(IMetricContext context, string name, CounterConfig config)
             => tags => new Counter(context, MetricTagsMerger.Merge(context.Tags, name, tags), config);
 
         #endregion
