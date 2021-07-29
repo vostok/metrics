@@ -68,7 +68,7 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
                 Thread.Sleep(0.01.Seconds());
             }
 
-            @event.Value.Should().BeGreaterThan(0.01);
+            @event.Value.Should().BeGreaterThan(0.001);
         }
 
         [Test]
@@ -79,7 +79,7 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
             var timer = context.CreateTimer("name");
 
             timer.MeasureSync(() => Thread.Sleep(0.01.Seconds()));
-            @event.Value.Should().BeGreaterThan(0.01);
+            @event.Value.Should().BeGreaterThan(0.001);
         }
 
         [Test]
@@ -96,7 +96,7 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
                 })
                 .Should()
                 .Be(42);
-            @event.Value.Should().BeGreaterThan(0.01);
+            @event.Value.Should().BeGreaterThan(0.001);
         }
 
         [Test]
@@ -112,7 +112,7 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
                 throw new Exception();
             });
             measurement.Should().Throw<Exception>();
-            @event.Value.Should().BeGreaterThan(0.01);
+            @event.Value.Should().BeGreaterThan(0.001);
         }
 
         [Test]
@@ -128,7 +128,7 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
                 throw new Exception();
             });
             measurement.Should().Throw<Exception>();
-            @event.Value.Should().BeGreaterThan(0.01);
+            @event.Value.Should().BeGreaterThan(0.001);
         }
 
         [Test]
@@ -139,7 +139,7 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
             var timer = context.CreateTimer("name");
 
             await timer.MeasureAsync(async () => await Task.Delay(0.01.Seconds()));
-            @event.Value.Should().BeGreaterThan(0.01);
+            @event.Value.Should().BeGreaterThan(0.001);
         }
 
         [Test]
@@ -156,7 +156,7 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
                 }))
                 .Should()
                 .Be(42);
-            @event.Value.Should().BeGreaterThan(0.01);
+            @event.Value.Should().BeGreaterThan(0.001);
         }
     }
 }
