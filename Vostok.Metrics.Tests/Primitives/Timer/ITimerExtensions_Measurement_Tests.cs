@@ -80,7 +80,8 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
             var timer = context.CreateTimer("name");
 
             timer.Measure(() => Thread.Sleep(0.1.Seconds()));
-            @event.Value.Should().BeApproximately(0.1, precision: 0.01);
+            @event.Value.Should().BeGreaterThan(0.1);
+            @event.Value.Should().BeLessThan(0.2);
         }
 
         [Test]
@@ -97,7 +98,8 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
                 })
                 .Should()
                 .Be(42);
-            @event.Value.Should().BeApproximately(0.1, precision: 0.01);
+            @event.Value.Should().BeGreaterThan(0.1);
+            @event.Value.Should().BeLessThan(0.2);
         }
 
         [Test]
@@ -112,7 +114,8 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
                 Thread.Sleep(0.1.Seconds());
                 throw new Exception();
             });
-            @event.Value.Should().BeApproximately(0.1, precision: 0.01);
+            @event.Value.Should().BeGreaterThan(0.1);
+            @event.Value.Should().BeLessThan(0.2);
         }
 
         [Test]
@@ -123,7 +126,8 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
             var timer = context.CreateTimer("name");
 
             await timer.Measure(async () => await Task.Delay(0.1.Seconds()));
-            @event.Value.Should().BeApproximately(0.1, precision: 0.01);    
+            @event.Value.Should().BeGreaterThan(0.1);
+            @event.Value.Should().BeLessThan(0.2);
         }
     }
 }
