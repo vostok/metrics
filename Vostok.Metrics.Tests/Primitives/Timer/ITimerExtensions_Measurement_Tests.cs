@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using FluentAssertions;
 using FluentAssertions.Extensions;
 using NUnit.Framework;
@@ -69,6 +70,60 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
 
             @event.Value.Should().BeGreaterThan(0.1);
             @event.Value.Should().BeLessThan(0.2);
+        }
+
+        [Test]
+        public void MeasureAction_should_report_elapsed()
+        {
+            MetricEvent @event = null;
+            var context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => @event = e)));
+            var timer = context.CreateTimer("name");
+
+            timer.Measure(() => Thread.Sleep(0.1.Seconds()));
+            @event.Value.Should().BeApproximately(0.1, precision: 0.01);
+        }
+
+        [Test]
+        public void MeasureFunc_should_report_elapsed_and_return_value()
+        {
+            MetricEvent @event = null;
+            var context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => @event = e)));
+            var timer = context.CreateTimer("name");
+
+            timer.Measure(() =>
+                {
+                    Thread.Sleep(0.1.Seconds());
+                    return 42;
+                })
+                .Should()
+                .Be(42);
+            @event.Value.Should().BeApproximately(0.1, precision: 0.01);
+        }
+
+        [Test]
+        public void MeasureAction_should_report_elapsed_in_case_of_exception()
+        {
+            MetricEvent @event = null;
+            var context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => @event = e)));
+            var timer = context.CreateTimer("name");
+
+            timer.Measure(() =>
+            {
+                Thread.Sleep(0.1.Seconds());
+                throw new Exception();
+            });
+            @event.Value.Should().BeApproximately(0.1, precision: 0.01);
+        }
+
+        [Test]
+        public async Task MeasureAsyncAction_should_report_elapsed()
+        {
+            MetricEvent @event = null;
+            var context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => @event = e)));
+            var timer = context.CreateTimer("name");
+
+            await timer.Measure(async () => await Task.Delay(0.1.Seconds()));
+            @event.Value.Should().BeApproximately(0.1, precision: 0.01);    
         }
     }
 }
