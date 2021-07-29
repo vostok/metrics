@@ -65,10 +65,10 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
 
             using (timer.Measure())
             {
-                Thread.Sleep(0.1.Seconds());
+                Thread.Sleep(0.01.Seconds());
             }
 
-            @event.Value.Should().BeInRange(0.1, 0.2);
+            @event.Value.Should().BeGreaterThan(0.01);
         }
 
         [Test]
@@ -78,8 +78,8 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
             var context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => @event = e)));
             var timer = context.CreateTimer("name");
 
-            timer.MeasureSync(() => Thread.Sleep(0.1.Seconds()));
-            @event.Value.Should().BeInRange(0.1, 0.2);
+            timer.MeasureSync(() => Thread.Sleep(0.01.Seconds()));
+            @event.Value.Should().BeGreaterThan(0.01);
         }
 
         [Test]
@@ -91,12 +91,12 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
 
             timer.MeasureSync(() =>
                 {
-                    Thread.Sleep(0.1.Seconds());
+                    Thread.Sleep(0.01.Seconds());
                     return 42;
                 })
                 .Should()
                 .Be(42);
-            @event.Value.Should().BeInRange(0.1, 0.2);
+            @event.Value.Should().BeGreaterThan(0.01);
         }
 
         [Test]
@@ -108,11 +108,11 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
 
             Action measurement = () => timer.MeasureSync(() =>
             {
-                Thread.Sleep(0.1.Seconds());
+                Thread.Sleep(0.01.Seconds());
                 throw new Exception();
             });
             measurement.Should().Throw<Exception>();
-            @event.Value.Should().BeInRange(0.1, 0.2);
+            @event.Value.Should().BeGreaterThan(0.01);
         }
 
         [Test]
@@ -124,11 +124,11 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
 
             Func<Task> measurement = () => timer.MeasureAsync(async () =>
             {
-                await Task.Delay(0.1.Seconds());
+                await Task.Delay(0.01.Seconds());
                 throw new Exception();
             });
             measurement.Should().Throw<Exception>();
-            @event.Value.Should().BeInRange(0.1, 0.2);
+            @event.Value.Should().BeGreaterThan(0.01);
         }
 
         [Test]
@@ -138,8 +138,8 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
             var context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => @event = e)));
             var timer = context.CreateTimer("name");
 
-            await timer.MeasureAsync(async () => await Task.Delay(0.1.Seconds()));
-            @event.Value.Should().BeInRange(0.1, 0.2);
+            await timer.MeasureAsync(async () => await Task.Delay(0.01.Seconds()));
+            @event.Value.Should().BeGreaterThan(0.01);
         }
 
         [Test]
@@ -151,12 +151,12 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
 
             (await timer.MeasureAsync(async () =>
                 {
-                    await Task.Delay(0.1.Seconds());
+                    await Task.Delay(0.01.Seconds());
                     return 42;
                 }))
                 .Should()
                 .Be(42);
-            @event.Value.Should().BeInRange(0.1, 0.2);
+            @event.Value.Should().BeGreaterThan(0.01);
         }
     }
 }
