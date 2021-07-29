@@ -1,6 +1,6 @@
 ## 0.2.20 (29.07.2021):
 
-Added `MeasureSync` and `MeasureAsync` extensions for lambda-methods (#8).
+Added `MeasureSync` and `MeasureAsync` extensions for lambda-methods (https://github.com/vostok/metrics/pull/8).
 
 
 ## 0.2.19 (25.02.2021):
