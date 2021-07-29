@@ -15,56 +15,28 @@ namespace Vostok.Metrics.Primitives.Timer
         public static IDisposable Measure([NotNull] this ITimer timer)
             => new Measurement(timer);
 
-        public static T Measure<T>([NotNull] this ITimer timer, Func<T> action)
+        public static T MeasureSync<T>([NotNull] this ITimer timer, [NotNull] Func<T> func)
         {
-            var stopwatch = Stopwatch.StartNew();
-            try
-            {
-                return action();
-            }
-            finally
-            {
-                timer.Report(stopwatch.Elapsed);
-            }
+            using (timer.Measure())
+                return func();
         }
 
-        public static void Measure([NotNull] this ITimer timer, Action action)
+        public static void MeasureSync([NotNull] this ITimer timer, [NotNull] Action action)
         {
-            var stopwatch = Stopwatch.StartNew();
-            try
-            {
+            using (timer.Measure())
                 action();
-            }
-            finally
-            {
-                timer.Report(stopwatch.Elapsed);
-            }
         }
 
-        public static async Task<T> Measure<T>([NotNull] this ITimer timer, Func<Task<T>> action)
+        public static async Task<T> MeasureAsync<T>([NotNull] this ITimer timer, [NotNull] Func<Task<T>> func)
         {
-            var stopwatch = Stopwatch.StartNew();
-            try
-            {
-                return await action().ConfigureAwait(false);
-            }
-            finally
-            {
-                timer.Report(stopwatch.Elapsed);
-            }
+            using (timer.Measure())
+                return await func().ConfigureAwait(false);
         }
 
-        public static async Task Measure([NotNull] this ITimer timer, Func<Task> action)
+        public static async Task MeasureAsync([NotNull] this ITimer timer, [NotNull] Func<Task> action)
         {
-            var stopwatch = Stopwatch.StartNew();
-            try
-            {
+            using (timer.Measure())
                 await action().ConfigureAwait(false);
-            }
-            finally
-            {
-                timer.Report(stopwatch.Elapsed);
-            }
         }
 
         private class Measurement : Stopwatch, IDisposable

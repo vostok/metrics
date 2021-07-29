@@ -68,54 +68,67 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
                 Thread.Sleep(0.1.Seconds());
             }
 
-            @event.Value.Should().BeGreaterThan(0.1);
-            @event.Value.Should().BeLessThan(0.2);
+            @event.Value.Should().BeInRange(0.1, 0.2);
         }
 
         [Test]
-        public void MeasureAction_should_report_elapsed()
+        public void MeasureSyncAction_should_report_elapsed()
         {
             MetricEvent @event = null;
             var context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => @event = e)));
             var timer = context.CreateTimer("name");
 
-            timer.Measure(() => Thread.Sleep(0.1.Seconds()));
-            @event.Value.Should().BeGreaterThan(0.1);
-            @event.Value.Should().BeLessThan(0.2);
+            timer.MeasureSync(() => Thread.Sleep(0.1.Seconds()));
+            @event.Value.Should().BeInRange(0.1, 0.2);
         }
 
         [Test]
-        public void MeasureFunc_should_report_elapsed_and_return_value()
+        public void MeasureSyncFunc_should_report_elapsed_and_return_value()
         {
             MetricEvent @event = null;
             var context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => @event = e)));
             var timer = context.CreateTimer("name");
 
-            timer.Measure(() =>
+            timer.MeasureSync(() =>
                 {
                     Thread.Sleep(0.1.Seconds());
                     return 42;
                 })
                 .Should()
                 .Be(42);
-            @event.Value.Should().BeGreaterThan(0.1);
-            @event.Value.Should().BeLessThan(0.2);
+            @event.Value.Should().BeInRange(0.1, 0.2);
         }
 
         [Test]
-        public void MeasureAction_should_report_elapsed_in_case_of_exception()
+        public void MeasureSyncAction_should_report_elapsed_in_case_of_exception()
         {
             MetricEvent @event = null;
             var context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => @event = e)));
             var timer = context.CreateTimer("name");
 
-            timer.Measure(() =>
+            Action measurement = () => timer.MeasureSync(() =>
             {
                 Thread.Sleep(0.1.Seconds());
                 throw new Exception();
             });
-            @event.Value.Should().BeGreaterThan(0.1);
-            @event.Value.Should().BeLessThan(0.2);
+            measurement.Should().Throw<Exception>();
+            @event.Value.Should().BeInRange(0.1, 0.2);
+        }
+
+        [Test]
+        public void MeasureAsyncAction_should_report_elapsed_in_case_of_exception()
+        {
+            MetricEvent @event = null;
+            var context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => @event = e)));
+            var timer = context.CreateTimer("name");
+
+            Func<Task> measurement = () => timer.MeasureAsync(async () =>
+            {
+                await Task.Delay(0.1.Seconds());
+                throw new Exception();
+            });
+            measurement.Should().Throw<Exception>();
+            @event.Value.Should().BeInRange(0.1, 0.2);
         }
 
         [Test]
@@ -125,9 +138,25 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
             var context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => @event = e)));
             var timer = context.CreateTimer("name");
 
-            await timer.Measure(async () => await Task.Delay(0.1.Seconds()));
-            @event.Value.Should().BeGreaterThan(0.1);
-            @event.Value.Should().BeLessThan(0.2);
+            await timer.MeasureAsync(async () => await Task.Delay(0.1.Seconds()));
+            @event.Value.Should().BeInRange(0.1, 0.2);
+        }
+
+        [Test]
+        public async Task MeasureAsyncFunc_should_report_elapsed_and_return_value()
+        {
+            MetricEvent @event = null;
+            var context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => @event = e)));
+            var timer = context.CreateTimer("name");
+
+            (await timer.MeasureAsync(async () =>
+                {
+                    await Task.Delay(0.1.Seconds());
+                    return 42;
+                }))
+                .Should()
+                .Be(42);
+            @event.Value.Should().BeInRange(0.1, 0.2);
         }
     }
 }
