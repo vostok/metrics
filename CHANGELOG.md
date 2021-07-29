@@ -1,3 +1,8 @@
+## 0.2.20 (29.07.2021):
+
+Added `MeasureSync` and `MeasureAsync` extensions for lambda-methods (#8).
+
+
 ## 0.2.19 (25.02.2021):
 
 Added `CreateMultiFuncGaugeFromEvents` extension.
