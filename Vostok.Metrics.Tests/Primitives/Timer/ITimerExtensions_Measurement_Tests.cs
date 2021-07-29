@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using FluentAssertions;
 using FluentAssertions.Extensions;
 using NUnit.Framework;
@@ -64,11 +65,98 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
 
             using (timer.Measure())
             {
-                Thread.Sleep(0.1.Seconds());
+                Thread.Sleep(0.01.Seconds());
             }
 
-            @event.Value.Should().BeGreaterThan(0.1);
-            @event.Value.Should().BeLessThan(0.2);
+            @event.Value.Should().BeGreaterThan(0.001);
+        }
+
+        [Test]
+        public void MeasureSyncAction_should_report_elapsed()
+        {
+            MetricEvent @event = null;
+            var context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => @event = e)));
+            var timer = context.CreateTimer("name");
+
+            timer.MeasureSync(() => Thread.Sleep(0.01.Seconds()));
+            @event.Value.Should().BeGreaterThan(0.001);
+        }
+
+        [Test]
+        public void MeasureSyncFunc_should_report_elapsed_and_return_value()
+        {
+            MetricEvent @event = null;
+            var context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => @event = e)));
+            var timer = context.CreateTimer("name");
+
+            timer.MeasureSync(() =>
+                {
+                    Thread.Sleep(0.01.Seconds());
+                    return 42;
+                })
+                .Should()
+                .Be(42);
+            @event.Value.Should().BeGreaterThan(0.001);
+        }
+
+        [Test]
+        public void MeasureSyncAction_should_report_elapsed_in_case_of_exception()
+        {
+            MetricEvent @event = null;
+            var context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => @event = e)));
+            var timer = context.CreateTimer("name");
+
+            Action measurement = () => timer.MeasureSync(() =>
+            {
+                Thread.Sleep(0.01.Seconds());
+                throw new Exception();
+            });
+            measurement.Should().Throw<Exception>();
+            @event.Value.Should().BeGreaterThan(0.001);
+        }
+
+        [Test]
+        public void MeasureAsyncAction_should_report_elapsed_in_case_of_exception()
+        {
+            MetricEvent @event = null;
+            var context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => @event = e)));
+            var timer = context.CreateTimer("name");
+
+            Func<Task> measurement = () => timer.MeasureAsync(async () =>
+            {
+                await Task.Delay(0.01.Seconds());
+                throw new Exception();
+            });
+            measurement.Should().Throw<Exception>();
+            @event.Value.Should().BeGreaterThan(0.001);
+        }
+
+        [Test]
+        public async Task MeasureAsyncAction_should_report_elapsed()
+        {
+            MetricEvent @event = null;
+            var context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => @event = e)));
+            var timer = context.CreateTimer("name");
+
+            await timer.MeasureAsync(async () => await Task.Delay(0.01.Seconds()));
+            @event.Value.Should().BeGreaterThan(0.001);
+        }
+
+        [Test]
+        public async Task MeasureAsyncFunc_should_report_elapsed_and_return_value()
+        {
+            MetricEvent @event = null;
+            var context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => @event = e)));
+            var timer = context.CreateTimer("name");
+
+            (await timer.MeasureAsync(async () =>
+                {
+                    await Task.Delay(0.01.Seconds());
+                    return 42;
+                }))
+                .Should()
+                .Be(42);
+            @event.Value.Should().BeGreaterThan(0.001);
         }
     }
 }
