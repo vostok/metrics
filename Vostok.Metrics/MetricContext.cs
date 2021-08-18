@@ -4,7 +4,6 @@ using JetBrains.Annotations;
 using Vostok.Metrics.Models;
 using Vostok.Metrics.Primitives.Counter;
 using Vostok.Metrics.Scraping;
-using Vostok.Metrics.Scraping.Configuration;
 using Vostok.Metrics.Senders;
 
 // ReSharper disable SuspiciousTypeConversion.Global
@@ -48,12 +47,9 @@ namespace Vostok.Metrics
 
         public MetricTags Tags => config.Tags ?? MetricTags.Empty;
 
-        public IDisposable Register(IScrapableMetric metric, TimeSpan? scrapePeriod) =>
-            Register(metric, new ScrapeConfig {ScrapePeriod = scrapePeriod});
-
-        public IDisposable Register(IScrapableMetric metric, ScrapeConfig scrapeConfig) =>
-            GetScheduler(metric, scrapeConfig?.ScrapeOnDispose ?? false)
-               .Register(metric, scrapeConfig?.ScrapePeriod ?? config.DefaultScrapePeriod);
+        public IDisposable Register(IScrapableMetric metric, TimeSpan? scrapePeriod = null, bool? scrapeOnDispose = null) =>
+            GetScheduler(metric, scrapeOnDispose)
+               .Register(metric, scrapePeriod ?? config.DefaultScrapePeriod);
 
         public void Send(MetricEvent @event)
             => metricSender.Send(@event);
@@ -83,9 +79,9 @@ namespace Vostok.Metrics
             Interlocked.Exchange(ref globalSenders, newGlobalSenders);
         }
 
-        private ScrapeScheduler GetScheduler(IScrapableMetric metric, bool scrapeOnDispose = false)
+        private ScrapeScheduler GetScheduler(IScrapableMetric metric, bool? scrapeOnDispose = null)
         {
-            if (metric is ICounter && scrapeOnDispose || scrapeOnDispose)
+            if (metric is ICounter && (scrapeOnDispose ?? true) || (scrapeOnDispose ?? false))
                 return scrapeOnDisposeScheduler;
 
             if (metric is IFastScrapableMetric)
