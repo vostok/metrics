@@ -53,7 +53,7 @@ namespace Vostok.Metrics.Primitives.Timer
             sample = new double[config.BufferSize];
             quantileBuilder = new QuantileMetricsBuilder(config.Quantiles, tags, config.Unit);
 
-            registration = context.Register(this, config.ScrapePeriod);
+            registration = context.Register(this, config.ScrapePeriod, config.ScrapeOnDispose);
         }
 
         public string Unit => config.Unit;

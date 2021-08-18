@@ -32,5 +32,10 @@ namespace Vostok.Metrics.Primitives.Timer
         /// </summary>
         [CanBeNull]
         public TimeSpan? ScrapePeriod { get; set; }
+
+        /// <summary>
+        /// Whether or not to scrape histogram on dispose.
+        /// </summary>
+        public bool ScrapeOnDispose { get; set; }
     }
 }
