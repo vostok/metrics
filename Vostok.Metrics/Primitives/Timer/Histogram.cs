@@ -52,6 +52,18 @@ namespace Vostok.Metrics.Primitives.Timer
         private readonly HistogramBuckets buckets;
 
         public Histogram([NotNull] IMetricContext context, [NotNull] MetricTags tags, [NotNull] HistogramConfig config)
+            : this(tags, config)
+        {
+            registration = context.Register(this, config.ScrapePeriod);
+        }
+
+        public Histogram([NotNull] IScrapeConfigurableMetricContext context, [NotNull] MetricTags tags, [NotNull] HistogramConfig config, [CanBeNull] ScrapeConfig scrapeConfig)
+            : this(tags, config)
+        {
+            registration = context.Register(this, config.ScrapePeriod, scrapeConfig);
+        }
+
+        private Histogram([NotNull] MetricTags tags, [NotNull] HistogramConfig config)
         {
             this.config = config ?? throw new ArgumentNullException(nameof(config));
             this.tags = tags ?? throw new ArgumentNullException(nameof(tags));
@@ -66,8 +78,6 @@ namespace Vostok.Metrics.Primitives.Timer
                 parameters.SetHistogramBucket(buckets[i]);
                 aggregationParameters[i] = parameters;
             }
-
-            registration = context.Register(this, config.ScrapePeriod, config.ScrapeOnDispose);
         }
 
         public string Unit => config.Unit;

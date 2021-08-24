@@ -47,13 +47,23 @@ namespace Vostok.Metrics.Primitives.Timer
         private int count;
 
         public Summary([NotNull] IMetricContext context, [NotNull] MetricTags tags, [NotNull] SummaryConfig config)
+            : this(tags, config)
+        {
+            registration = context.Register(this, config.ScrapePeriod);
+        }
+
+        public Summary([NotNull] IScrapeConfigurableMetricContext context, [NotNull] MetricTags tags, [NotNull] SummaryConfig config, [CanBeNull] ScrapeConfig scrapeConfig)
+            : this(tags, config)
+        {
+            registration = context.Register(this, config.ScrapePeriod, scrapeConfig);
+        }
+
+        private Summary([NotNull] MetricTags tags, [NotNull] SummaryConfig config)
         {
             this.config = config ?? throw new ArgumentNullException(nameof(config));
 
             sample = new double[config.BufferSize];
             quantileBuilder = new QuantileMetricsBuilder(config.Quantiles, tags, config.Unit);
-
-            registration = context.Register(this, config.ScrapePeriod, config.ScrapeOnDispose);
         }
 
         public string Unit => config.Unit;
@@ -61,6 +71,7 @@ namespace Vostok.Metrics.Primitives.Timer
         public void Report(double value)
         {
             var newCount = Interlocked.Increment(ref count);
+
             if (newCount <= sample.Length)
             {
                 Interlocked.Exchange(ref sample[newCount - 1], value);

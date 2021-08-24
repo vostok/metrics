@@ -23,11 +23,6 @@ namespace Vostok.Metrics.Primitives.Timer
         public TimeSpan? ScrapePeriod { get; set; }
 
         /// <summary>
-        /// Whether or not to scrape summary on dispose.
-        /// </summary>
-        public bool ScrapeOnDispose { get; set; } 
-
-        /// <summary>
         /// Size of internal buffer used to store a sample of incoming values.
         /// </summary>
         public int BufferSize { get; set; } = 1028;
