@@ -24,10 +24,5 @@ namespace Vostok.Metrics.Primitives.Gauge
         /// Whether or not to send gauge with zero value.
         /// </summary>
         public bool SendZeroValues { get; set; } = true;
-
-        /// <summary>
-        /// Whether or not to scrape gauge on dispose.
-        /// </summary>
-        public bool ScrapeOnDispose { get; set; }
     }
 }

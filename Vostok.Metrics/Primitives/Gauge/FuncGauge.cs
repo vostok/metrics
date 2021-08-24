@@ -15,17 +15,30 @@ namespace Vostok.Metrics.Primitives.Gauge
         private readonly IDisposable registration;
         private volatile Func<double?> valueProvider;
 
-        public FuncGauge(
-            [NotNull] IMetricContext context,
-            [NotNull] MetricTags tags,
-            [CanBeNull] Func<double?> valueProvider,
-            [NotNull] FuncGaugeConfig config)
+        private FuncGauge(MetricTags tags, Func<double?> valueProvider, FuncGaugeConfig config)
         {
             this.valueProvider = valueProvider;
             this.tags = tags ?? throw new ArgumentNullException(nameof(tags));
             this.config = config ?? throw new ArgumentNullException(nameof(config));
+        }
 
-            registration = context.Register(this, config.ScrapePeriod, config.ScrapeOnDispose);
+        public FuncGauge(
+            [NotNull] IScrapeConfigurableMetricContext context,
+            [NotNull] MetricTags tags,
+            [CanBeNull] Func<double?> valueProvider,
+            [NotNull] FuncGaugeConfig config,
+            [CanBeNull] ScrapeConfig scrapeConfig) : this(tags, valueProvider, config)
+        {
+            registration = context.Register(this, config.ScrapePeriod, scrapeConfig);
+        }
+
+        public FuncGauge(
+            [NotNull] IMetricContext context,
+            [NotNull] MetricTags tags,
+            [CanBeNull] Func<double?> valueProvider,
+            [NotNull] FuncGaugeConfig config) : this(tags, valueProvider, config)
+        {
+            registration = context.Register(this, config.ScrapePeriod);
         }
 
         public FuncGauge(
