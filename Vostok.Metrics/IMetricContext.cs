@@ -43,6 +43,6 @@ namespace Vostok.Metrics
         /// <param name="scrapePeriod">How often to scrape</param>
         /// <returns>The <see cref="IDisposable"/> token. Call <see cref="IDisposable.Dispose"/> to stop scraping the <paramref name="metric"/></returns>
         [NotNull]
-        IDisposable Register([NotNull] IScrapableMetric metric, [CanBeNull] TimeSpan? scrapePeriod = null, [CanBeNull] bool? scrapeOnDispose = null);
+        IDisposable Register([NotNull] IScrapableMetric metric, [CanBeNull] TimeSpan? scrapePeriod);
     }
 }

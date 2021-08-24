@@ -12,7 +12,7 @@ namespace Vostok.Metrics
 {
     /// <inheritdoc cref="IMetricContext"/>
     [PublicAPI]
-    public class MetricContext : IMetricContext, IAnnotationContext, IDisposable
+    public class MetricContext : IMetricContext, IAnnotationContext, IDisposable, IScrapeConfigurableMetricContext
     {
         private static IMetricEventSender[] globalMetricSenders = Array.Empty<IMetricEventSender>();
         private static IAnnotationEventSender[] globalAnnotationSenders = Array.Empty<IAnnotationEventSender>();
@@ -47,12 +47,16 @@ namespace Vostok.Metrics
 
         public MetricTags Tags => config.Tags ?? MetricTags.Empty;
 
-        public IDisposable Register(IScrapableMetric metric, TimeSpan? scrapePeriod = null, bool? scrapeOnDispose = null) =>
-            GetScheduler(metric, scrapeOnDispose)
+        public IDisposable Register(IScrapableMetric metric, TimeSpan? scrapePeriod) =>
+            GetScheduler(metric)
                .Register(metric, scrapePeriod ?? config.DefaultScrapePeriod);
 
         public void Send(MetricEvent @event)
             => metricSender.Send(@event);
+
+        public IDisposable Register(IScrapableMetric metric, TimeSpan? scrapePeriod, ScrapeConfig scrapeConfig) =>
+            GetScheduler(metric, scrapeConfig?.ScrapeOnDispose)
+               .Register(metric, scrapePeriod ?? config.DefaultScrapePeriod);
 
         public void Send(AnnotationEvent @event)
             => annotationSender.Send(@event);

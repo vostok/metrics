@@ -44,8 +44,8 @@ namespace Vostok.Metrics
 
             public MetricTags Tags { get; }
 
-            public IDisposable Register(IScrapableMetric metric, TimeSpan? scrapePeriod = null, bool? scrapeOnDispose = null)
-                => BaseContext.Register(metric, scrapePeriod, scrapeOnDispose);
+            public IDisposable Register(IScrapableMetric metric, TimeSpan? scrapePeriod)
+                => BaseContext.Register(metric, scrapePeriod);
 
             public void Send(MetricEvent @event)
                 => BaseContext.Send(@event);

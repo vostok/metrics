@@ -13,7 +13,7 @@ namespace Vostok.Metrics
     {
         public MetricTags Tags => MetricTags.Empty;
 
-        public IDisposable Register(IScrapableMetric metric, TimeSpan? scrapePeriod = null, bool? scrapeOnDispose = null)
+        public IDisposable Register(IScrapableMetric metric, TimeSpan? scrapePeriod)
             => new DummyRegistrationToken();
 
         public void Send(MetricEvent @event)
