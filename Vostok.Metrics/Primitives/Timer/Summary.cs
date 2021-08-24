@@ -47,23 +47,13 @@ namespace Vostok.Metrics.Primitives.Timer
         private int count;
 
         public Summary([NotNull] IMetricContext context, [NotNull] MetricTags tags, [NotNull] SummaryConfig config)
-            : this(tags, config)
-        {
-            registration = context.Register(this, config.ScrapePeriod);
-        }
-
-        public Summary([NotNull] IScrapeConfigurableMetricContext context, [NotNull] MetricTags tags, [NotNull] SummaryConfig config, [CanBeNull] ScrapeConfig scrapeConfig)
-            : this(tags, config)
-        {
-            registration = context.Register(this, config.ScrapePeriod, scrapeConfig);
-        }
-
-        private Summary([NotNull] MetricTags tags, [NotNull] SummaryConfig config)
         {
             this.config = config ?? throw new ArgumentNullException(nameof(config));
 
             sample = new double[config.BufferSize];
             quantileBuilder = new QuantileMetricsBuilder(config.Quantiles, tags, config.Unit);
+
+            registration = context.Register(this, config);
         }
 
         public string Unit => config.Unit;

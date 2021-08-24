@@ -14,27 +14,9 @@ namespace Vostok.Metrics.Primitives.Gauge
         private readonly IntegerGaugeConfig config;
         private readonly IDisposable registration;
         private long value;
-        
+
         public IntegerGauge(
             [NotNull] IMetricContext context,
-            [NotNull] MetricTags tags,
-            [NotNull] IntegerGaugeConfig config)
-            : this(tags, config)
-        {
-            registration = context.Register(this, config.ScrapePeriod);
-        }
-
-        public IntegerGauge(
-            [NotNull] IScrapeConfigurableMetricContext context,
-            [NotNull] MetricTags tags,
-            [NotNull] IntegerGaugeConfig config,
-            [CanBeNull] ScrapeConfig scrapeConfig)
-            : this(tags, config)
-        {
-            registration = context.Register(this, config.ScrapePeriod, scrapeConfig);
-        }
-
-        private IntegerGauge(
             [NotNull] MetricTags tags,
             [NotNull] IntegerGaugeConfig config)
         {
@@ -42,6 +24,8 @@ namespace Vostok.Metrics.Primitives.Gauge
             this.config = config ?? throw new ArgumentNullException(nameof(config));
 
             value = config.InitialValue;
+
+            registration = context.Register(this, config);
         }
 
         public long CurrentValue => Interlocked.Read(ref value);

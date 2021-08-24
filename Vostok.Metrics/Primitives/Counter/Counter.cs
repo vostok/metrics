@@ -19,25 +19,11 @@ namespace Vostok.Metrics.Primitives.Counter
             [NotNull] IMetricContext context,
             [NotNull] MetricTags tags,
             [NotNull] CounterConfig config)
-            : this(tags, config)
-        {
-            registration = context.Register(this, config.ScrapePeriod);
-        }
-
-        public Counter(
-            [NotNull] IScrapeConfigurableMetricContext context,
-            [NotNull] MetricTags tags,
-            [NotNull] CounterConfig config,
-            [CanBeNull] ScrapeConfig scrapeConfig)
-            : this(tags, config)
-        {
-            registration = context.Register(this, config.ScrapePeriod, scrapeConfig);
-        }
-
-        private Counter([NotNull] MetricTags tags, [NotNull] CounterConfig config)
         {
             this.tags = tags ?? throw new ArgumentNullException(nameof(tags));
             this.config = config ?? throw new ArgumentNullException(nameof(config));
+
+            registration = context.Register(this, config);
         }
 
         public void Add(long value)
