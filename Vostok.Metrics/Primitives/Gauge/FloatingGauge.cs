@@ -19,12 +19,29 @@ namespace Vostok.Metrics.Primitives.Gauge
             [NotNull] IMetricContext context,
             [NotNull] MetricTags tags,
             [NotNull] FloatingGaugeConfig config)
+            : this(tags, config)
+        {
+            registration = context.Register(this, config.ScrapePeriod);
+        }
+
+        public FloatingGauge(
+            [NotNull] IScrapeConfigurableMetricContext context,
+            [NotNull] MetricTags tags,
+            [NotNull] FloatingGaugeConfig config,
+            [CanBeNull] ScrapeConfig scrapeConfig)
+            : this(tags, config)
+        {
+            registration = context.Register(this, config.ScrapePeriod, scrapeConfig);
+        }
+
+        private FloatingGauge(
+            [NotNull] MetricTags tags,
+            [NotNull] FloatingGaugeConfig config)
         {
             this.tags = tags ?? throw new ArgumentNullException(nameof(tags));
             this.config = config ?? throw new ArgumentNullException(nameof(config));
 
             value = config.InitialValue;
-            registration = context.Register(this, config.ScrapePeriod, config.ScrapeOnDispose);
         }
 
         public double CurrentValue => Interlocked.CompareExchange(ref value, config.InitialValue, config.InitialValue);

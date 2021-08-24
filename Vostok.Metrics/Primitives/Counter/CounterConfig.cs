@@ -33,10 +33,5 @@ namespace Vostok.Metrics.Primitives.Counter
         /// </summary>
         [CanBeNull]
         public TimeSpan? ScrapePeriod { get; set; }
-
-        /// <summary>
-        /// Whether or not to scrape counter on dispose.
-        /// </summary>
-        public bool ScrapeOnDispose { get; set; } = true;
     }
 }
