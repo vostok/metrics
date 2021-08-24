@@ -23,49 +23,20 @@ namespace Vostok.Metrics.Primitives.Gauge
             this.eventsProvider = eventsProvider ?? throw new ArgumentNullException(nameof(eventsProvider));
 
         public MultiFuncGauge(
-            [NotNull] IScrapeConfigurableMetricContext context,
-            [NotNull] Func<IEnumerable<MetricEvent>> eventsProvider,
-            [NotNull] FuncGaugeConfig config,
-            [CanBeNull] ScrapeConfig scrapeConfig)
-            : this(context, config, scrapeConfig) =>
-            this.eventsProvider = eventsProvider ?? throw new ArgumentNullException(nameof(eventsProvider));
-
-        public MultiFuncGauge(
             [NotNull] IMetricContext context,
             [NotNull] Func<IEnumerable<MetricDataPoint>> pointsProvider,
             [NotNull] FuncGaugeConfig config)
             : this(context, config) =>
             this.pointsProvider = pointsProvider ?? throw new ArgumentNullException(nameof(pointsProvider));
 
-        public MultiFuncGauge(
-            [NotNull] IScrapeConfigurableMetricContext context,
-            [NotNull] Func<IEnumerable<MetricDataPoint>> pointsProvider,
-            [NotNull] FuncGaugeConfig config,
-            [CanBeNull] ScrapeConfig scrapeConfig)
-            : this(context, config, scrapeConfig) =>
-            this.pointsProvider = pointsProvider ?? throw new ArgumentNullException(nameof(pointsProvider));
-
-        private MultiFuncGauge([NotNull] MetricTags tags, [NotNull] FuncGaugeConfig config)
-        {
-            contextTags = tags;
-            this.config = config ?? throw new ArgumentNullException(nameof(config));
-        }
-
         private MultiFuncGauge(
             [NotNull] IMetricContext context,
             [NotNull] FuncGaugeConfig config)
-            : this(context.Tags, config)
         {
-            registration = context.Register(this, config.ScrapePeriod);
-        }
+            contextTags = context.Tags;
+            this.config = config ?? throw new ArgumentNullException(nameof(config));
 
-        private MultiFuncGauge(
-            [NotNull] IScrapeConfigurableMetricContext context,
-            [NotNull] FuncGaugeConfig config,
-            [CanBeNull] ScrapeConfig scrapeConfig)
-            : this(context.Tags, config)
-        {
-            registration = context.Register(this, config.ScrapePeriod, scrapeConfig);
+            registration = context.Register(this, config);
         }
 
         public void Dispose()

@@ -6,11 +6,11 @@ namespace Vostok.Metrics
 {
     /// <inheritdoc cref="IMetricContext"/>
     [PublicAPI]
-    public interface IScrapeConfigurableMetricContext : IMetricContext
+    public interface IScrapeConfigurableMetricContext
     {
         /// <inheritdoc cref="IMetricContext.Register"/>
-        /// <param name="scrapeConfig">Scrape configuration</param>
+        /// <param name="scrapableMetricConfig">Scrape configuration</param>
         [NotNull]
-        IDisposable Register([NotNull] IScrapableMetric metric, [CanBeNull] TimeSpan? scrapePeriod, [CanBeNull] ScrapeConfig scrapeConfig);
+        IDisposable Register([NotNull] IScrapableMetric metric, [CanBeNull] ScrapableMetricConfig scrapableMetricConfig);
     }
 }
