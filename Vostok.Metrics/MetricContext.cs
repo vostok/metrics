@@ -48,14 +48,14 @@ namespace Vostok.Metrics
         public MetricTags Tags => config.Tags ?? MetricTags.Empty;
 
         public IDisposable Register(IScrapableMetric metric, TimeSpan? scrapePeriod) =>
-            GetScheduler(metric)
+            GetScheduler(metric, ShouldBeScrapedOnDisposeByDefault(metric))
                .Register(metric, scrapePeriod ?? config.DefaultScrapePeriod);
 
         public void Send(MetricEvent @event)
             => metricSender.Send(@event);
 
         public IDisposable Register(IScrapableMetric metric, ScrapableMetricConfig scrapableMetricConfig) =>
-            GetScheduler(metric, scrapableMetricConfig?.ScrapeOnDispose)
+            GetScheduler(metric, scrapableMetricConfig?.ScrapeOnDispose ?? ShouldBeScrapedOnDisposeByDefault(metric))
                .Register(metric, scrapableMetricConfig?.ScrapePeriod ?? config.DefaultScrapePeriod);
 
         public void Send(AnnotationEvent @event)
@@ -83,10 +83,9 @@ namespace Vostok.Metrics
             Interlocked.Exchange(ref globalSenders, newGlobalSenders);
         }
 
-        private ScrapeScheduler GetScheduler(IScrapableMetric metric, bool? scrapeOnDispose = null)
+        private ScrapeScheduler GetScheduler(IScrapableMetric metric, bool scrapeOnDispose)
         {
-            // NOTE (tsup): We want to preserve behaviour for IMetricContext interface
-            if (metric is ICounter && (scrapeOnDispose ?? true) || (scrapeOnDispose ?? false))
+            if (scrapeOnDispose)
                 return scrapeOnDisposeScheduler;
 
             if (metric is IFastScrapableMetric)
@@ -94,5 +93,7 @@ namespace Vostok.Metrics
 
             return scheduler;
         }
+
+        private bool ShouldBeScrapedOnDisposeByDefault(IScrapableMetric metric) => metric is ICounter;
     }
 }
