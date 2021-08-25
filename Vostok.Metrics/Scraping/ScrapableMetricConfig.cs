@@ -23,7 +23,6 @@ namespace Vostok.Metrics.Scraping
         /// <summary>
         /// Whether or not to scrape on dispose.
         /// </summary>
-        [CanBeNull]
-        public bool? ScrapeOnDispose { get; set; }
+        public bool ScrapeOnDispose { get; set; }
     }
 }
