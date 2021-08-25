@@ -11,7 +11,6 @@ namespace Vostok.Metrics.Primitives.Timer
         public SummaryConfig()
         {
             Unit = WellKnownUnits.Seconds;
-            ScrapeOnDispose = false;
         }
 
         /// <summary>

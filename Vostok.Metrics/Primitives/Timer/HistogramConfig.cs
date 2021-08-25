@@ -13,7 +13,6 @@ namespace Vostok.Metrics.Primitives.Timer
         public HistogramConfig()
         {
             Unit = WellKnownUnits.Seconds;
-            ScrapeOnDispose = false;
         }
 
         [NotNull]
