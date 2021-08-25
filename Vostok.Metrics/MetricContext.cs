@@ -85,6 +85,7 @@ namespace Vostok.Metrics
 
         private ScrapeScheduler GetScheduler(IScrapableMetric metric, bool? scrapeOnDispose = null)
         {
+            // NOTE (tsup): We want to preserve behaviour for IMetricContext interface
             if (metric is ICounter && (scrapeOnDispose ?? true) || (scrapeOnDispose ?? false))
                 return scrapeOnDisposeScheduler;
 
