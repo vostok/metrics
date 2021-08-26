@@ -1,3 +1,7 @@
+## 0.2.22 (26.08.2021):
+
+Revert `ScrapeOnDispose`
+
 ## 0.2.21 (26.08.2021):
 
 Added `ScrapeOnDispose` option to many primitives.
