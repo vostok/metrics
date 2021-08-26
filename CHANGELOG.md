@@ -1,3 +1,7 @@
+## 0.2.21 (26.08.2021):
+
+Added `ScrapeOnDispose` option to many primitives.
+
 ## 0.2.20 (29.07.2021):
 
 Added `MeasureSync` and `MeasureAsync` extensions for lambda-methods (https://github.com/vostok/metrics/pull/8).
