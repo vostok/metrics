@@ -24,8 +24,7 @@ namespace Vostok.Metrics.Primitives.Gauge
             this.config = config ?? throw new ArgumentNullException(nameof(config));
 
             value = config.InitialValue;
-
-            registration = context.Register(this, config);
+            registration = context.Register(this, config.ScrapePeriod);
         }
 
         public long CurrentValue => Interlocked.Read(ref value);

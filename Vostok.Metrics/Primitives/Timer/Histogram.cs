@@ -67,7 +67,7 @@ namespace Vostok.Metrics.Primitives.Timer
                 aggregationParameters[i] = parameters;
             }
 
-            registration = context.Register(this, config);
+            registration = context.Register(this, config.ScrapePeriod);
         }
 
         public string Unit => config.Unit;
