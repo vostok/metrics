@@ -53,7 +53,7 @@ namespace Vostok.Metrics.Primitives.Timer
             sample = new double[config.BufferSize];
             quantileBuilder = new QuantileMetricsBuilder(config.Quantiles, tags, config.Unit);
 
-            registration = context.Register(this, config.ScrapePeriod);
+            registration = context.Register(this, config);
         }
 
         public string Unit => config.Unit;
@@ -61,6 +61,7 @@ namespace Vostok.Metrics.Primitives.Timer
         public void Report(double value)
         {
             var newCount = Interlocked.Increment(ref count);
+
             if (newCount <= sample.Length)
             {
                 Interlocked.Exchange(ref sample[newCount - 1], value);
