@@ -17,13 +17,13 @@ namespace Vostok.Metrics.Primitives.Timer
         public string Unit { get; set; } = WellKnownUnits.Seconds;
 
         /// <summary>
-        /// Period of scraping. If set to <c>null</c>, context default period will be used.
+        /// Period of scraping summary's current value. If left <c>null</c>, context default period will be used.
         /// </summary>
         [CanBeNull]
         public TimeSpan? ScrapePeriod { get; set; }
 
         /// <summary>
-        /// Whether or not to scrape on dispose.
+        /// Whether or not to scrape summary on dispose.
         /// </summary>
         public bool ScrapeOnDispose { get; set; }
 
