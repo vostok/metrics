@@ -18,17 +18,6 @@ namespace Vostok.Metrics.Primitives.Counter
         public string Unit { get; set; }
 
         /// <summary>
-        /// Period of scraping. If set to <c>null</c>, context default period will be used.
-        /// </summary>
-        [CanBeNull]
-        public TimeSpan? ScrapePeriod { get; set; }
-
-        /// <summary>
-        /// Whether or not to scrape on dispose.
-        /// </summary>
-        public bool ScrapeOnDispose { get; set; } = true;
-
-        /// <summary>
         /// See <see cref="MetricEvent.AggregationParameters"/> for more info.
         /// </summary>
         [CanBeNull]
@@ -38,5 +27,16 @@ namespace Vostok.Metrics.Primitives.Counter
         /// Whether or not to send counter with zero value.
         /// </summary>
         public bool SendZeroValues { get; set; } = true;
+
+        /// <summary>
+        /// Period of scraping counter's current value. If set to <c>null</c>, context default period will be used.
+        /// </summary>
+        [CanBeNull]
+        public TimeSpan? ScrapePeriod { get; set; }
+
+        /// <summary>
+        /// Whether or not to scrape counter on dispose.
+        /// </summary>
+        public bool ScrapeOnDispose { get; set; } = true;
     }
 }

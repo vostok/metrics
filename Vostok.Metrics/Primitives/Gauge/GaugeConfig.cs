@@ -15,13 +15,13 @@ namespace Vostok.Metrics.Primitives.Gauge
         public string Unit { get; set; }
 
         /// <summary>
-        /// Period of scraping. If set to <c>null</c>, context default period will be used.
+        /// Period of scraping gauge's current value. If left <c>null</c>, context default period will be used.
         /// </summary>
         [CanBeNull]
         public TimeSpan? ScrapePeriod { get; set; }
 
         /// <summary>
-        /// Whether or not to scrape on dispose.
+        /// Whether or not to scrape gauge on dispose.
         /// </summary>
         public bool ScrapeOnDispose { get; set; }
 
