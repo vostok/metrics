@@ -54,7 +54,7 @@ namespace Vostok.Metrics
         public void Send(MetricEvent @event)
             => metricSender.Send(@event);
 
-        public IDisposable Register(IScrapableMetric metric, ScrapableMetricConfig scrapableMetricConfig) =>
+        IDisposable IScrapeConfigurableMetricContext.Register(IScrapableMetric metric, ScrapableMetricConfig scrapableMetricConfig) =>
             GetScheduler(metric, scrapableMetricConfig?.ScrapeOnDispose ?? ShouldBeScrapedOnDisposeByDefault(metric))
                .Register(metric, scrapableMetricConfig?.ScrapePeriod ?? config.DefaultScrapePeriod);
 

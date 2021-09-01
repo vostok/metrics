@@ -4,9 +4,7 @@ using Vostok.Metrics.Scraping;
 
 namespace Vostok.Metrics
 {
-    /// <inheritdoc cref="IMetricContext"/>
-    [PublicAPI]
-    public interface IScrapeConfigurableMetricContext
+    internal interface IScrapeConfigurableMetricContext
     {
         /// <inheritdoc cref="IMetricContext.Register"/>
         /// <param name="scrapableMetricConfig">Scrape configuration</param>

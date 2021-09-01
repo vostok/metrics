@@ -1,19 +1,32 @@
+using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Vostok.Metrics.Models;
-using Vostok.Metrics.Scraping;
 
 namespace Vostok.Metrics.Primitives.Timer
 {
     [PublicAPI]
-    public class HistogramConfig : ScrapableMetricConfig
+    public class HistogramConfig
     {
         internal static readonly HistogramConfig Default = new HistogramConfig();
 
-        public HistogramConfig()
-        {
-            Unit = WellKnownUnits.Seconds;
-        }
+        /// <summary>
+        /// See <see cref="MetricEvent.Unit"/> and <see cref="WellKnownUnits"/> for more info.
+        /// </summary>
+        [CanBeNull]
+        [ValueProvider("Vostok.Metrics.WellKnownUnits")]
+        public string Unit { get; set; } = WellKnownUnits.Seconds;
+
+        /// <summary>
+        /// Period of scraping. If set to <c>null</c>, context default period will be used.
+        /// </summary>
+        [CanBeNull]
+        public TimeSpan? ScrapePeriod { get; set; }
+
+        /// <summary>
+        /// Whether or not to scrape on dispose.
+        /// </summary>
+        public bool ScrapeOnDispose { get; set; }
 
         [NotNull]
         public HistogramBuckets Buckets { get; set; }

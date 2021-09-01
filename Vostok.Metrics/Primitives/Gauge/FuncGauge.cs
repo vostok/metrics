@@ -25,7 +25,7 @@ namespace Vostok.Metrics.Primitives.Gauge
             this.tags = tags ?? throw new ArgumentNullException(nameof(tags));
             this.config = config ?? throw new ArgumentNullException(nameof(config));
 
-            registration = context.Register(this, config);
+            registration = context.Register(this, config.ToScrapableMetricConfig());
         }
 
         public FuncGauge(
