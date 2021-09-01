@@ -33,10 +33,10 @@ namespace Vostok.Metrics.Primitives.Gauge
             [NotNull] IMetricContext context,
             [NotNull] FuncGaugeConfig config)
         {
+            contextTags = context.Tags;
             this.config = config ?? throw new ArgumentNullException(nameof(config));
 
-            contextTags = context.Tags;
-            registration = context.Register(this, config.ScrapePeriod);
+            registration = context.Register(this, config);
         }
 
         public void Dispose()

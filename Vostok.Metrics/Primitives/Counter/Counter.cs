@@ -15,12 +15,15 @@ namespace Vostok.Metrics.Primitives.Counter
 
         private long count;
 
-        public Counter([NotNull] IMetricContext context, [NotNull] MetricTags tags, [NotNull] CounterConfig config)
+        public Counter(
+            [NotNull] IMetricContext context,
+            [NotNull] MetricTags tags,
+            [NotNull] CounterConfig config)
         {
             this.tags = tags ?? throw new ArgumentNullException(nameof(tags));
             this.config = config ?? throw new ArgumentNullException(nameof(config));
 
-            registration = context.Register(this, config.ScrapePeriod);
+            registration = context.Register(this, config);
         }
 
         public void Add(long value)
