@@ -36,7 +36,7 @@ namespace Vostok.Metrics.Primitives.Gauge
             contextTags = context.Tags;
             this.config = config ?? throw new ArgumentNullException(nameof(config));
 
-            registration = context.Register(this, config);
+            registration = context.Register(this, config.ToScrapableMetricConfig());
         }
 
         public void Dispose()

@@ -25,7 +25,7 @@ namespace Vostok.Metrics.Primitives.Gauge
 
             value = config.InitialValue;
 
-            registration = context.Register(this, config);
+            registration = context.Register(this, config.ToScrapableMetricConfig());
         }
 
         public long CurrentValue => Interlocked.Read(ref value);

@@ -23,7 +23,7 @@ namespace Vostok.Metrics.Primitives.Counter
             this.tags = tags ?? throw new ArgumentNullException(nameof(tags));
             this.config = config ?? throw new ArgumentNullException(nameof(config));
 
-            registration = context.Register(this, config);
+            registration = context.Register(this, config.ToScrapableMetricConfig());
         }
 
         public void Add(long value)

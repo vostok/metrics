@@ -1,17 +1,31 @@
+using System;
 using JetBrains.Annotations;
-using Vostok.Metrics.Scraping;
+using Vostok.Metrics.Models;
 
 namespace Vostok.Metrics.Primitives.Timer
 {
     [PublicAPI]
-    public class SummaryConfig : ScrapableMetricConfig
+    public class SummaryConfig
     {
         internal static readonly SummaryConfig Default = new SummaryConfig();
 
-        public SummaryConfig()
-        {
-            Unit = WellKnownUnits.Seconds;
-        }
+        /// <summary>
+        /// See <see cref="MetricEvent.Unit"/> and <see cref="WellKnownUnits"/> for more info.
+        /// </summary>
+        [CanBeNull]
+        [ValueProvider("Vostok.Metrics.WellKnownUnits")]
+        public string Unit { get; set; } = WellKnownUnits.Seconds;
+
+        /// <summary>
+        /// Period of scraping. If set to <c>null</c>, context default period will be used.
+        /// </summary>
+        [CanBeNull]
+        public TimeSpan? ScrapePeriod { get; set; }
+
+        /// <summary>
+        /// Whether or not to scrape on dispose.
+        /// </summary>
+        public bool ScrapeOnDispose { get; set; }
 
         /// <summary>
         /// Size of internal buffer used to store a sample of incoming values.
