@@ -4,6 +4,7 @@ using Vostok.Metrics.Primitives.Timer;
 
 namespace Vostok.Metrics.Scraping
 {
+    // NOTE (tsup): We do not inherit configs from ScrapableMetricConfig to keep back-compatibility. 
     internal static class ConfigExtensions
     {
         public static ScrapableMetricConfig ToScrapableMetricConfig(this CounterConfig config)
