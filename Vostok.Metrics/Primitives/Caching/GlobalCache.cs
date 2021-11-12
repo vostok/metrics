@@ -13,7 +13,14 @@ namespace Vostok.Metrics.Primitives.Caching
             new ConcurrentDictionary<CacheKey, PerContextCache>(new CacheKeyComparer());
 
         public static TMetric Obtain<TMetric>([NotNull] IMetricContext context, [NotNull] string name, [CanBeNull] object details, [NotNull] Func<TMetric> factory)
-            => (TMetric)PerContextCaches.GetOrAdd(new CacheKey(context), _ => new PerContextCache()).Obtain(name, typeof(TMetric), details, () => factory());
+        {
+            var cacheKey = new CacheKey(context);
+
+            if (cacheKey.BaseContext is DevNullMetricContext)
+                return factory();
+            
+            return (TMetric)PerContextCaches.GetOrAdd(cacheKey, _ => new PerContextCache()).Obtain(name, typeof(TMetric), details, () => factory());
+        }
 
         #region CacheKeyComparer
 
