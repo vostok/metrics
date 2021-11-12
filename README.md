@@ -1,6 +1,6 @@
 # Vostok.Metrics
 
-[![Build status](https://ci.appveyor.com/api/projects/status/github/vostok/metrics?svg=true&branch=master)](https://ci.appveyor.com/project/vostok/metrics/branch/master)
+[![Build & Test & Publish](https://github.com/vostok/metrics/actions/workflows/ci.yml/badge.svg)](https://github.com/vostok/metrics/actions/workflows/ci.yml)
 [![NuGet](https://img.shields.io/nuget/v/Vostok.Metrics.svg)](https://www.nuget.org/packages/Vostok.Metrics)
 
 Entry point to Vostok metrics system: abstractions, models, gathering primitives.
