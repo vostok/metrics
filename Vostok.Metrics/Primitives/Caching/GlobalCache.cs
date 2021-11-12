@@ -13,7 +13,25 @@ namespace Vostok.Metrics.Primitives.Caching
             new ConcurrentDictionary<CacheKey, PerContextCache>(new CacheKeyComparer());
 
         public static TMetric Obtain<TMetric>([NotNull] IMetricContext context, [NotNull] string name, [CanBeNull] object details, [NotNull] Func<TMetric> factory)
-            => (TMetric)PerContextCaches.GetOrAdd(new CacheKey(context), _ => new PerContextCache()).Obtain(name, typeof(TMetric), details, () => factory());
+        {
+            var cacheKey = new CacheKey(context);
+
+            if (cacheKey.BaseContext is DevNullMetricContext)
+                return factory();
+            
+            return (TMetric)PerContextCaches.GetOrAdd(cacheKey, _ => new PerContextCache()).Obtain(name, typeof(TMetric), details, () => factory());
+        }
+
+        // note (kungurtsev, 12.11.2021): if we call Obtain after Clean, it will allocate PerContextCaches item again
+        // note (kungurtsev, 12.11.2021): but otherwise, it won't be lock-free
+        public static void Clean([NotNull] IMetricContext context)
+        {
+            foreach (var entry in PerContextCaches)
+            {
+                if (ReferenceEquals(entry.Key.BaseContext, context))
+                    PerContextCaches.TryRemove(entry.Key, out _);
+            }
+        }
 
         #region CacheKeyComparer
 
