@@ -26,10 +26,27 @@ namespace Vostok.Metrics.Tests.Primitives
         {
             var context = new DevNullMetricContext();
             
-            var timer1 = context.CreateTimer("timer");
-            var timer2 = context.CreateTimer("timer");
+            var c1 = context.CreateCounter("c");
+            var c2 = context.CreateCounter("c");
 
-            timer2.Should().NotBeSameAs(timer1);
+            c2.Should().NotBeSameAs(c1);
+        }
+        
+        [Test]
+        public void Should_clean_cache_on_context_dispose()
+        {
+            var context = new MetricContext(new MetricContextConfig(new DevNullMetricEventSender()));
+            
+            var c1 = context.CreateCounter("c");
+            var c2 = context.CreateCounter("c");
+
+            c2.Should().BeSameAs(c1);
+            
+            context.Dispose();
+            
+            var c3 = context.CreateCounter("c");
+            
+            c3.Should().NotBeSameAs(c1);
         }
         
         [Test]
