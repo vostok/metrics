@@ -4,6 +4,7 @@ using Vostok.Metrics.Models;
 using Vostok.Metrics.Primitives.Counter;
 using Vostok.Metrics.Primitives.Gauge;
 using Vostok.Metrics.Primitives.Timer;
+using Vostok.Metrics.Senders;
 
 namespace Vostok.Metrics.Tests.Primitives
 {
@@ -16,10 +17,21 @@ namespace Vostok.Metrics.Tests.Primitives
         [SetUp]
         public void TestSetup()
         {
-            context1 = new DevNullMetricContext();
-            context2 = new DevNullMetricContext();
+            context1 = new MetricContext(new MetricContextConfig(new DevNullMetricEventSender()));
+            context2 = new MetricContext(new MetricContextConfig(new DevNullMetricEventSender()));
         }
 
+        [Test]
+        public void Should_not_cache_for_dev_null_context()
+        {
+            var context = new DevNullMetricContext();
+            
+            var timer1 = context.CreateTimer("timer");
+            var timer2 = context.CreateTimer("timer");
+
+            timer2.Should().NotBeSameAs(timer1);
+        }
+        
         [Test]
         public void Should_not_cache_timers()
         {
