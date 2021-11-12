@@ -26,10 +26,10 @@ namespace Vostok.Metrics.Primitives.Caching
         // note (kungurtsev, 12.11.2021): but otherwise, it won't be lock-free
         public static void Clean([NotNull] IMetricContext context)
         {
-            foreach (var enrty in PerContextCaches)
+            foreach (var entry in PerContextCaches)
             {
-                if (ReferenceEquals(enrty.Key.BaseContext, context))
-                    PerContextCaches.TryRemove(enrty.Key, out _);
+                if (ReferenceEquals(entry.Key.BaseContext, context))
+                    PerContextCaches.TryRemove(entry.Key, out _);
             }
         }
 
