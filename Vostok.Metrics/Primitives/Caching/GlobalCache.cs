@@ -22,6 +22,17 @@ namespace Vostok.Metrics.Primitives.Caching
             return (TMetric)PerContextCaches.GetOrAdd(cacheKey, _ => new PerContextCache()).Obtain(name, typeof(TMetric), details, () => factory());
         }
 
+        // note (kungurtsev, 12.11.2021): if we call Obtain after Clean, it will allocate PerContextCaches item again
+        // note (kungurtsev, 12.11.2021): but otherwise, it won't be lock-free
+        public static void Clean([NotNull] IMetricContext context)
+        {
+            foreach (var enrty in PerContextCaches)
+            {
+                if (ReferenceEquals(enrty.Key.BaseContext, context))
+                    PerContextCaches.TryRemove(enrty.Key, out _);
+            }
+        }
+
         #region CacheKeyComparer
 
         private class CacheKeyComparer : IEqualityComparer<CacheKey>

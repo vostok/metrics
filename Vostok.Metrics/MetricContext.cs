@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using JetBrains.Annotations;
 using Vostok.Metrics.Models;
+using Vostok.Metrics.Primitives.Caching;
 using Vostok.Metrics.Primitives.Counter;
 using Vostok.Metrics.Scraping;
 using Vostok.Metrics.Senders;
@@ -66,6 +67,7 @@ namespace Vostok.Metrics
             scheduler.Dispose();
             fastScheduler.Dispose();
             scrapeOnDisposeScheduler.Dispose();
+            GlobalCache.Clean(this);
         }
 
         private static void AddGlobalSender<TSender>([NotNull] TSender sender, ref TSender[] globalSenders)
