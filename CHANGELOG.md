@@ -1,3 +1,8 @@
+## 0.2.24 (12.11.2021):
+
+- Do not use cache for `DevNullMetricContext` 
+- Clean `GlobalCache` on `MetricContext` dispose
+
 ## 0.2.23 (02.09.2021):
 
 Added 'ScrapeOnDispose' option to many primitives.
