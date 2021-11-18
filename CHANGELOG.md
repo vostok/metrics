@@ -1,3 +1,7 @@
+## 0.2.25 (18.11.2021):
+
+Added `MeasureElapsed` timer extension.
+
 ## 0.2.24 (12.11.2021):
 
 - Do not use cache for `DevNullMetricContext` 
