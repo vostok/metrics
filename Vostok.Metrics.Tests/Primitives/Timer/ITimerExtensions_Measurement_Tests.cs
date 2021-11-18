@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -69,6 +70,23 @@ namespace Vostok.Metrics.Tests.Primitives.Timer
             }
 
             @event.Value.Should().BeGreaterThan(0.001);
+        }
+        
+        [Test]
+        public void MeasureElapsed_should_return_elapsed()
+        {
+            MetricEvent @event = null;
+            var context = new MetricContext(new MetricContextConfig(new AdHocMetricEventSender(e => @event = e)));
+            var timer = context.CreateTimer("name");
+
+            Measurement measurement;
+            using (measurement = timer.MeasureElapsed())
+            {
+                Thread.Sleep(0.01.Seconds());
+            }
+
+            measurement.Elapsed.TotalSeconds.Should().BeGreaterThan(0.001);
+            @event.Value.Should().Be(measurement.Elapsed.TotalSeconds);
         }
 
         [Test]
