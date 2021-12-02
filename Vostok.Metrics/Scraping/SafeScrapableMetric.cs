@@ -23,13 +23,11 @@ namespace Vostok.Metrics.Scraping
 
         public IEnumerable<MetricEvent> Scrape(DateTimeOffset timestamp)
         {
-            if (disposed)
-                yield break;
-
             scrapeEnded.Reset();
 
-            foreach (var metricEvent in metric.Scrape(timestamp))
-                yield return metricEvent;
+            if (!disposed)
+                foreach (var metricEvent in metric.Scrape(timestamp))
+                    yield return metricEvent;
 
             scrapeEnded.Set();
         }
