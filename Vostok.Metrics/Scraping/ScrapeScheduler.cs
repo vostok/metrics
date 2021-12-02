@@ -35,7 +35,8 @@ namespace Vostok.Metrics.Scraping
 
             var (metrics, created) = ObtainMetricsForPeriod(scrapePeriod);
 
-            metrics.Add(metric);
+            var safeMetric = new SafeScrapableMetric(metric);
+            metrics.Add(safeMetric);
 
             if (created)
             {
@@ -47,7 +48,8 @@ namespace Vostok.Metrics.Scraping
             return new ActionDisposable(
                 () =>
                 {
-                    metrics.Remove(metric);
+                    metrics.Remove(safeMetric);
+                    safeMetric.Dispose();
                     ScrapeOnDispose(metric);
                 });
         }
