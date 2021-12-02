@@ -16,10 +16,8 @@ namespace Vostok.Metrics.Scraping
         private readonly AtomicBoolean disposed = new AtomicBoolean(false);
         private readonly IScrapableMetric metric;
 
-        public SafeScrapableMetric([NotNull] IScrapableMetric metric)
-        {
+        public SafeScrapableMetric([NotNull] IScrapableMetric metric) =>
             this.metric = metric;
-        }
 
         public IEnumerable<MetricEvent> Scrape(DateTimeOffset timestamp)
         {
