@@ -1,3 +1,7 @@
+## 0.2.26 (06-12-2021):
+
+Added `net6.0` target.
+
 ## 0.2.25 (18.11.2021):
 
 Added `MeasureElapsed` timer extension.
