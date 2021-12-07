@@ -51,7 +51,7 @@ namespace Vostok.Metrics.Scraping
 
                     // todo (kungurtsev, 07.12.2021): 
                     // 1. obtain metric Scraper
-                    // 2. wait when Scraper to finish current iteration
+                    // 2. wait when Scraper finish current iteration
                     
                     ScrapeOnDispose(metric);
                 });
