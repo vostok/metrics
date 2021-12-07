@@ -48,6 +48,11 @@ namespace Vostok.Metrics.Scraping
                 () =>
                 {
                     metrics.Remove(metric);
+
+                    // todo (kungurtsev, 07.12.2021): 
+                    // 1. obtain metric Scraper
+                    // 2. wait when Scraper to finish current iteration
+                    
                     ScrapeOnDispose(metric);
                 });
         }

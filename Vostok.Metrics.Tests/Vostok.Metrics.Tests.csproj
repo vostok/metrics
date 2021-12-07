@@ -14,6 +14,9 @@
 
   <ItemGroup>
     <Compile Include="..\..\vostok.commons.testing\Vostok.Commons.Testing\*.cs" LinkBase="Commons\Testing\" />
+    <Compile Include="..\..\vostok.commons.threading\Vostok.Commons.Threading\AsyncManualResetEvent.cs">
+      <Link>Commons\AsyncManualResetEvent.cs</Link>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
