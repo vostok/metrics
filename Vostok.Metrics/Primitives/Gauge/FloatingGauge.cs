@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using JetBrains.Annotations;
+using Vostok.Commons.Threading;
 using Vostok.Metrics.Models;
 using Vostok.Metrics.Scraping;
 
@@ -13,6 +14,7 @@ namespace Vostok.Metrics.Primitives.Gauge
         private readonly MetricTags tags;
         private readonly FloatingGaugeConfig config;
         private readonly IDisposable registration;
+        private readonly AtomicBoolean valueModified;
         private double value;
 
         public FloatingGauge(
@@ -23,7 +25,11 @@ namespace Vostok.Metrics.Primitives.Gauge
             this.tags = tags ?? throw new ArgumentNullException(nameof(tags));
             this.config = config ?? throw new ArgumentNullException(nameof(config));
 
+            if (!this.config.SendInitialValue && this.config.ResetOnScrape)
+                throw new ArgumentException("'FloatingGaugeConfig.SendInitialValue = false' is incompatible with 'FloatingGaugeConfig.ResetOnScrape = true'.");
+            
             value = config.InitialValue;
+            valueModified = false;
 
             registration = context.Register(this, config.ToScrapableMetricConfig());
         }
@@ -36,12 +42,15 @@ namespace Vostok.Metrics.Primitives.Gauge
                 ? Interlocked.Exchange(ref value, config.InitialValue)
                 : CurrentValue;
 
-            if (valueToReport != 0 || config.SendZeroValues)
+            if ((config.SendZeroValues || valueToReport != 0) && (config.SendInitialValue || valueModified))
                 yield return new MetricEvent(valueToReport, tags, timestamp, config.Unit, null, null);
         }
 
         public void Set(double newValue)
-            => Interlocked.Exchange(ref value, newValue);
+        {
+            Interlocked.Exchange(ref value, newValue);
+            valueModified.SetTrue();
+        }
 
         public void Substract(double valueToSubstract)
             => Add(-valueToSubstract);
@@ -80,6 +89,11 @@ namespace Vostok.Metrics.Primitives.Gauge
             => registration.Dispose();
 
         private bool TrySet(double newValue, double expectedValue)
-            => Math.Abs(Interlocked.CompareExchange(ref value, newValue, expectedValue) - expectedValue) < double.Epsilon * 100;
+        {
+            var result = Math.Abs(Interlocked.CompareExchange(ref value, newValue, expectedValue) - expectedValue) < double.Epsilon * 100;
+            if (result)
+                valueModified.SetTrue();
+            return result;
+        }
     }
 }
