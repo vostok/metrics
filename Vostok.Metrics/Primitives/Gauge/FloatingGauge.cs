@@ -26,7 +26,7 @@ namespace Vostok.Metrics.Primitives.Gauge
             this.config = config ?? throw new ArgumentNullException(nameof(config));
 
             if (!this.config.SendInitialValue && this.config.ResetOnScrape)
-                throw new ArgumentException("'FloatingGaugeConfig.SendInitialValue = false' is incompatible with 'FloatingGaugeConfig.ResetOnScrape = true'.");
+                throw new ArgumentException($"'{nameof(FloatingGaugeConfig)}.{nameof(FloatingGaugeConfig.SendInitialValue)} = false' is incompatible with '{nameof(FloatingGaugeConfig)}.{nameof(FloatingGaugeConfig.ResetOnScrape)} = true'.");
             
             value = config.InitialValue;
             valueModified = false;

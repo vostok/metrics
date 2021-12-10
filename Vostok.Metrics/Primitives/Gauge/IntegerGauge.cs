@@ -26,7 +26,7 @@ namespace Vostok.Metrics.Primitives.Gauge
             this.config = config ?? throw new ArgumentNullException(nameof(config));
 
             if (!this.config.SendInitialValue && this.config.ResetOnScrape)
-                throw new ArgumentException("'IntegerGaugeConfig.SendInitialValue = false' is incompatible with 'IntegerGaugeConfig.ResetOnScrape = true'.");
+                throw new ArgumentException($"'{nameof(IntegerGaugeConfig)}.{nameof(IntegerGaugeConfig.SendInitialValue)} = false' is incompatible with '{nameof(IntegerGaugeConfig)}.{nameof(IntegerGaugeConfig.ResetOnScrape)} = true'.");
 
             value = config.InitialValue;
             valueModified = false;
