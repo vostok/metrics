@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using JetBrains.Annotations;
+using Vostok.Commons.Threading;
 using Vostok.Metrics.Models;
 using Vostok.Metrics.Scraping;
 
@@ -13,6 +14,7 @@ namespace Vostok.Metrics.Primitives.Gauge
         private readonly MetricTags tags;
         private readonly IntegerGaugeConfig config;
         private readonly IDisposable registration;
+        private readonly AtomicBoolean valueModified;
         private long value;
 
         public IntegerGauge(
@@ -23,12 +25,19 @@ namespace Vostok.Metrics.Primitives.Gauge
             this.tags = tags ?? throw new ArgumentNullException(nameof(tags));
             this.config = config ?? throw new ArgumentNullException(nameof(config));
 
+            if (!this.config.SendInitialValue && this.config.ResetOnScrape)
+                throw new ArgumentException("'IntegerGaugeConfig.SendInitialValue = false' is incompatible with 'IntegerGaugeConfig.ResetOnScrape = true'.");
+
             value = config.InitialValue;
+            valueModified = false;
 
             registration = context.Register(this, config.ToScrapableMetricConfig());
         }
 
-        public long CurrentValue => Interlocked.Read(ref value);
+        public long CurrentValue
+        {
+            get { return Interlocked.Read(ref value); }
+        }
 
         public IEnumerable<MetricEvent> Scrape(DateTimeOffset timestamp)
         {
@@ -36,24 +45,36 @@ namespace Vostok.Metrics.Primitives.Gauge
                 ? Interlocked.Exchange(ref value, config.InitialValue)
                 : CurrentValue;
 
-            if (valueToReport != 0 || config.SendZeroValues)
+            if ((config.SendZeroValues || valueToReport != 0) && (config.SendInitialValue || valueModified))
                 yield return new MetricEvent(valueToReport, tags, timestamp, config.Unit, null, null);
         }
 
         public void Set(long newValue)
-            => Interlocked.Exchange(ref value, newValue);
+        {
+            Interlocked.Exchange(ref value, newValue);
+            valueModified.SetTrue();
+        }
 
         public void Increment()
-            => Interlocked.Increment(ref value);
+        {
+            Interlocked.Increment(ref value);
+            valueModified.SetTrue();
+        }
 
         public void Decrement()
-            => Interlocked.Decrement(ref value);
+        {
+            Interlocked.Decrement(ref value);
+            valueModified.SetTrue();
+        }
 
         public void Add(long valueToAdd)
-            => Interlocked.Add(ref value, valueToAdd);
+        {
+            Interlocked.Add(ref value, valueToAdd);
+            valueModified.SetTrue();
+        }
 
-        public void Substract(long valueToSubstract)
-            => Add(-valueToSubstract);
+        public void Substract(long valueToSubstract) =>
+            Add(-valueToSubstract);
 
         public void TryIncreaseTo(long candidateValue)
         {
@@ -76,9 +97,16 @@ namespace Vostok.Metrics.Primitives.Gauge
         }
 
         public void Dispose()
-            => registration.Dispose();
+        {
+            registration.Dispose();
+        }
 
         private bool TrySet(long newValue, long expectedValue)
-            => Interlocked.CompareExchange(ref value, newValue, expectedValue) == expectedValue;
+        {
+            var result = Interlocked.CompareExchange(ref value, newValue, expectedValue) == expectedValue;
+            if (result)
+                valueModified.SetTrue();
+            return result;
+        }
     }
 }
