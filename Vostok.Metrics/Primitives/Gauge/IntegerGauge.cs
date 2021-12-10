@@ -34,10 +34,7 @@ namespace Vostok.Metrics.Primitives.Gauge
             registration = context.Register(this, config.ToScrapableMetricConfig());
         }
 
-        public long CurrentValue
-        {
-            get { return Interlocked.Read(ref value); }
-        }
+        public long CurrentValue => Interlocked.Read(ref value);
 
         public IEnumerable<MetricEvent> Scrape(DateTimeOffset timestamp)
         {
