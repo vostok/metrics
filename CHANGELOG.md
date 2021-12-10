@@ -1,3 +1,7 @@
+## 0.2.28 (10-12-2021):
+
+Added `SendInitialValue` setting for gauges.
+
 ## 0.2.27 (06-12-2021):
 
 Added `net6.0` target.
