@@ -16,5 +16,10 @@ namespace Vostok.Metrics.Primitives.Gauge
         /// Initial value of the gauge. Zero by default.
         /// </summary>
         public double InitialValue { get; set; }
+        
+        /// <summary>
+        /// Whether or not to send initial value.
+        /// </summary>
+        public bool SendInitialValue { get; set; } = true;
     }
 }

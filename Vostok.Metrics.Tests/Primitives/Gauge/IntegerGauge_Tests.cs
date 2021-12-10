@@ -198,9 +198,21 @@ namespace Vostok.Metrics.Tests.Primitives.Gauge
             gauge.CurrentValue.Should().Be(5);
         }
 
+        [Test]
+        public void Should_not_send_initial_value_if_specified()
+        {
+            var gauge = context.CreateIntegerGauge("name", new IntegerGaugeConfig {InitialValue = 100, SendInitialValue = false});
+
+            Scrape(gauge).Should().BeNull();
+            
+            gauge.Set(100);
+            
+            Scrape(gauge).Value.Should().Be(100);
+        }
+
         private static MetricEvent Scrape(IIntegerGauge gauge, DateTimeOffset? timestamp = null)
         {
-            return ((IntegerGauge)gauge).Scrape(timestamp ?? DateTimeOffset.Now).Single();
+            return ((IntegerGauge)gauge).Scrape(timestamp ?? DateTimeOffset.Now).FirstOrDefault();
         }
     }
 }
