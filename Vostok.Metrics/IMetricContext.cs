@@ -38,6 +38,9 @@ namespace Vostok.Metrics
         /// <para>
         /// Implementations should guarantee that <see cref="IScrapableMetric.Scrape"/> is never called concurrently on the same <paramref name="metric"/>.
         /// </para>
+        /// <para>
+        /// Implementations should also guarantee that <see cref="IScrapableMetric.Scrape"/> will not be invoked again after <see cref="IDisposable.Dispose"/> call.
+        /// </para>
         /// </summary>
         /// <param name="metric">The metric to scrape</param>
         /// <param name="scrapePeriod">How often to scrape</param>
