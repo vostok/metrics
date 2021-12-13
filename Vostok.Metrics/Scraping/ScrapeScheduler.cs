@@ -37,11 +37,10 @@ namespace Vostok.Metrics.Scraping
 
             metrics.Add(metric);
 
-            // NOTE: Only one thread per scrape period can enter
             if (created)
             {
                 var scraper = new Scraper(sender, errorCallback);
-                var job = Task.Run(async () => await scraper.RunAsync(metrics, scrapePeriod, cancellation.Token).SilentlyContinue().ConfigureAwait(false));
+                var job = Task.Run(() => scraper.RunAsync(metrics, scrapePeriod, cancellation.Token).SilentlyContinue());
                 scrapersWithJobs[scrapePeriod] = (scraper, job);
             }
 
@@ -50,7 +49,6 @@ namespace Vostok.Metrics.Scraping
                 {
                     metrics.Remove(metric);
 
-                    // NOTE: We want our user to be sure that he is able to free all resources after `Dispose` on `Register`.
                     if (scrapersWithJobs.TryGetValue(scrapePeriod, out var scraperWithJob))
                         scraperWithJob.scraper.WaitForIterationEnd().GetAwaiter().GetResult();
 
