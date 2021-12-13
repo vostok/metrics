@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Vostok.Commons.Helpers.Disposable;
+using Vostok.Commons.Helpers.Extensions;
 
 namespace Vostok.Metrics.Scraping
 {
@@ -40,7 +41,7 @@ namespace Vostok.Metrics.Scraping
             if (created)
             {
                 var scraper = new Scraper(sender, errorCallback);
-                var job = Task.Run(async () => await scraper.RunAsync(metrics, scrapePeriod, cancellation.Token).ConfigureAwait(false));
+                var job = Task.Run(async () => await scraper.RunAsync(metrics, scrapePeriod, cancellation.Token).SilentlyContinue().ConfigureAwait(false));
                 scrapersWithJobs[scrapePeriod] = (scraper, job);
             }
 
