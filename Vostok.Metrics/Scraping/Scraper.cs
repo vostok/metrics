@@ -4,13 +4,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Vostok.Commons.Time;
 using Vostok.Metrics.Models;
+using Signal = Vostok.Commons.Threading.AsyncManualResetEvent;
 
 namespace Vostok.Metrics.Scraping
 {
     internal class Scraper
     {
         private static readonly TimeSpan RolloverWaitPause = TimeSpan.FromMilliseconds(1);
-
+        private readonly Signal iterationEnd = new Signal(true);
         private readonly IMetricEventSender sender;
         private readonly Action<Exception> errorCallback;
         private readonly List<MetricEvent> metricEventsBuffer;
@@ -41,13 +42,18 @@ namespace Vostok.Metrics.Scraping
 
         public void ScrapeOnce(IEnumerable<IScrapableMetric> metrics, DateTime? scrapeTimestamp = null, CancellationToken cancellationToken = default)
         {
+            iterationEnd.Reset();
+
             metricEventsBuffer.Clear();
             scrapeTimestamp = scrapeTimestamp ?? Now;
 
             foreach (var metric in metrics)
             {
                 if (cancellationToken.IsCancellationRequested)
+                {
+                    iterationEnd.Set();
                     return;
+                }
 
                 try
                 {
@@ -58,6 +64,8 @@ namespace Vostok.Metrics.Scraping
                     OnError(error);
                 }
             }
+
+            iterationEnd.Set();
 
             foreach (var metricEvent in metricEventsBuffer)
             {
@@ -76,6 +84,7 @@ namespace Vostok.Metrics.Scraping
         }
 
         private static DateTime Now => PreciseDateTime.UtcNow.UtcDateTime;
+        public Task WaitForIterationEnd() => iterationEnd.WaitAsync();
 
         private static TimeSpan GetDelayToNextScrape(DateTime now, TimeSpan period)
             => period - TimeSpan.FromTicks(now.Ticks % period.Ticks);
