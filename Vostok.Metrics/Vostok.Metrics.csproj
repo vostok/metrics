@@ -7,7 +7,7 @@
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <VersionPrefix>0.2.29</VersionPrefix>
+    <VersionPrefix>0.2.30</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
     <Title>Vostok.Metrics</Title>
