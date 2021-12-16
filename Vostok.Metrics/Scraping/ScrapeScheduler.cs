@@ -15,7 +15,7 @@ namespace Vostok.Metrics.Scraping
         private readonly bool scrapeOnDispose;
         private readonly CancellationTokenSource cancellation;
         private readonly ConcurrentDictionary<TimeSpan, ScrapableMetrics> scrapableMetrics;
-        private readonly ConcurrentDictionary<TimeSpan, Task> scraperTasks;
+        private readonly ConcurrentDictionary<TimeSpan, (Scraper scraper, Task runJob)> scrapersWithJobs;
 
         public ScrapeScheduler(IMetricEventSender sender, Action<Exception> errorCallback, bool scrapeOnDispose = false)
         {
@@ -24,8 +24,8 @@ namespace Vostok.Metrics.Scraping
             this.scrapeOnDispose = scrapeOnDispose;
 
             cancellation = new CancellationTokenSource();
-            scraperTasks = new ConcurrentDictionary<TimeSpan, Task>();
             scrapableMetrics = new ConcurrentDictionary<TimeSpan, ScrapableMetrics>();
+            scrapersWithJobs = new ConcurrentDictionary<TimeSpan, (Scraper scraper, Task runJob)>();
         }
 
         public IDisposable Register(IScrapableMetric metric, TimeSpan scrapePeriod)
@@ -39,15 +39,19 @@ namespace Vostok.Metrics.Scraping
 
             if (created)
             {
-                scraperTasks[scrapePeriod] = new Scraper(sender, errorCallback)
-                    .RunAsync(metrics, scrapePeriod, cancellation.Token)
-                    .SilentlyContinue();
+                var scraper = new Scraper(sender, errorCallback);
+                var job = Task.Run(() => scraper.RunAsync(metrics, scrapePeriod, cancellation.Token));
+                scrapersWithJobs[scrapePeriod] = (scraper, job);
             }
 
             return new ActionDisposable(
                 () =>
                 {
                     metrics.Remove(metric);
+
+                    if (scrapersWithJobs.TryGetValue(scrapePeriod, out var scraperWithJob))
+                        scraperWithJob.scraper.WaitForIterationEnd().GetAwaiter().GetResult();
+
                     ScrapeOnDispose(metric);
                 });
         }
@@ -56,13 +60,13 @@ namespace Vostok.Metrics.Scraping
         {
             cancellation.Cancel();
 
-            Task.WhenAll(scraperTasks.Values)
+            Task.WhenAll(scrapersWithJobs.Values.Select(x => x.runJob.SilentlyContinue()))
                 .GetAwaiter()
                 .GetResult();
 
             ScrapeOnDispose();
 
-            scraperTasks.Clear();
+            scrapersWithJobs.Clear();
             scrapableMetrics.Clear();
         }
 
