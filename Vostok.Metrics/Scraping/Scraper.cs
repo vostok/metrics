@@ -4,13 +4,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Vostok.Commons.Time;
 using Vostok.Metrics.Models;
+using Signal = Vostok.Commons.Threading.AsyncManualResetEvent;
 
 namespace Vostok.Metrics.Scraping
 {
     internal class Scraper
     {
         private static readonly TimeSpan RolloverWaitPause = TimeSpan.FromMilliseconds(1);
-
+        private readonly Signal iterationEnd = new Signal(true);
         private readonly IMetricEventSender sender;
         private readonly Action<Exception> errorCallback;
         private readonly List<MetricEvent> metricEventsBuffer;
@@ -41,23 +42,9 @@ namespace Vostok.Metrics.Scraping
 
         public void ScrapeOnce(IEnumerable<IScrapableMetric> metrics, DateTime? scrapeTimestamp = null, CancellationToken cancellationToken = default)
         {
-            metricEventsBuffer.Clear();
-            scrapeTimestamp = scrapeTimestamp ?? Now;
-
-            foreach (var metric in metrics)
-            {
-                if (cancellationToken.IsCancellationRequested)
-                    return;
-
-                try
-                {
-                    metricEventsBuffer.AddRange(metric.Scrape(scrapeTimestamp.Value));
-                }
-                catch (Exception error)
-                {
-                    OnError(error);
-                }
-            }
+            iterationEnd.Reset();
+            Scrape(metrics, scrapeTimestamp, cancellationToken);
+            iterationEnd.Set();
 
             foreach (var metricEvent in metricEventsBuffer)
             {
@@ -75,7 +62,30 @@ namespace Vostok.Metrics.Scraping
             }
         }
 
+        public Task WaitForIterationEnd() => iterationEnd.WaitAsync();
+
         private static DateTime Now => PreciseDateTime.UtcNow.UtcDateTime;
+
+        private void Scrape(IEnumerable<IScrapableMetric> metrics, DateTime? scrapeTimestamp, CancellationToken cancellationToken)
+        {
+            metricEventsBuffer.Clear();
+            scrapeTimestamp = scrapeTimestamp ?? Now;
+
+            foreach (var metric in metrics)
+            {
+                if (cancellationToken.IsCancellationRequested)
+                    return;
+
+                try
+                {
+                    metricEventsBuffer.AddRange(metric.Scrape(scrapeTimestamp.Value));
+                }
+                catch (Exception error)
+                {
+                    OnError(error);
+                }
+            }
+        }
 
         private static TimeSpan GetDelayToNextScrape(DateTime now, TimeSpan period)
             => period - TimeSpan.FromTicks(now.Ticks % period.Ticks);
