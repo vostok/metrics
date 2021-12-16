@@ -1,3 +1,7 @@
+## 0.2.29 (16-12-2021):
+
+`IDisposable` returned by `IMetricContext.Register` now awaits until scraping iteration end in order to guarantee that `IScrapableMetric.Scrape` will not be called afterwards.
+
 ## 0.2.28 (10-12-2021):
 
 Added `SendInitialValue` setting for gauges.
