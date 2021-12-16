@@ -43,28 +43,7 @@ namespace Vostok.Metrics.Scraping
         public void ScrapeOnce(IEnumerable<IScrapableMetric> metrics, DateTime? scrapeTimestamp = null, CancellationToken cancellationToken = default)
         {
             iterationEnd.Reset();
-
-            metricEventsBuffer.Clear();
-            scrapeTimestamp = scrapeTimestamp ?? Now;
-
-            foreach (var metric in metrics)
-            {
-                if (cancellationToken.IsCancellationRequested)
-                {
-                    iterationEnd.Set();
-                    return;
-                }
-
-                try
-                {
-                    metricEventsBuffer.AddRange(metric.Scrape(scrapeTimestamp.Value));
-                }
-                catch (Exception error)
-                {
-                    OnError(error);
-                }
-            }
-
+            Scrape(metrics, scrapeTimestamp, cancellationToken);
             iterationEnd.Set();
 
             foreach (var metricEvent in metricEventsBuffer)
@@ -83,8 +62,31 @@ namespace Vostok.Metrics.Scraping
             }
         }
 
-        private static DateTime Now => PreciseDateTime.UtcNow.UtcDateTime;
+        private void Scrape(IEnumerable<IScrapableMetric> metrics, DateTime? scrapeTimestamp, CancellationToken cancellationToken)
+        {
+            metricEventsBuffer.Clear();
+            scrapeTimestamp = scrapeTimestamp ?? Now;
+
+            foreach (var metric in metrics)
+            {
+                if (cancellationToken.IsCancellationRequested)
+                    return;
+
+                try
+                {
+                    metricEventsBuffer.AddRange(metric.Scrape(scrapeTimestamp.Value));
+                }
+                catch (Exception error)
+                {
+                    OnError(error);
+                }
+            }
+        }
+
         public Task WaitForIterationEnd() => iterationEnd.WaitAsync();
+
+
+        private static DateTime Now => PreciseDateTime.UtcNow.UtcDateTime;
 
         private static TimeSpan GetDelayToNextScrape(DateTime now, TimeSpan period)
             => period - TimeSpan.FromTicks(now.Ticks % period.Ticks);

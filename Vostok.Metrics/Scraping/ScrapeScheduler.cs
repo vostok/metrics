@@ -40,7 +40,7 @@ namespace Vostok.Metrics.Scraping
             if (created)
             {
                 var scraper = new Scraper(sender, errorCallback);
-                var job = Task.Run(async () => await scraper.RunAsync(metrics, scrapePeriod, cancellation.Token).SilentlyContinue().ConfigureAwait(false));
+                var job = Task.Run(() => scraper.RunAsync(metrics, scrapePeriod, cancellation.Token));
                 scrapersWithJobs[scrapePeriod] = (scraper, job);
             }
 
@@ -60,7 +60,7 @@ namespace Vostok.Metrics.Scraping
         {
             cancellation.Cancel();
 
-            Task.WhenAll(scrapersWithJobs.Values.Select(x => x.runJob))
+            Task.WhenAll(scrapersWithJobs.Values.Select(x => x.runJob.SilentlyContinue()))
                 .GetAwaiter()
                 .GetResult();
 
