@@ -62,6 +62,10 @@ namespace Vostok.Metrics.Scraping
             }
         }
 
+        public Task WaitForIterationEnd() => iterationEnd.WaitAsync();
+
+        private static DateTime Now => PreciseDateTime.UtcNow.UtcDateTime;
+
         private void Scrape(IEnumerable<IScrapableMetric> metrics, DateTime? scrapeTimestamp, CancellationToken cancellationToken)
         {
             metricEventsBuffer.Clear();
@@ -82,11 +86,6 @@ namespace Vostok.Metrics.Scraping
                 }
             }
         }
-
-        public Task WaitForIterationEnd() => iterationEnd.WaitAsync();
-
-
-        private static DateTime Now => PreciseDateTime.UtcNow.UtcDateTime;
 
         private static TimeSpan GetDelayToNextScrape(DateTime now, TimeSpan period)
             => period - TimeSpan.FromTicks(now.Ticks % period.Ticks);
