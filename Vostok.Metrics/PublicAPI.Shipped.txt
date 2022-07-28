@@ -1,0 +1,456 @@
+const Vostok.Metrics.WellKnownAggregationTypes.Counter = "counter" -> string
+const Vostok.Metrics.WellKnownAggregationTypes.Histogram = "histogram" -> string
+const Vostok.Metrics.WellKnownAggregationTypes.Timer = "timer" -> string
+const Vostok.Metrics.WellKnownTagKeys.Aggregate = "_aggregate" -> string
+const Vostok.Metrics.WellKnownTagKeys.Component = "component" -> string
+const Vostok.Metrics.WellKnownTagKeys.LowerBound = "_lowerBound" -> string
+const Vostok.Metrics.WellKnownTagKeys.Name = "_name" -> string
+const Vostok.Metrics.WellKnownTagKeys.UpperBound = "_upperBound" -> string
+const Vostok.Metrics.WellKnownTagValues.AggregateAverage = "avg" -> string
+const Vostok.Metrics.WellKnownTagValues.AggregateCount = "count" -> string
+const Vostok.Metrics.WellKnownTagValues.AggregateP50 = "p50" -> string
+const Vostok.Metrics.WellKnownTagValues.AggregateP75 = "p75" -> string
+const Vostok.Metrics.WellKnownTagValues.AggregateP95 = "p95" -> string
+const Vostok.Metrics.WellKnownTagValues.AggregateP99 = "p99" -> string
+const Vostok.Metrics.WellKnownTagValues.AggregateP999 = "p999" -> string
+const Vostok.Metrics.WellKnownTagValues.NegativeInfinity = "-Inf" -> string
+const Vostok.Metrics.WellKnownTagValues.PositiveInfinity = "+Inf" -> string
+const Vostok.Metrics.WellKnownUnits.Bits = "bits" -> string
+const Vostok.Metrics.WellKnownUnits.BitsPerSecond = "bits/second" -> string
+const Vostok.Metrics.WellKnownUnits.Bytes = "bytes" -> string
+const Vostok.Metrics.WellKnownUnits.BytesPerSecond = "bytes/second" -> string
+const Vostok.Metrics.WellKnownUnits.Days = "days" -> string
+const Vostok.Metrics.WellKnownUnits.Exabits = "exabits" -> string
+const Vostok.Metrics.WellKnownUnits.ExabitsPerSecond = "exabits/second" -> string
+const Vostok.Metrics.WellKnownUnits.Exabytes = "exabytes" -> string
+const Vostok.Metrics.WellKnownUnits.ExabytesPerSecond = "exabytes/second" -> string
+const Vostok.Metrics.WellKnownUnits.Gigabits = "gigabits" -> string
+const Vostok.Metrics.WellKnownUnits.GigabitsPerSecond = "gigabits/second" -> string
+const Vostok.Metrics.WellKnownUnits.Gigabytes = "gigabytes" -> string
+const Vostok.Metrics.WellKnownUnits.GigabytesPerSecond = "gigabytes/second" -> string
+const Vostok.Metrics.WellKnownUnits.Hours = "hours" -> string
+const Vostok.Metrics.WellKnownUnits.Kilobits = "kilobits" -> string
+const Vostok.Metrics.WellKnownUnits.KilobitsPerSecond = "kilobits/second" -> string
+const Vostok.Metrics.WellKnownUnits.Kilobytes = "kilobytes" -> string
+const Vostok.Metrics.WellKnownUnits.KilobytesPerSecond = "kilobytes/second" -> string
+const Vostok.Metrics.WellKnownUnits.Megabits = "megabits" -> string
+const Vostok.Metrics.WellKnownUnits.MegabitsPerSecond = "megabits/second" -> string
+const Vostok.Metrics.WellKnownUnits.Megabytes = "megabytes" -> string
+const Vostok.Metrics.WellKnownUnits.MegabytesPerSecond = "megabytes/second" -> string
+const Vostok.Metrics.WellKnownUnits.Microseconds = "microseconds" -> string
+const Vostok.Metrics.WellKnownUnits.Milliseconds = "milliseconds" -> string
+const Vostok.Metrics.WellKnownUnits.Minutes = "minutes" -> string
+const Vostok.Metrics.WellKnownUnits.Nanoseconds = "nanoseconds" -> string
+const Vostok.Metrics.WellKnownUnits.None = null -> string
+const Vostok.Metrics.WellKnownUnits.OpsPerMinute = "ops/minute" -> string
+const Vostok.Metrics.WellKnownUnits.OpsPerSecond = "ops/second" -> string
+const Vostok.Metrics.WellKnownUnits.Percent1 = "percent1" -> string
+const Vostok.Metrics.WellKnownUnits.Percent100 = "percent100" -> string
+const Vostok.Metrics.WellKnownUnits.Petabits = "petabits" -> string
+const Vostok.Metrics.WellKnownUnits.PetabitsPerSecond = "petabits/second" -> string
+const Vostok.Metrics.WellKnownUnits.Petabytes = "petabytes" -> string
+const Vostok.Metrics.WellKnownUnits.PetabytesPerSecond = "petabytes/second" -> string
+const Vostok.Metrics.WellKnownUnits.Seconds = "seconds" -> string
+const Vostok.Metrics.WellKnownUnits.Terabits = "terabits" -> string
+const Vostok.Metrics.WellKnownUnits.TerabitsPerSecond = "terabits/second" -> string
+const Vostok.Metrics.WellKnownUnits.Terabytes = "terabytes" -> string
+const Vostok.Metrics.WellKnownUnits.TerabytesPerSecond = "terabytes/second" -> string
+const Vostok.Metrics.WellKnownUnits.Ticks = "ticks" -> string
+override Vostok.Metrics.Models.AnnotationEvent.Equals(object obj) -> bool
+override Vostok.Metrics.Models.AnnotationEvent.GetHashCode() -> int
+override Vostok.Metrics.Models.AnnotationEvent.ToString() -> string
+override Vostok.Metrics.Models.MetricEvent.Equals(object obj) -> bool
+override Vostok.Metrics.Models.MetricEvent.GetHashCode() -> int
+override Vostok.Metrics.Models.MetricEvent.ToString() -> string
+override Vostok.Metrics.Models.MetricTag.Equals(object obj) -> bool
+override Vostok.Metrics.Models.MetricTag.GetHashCode() -> int
+override Vostok.Metrics.Models.MetricTag.ToString() -> string
+override Vostok.Metrics.Models.MetricTags.Equals(object obj) -> bool
+override Vostok.Metrics.Models.MetricTags.GetHashCode() -> int
+override Vostok.Metrics.Models.MetricTags.ToString() -> string
+override Vostok.Metrics.Primitives.Timer.HistogramBucket.Equals(object obj) -> bool
+override Vostok.Metrics.Primitives.Timer.HistogramBucket.GetHashCode() -> int
+readonly Vostok.Metrics.Primitives.Timer.HistogramBucket.LowerBound -> double
+readonly Vostok.Metrics.Primitives.Timer.HistogramBucket.UpperBound -> double
+static readonly Vostok.Metrics.Models.MetricTags.Empty -> Vostok.Metrics.Models.MetricTags
+static Vostok.Metrics.AggregationParametersExtensions.GetAggregationLag(this System.Collections.Generic.IReadOnlyDictionary<string, string> aggregationParameters) -> System.TimeSpan?
+static Vostok.Metrics.AggregationParametersExtensions.GetAggregationPeriod(this System.Collections.Generic.IReadOnlyDictionary<string, string> aggregationParameters) -> System.TimeSpan?
+static Vostok.Metrics.AggregationParametersExtensions.GetHistogramBucket(this System.Collections.Generic.IReadOnlyDictionary<string, string> aggregationParameters) -> Vostok.Metrics.Primitives.Timer.HistogramBucket?
+static Vostok.Metrics.AggregationParametersExtensions.GetQuantiles(this System.Collections.Generic.IReadOnlyDictionary<string, string> aggregationParameters) -> double[]
+static Vostok.Metrics.AggregationParametersExtensions.SetAggregationLag(this System.Collections.Generic.Dictionary<string, string> aggregationParameters, System.TimeSpan period) -> System.Collections.Generic.Dictionary<string, string>
+static Vostok.Metrics.AggregationParametersExtensions.SetAggregationPeriod(this System.Collections.Generic.Dictionary<string, string> aggregationParameters, System.TimeSpan period) -> System.Collections.Generic.Dictionary<string, string>
+static Vostok.Metrics.AggregationParametersExtensions.SetQuantiles(this System.Collections.Generic.Dictionary<string, string> aggregationParameters, double[] quantiles) -> System.Collections.Generic.Dictionary<string, string>
+static Vostok.Metrics.Grouping.IMetricGroupExtensions.For<TMetric, TValue1, TValue2, TValue3, TValue4, TValue5, TValue6, TValue7, TValue8>(this Vostok.Metrics.Grouping.IMetricGroup8<TMetric> metric, TValue1 value1, TValue2 value2, TValue3 value3, TValue4 value4, TValue5 value5, TValue6 value6, TValue7 value7, TValue8 value8) -> TMetric
+static Vostok.Metrics.Grouping.IMetricGroupExtensions.For<TMetric, TValue1, TValue2, TValue3, TValue4, TValue5, TValue6, TValue7>(this Vostok.Metrics.Grouping.IMetricGroup7<TMetric> metric, TValue1 value1, TValue2 value2, TValue3 value3, TValue4 value4, TValue5 value5, TValue6 value6, TValue7 value7) -> TMetric
+static Vostok.Metrics.Grouping.IMetricGroupExtensions.For<TMetric, TValue1, TValue2, TValue3, TValue4, TValue5, TValue6>(this Vostok.Metrics.Grouping.IMetricGroup6<TMetric> metric, TValue1 value1, TValue2 value2, TValue3 value3, TValue4 value4, TValue5 value5, TValue6 value6) -> TMetric
+static Vostok.Metrics.Grouping.IMetricGroupExtensions.For<TMetric, TValue1, TValue2, TValue3, TValue4, TValue5>(this Vostok.Metrics.Grouping.IMetricGroup5<TMetric> metric, TValue1 value1, TValue2 value2, TValue3 value3, TValue4 value4, TValue5 value5) -> TMetric
+static Vostok.Metrics.Grouping.IMetricGroupExtensions.For<TMetric, TValue1, TValue2, TValue3, TValue4>(this Vostok.Metrics.Grouping.IMetricGroup4<TMetric> metric, TValue1 value1, TValue2 value2, TValue3 value3, TValue4 value4) -> TMetric
+static Vostok.Metrics.Grouping.IMetricGroupExtensions.For<TMetric, TValue1, TValue2, TValue3>(this Vostok.Metrics.Grouping.IMetricGroup3<TMetric> metric, TValue1 value1, TValue2 value2, TValue3 value3) -> TMetric
+static Vostok.Metrics.Grouping.IMetricGroupExtensions.For<TMetric, TValue1, TValue2>(this Vostok.Metrics.Grouping.IMetricGroup2<TMetric> metric, TValue1 value1, TValue2 value2) -> TMetric
+static Vostok.Metrics.Grouping.IMetricGroupExtensions.For<TMetric, TValue1>(this Vostok.Metrics.Grouping.IMetricGroup1<TMetric> metric, TValue1 value1) -> TMetric
+static Vostok.Metrics.IAnnotationContextExtensions.Send(this Vostok.Metrics.IAnnotationContext context, string description, params (string key, string value)[] tags) -> void
+static Vostok.Metrics.IMetricContextExtensions_Sending.Send(this Vostok.Metrics.IMetricContext context, Vostok.Metrics.Models.MetricDataPoint point) -> void
+static Vostok.Metrics.IMetricContextExtensions_Sending.SendAnnotation(this Vostok.Metrics.IMetricContext context, string description, params (string key, string value)[] tags) -> void
+static Vostok.Metrics.IMetricContextExtensions_Tags.OverwriteTags(this Vostok.Metrics.IMetricContext context, Vostok.Metrics.Models.MetricTags newTags) -> Vostok.Metrics.IMetricContext
+static Vostok.Metrics.IMetricContextExtensions_Tags.WithTag(this Vostok.Metrics.IMetricContext context, string key, string value) -> Vostok.Metrics.IMetricContext
+static Vostok.Metrics.IMetricContextExtensions_Tags.WithTag(this Vostok.Metrics.IMetricContext context, Vostok.Metrics.Models.MetricTag tag) -> Vostok.Metrics.IMetricContext
+static Vostok.Metrics.IMetricContextExtensions_Tags.WithTags(this Vostok.Metrics.IMetricContext context, Vostok.Metrics.Models.MetricTags tags) -> Vostok.Metrics.IMetricContext
+static Vostok.Metrics.MetricContext.AddGlobalSender(Vostok.Metrics.IAnnotationEventSender sender) -> void
+static Vostok.Metrics.MetricContext.AddGlobalSender(Vostok.Metrics.IMetricEventSender sender) -> void
+static Vostok.Metrics.MetricContextProvider.Configure(Vostok.Metrics.IMetricContext metricContext, bool canOverwrite = false) -> void
+static Vostok.Metrics.MetricContextProvider.Get() -> Vostok.Metrics.IMetricContext
+static Vostok.Metrics.MetricContextProvider.IsConfigured.get -> bool
+static Vostok.Metrics.Models.MetricTagsMerger.Merge(Vostok.Metrics.Models.MetricTags contextTags, string name) -> Vostok.Metrics.Models.MetricTags
+static Vostok.Metrics.Models.MetricTagsMerger.Merge(Vostok.Metrics.Models.MetricTags contextTags, string name, System.Collections.Generic.IReadOnlyList<Vostok.Metrics.Models.MetricTag> dynamicTags) -> Vostok.Metrics.Models.MetricTags
+static Vostok.Metrics.Primitives.Counter.CounterFactoryExtensions.CreateCounter(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, string key7, string key8, Vostok.Metrics.Primitives.Counter.CounterConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup8<Vostok.Metrics.Primitives.Counter.ICounter>
+static Vostok.Metrics.Primitives.Counter.CounterFactoryExtensions.CreateCounter(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, string key7, Vostok.Metrics.Primitives.Counter.CounterConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup7<Vostok.Metrics.Primitives.Counter.ICounter>
+static Vostok.Metrics.Primitives.Counter.CounterFactoryExtensions.CreateCounter(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, Vostok.Metrics.Primitives.Counter.CounterConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup6<Vostok.Metrics.Primitives.Counter.ICounter>
+static Vostok.Metrics.Primitives.Counter.CounterFactoryExtensions.CreateCounter(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, Vostok.Metrics.Primitives.Counter.CounterConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup5<Vostok.Metrics.Primitives.Counter.ICounter>
+static Vostok.Metrics.Primitives.Counter.CounterFactoryExtensions.CreateCounter(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, Vostok.Metrics.Primitives.Counter.CounterConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup4<Vostok.Metrics.Primitives.Counter.ICounter>
+static Vostok.Metrics.Primitives.Counter.CounterFactoryExtensions.CreateCounter(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, Vostok.Metrics.Primitives.Counter.CounterConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup3<Vostok.Metrics.Primitives.Counter.ICounter>
+static Vostok.Metrics.Primitives.Counter.CounterFactoryExtensions.CreateCounter(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, Vostok.Metrics.Primitives.Counter.CounterConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup2<Vostok.Metrics.Primitives.Counter.ICounter>
+static Vostok.Metrics.Primitives.Counter.CounterFactoryExtensions.CreateCounter(this Vostok.Metrics.IMetricContext context, string name, string key1, Vostok.Metrics.Primitives.Counter.CounterConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup1<Vostok.Metrics.Primitives.Counter.ICounter>
+static Vostok.Metrics.Primitives.Counter.CounterFactoryExtensions.CreateCounter(this Vostok.Metrics.IMetricContext context, string name, Vostok.Metrics.Primitives.Counter.CounterConfig config = null) -> Vostok.Metrics.Primitives.Counter.ICounter
+static Vostok.Metrics.Primitives.Counter.CounterFactoryExtensions.CreateCounter<TFor>(this Vostok.Metrics.IMetricContext context, string name, Vostok.Metrics.Primitives.Counter.CounterConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup<TFor, Vostok.Metrics.Primitives.Counter.ICounter>
+static Vostok.Metrics.Primitives.Counter.ICounterExtensions.Increment(this Vostok.Metrics.Primitives.Counter.ICounter counter) -> void
+static Vostok.Metrics.Primitives.Gauge.FloatingGaugeFactoryExtensions.CreateFloatingGauge(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, string key7, string key8, Vostok.Metrics.Primitives.Gauge.FloatingGaugeConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup8<Vostok.Metrics.Primitives.Gauge.IFloatingGauge>
+static Vostok.Metrics.Primitives.Gauge.FloatingGaugeFactoryExtensions.CreateFloatingGauge(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, string key7, Vostok.Metrics.Primitives.Gauge.FloatingGaugeConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup7<Vostok.Metrics.Primitives.Gauge.IFloatingGauge>
+static Vostok.Metrics.Primitives.Gauge.FloatingGaugeFactoryExtensions.CreateFloatingGauge(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, Vostok.Metrics.Primitives.Gauge.FloatingGaugeConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup6<Vostok.Metrics.Primitives.Gauge.IFloatingGauge>
+static Vostok.Metrics.Primitives.Gauge.FloatingGaugeFactoryExtensions.CreateFloatingGauge(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, Vostok.Metrics.Primitives.Gauge.FloatingGaugeConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup5<Vostok.Metrics.Primitives.Gauge.IFloatingGauge>
+static Vostok.Metrics.Primitives.Gauge.FloatingGaugeFactoryExtensions.CreateFloatingGauge(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, Vostok.Metrics.Primitives.Gauge.FloatingGaugeConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup4<Vostok.Metrics.Primitives.Gauge.IFloatingGauge>
+static Vostok.Metrics.Primitives.Gauge.FloatingGaugeFactoryExtensions.CreateFloatingGauge(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, Vostok.Metrics.Primitives.Gauge.FloatingGaugeConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup3<Vostok.Metrics.Primitives.Gauge.IFloatingGauge>
+static Vostok.Metrics.Primitives.Gauge.FloatingGaugeFactoryExtensions.CreateFloatingGauge(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, Vostok.Metrics.Primitives.Gauge.FloatingGaugeConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup2<Vostok.Metrics.Primitives.Gauge.IFloatingGauge>
+static Vostok.Metrics.Primitives.Gauge.FloatingGaugeFactoryExtensions.CreateFloatingGauge(this Vostok.Metrics.IMetricContext context, string name, string key1, Vostok.Metrics.Primitives.Gauge.FloatingGaugeConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup1<Vostok.Metrics.Primitives.Gauge.IFloatingGauge>
+static Vostok.Metrics.Primitives.Gauge.FloatingGaugeFactoryExtensions.CreateFloatingGauge(this Vostok.Metrics.IMetricContext context, string name, Vostok.Metrics.Primitives.Gauge.FloatingGaugeConfig config = null) -> Vostok.Metrics.Primitives.Gauge.IFloatingGauge
+static Vostok.Metrics.Primitives.Gauge.FloatingGaugeFactoryExtensions.CreateFloatingGauge<TFor>(this Vostok.Metrics.IMetricContext context, string name, Vostok.Metrics.Primitives.Gauge.FloatingGaugeConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup<TFor, Vostok.Metrics.Primitives.Gauge.IFloatingGauge>
+static Vostok.Metrics.Primitives.Gauge.FuncGaugeFactoryExtensions.CreateFuncGauge(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, string key7, string key8, Vostok.Metrics.Primitives.Gauge.FuncGaugeConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup8<Vostok.Metrics.Primitives.Gauge.IFuncGauge>
+static Vostok.Metrics.Primitives.Gauge.FuncGaugeFactoryExtensions.CreateFuncGauge(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, string key7, Vostok.Metrics.Primitives.Gauge.FuncGaugeConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup7<Vostok.Metrics.Primitives.Gauge.IFuncGauge>
+static Vostok.Metrics.Primitives.Gauge.FuncGaugeFactoryExtensions.CreateFuncGauge(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, Vostok.Metrics.Primitives.Gauge.FuncGaugeConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup6<Vostok.Metrics.Primitives.Gauge.IFuncGauge>
+static Vostok.Metrics.Primitives.Gauge.FuncGaugeFactoryExtensions.CreateFuncGauge(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, Vostok.Metrics.Primitives.Gauge.FuncGaugeConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup5<Vostok.Metrics.Primitives.Gauge.IFuncGauge>
+static Vostok.Metrics.Primitives.Gauge.FuncGaugeFactoryExtensions.CreateFuncGauge(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, Vostok.Metrics.Primitives.Gauge.FuncGaugeConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup4<Vostok.Metrics.Primitives.Gauge.IFuncGauge>
+static Vostok.Metrics.Primitives.Gauge.FuncGaugeFactoryExtensions.CreateFuncGauge(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, Vostok.Metrics.Primitives.Gauge.FuncGaugeConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup3<Vostok.Metrics.Primitives.Gauge.IFuncGauge>
+static Vostok.Metrics.Primitives.Gauge.FuncGaugeFactoryExtensions.CreateFuncGauge(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, Vostok.Metrics.Primitives.Gauge.FuncGaugeConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup2<Vostok.Metrics.Primitives.Gauge.IFuncGauge>
+static Vostok.Metrics.Primitives.Gauge.FuncGaugeFactoryExtensions.CreateFuncGauge(this Vostok.Metrics.IMetricContext context, string name, string key1, Vostok.Metrics.Primitives.Gauge.FuncGaugeConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup1<Vostok.Metrics.Primitives.Gauge.IFuncGauge>
+static Vostok.Metrics.Primitives.Gauge.FuncGaugeFactoryExtensions.CreateFuncGauge(this Vostok.Metrics.IMetricContext context, string name, System.Func<double> valueProvider, Vostok.Metrics.Primitives.Gauge.FuncGaugeConfig config = null) -> Vostok.Metrics.Primitives.Gauge.IFuncGauge
+static Vostok.Metrics.Primitives.Gauge.FuncGaugeFactoryExtensions.CreateFuncGauge(this Vostok.Metrics.IMetricContext context, string name, System.Func<double?> valueProvider, Vostok.Metrics.Primitives.Gauge.FuncGaugeConfig config = null) -> Vostok.Metrics.Primitives.Gauge.IFuncGauge
+static Vostok.Metrics.Primitives.Gauge.FuncGaugeFactoryExtensions.CreateFuncGauge<TFor>(this Vostok.Metrics.IMetricContext context, string name, Vostok.Metrics.Primitives.Gauge.FuncGaugeConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup<TFor, Vostok.Metrics.Primitives.Gauge.IFuncGauge>
+static Vostok.Metrics.Primitives.Gauge.IntegerGaugeFactoryExtensions.CreateIntegerGauge(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, string key7, string key8, Vostok.Metrics.Primitives.Gauge.IntegerGaugeConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup8<Vostok.Metrics.Primitives.Gauge.IIntegerGauge>
+static Vostok.Metrics.Primitives.Gauge.IntegerGaugeFactoryExtensions.CreateIntegerGauge(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, string key7, Vostok.Metrics.Primitives.Gauge.IntegerGaugeConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup7<Vostok.Metrics.Primitives.Gauge.IIntegerGauge>
+static Vostok.Metrics.Primitives.Gauge.IntegerGaugeFactoryExtensions.CreateIntegerGauge(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, Vostok.Metrics.Primitives.Gauge.IntegerGaugeConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup6<Vostok.Metrics.Primitives.Gauge.IIntegerGauge>
+static Vostok.Metrics.Primitives.Gauge.IntegerGaugeFactoryExtensions.CreateIntegerGauge(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, Vostok.Metrics.Primitives.Gauge.IntegerGaugeConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup5<Vostok.Metrics.Primitives.Gauge.IIntegerGauge>
+static Vostok.Metrics.Primitives.Gauge.IntegerGaugeFactoryExtensions.CreateIntegerGauge(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, Vostok.Metrics.Primitives.Gauge.IntegerGaugeConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup4<Vostok.Metrics.Primitives.Gauge.IIntegerGauge>
+static Vostok.Metrics.Primitives.Gauge.IntegerGaugeFactoryExtensions.CreateIntegerGauge(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, Vostok.Metrics.Primitives.Gauge.IntegerGaugeConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup3<Vostok.Metrics.Primitives.Gauge.IIntegerGauge>
+static Vostok.Metrics.Primitives.Gauge.IntegerGaugeFactoryExtensions.CreateIntegerGauge(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, Vostok.Metrics.Primitives.Gauge.IntegerGaugeConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup2<Vostok.Metrics.Primitives.Gauge.IIntegerGauge>
+static Vostok.Metrics.Primitives.Gauge.IntegerGaugeFactoryExtensions.CreateIntegerGauge(this Vostok.Metrics.IMetricContext context, string name, string key1, Vostok.Metrics.Primitives.Gauge.IntegerGaugeConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup1<Vostok.Metrics.Primitives.Gauge.IIntegerGauge>
+static Vostok.Metrics.Primitives.Gauge.IntegerGaugeFactoryExtensions.CreateIntegerGauge(this Vostok.Metrics.IMetricContext context, string name, Vostok.Metrics.Primitives.Gauge.IntegerGaugeConfig config = null) -> Vostok.Metrics.Primitives.Gauge.IIntegerGauge
+static Vostok.Metrics.Primitives.Gauge.IntegerGaugeFactoryExtensions.CreateIntegerGauge<TFor>(this Vostok.Metrics.IMetricContext context, string name, Vostok.Metrics.Primitives.Gauge.IntegerGaugeConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup<TFor, Vostok.Metrics.Primitives.Gauge.IIntegerGauge>
+static Vostok.Metrics.Primitives.Gauge.MultiFuncGaugeFactoryExtensions.CreateMultiFuncGauge(this Vostok.Metrics.IMetricContext context, System.Func<System.Collections.Generic.IEnumerable<Vostok.Metrics.Models.MetricDataPoint>> pointProvider, Vostok.Metrics.Primitives.Gauge.FuncGaugeConfig config = null) -> Vostok.Metrics.Primitives.Gauge.IMultiFuncGauge
+static Vostok.Metrics.Primitives.Gauge.MultiFuncGaugeFactoryExtensions.CreateMultiFuncGaugeFromEvents(this Vostok.Metrics.IMetricContext context, System.Func<System.Collections.Generic.IEnumerable<Vostok.Metrics.Models.MetricEvent>> eventsProvider, Vostok.Metrics.Primitives.Gauge.FuncGaugeConfig config = null) -> Vostok.Metrics.Primitives.Gauge.IMultiFuncGauge
+static Vostok.Metrics.Primitives.Timer.HistogramBuckets.CreateExponential(double start, double factor, int count) -> Vostok.Metrics.Primitives.Timer.HistogramBuckets
+static Vostok.Metrics.Primitives.Timer.HistogramBuckets.CreateLinear(double start, double width, int count) -> Vostok.Metrics.Primitives.Timer.HistogramBuckets
+static Vostok.Metrics.Primitives.Timer.HistogramFactoryExtensions.CreateHistogram(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, string key7, string key8, Vostok.Metrics.Primitives.Timer.HistogramConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup8<Vostok.Metrics.Primitives.Timer.ITimer>
+static Vostok.Metrics.Primitives.Timer.HistogramFactoryExtensions.CreateHistogram(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, string key7, Vostok.Metrics.Primitives.Timer.HistogramConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup7<Vostok.Metrics.Primitives.Timer.ITimer>
+static Vostok.Metrics.Primitives.Timer.HistogramFactoryExtensions.CreateHistogram(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, Vostok.Metrics.Primitives.Timer.HistogramConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup6<Vostok.Metrics.Primitives.Timer.ITimer>
+static Vostok.Metrics.Primitives.Timer.HistogramFactoryExtensions.CreateHistogram(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, Vostok.Metrics.Primitives.Timer.HistogramConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup5<Vostok.Metrics.Primitives.Timer.ITimer>
+static Vostok.Metrics.Primitives.Timer.HistogramFactoryExtensions.CreateHistogram(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, Vostok.Metrics.Primitives.Timer.HistogramConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup4<Vostok.Metrics.Primitives.Timer.ITimer>
+static Vostok.Metrics.Primitives.Timer.HistogramFactoryExtensions.CreateHistogram(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, Vostok.Metrics.Primitives.Timer.HistogramConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup3<Vostok.Metrics.Primitives.Timer.ITimer>
+static Vostok.Metrics.Primitives.Timer.HistogramFactoryExtensions.CreateHistogram(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, Vostok.Metrics.Primitives.Timer.HistogramConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup2<Vostok.Metrics.Primitives.Timer.ITimer>
+static Vostok.Metrics.Primitives.Timer.HistogramFactoryExtensions.CreateHistogram(this Vostok.Metrics.IMetricContext context, string name, string key1, Vostok.Metrics.Primitives.Timer.HistogramConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup1<Vostok.Metrics.Primitives.Timer.ITimer>
+static Vostok.Metrics.Primitives.Timer.HistogramFactoryExtensions.CreateHistogram(this Vostok.Metrics.IMetricContext context, string name, Vostok.Metrics.Primitives.Timer.HistogramConfig config = null) -> Vostok.Metrics.Primitives.Timer.ITimer
+static Vostok.Metrics.Primitives.Timer.HistogramFactoryExtensions.CreateHistogram<TFor>(this Vostok.Metrics.IMetricContext context, string name, Vostok.Metrics.Primitives.Timer.HistogramConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup<TFor, Vostok.Metrics.Primitives.Timer.ITimer>
+static Vostok.Metrics.Primitives.Timer.ITimerExtensions_Measurement.Measure(this Vostok.Metrics.Primitives.Timer.ITimer timer) -> System.IDisposable
+static Vostok.Metrics.Primitives.Timer.ITimerExtensions_Measurement.MeasureAsync(this Vostok.Metrics.Primitives.Timer.ITimer timer, System.Func<System.Threading.Tasks.Task> action) -> System.Threading.Tasks.Task
+static Vostok.Metrics.Primitives.Timer.ITimerExtensions_Measurement.MeasureAsync<T>(this Vostok.Metrics.Primitives.Timer.ITimer timer, System.Func<System.Threading.Tasks.Task<T>> func) -> System.Threading.Tasks.Task<T>
+static Vostok.Metrics.Primitives.Timer.ITimerExtensions_Measurement.MeasureElapsed(this Vostok.Metrics.Primitives.Timer.ITimer timer) -> Vostok.Metrics.Models.Measurement
+static Vostok.Metrics.Primitives.Timer.ITimerExtensions_Measurement.MeasureSync(this Vostok.Metrics.Primitives.Timer.ITimer timer, System.Action action) -> void
+static Vostok.Metrics.Primitives.Timer.ITimerExtensions_Measurement.MeasureSync<T>(this Vostok.Metrics.Primitives.Timer.ITimer timer, System.Func<T> func) -> T
+static Vostok.Metrics.Primitives.Timer.ITimerExtensions_Measurement.Report(this Vostok.Metrics.Primitives.Timer.ITimer timer, System.TimeSpan value) -> void
+static Vostok.Metrics.Primitives.Timer.Quantiles.DefaultQuantiles.get -> double[]
+static Vostok.Metrics.Primitives.Timer.Quantiles.GetQuantile(double quantile, System.Collections.Generic.IList<double> values, int size) -> double
+static Vostok.Metrics.Primitives.Timer.Quantiles.QuantileTag(double quantile) -> Vostok.Metrics.Models.MetricTag
+static Vostok.Metrics.Primitives.Timer.Quantiles.QuantileTags(double[] quantiles, Vostok.Metrics.Models.MetricTags baseTags) -> Vostok.Metrics.Models.MetricTags[]
+static Vostok.Metrics.Primitives.Timer.SummaryFactoryExtensions.CreateSummary(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, string key7, string key8, Vostok.Metrics.Primitives.Timer.SummaryConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup8<Vostok.Metrics.Primitives.Timer.ITimer>
+static Vostok.Metrics.Primitives.Timer.SummaryFactoryExtensions.CreateSummary(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, string key7, Vostok.Metrics.Primitives.Timer.SummaryConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup7<Vostok.Metrics.Primitives.Timer.ITimer>
+static Vostok.Metrics.Primitives.Timer.SummaryFactoryExtensions.CreateSummary(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, Vostok.Metrics.Primitives.Timer.SummaryConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup6<Vostok.Metrics.Primitives.Timer.ITimer>
+static Vostok.Metrics.Primitives.Timer.SummaryFactoryExtensions.CreateSummary(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, Vostok.Metrics.Primitives.Timer.SummaryConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup5<Vostok.Metrics.Primitives.Timer.ITimer>
+static Vostok.Metrics.Primitives.Timer.SummaryFactoryExtensions.CreateSummary(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, Vostok.Metrics.Primitives.Timer.SummaryConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup4<Vostok.Metrics.Primitives.Timer.ITimer>
+static Vostok.Metrics.Primitives.Timer.SummaryFactoryExtensions.CreateSummary(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, Vostok.Metrics.Primitives.Timer.SummaryConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup3<Vostok.Metrics.Primitives.Timer.ITimer>
+static Vostok.Metrics.Primitives.Timer.SummaryFactoryExtensions.CreateSummary(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, Vostok.Metrics.Primitives.Timer.SummaryConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup2<Vostok.Metrics.Primitives.Timer.ITimer>
+static Vostok.Metrics.Primitives.Timer.SummaryFactoryExtensions.CreateSummary(this Vostok.Metrics.IMetricContext context, string name, string key1, Vostok.Metrics.Primitives.Timer.SummaryConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup1<Vostok.Metrics.Primitives.Timer.ITimer>
+static Vostok.Metrics.Primitives.Timer.SummaryFactoryExtensions.CreateSummary(this Vostok.Metrics.IMetricContext context, string name, Vostok.Metrics.Primitives.Timer.SummaryConfig config = null) -> Vostok.Metrics.Primitives.Timer.ITimer
+static Vostok.Metrics.Primitives.Timer.SummaryFactoryExtensions.CreateSummary<TFor>(this Vostok.Metrics.IMetricContext context, string name, Vostok.Metrics.Primitives.Timer.SummaryConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup<TFor, Vostok.Metrics.Primitives.Timer.ITimer>
+static Vostok.Metrics.Primitives.Timer.TimerFactoryExtensions.CreateTimer(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, string key7, string key8, Vostok.Metrics.Primitives.Timer.TimerConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup8<Vostok.Metrics.Primitives.Timer.ITimer>
+static Vostok.Metrics.Primitives.Timer.TimerFactoryExtensions.CreateTimer(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, string key7, Vostok.Metrics.Primitives.Timer.TimerConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup7<Vostok.Metrics.Primitives.Timer.ITimer>
+static Vostok.Metrics.Primitives.Timer.TimerFactoryExtensions.CreateTimer(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, string key6, Vostok.Metrics.Primitives.Timer.TimerConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup6<Vostok.Metrics.Primitives.Timer.ITimer>
+static Vostok.Metrics.Primitives.Timer.TimerFactoryExtensions.CreateTimer(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, string key5, Vostok.Metrics.Primitives.Timer.TimerConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup5<Vostok.Metrics.Primitives.Timer.ITimer>
+static Vostok.Metrics.Primitives.Timer.TimerFactoryExtensions.CreateTimer(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, string key4, Vostok.Metrics.Primitives.Timer.TimerConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup4<Vostok.Metrics.Primitives.Timer.ITimer>
+static Vostok.Metrics.Primitives.Timer.TimerFactoryExtensions.CreateTimer(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, string key3, Vostok.Metrics.Primitives.Timer.TimerConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup3<Vostok.Metrics.Primitives.Timer.ITimer>
+static Vostok.Metrics.Primitives.Timer.TimerFactoryExtensions.CreateTimer(this Vostok.Metrics.IMetricContext context, string name, string key1, string key2, Vostok.Metrics.Primitives.Timer.TimerConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup2<Vostok.Metrics.Primitives.Timer.ITimer>
+static Vostok.Metrics.Primitives.Timer.TimerFactoryExtensions.CreateTimer(this Vostok.Metrics.IMetricContext context, string name, string key1, Vostok.Metrics.Primitives.Timer.TimerConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup1<Vostok.Metrics.Primitives.Timer.ITimer>
+static Vostok.Metrics.Primitives.Timer.TimerFactoryExtensions.CreateTimer(this Vostok.Metrics.IMetricContext context, string name, Vostok.Metrics.Primitives.Timer.TimerConfig config = null) -> Vostok.Metrics.Primitives.Timer.ITimer
+static Vostok.Metrics.Primitives.Timer.TimerFactoryExtensions.CreateTimer<TFor>(this Vostok.Metrics.IMetricContext context, string name, Vostok.Metrics.Primitives.Timer.TimerConfig config = null) -> Vostok.Metrics.Grouping.IMetricGroup<TFor, Vostok.Metrics.Primitives.Timer.ITimer>
+Vostok.Metrics.AggregationParametersExtensions
+Vostok.Metrics.DevNullMetricContext
+Vostok.Metrics.DevNullMetricContext.DevNullMetricContext() -> void
+Vostok.Metrics.DevNullMetricContext.Register(Vostok.Metrics.Scraping.IScrapableMetric metric, System.TimeSpan? scrapePeriod) -> System.IDisposable
+Vostok.Metrics.DevNullMetricContext.Send(Vostok.Metrics.Models.AnnotationEvent event) -> void
+Vostok.Metrics.DevNullMetricContext.Send(Vostok.Metrics.Models.MetricEvent event) -> void
+Vostok.Metrics.DevNullMetricContext.Tags.get -> Vostok.Metrics.Models.MetricTags
+Vostok.Metrics.Grouping.IMetricGroup1<TMetric>
+Vostok.Metrics.Grouping.IMetricGroup1<TMetric>.For(string value1) -> TMetric
+Vostok.Metrics.Grouping.IMetricGroup2<TMetric>
+Vostok.Metrics.Grouping.IMetricGroup2<TMetric>.For(string value1, string value2) -> TMetric
+Vostok.Metrics.Grouping.IMetricGroup3<TMetric>
+Vostok.Metrics.Grouping.IMetricGroup3<TMetric>.For(string value1, string value2, string value3) -> TMetric
+Vostok.Metrics.Grouping.IMetricGroup4<TMetric>
+Vostok.Metrics.Grouping.IMetricGroup4<TMetric>.For(string value1, string value2, string value3, string value4) -> TMetric
+Vostok.Metrics.Grouping.IMetricGroup5<TMetric>
+Vostok.Metrics.Grouping.IMetricGroup5<TMetric>.For(string value1, string value2, string value3, string value4, string value5) -> TMetric
+Vostok.Metrics.Grouping.IMetricGroup6<TMetric>
+Vostok.Metrics.Grouping.IMetricGroup6<TMetric>.For(string value1, string value2, string value3, string value4, string value5, string value6) -> TMetric
+Vostok.Metrics.Grouping.IMetricGroup7<TMetric>
+Vostok.Metrics.Grouping.IMetricGroup7<TMetric>.For(string value1, string value2, string value3, string value4, string value5, string value6, string value7) -> TMetric
+Vostok.Metrics.Grouping.IMetricGroup8<TMetric>
+Vostok.Metrics.Grouping.IMetricGroup8<TMetric>.For(string value1, string value2, string value3, string value4, string value5, string value6, string value7, string value8) -> TMetric
+Vostok.Metrics.Grouping.IMetricGroup<TFor, TMetric>
+Vostok.Metrics.Grouping.IMetricGroup<TFor, TMetric>.For(TFor value) -> TMetric
+Vostok.Metrics.Grouping.IMetricGroupExtensions
+Vostok.Metrics.IAnnotationContext
+Vostok.Metrics.IAnnotationContext.Send(Vostok.Metrics.Models.AnnotationEvent event) -> void
+Vostok.Metrics.IAnnotationContext.Tags.get -> Vostok.Metrics.Models.MetricTags
+Vostok.Metrics.IAnnotationContextExtensions
+Vostok.Metrics.IAnnotationEventSender
+Vostok.Metrics.IAnnotationEventSender.Send(Vostok.Metrics.Models.AnnotationEvent event) -> void
+Vostok.Metrics.IMetricContext
+Vostok.Metrics.IMetricContext.Register(Vostok.Metrics.Scraping.IScrapableMetric metric, System.TimeSpan? scrapePeriod) -> System.IDisposable
+Vostok.Metrics.IMetricContext.Send(Vostok.Metrics.Models.MetricEvent event) -> void
+Vostok.Metrics.IMetricContext.Tags.get -> Vostok.Metrics.Models.MetricTags
+Vostok.Metrics.IMetricContextExtensions_Sending
+Vostok.Metrics.IMetricContextExtensions_Tags
+Vostok.Metrics.IMetricContextWrapper
+Vostok.Metrics.IMetricContextWrapper.BaseContext.get -> Vostok.Metrics.IMetricContext
+Vostok.Metrics.IMetricEventSender
+Vostok.Metrics.IMetricEventSender.Send(Vostok.Metrics.Models.MetricEvent event) -> void
+Vostok.Metrics.MetricContext
+Vostok.Metrics.MetricContext.Dispose() -> void
+Vostok.Metrics.MetricContext.MetricContext(Vostok.Metrics.MetricContextConfig config) -> void
+Vostok.Metrics.MetricContext.Register(Vostok.Metrics.Scraping.IScrapableMetric metric, System.TimeSpan? scrapePeriod) -> System.IDisposable
+Vostok.Metrics.MetricContext.Send(Vostok.Metrics.Models.AnnotationEvent event) -> void
+Vostok.Metrics.MetricContext.Send(Vostok.Metrics.Models.MetricEvent event) -> void
+Vostok.Metrics.MetricContext.Tags.get -> Vostok.Metrics.Models.MetricTags
+Vostok.Metrics.MetricContextConfig
+Vostok.Metrics.MetricContextConfig.AnnotationSender.get -> Vostok.Metrics.IAnnotationEventSender
+Vostok.Metrics.MetricContextConfig.AnnotationSender.set -> void
+Vostok.Metrics.MetricContextConfig.DefaultScrapePeriod.get -> System.TimeSpan
+Vostok.Metrics.MetricContextConfig.DefaultScrapePeriod.set -> void
+Vostok.Metrics.MetricContextConfig.ErrorCallback.get -> System.Action<System.Exception>
+Vostok.Metrics.MetricContextConfig.ErrorCallback.set -> void
+Vostok.Metrics.MetricContextConfig.MetricContextConfig(Vostok.Metrics.IMetricEventSender sender) -> void
+Vostok.Metrics.MetricContextConfig.Sender.get -> Vostok.Metrics.IMetricEventSender
+Vostok.Metrics.MetricContextConfig.Tags.get -> Vostok.Metrics.Models.MetricTags
+Vostok.Metrics.MetricContextConfig.Tags.set -> void
+Vostok.Metrics.MetricContextProvider
+Vostok.Metrics.Models.AnnotationEvent
+Vostok.Metrics.Models.AnnotationEvent.AnnotationEvent(System.DateTimeOffset timestamp, Vostok.Metrics.Models.MetricTags tags, string description) -> void
+Vostok.Metrics.Models.AnnotationEvent.Description.get -> string
+Vostok.Metrics.Models.AnnotationEvent.Equals(Vostok.Metrics.Models.AnnotationEvent other) -> bool
+Vostok.Metrics.Models.AnnotationEvent.Tags.get -> Vostok.Metrics.Models.MetricTags
+Vostok.Metrics.Models.AnnotationEvent.Timestamp.get -> System.DateTimeOffset
+Vostok.Metrics.Models.Measurement
+Vostok.Metrics.Models.Measurement.Dispose() -> void
+Vostok.Metrics.Models.Measurement.Measurement(Vostok.Metrics.Primitives.Timer.ITimer timer) -> void
+Vostok.Metrics.Models.MetricDataPoint
+Vostok.Metrics.Models.MetricDataPoint.MetricDataPoint(double value, params (string key, string value)[] tags) -> void
+Vostok.Metrics.Models.MetricDataPoint.MetricDataPoint(double value, string name, params (string key, string value)[] tags) -> void
+Vostok.Metrics.Models.MetricDataPoint.Name.get -> string
+Vostok.Metrics.Models.MetricDataPoint.Tags.get -> System.Collections.Generic.IReadOnlyList<(string key, string value)>
+Vostok.Metrics.Models.MetricDataPoint.Timestamp.get -> System.DateTimeOffset?
+Vostok.Metrics.Models.MetricDataPoint.Timestamp.set -> void
+Vostok.Metrics.Models.MetricDataPoint.ToMetricEvent(Vostok.Metrics.Models.MetricTags contextTags) -> Vostok.Metrics.Models.MetricEvent
+Vostok.Metrics.Models.MetricDataPoint.Unit.get -> string
+Vostok.Metrics.Models.MetricDataPoint.Unit.set -> void
+Vostok.Metrics.Models.MetricDataPoint.Value.get -> double
+Vostok.Metrics.Models.MetricEvent
+Vostok.Metrics.Models.MetricEvent.AggregationParameters.get -> System.Collections.Generic.IReadOnlyDictionary<string, string>
+Vostok.Metrics.Models.MetricEvent.AggregationType.get -> string
+Vostok.Metrics.Models.MetricEvent.Equals(Vostok.Metrics.Models.MetricEvent other) -> bool
+Vostok.Metrics.Models.MetricEvent.MetricEvent(double value, Vostok.Metrics.Models.MetricTags tags, System.DateTimeOffset timestamp, string unit, string aggregationType, System.Collections.Generic.IReadOnlyDictionary<string, string> aggregationParameters) -> void
+Vostok.Metrics.Models.MetricEvent.Tags.get -> Vostok.Metrics.Models.MetricTags
+Vostok.Metrics.Models.MetricEvent.Timestamp.get -> System.DateTimeOffset
+Vostok.Metrics.Models.MetricEvent.Unit.get -> string
+Vostok.Metrics.Models.MetricEvent.Value.get -> double
+Vostok.Metrics.Models.MetricEventPrintFormat
+Vostok.Metrics.Models.MetricEventPrintFormat.Flat = 1 -> Vostok.Metrics.Models.MetricEventPrintFormat
+Vostok.Metrics.Models.MetricEventPrintFormat.Json = 0 -> Vostok.Metrics.Models.MetricEventPrintFormat
+Vostok.Metrics.Models.MetricTag
+Vostok.Metrics.Models.MetricTag.Equals(Vostok.Metrics.Models.MetricTag other) -> bool
+Vostok.Metrics.Models.MetricTag.Key.get -> string
+Vostok.Metrics.Models.MetricTag.MetricTag(string key, string value) -> void
+Vostok.Metrics.Models.MetricTag.Value.get -> string
+Vostok.Metrics.Models.MetricTagAttribute
+Vostok.Metrics.Models.MetricTagAttribute.MetricTagAttribute(int order) -> void
+Vostok.Metrics.Models.MetricTagAttribute.Order.get -> int
+Vostok.Metrics.Models.MetricTags
+Vostok.Metrics.Models.MetricTags.Append(string key, string value) -> Vostok.Metrics.Models.MetricTags
+Vostok.Metrics.Models.MetricTags.Append(System.Collections.Generic.IReadOnlyList<Vostok.Metrics.Models.MetricTag> tags) -> Vostok.Metrics.Models.MetricTags
+Vostok.Metrics.Models.MetricTags.Append(Vostok.Metrics.Models.MetricTag tag) -> Vostok.Metrics.Models.MetricTags
+Vostok.Metrics.Models.MetricTags.Count.get -> int
+Vostok.Metrics.Models.MetricTags.Equals(Vostok.Metrics.Models.MetricTags other) -> bool
+Vostok.Metrics.Models.MetricTags.GetEnumerator() -> System.Collections.Generic.IEnumerator<Vostok.Metrics.Models.MetricTag>
+Vostok.Metrics.Models.MetricTags.MetricTags(int capacity) -> void
+Vostok.Metrics.Models.MetricTags.MetricTags(params Vostok.Metrics.Models.MetricTag[] tags) -> void
+Vostok.Metrics.Models.MetricTags.this[int index].get -> Vostok.Metrics.Models.MetricTag
+Vostok.Metrics.Models.MetricTagsMerger
+Vostok.Metrics.Primitives.Counter.CounterConfig
+Vostok.Metrics.Primitives.Counter.CounterConfig.AggregationParameters.get -> System.Collections.Generic.IReadOnlyDictionary<string, string>
+Vostok.Metrics.Primitives.Counter.CounterConfig.AggregationParameters.set -> void
+Vostok.Metrics.Primitives.Counter.CounterConfig.CounterConfig() -> void
+Vostok.Metrics.Primitives.Counter.CounterConfig.ScrapeOnDispose.get -> bool
+Vostok.Metrics.Primitives.Counter.CounterConfig.ScrapeOnDispose.set -> void
+Vostok.Metrics.Primitives.Counter.CounterConfig.ScrapePeriod.get -> System.TimeSpan?
+Vostok.Metrics.Primitives.Counter.CounterConfig.ScrapePeriod.set -> void
+Vostok.Metrics.Primitives.Counter.CounterConfig.SendZeroValues.get -> bool
+Vostok.Metrics.Primitives.Counter.CounterConfig.SendZeroValues.set -> void
+Vostok.Metrics.Primitives.Counter.CounterConfig.Unit.get -> string
+Vostok.Metrics.Primitives.Counter.CounterConfig.Unit.set -> void
+Vostok.Metrics.Primitives.Counter.CounterFactoryExtensions
+Vostok.Metrics.Primitives.Counter.ICounter
+Vostok.Metrics.Primitives.Counter.ICounter.Add(long value) -> void
+Vostok.Metrics.Primitives.Counter.ICounterExtensions
+Vostok.Metrics.Primitives.Gauge.FloatingGaugeConfig
+Vostok.Metrics.Primitives.Gauge.FloatingGaugeConfig.FloatingGaugeConfig() -> void
+Vostok.Metrics.Primitives.Gauge.FloatingGaugeConfig.InitialValue.get -> double
+Vostok.Metrics.Primitives.Gauge.FloatingGaugeConfig.InitialValue.set -> void
+Vostok.Metrics.Primitives.Gauge.FloatingGaugeConfig.ResetOnScrape.get -> bool
+Vostok.Metrics.Primitives.Gauge.FloatingGaugeConfig.ResetOnScrape.set -> void
+Vostok.Metrics.Primitives.Gauge.FloatingGaugeConfig.SendInitialValue.get -> bool
+Vostok.Metrics.Primitives.Gauge.FloatingGaugeConfig.SendInitialValue.set -> void
+Vostok.Metrics.Primitives.Gauge.FloatingGaugeFactoryExtensions
+Vostok.Metrics.Primitives.Gauge.FuncGaugeConfig
+Vostok.Metrics.Primitives.Gauge.FuncGaugeConfig.FuncGaugeConfig() -> void
+Vostok.Metrics.Primitives.Gauge.FuncGaugeFactoryExtensions
+Vostok.Metrics.Primitives.Gauge.GaugeConfig
+Vostok.Metrics.Primitives.Gauge.GaugeConfig.GaugeConfig() -> void
+Vostok.Metrics.Primitives.Gauge.GaugeConfig.ScrapeOnDispose.get -> bool
+Vostok.Metrics.Primitives.Gauge.GaugeConfig.ScrapeOnDispose.set -> void
+Vostok.Metrics.Primitives.Gauge.GaugeConfig.ScrapePeriod.get -> System.TimeSpan?
+Vostok.Metrics.Primitives.Gauge.GaugeConfig.ScrapePeriod.set -> void
+Vostok.Metrics.Primitives.Gauge.GaugeConfig.SendZeroValues.get -> bool
+Vostok.Metrics.Primitives.Gauge.GaugeConfig.SendZeroValues.set -> void
+Vostok.Metrics.Primitives.Gauge.GaugeConfig.Unit.get -> string
+Vostok.Metrics.Primitives.Gauge.GaugeConfig.Unit.set -> void
+Vostok.Metrics.Primitives.Gauge.IFloatingGauge
+Vostok.Metrics.Primitives.Gauge.IFloatingGauge.Add(double value) -> void
+Vostok.Metrics.Primitives.Gauge.IFloatingGauge.Set(double value) -> void
+Vostok.Metrics.Primitives.Gauge.IFloatingGauge.Substract(double value) -> void
+Vostok.Metrics.Primitives.Gauge.IFloatingGauge.TryIncreaseTo(double value) -> void
+Vostok.Metrics.Primitives.Gauge.IFloatingGauge.TryReduceTo(double value) -> void
+Vostok.Metrics.Primitives.Gauge.IFuncGauge
+Vostok.Metrics.Primitives.Gauge.IFuncGauge.SetValueProvider(System.Func<double> valueProvider) -> void
+Vostok.Metrics.Primitives.Gauge.IFuncGauge.SetValueProvider(System.Func<double?> valueProvider) -> void
+Vostok.Metrics.Primitives.Gauge.IIntegerGauge
+Vostok.Metrics.Primitives.Gauge.IIntegerGauge.Add(long value) -> void
+Vostok.Metrics.Primitives.Gauge.IIntegerGauge.Decrement() -> void
+Vostok.Metrics.Primitives.Gauge.IIntegerGauge.Increment() -> void
+Vostok.Metrics.Primitives.Gauge.IIntegerGauge.Set(long value) -> void
+Vostok.Metrics.Primitives.Gauge.IIntegerGauge.Substract(long value) -> void
+Vostok.Metrics.Primitives.Gauge.IIntegerGauge.TryIncreaseTo(long value) -> void
+Vostok.Metrics.Primitives.Gauge.IIntegerGauge.TryReduceTo(long value) -> void
+Vostok.Metrics.Primitives.Gauge.IMultiFuncGauge
+Vostok.Metrics.Primitives.Gauge.IntegerGaugeConfig
+Vostok.Metrics.Primitives.Gauge.IntegerGaugeConfig.InitialValue.get -> long
+Vostok.Metrics.Primitives.Gauge.IntegerGaugeConfig.InitialValue.set -> void
+Vostok.Metrics.Primitives.Gauge.IntegerGaugeConfig.IntegerGaugeConfig() -> void
+Vostok.Metrics.Primitives.Gauge.IntegerGaugeConfig.ResetOnScrape.get -> bool
+Vostok.Metrics.Primitives.Gauge.IntegerGaugeConfig.ResetOnScrape.set -> void
+Vostok.Metrics.Primitives.Gauge.IntegerGaugeConfig.SendInitialValue.get -> bool
+Vostok.Metrics.Primitives.Gauge.IntegerGaugeConfig.SendInitialValue.set -> void
+Vostok.Metrics.Primitives.Gauge.IntegerGaugeFactoryExtensions
+Vostok.Metrics.Primitives.Gauge.MultiFuncGaugeFactoryExtensions
+Vostok.Metrics.Primitives.Timer.HistogramBucket
+Vostok.Metrics.Primitives.Timer.HistogramBucket.Equals(Vostok.Metrics.Primitives.Timer.HistogramBucket other) -> bool
+Vostok.Metrics.Primitives.Timer.HistogramBucket.HistogramBucket() -> void
+Vostok.Metrics.Primitives.Timer.HistogramBucket.HistogramBucket(double lowerBound, double upperBound) -> void
+Vostok.Metrics.Primitives.Timer.HistogramBuckets
+Vostok.Metrics.Primitives.Timer.HistogramBuckets.Count.get -> int
+Vostok.Metrics.Primitives.Timer.HistogramBuckets.FindBucketIndex(double value) -> int
+Vostok.Metrics.Primitives.Timer.HistogramBuckets.HistogramBuckets(params double[] upperBounds) -> void
+Vostok.Metrics.Primitives.Timer.HistogramBuckets.HistogramBuckets(System.Collections.Generic.IReadOnlyList<double> upperBounds) -> void
+Vostok.Metrics.Primitives.Timer.HistogramBuckets.this[int index].get -> Vostok.Metrics.Primitives.Timer.HistogramBucket
+Vostok.Metrics.Primitives.Timer.HistogramConfig
+Vostok.Metrics.Primitives.Timer.HistogramConfig.AggregationParameters.get -> System.Collections.Generic.IReadOnlyDictionary<string, string>
+Vostok.Metrics.Primitives.Timer.HistogramConfig.AggregationParameters.set -> void
+Vostok.Metrics.Primitives.Timer.HistogramConfig.Buckets.get -> Vostok.Metrics.Primitives.Timer.HistogramBuckets
+Vostok.Metrics.Primitives.Timer.HistogramConfig.Buckets.set -> void
+Vostok.Metrics.Primitives.Timer.HistogramConfig.HistogramConfig() -> void
+Vostok.Metrics.Primitives.Timer.HistogramConfig.ScrapeOnDispose.get -> bool
+Vostok.Metrics.Primitives.Timer.HistogramConfig.ScrapeOnDispose.set -> void
+Vostok.Metrics.Primitives.Timer.HistogramConfig.ScrapePeriod.get -> System.TimeSpan?
+Vostok.Metrics.Primitives.Timer.HistogramConfig.ScrapePeriod.set -> void
+Vostok.Metrics.Primitives.Timer.HistogramConfig.Unit.get -> string
+Vostok.Metrics.Primitives.Timer.HistogramConfig.Unit.set -> void
+Vostok.Metrics.Primitives.Timer.HistogramFactoryExtensions
+Vostok.Metrics.Primitives.Timer.ITimer
+Vostok.Metrics.Primitives.Timer.ITimer.Report(double value) -> void
+Vostok.Metrics.Primitives.Timer.ITimer.Unit.get -> string
+Vostok.Metrics.Primitives.Timer.ITimerExtensions_Measurement
+Vostok.Metrics.Primitives.Timer.QuantileMetricsBuilder
+Vostok.Metrics.Primitives.Timer.QuantileMetricsBuilder.Build(double[] values, int size, int totalCount, System.DateTimeOffset timestamp) -> System.Collections.Generic.IEnumerable<Vostok.Metrics.Models.MetricEvent>
+Vostok.Metrics.Primitives.Timer.QuantileMetricsBuilder.Build(double[] values, System.DateTimeOffset timestamp) -> System.Collections.Generic.IEnumerable<Vostok.Metrics.Models.MetricEvent>
+Vostok.Metrics.Primitives.Timer.QuantileMetricsBuilder.Build(System.Collections.Generic.List<double> values, System.DateTimeOffset timestamp) -> System.Collections.Generic.IEnumerable<Vostok.Metrics.Models.MetricEvent>
+Vostok.Metrics.Primitives.Timer.QuantileMetricsBuilder.QuantileMetricsBuilder(double[] quantiles, Vostok.Metrics.Models.MetricTags tags, string unit) -> void
+Vostok.Metrics.Primitives.Timer.Quantiles
+Vostok.Metrics.Primitives.Timer.SummaryConfig
+Vostok.Metrics.Primitives.Timer.SummaryConfig.BufferSize.get -> int
+Vostok.Metrics.Primitives.Timer.SummaryConfig.BufferSize.set -> void
+Vostok.Metrics.Primitives.Timer.SummaryConfig.Quantiles.get -> double[]
+Vostok.Metrics.Primitives.Timer.SummaryConfig.Quantiles.set -> void
+Vostok.Metrics.Primitives.Timer.SummaryConfig.ScrapeOnDispose.get -> bool
+Vostok.Metrics.Primitives.Timer.SummaryConfig.ScrapeOnDispose.set -> void
+Vostok.Metrics.Primitives.Timer.SummaryConfig.ScrapePeriod.get -> System.TimeSpan?
+Vostok.Metrics.Primitives.Timer.SummaryConfig.ScrapePeriod.set -> void
+Vostok.Metrics.Primitives.Timer.SummaryConfig.SummaryConfig() -> void
+Vostok.Metrics.Primitives.Timer.SummaryConfig.Unit.get -> string
+Vostok.Metrics.Primitives.Timer.SummaryConfig.Unit.set -> void
+Vostok.Metrics.Primitives.Timer.SummaryFactoryExtensions
+Vostok.Metrics.Primitives.Timer.TimerConfig
+Vostok.Metrics.Primitives.Timer.TimerConfig.AggregationParameters.get -> System.Collections.Generic.IReadOnlyDictionary<string, string>
+Vostok.Metrics.Primitives.Timer.TimerConfig.AggregationParameters.set -> void
+Vostok.Metrics.Primitives.Timer.TimerConfig.TimerConfig() -> void
+Vostok.Metrics.Primitives.Timer.TimerConfig.Unit.get -> string
+Vostok.Metrics.Primitives.Timer.TimerConfig.Unit.set -> void
+Vostok.Metrics.Primitives.Timer.TimerFactoryExtensions
+Vostok.Metrics.Scraping.IScrapableMetric
+Vostok.Metrics.Scraping.IScrapableMetric.Scrape(System.DateTimeOffset timestamp) -> System.Collections.Generic.IEnumerable<Vostok.Metrics.Models.MetricEvent>
+Vostok.Metrics.Senders.AdHocAnnotationEventSender
+Vostok.Metrics.Senders.AdHocAnnotationEventSender.AdHocAnnotationEventSender(System.Action<Vostok.Metrics.Models.AnnotationEvent> sendAction) -> void
+Vostok.Metrics.Senders.AdHocAnnotationEventSender.Send(Vostok.Metrics.Models.AnnotationEvent event) -> void
+Vostok.Metrics.Senders.AdHocMetricEventSender
+Vostok.Metrics.Senders.AdHocMetricEventSender.AdHocMetricEventSender(System.Action<Vostok.Metrics.Models.MetricEvent> sendAction) -> void
+Vostok.Metrics.Senders.AdHocMetricEventSender.Send(Vostok.Metrics.Models.MetricEvent event) -> void
+Vostok.Metrics.Senders.CompositeAnnotationEventSender
+Vostok.Metrics.Senders.CompositeAnnotationEventSender.CompositeAnnotationEventSender(Vostok.Metrics.IAnnotationEventSender[] senders) -> void
+Vostok.Metrics.Senders.CompositeAnnotationEventSender.Send(Vostok.Metrics.Models.AnnotationEvent event) -> void
+Vostok.Metrics.Senders.CompositeMetricEventSender
+Vostok.Metrics.Senders.CompositeMetricEventSender.CompositeMetricEventSender(Vostok.Metrics.IMetricEventSender[] senders) -> void
+Vostok.Metrics.Senders.CompositeMetricEventSender.Send(Vostok.Metrics.Models.MetricEvent event) -> void
+Vostok.Metrics.Senders.ConsoleAnnotationEventSender
+Vostok.Metrics.Senders.ConsoleAnnotationEventSender.ConsoleAnnotationEventSender() -> void
+Vostok.Metrics.Senders.ConsoleMetricEventSender
+Vostok.Metrics.Senders.ConsoleMetricEventSender.ConsoleMetricEventSender(Vostok.Metrics.Models.MetricEventPrintFormat format) -> void
+Vostok.Metrics.Senders.DevNullAnnotationEventSender
+Vostok.Metrics.Senders.DevNullAnnotationEventSender.DevNullAnnotationEventSender() -> void
+Vostok.Metrics.Senders.DevNullAnnotationEventSender.Send(Vostok.Metrics.Models.AnnotationEvent event) -> void
+Vostok.Metrics.Senders.DevNullMetricEventSender
+Vostok.Metrics.Senders.DevNullMetricEventSender.DevNullMetricEventSender() -> void
+Vostok.Metrics.Senders.DevNullMetricEventSender.Send(Vostok.Metrics.Models.MetricEvent event) -> void
+Vostok.Metrics.Senders.TextAnnotationEventSender
+Vostok.Metrics.Senders.TextAnnotationEventSender.Send(Vostok.Metrics.Models.AnnotationEvent event) -> void
+Vostok.Metrics.Senders.TextAnnotationEventSender.TextAnnotationEventSender(System.Action<string> send) -> void
+Vostok.Metrics.Senders.TextMetricEventSender
+Vostok.Metrics.Senders.TextMetricEventSender.Send(Vostok.Metrics.Models.MetricEvent event) -> void
+Vostok.Metrics.Senders.TextMetricEventSender.TextMetricEventSender(System.Action<string> send, Vostok.Metrics.Models.MetricEventPrintFormat format) -> void
+Vostok.Metrics.WellKnownAggregationTypes
+Vostok.Metrics.WellKnownTagKeys
+Vostok.Metrics.WellKnownTagValues
+Vostok.Metrics.WellKnownUnits
