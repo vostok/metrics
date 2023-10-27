@@ -9,10 +9,13 @@ namespace Vostok.Metrics.Grouping
     internal abstract class MetricGroupBase<TMetric> : IDisposable
     {
         private readonly ConcurrentDictionary<MetricTags, Lazy<TMetric>> cache = new ConcurrentDictionary<MetricTags, Lazy<TMetric>>();
-        private readonly Func<MetricTags, TMetric> factory;
+        private readonly Func<MetricTags, Lazy<TMetric>> factory;
 
         protected MetricGroupBase([NotNull] Func<MetricTags, TMetric> factory)
-            => this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
+        {
+            if (factory == null) throw new ArgumentNullException(nameof(factory));
+            this.factory = t => { return new Lazy<TMetric>(() => factory(t), LazyThreadSafetyMode.ExecutionAndPublication); };
+        }
 
         public void Dispose()
         {
@@ -25,6 +28,6 @@ namespace Vostok.Metrics.Grouping
         }
 
         protected TMetric For([NotNull] MetricTags dynamicTags)
-            => cache.GetOrAdd(dynamicTags, t => new Lazy<TMetric>(() => factory(t), LazyThreadSafetyMode.ExecutionAndPublication)).Value;
+            => cache.GetOrAdd(dynamicTags, factory).Value;
     }
 }
