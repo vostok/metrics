@@ -6,7 +6,7 @@
     <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
   <PropertyGroup>
-    <VersionPrefix>0.2.31</VersionPrefix>
+    <VersionPrefix>0.2.32</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
     <Title>Vostok.Metrics</Title>
