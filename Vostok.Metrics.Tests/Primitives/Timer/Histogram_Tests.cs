@@ -9,6 +9,7 @@ using NUnit.Framework;
 using Vostok.Metrics.Models;
 using Vostok.Metrics.Primitives.Timer;
 using Vostok.Metrics.Senders;
+using ITimer = Vostok.Metrics.Primitives.Timer.ITimer;
 
 // ReSharper disable CompareOfFloatsByEqualityOperator
 // ReSharper disable PossibleInvalidOperationException
