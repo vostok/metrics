@@ -1,3 +1,7 @@
+## 0.2.31 (12-12-2024): 
+
+Bump NuGet deps versions
+
 ## 0.2.30 (31-10-2023):
 
 Minor optimization on the hot path of the `For` method.
