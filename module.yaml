@@ -7,6 +7,16 @@ notests *default:
 
   install:
     - Vostok.Metrics/bin/Release/netstandard2.0/Vostok.Metrics.dll
+    - groups:
+        - target-framework: "netstandard2.0"
+          libraries:
+            - Vostok.Metrics/bin/Release/netstandard2.0/Vostok.Metrics.dll
+        - target-framework: "net6.0"
+          libraries:
+            - Vostok.Metrics/bin/Release/net6.0/Vostok.Metrics.dll
+        - target-framework: "net8.0"
+          libraries:
+            - Vostok.Metrics/bin/Release/net8.0/Vostok.Metrics.dll
 
   deps:
     - vostok.devtools
@@ -19,6 +29,21 @@ full-build > notests:
   build:
     target: Vostok.Metrics.sln
     configuration: Release
+    tool:
+      name: dotnet
+
+  install:
+    - Vostok.Metrics/bin/Release/netstandard2.0/Vostok.Metrics.dll
+    - groups:
+        - target-framework: "netstandard2.0"
+          libraries:
+            - Vostok.Metrics/bin/Release/netstandard2.0/Vostok.Metrics.dll
+        - target-framework: "net6.0"
+          libraries:
+            - Vostok.Metrics/bin/Release/net6.0/Vostok.Metrics.dll
+        - target-framework: "net8.0"
+          libraries:
+            - Vostok.Metrics/bin/Release/net8.0/Vostok.Metrics.dll
 
   deps:
     - -vostok.devtools
